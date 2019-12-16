@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+<<<<<<< HEAD
 import { Text, View, ScrollView } from 'react-native'
 import Category from './Components/Component1';
 import {CatBrown,Catlight,CatBlue,CatGreen,Catpurple,CatLightBrown,CatLightBlue,CatSimit,CatRandom,CatService} from './Assets/Colors';
@@ -40,6 +41,21 @@ export default class App extends Component {
 
         </ScrollView>
        </View>
+=======
+import { Text, View } from 'react-native'
+import HomeScreen from './Screens/HomeScreen'
+
+import CreatePost from './Screens/CreatePost'
+
+
+
+export default class App extends Component {
+  render() {
+    return (
+      <View>
+        <HomeScreen />
+      </View>
+>>>>>>> b8c3a58bfe736908a5ab40737235b5ae8375a8d6
     )
   }
 }
