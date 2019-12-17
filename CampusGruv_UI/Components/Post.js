@@ -6,7 +6,7 @@ export default class Post extends Component {
     render() {
         return (
             <View style={styles.container}>
-                <View style={{height:'60%'}}>
+                <View style={{height:'50%'}}>
                     <Image
                         style={styles.image}
                         source = {{
@@ -14,24 +14,29 @@ export default class Post extends Component {
                         }}
                     />
                 </View>
-                <View style={{marginLeft:'3%', marginTop: '2%'}}>
+                <View style={{borderWidth:1, backgroundColor:'white', paddingLeft:'3%', paddingTop: '2%'}}>
                     <View>
                         <Text style={{fontSize:13}}>Love my new study spot!</Text>
                     </View>
-                    <View style={{flexDirection: 'row', alignItems: 'center', marginTop: '2%'}}>
-                        <View style={{flex:1}}>
+                    <View style={{paddingBottom:'2%', flexDirection: 'row', alignItems: 'center'}}>
+                        <View style={{width:'20%'}}>
                             <Image 
                                 source={{uri: 'https://travelog-pk.herokuapp.com/images/logo.png'}}
-                                style={{width:30, height:30,borderWidth:0.1, borderColor:'#616963', borderRadius: 50}} 
+                                style={{width:30, height:30,borderWidth:0.3, borderColor:'#616963', borderRadius: 50}} 
                             />
                         </View>
-                        <View style={{flex:4,borderWidth:1, marginLeft: '2%'}}>
+                        <View style={{width:'50%', marginRight: '2%', marginLeft: '2%'}}>
                             <Text style={{color: 'grey'}}>
                                 Linda Z.
                             </Text>
                         </View>
-                        <View style={{}}>
-                            <ViewsIcon color="grey" name="eye"/>
+                        <View style={{width:'10%'}}>
+                            <View>
+                                <ViewsIcon color="grey" name="eye"/>
+                            </View>
+                            <View style={{marginTop:-2}}>
+                                <Text style={{color:'grey', fontSize:7}}>2.4k</Text>
+                            </View>
                         </View>
                     </View>
                 </View>
@@ -43,8 +48,9 @@ export default class Post extends Component {
 const styles = StyleSheet.create({
     container: {
         width:"50%",
-        height:'40%',
-        marginLeft:10
+        height:300,
+        marginLeft:10,
+        borderWidth:1
     },
     image: {
         height:'100%',
