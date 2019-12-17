@@ -1,12 +1,20 @@
 import React, { Component } from 'react'
-import { Text, View, StyleSheet } from 'react-native'
+import { Text, View, ScrollView, SafeAreaView, StyleSheet, FlatList } from 'react-native'
 import Post from '../Components/Post'
+import Test from '../Components/Test'
+import Test1 from '../Components/Test1'
 
 export default class HomeScreen extends Component {
+
+    state = {
+        posts: [1,2,3,4,5,6]
+    }
+
     render() {
         return (
             <View style={styles.container}>
-                <Post />
+                
+                <Test1/>
             </View>
         )
     }
@@ -14,8 +22,8 @@ export default class HomeScreen extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        height: '90%',
-        marginTop: 20,
-        paddingTop:20
+        paddingTop:20,
+        borderWidth:5,
+        height:'100%'
     }
 })
