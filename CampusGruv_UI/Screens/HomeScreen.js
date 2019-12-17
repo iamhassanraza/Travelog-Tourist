@@ -13,7 +13,6 @@ export default class HomeScreen extends Component {
     render() {
         return (
             <View style={styles.container}>
-                
                 <Test1/>
             </View>
         )
