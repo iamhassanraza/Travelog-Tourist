@@ -11,9 +11,15 @@ export default class CategoryButton extends Component {
 
             <View style={{marginTop:15}}>
                 <Button
+                onPress={()=>{this.props.onSelect(this.props.title)}}
                  title={this.props.title}
                  titleStyle={{fontSize:13}} 
-                 buttonStyle={{width:100, height:32, backgroundColor:this.props.bgclr , ...this.props.style}} />
+                 
+                 buttonStyle={{width:100, height:32, backgroundColor:this.props.bgclr ,...this.props.style}} />
+                 <View style={{ 
+                    borderTopColor: "#dfede3",
+                    borderBottomColor: "#dfede3",
+                    elevation: this.props.Elevation ? this.props.Elevation : 3, borderWidth:0.2  }}></View>
             </View>
         )
     }
