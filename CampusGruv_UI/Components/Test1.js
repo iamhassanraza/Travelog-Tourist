@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View , RefreshControl, FlatList} from 'react-native'
+import { Text, View , RefreshControl, SafeAreaView, ScrollView, FlatList} from 'react-native'
 import Test from '../Components/Test'
 
 export default class Test1 extends Component {
@@ -43,37 +43,52 @@ export default class Test1 extends Component {
 
     render() {
         // {this.state.posts[0].users?  console.log(this.state.posts[0].users.first_name) : console.log('console')}
-      if(this.state.posts[0])
-      {
-       console.log(this.state.posts[0])
-        return (
-            <View style={{backgroundColor: '#F0F0F0'}}>
-      
-                 <FlatList
-                              
-                                data={this.state.posts}
-                                showsHorizontalScrollIndicator={false}
-                                renderItem={({ item }) =>{
-                                   return <Test name={item.users.first_name} title={item.title} imageurl={item.postDetail.length > 0 ? item.postDetail[0].image_url : 'https://travelog-pk.herokuapp.com/images/default.png' }>  </Test>
-                                }
-                              
-                           
-                            
+        if(this.state.posts[0]) {
+
+            const column1Data = this.state.posts.filter((item, i) => i%2 === 0);
+            const column2Data = this.state.posts.filter((item, i) => i%2 === 1);
+
+            return (
+                <SafeAreaView style={{flexDirection: 'row',flex: 1, backgroundColor: '#F0F0F0'}}>
+                    <View style={{flex: 1}}>
+                        <FlatList          
+                            data={column1Data}
+                            scrollEnabled={false}
+                            showsVerticalScrollIndicator={false}
+                            renderItem={({ item }) => {
+                                    return <Test style={{}} name={item.users.first_name} title={item.title} imageurl={item.postDetail.length > 0 ? item.postDetail[0].image_url : 'https://travelog-pk.herokuapp.com/images/default.png' }>  </Test>
+                                }       
                             }
-                                keyExtractor={item => item.tour_id}
-                                numColumns={2}
-                                refreshControl={
-                                    <RefreshControl refreshing={this.state.refreshing} onRefresh={this.fetchdata}/>}
-                            />
-
-
-            </View>
-        )
-      }
-      else{
-            return <View>
-                
-            </View>
-      }
+                            keyExtractor={item => item.tour_id}
+                            refreshControl={
+                                <RefreshControl refreshing={this.state.refreshing} onRefresh={this.fetchdata}/>
+                            }
+                        />
+                    </View>
+                    <View style={{flex: 1}}>
+                        <FlatList          
+                            data={column2Data}
+                            scrollEnabled={false}
+                            showsVerticalScrollIndicator={false}
+                            renderItem={({ item }) => {
+                                    return <Test name={item.users.first_name} title={item.title} imageurl={item.postDetail.length > 0 ? item.postDetail[0].image_url : 'https://travelog-pk.herokuapp.com/images/default.png' }>  </Test>
+                                }       
+                            }
+                            keyExtractor={item => item.tour_id}
+                            refreshControl={
+                                <RefreshControl refreshing={this.state.refreshing} onRefresh={this.fetchdata}/>
+                            }
+                        />
+                    </View>
+                </SafeAreaView>
+            )
+        }
+        else {
+            return (
+                <View>
+                    <Text>Loading</Text>
+                </View>
+            )
+        }
     }
 }

@@ -7,7 +7,9 @@ export default class Test extends Component {
     Image.getSize(this.props.imageurl, (srcWidth, srcHeight) => {
       const maxHeight = Dimensions.get('window').height;
       const maxWidth = Dimensions.get('window').width;
-
+      console.log(srcWidth,srcHeight)
+     // console.log("width wala",maxWidth / srcWidth)
+      //console.log("height wala",maxHeight / srcHeight)
       const ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
       this.setState({ width: srcWidth * ratio, height: srcHeight * ratio });
     }, error => {
@@ -24,7 +26,7 @@ export default class Test extends Component {
   render() {
       const iconColor = this.state.liked ? 'red' : 'grey' 
     return (
-      <View style={{height:this.state.height+75, width: '47.5%',backgroundColor: 'white', borderTopLeftRadius: 15, borderTopRightRadius: 15, margin: '1%', borderColor:'red'}}>
+      <View style={{ width: '100%',backgroundColor: 'white', borderTopLeftRadius: 15, borderTopRightRadius: 15, margin: '1%', borderColor:'red'}}>
         <View style={{}}>
           <Image
             source={{uri: this.props.imageurl}}
