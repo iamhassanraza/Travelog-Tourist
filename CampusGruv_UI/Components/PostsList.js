@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View , RefreshControl, SafeAreaView, ScrollView, FlatList, Dimensions} from 'react-native'
-import Test from '../Components/Test'
+import PostCard from './PostCard'
 import Masonry from 'react-native-masonry-layout'
 import ContentLoader, { Facebook } from 'react-content-loader/native'
 
@@ -58,7 +58,7 @@ export default class Test1 extends Component {
                             scrollEnabled={false}
                             showsVerticalScrollIndicator={false}
                             renderItem={({ item }) => {
-                                    return <Test style={{}} name={item.users.first_name} title={item.title} imageurl={item.postDetail.length > 0 ? item.postDetail[0].image_url : 'https://travelog-pk.herokuapp.com/images/default.png' }>  </Test>
+                                    return <PostCard style={{}} name={item.users.first_name} title={item.title} imageurl={item.postDetail.length > 0 ? item.postDetail[0].image_url : 'https://travelog-pk.herokuapp.com/images/default.png' }>  </PostCard>
                                 }       
                             }
                             keyExtractor={item => item.tour_id}
@@ -73,7 +73,7 @@ export default class Test1 extends Component {
                             scrollEnabled={false}
                             showsVerticalScrollIndicator={false}
                             renderItem={({ item }) => {
-                                    return <Test name={item.users.first_name} title={item.title} imageurl={item.postDetail.length > 0 ? item.postDetail[0].image_url : 'https://travelog-pk.herokuapp.com/images/default.png' }>  </Test>
+                                    return <PostCard name={item.users.first_name} title={item.title} imageurl={item.postDetail.length > 0 ? item.postDetail[0].image_url : 'https://travelog-pk.herokuapp.com/images/default.png' }>  </PostCard>
                                 }       
                             }
                             keyExtractor={item => item.tour_id}
