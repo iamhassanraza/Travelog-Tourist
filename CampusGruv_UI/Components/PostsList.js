@@ -51,7 +51,12 @@ export default class Test1 extends Component {
             const column2Data = this.state.posts.filter((item, i) => i%2 === 1);
 
             return (
-                <SafeAreaView style={{flexDirection: 'row',flex: 1, backgroundColor: '#F0F0F0'}}>
+                <SafeAreaView 
+                    style={{flexDirection: 'row',flex: 1, backgroundColor: '#F0F0F0'}}
+                    RefreshControl = {
+                        <RefreshControl refreshing={this.state.refreshing} onRefresh={this.fetchdata}/>
+                    }
+                >
                     <View style={{flex: 1}}>
                         <FlatList          
                             data={column1Data}
@@ -62,9 +67,7 @@ export default class Test1 extends Component {
                                 }       
                             }
                             keyExtractor={item => item.tour_id}
-                            refreshControl={
-                                <RefreshControl refreshing={this.state.refreshing} onRefresh={this.fetchdata}/>
-                            }
+                            
                         />
                     </View>
                     <View style={{flex: 1}}>
@@ -77,9 +80,6 @@ export default class Test1 extends Component {
                                 }       
                             }
                             keyExtractor={item => item.tour_id}
-                            refreshControl={
-                                <RefreshControl refreshing={this.state.refreshing} onRefresh={this.fetchdata}/>
-                            }
                         />
                     </View>
                 </SafeAreaView>

@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Text, View, ImageBackground, Image, Dimensions} from 'react-native';
 import ViewsIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 export default class Test extends Component {
 
   componentDidMount() {
@@ -12,9 +13,10 @@ export default class Test extends Component {
       //console.log("height wala",maxHeight / srcHeight)
       const ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight)
       this.setState({ width: srcWidth * ratio, height: srcHeight * ratio });
-    }, error => {
-      console.log('error:', error);
-    });
+    }, (error) => {
+
+    }
+    );
   }
 
   state = {
@@ -27,7 +29,18 @@ export default class Test extends Component {
       const iconColor = this.state.liked ? 'red' : 'grey' 
       console.log(this.state.height)
     return (
-      <View style={{backgroundColor: 'white', borderTopLeftRadius: 15, borderTopRightRadius: 15, margin: '1%', borderColor:'red'}}>
+      <TouchableWithoutFeedback 
+        style = {
+          {
+            backgroundColor: 'white',
+            borderTopLeftRadius: 15,
+            borderTopRightRadius: 15,
+            margin: '1%', 
+            borderColor:'red'
+          }
+        }
+        onPress = {() => alert(this.props.title)}
+      >
         <View style={{}}>
           <Image
               source={{uri: this.props.imageurl}}
@@ -69,7 +82,8 @@ export default class Test extends Component {
             </View>
           </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     );
   }
 }
+

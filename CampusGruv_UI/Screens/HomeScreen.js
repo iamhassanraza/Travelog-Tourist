@@ -20,8 +20,6 @@ export default class HomeScreen extends Component {
 
 const styles = StyleSheet.create({
     container: {
-        paddingTop:20,
-        borderWidth:5,
         height:'100%'
     }
 })
