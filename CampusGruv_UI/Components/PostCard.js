@@ -27,7 +27,6 @@ export default class Test extends Component {
 
   render() {
       const iconColor = this.state.liked ? 'red' : 'grey' 
-      console.log(this.state.height)
     return (
       <TouchableWithoutFeedback 
         style = {
