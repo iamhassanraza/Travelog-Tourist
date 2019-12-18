@@ -13,7 +13,7 @@ export default class CategoryButton extends Component {
                 <Button
                 onPress={()=>{this.props.onSelect(this.props.title)}}
                  title={this.props.title}
-                 titleStyle={{fontSize:13}} 
+                 titleStyle={{fontSize:13, ...this.props.titlefontsize}} 
                  
                  buttonStyle={{width:100, height:32, backgroundColor:this.props.bgclr ,...this.props.style}} />
                  <View style={{ 
