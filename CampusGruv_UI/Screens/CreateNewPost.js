@@ -32,7 +32,7 @@ export default class CreateNewPost extends Component {
 
   changeDescriptionState = desc => {
     this.setState({
-      Title: desc
+      Description: desc
     })
   }
 
@@ -293,9 +293,6 @@ export default class CreateNewPost extends Component {
 
 
   render() {
-    
-    console.log(this.state.Price);
-    console.log(this.state.CategoryEventDate);
 
     return (
       <ScrollView>
