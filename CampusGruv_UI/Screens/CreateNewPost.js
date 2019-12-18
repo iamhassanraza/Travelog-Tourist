@@ -289,11 +289,10 @@ export default class CreateNewPost extends Component {
 
 
 
-
+//                        " WHOLE RENDER METHOD ""
 
 
   render() {
-
     return (
       <ScrollView>
         {this.renderTitle()}
