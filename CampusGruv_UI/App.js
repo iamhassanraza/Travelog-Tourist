@@ -8,6 +8,7 @@ import Screen3 from './Components/Post'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons'
 import AddIcon from 'react-native-vector-icons/Entypo'
+import HomeScreen from './Screens/HomeScreen'
 import AliScreen from './Screens/CreateNewPost'
 import { createAppContainer } from 'react-navigation';
 import PostDetail from './Screens/PostDetail'
@@ -18,7 +19,7 @@ import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 const TabNavigator = createMaterialTopTabNavigator(
   {
       Home: {
-          screen: AliScreen,
+          screen: HomeScreen,
           navigationOptions: {
               tabBarIcon: ({tintColor}) => (
                   <Icon name="home" color={tintColor}  style={{fontSize:22}}/>

@@ -1,8 +1,6 @@
 import React, { Component } from 'react'
 import { Text, View, ScrollView, SafeAreaView, StyleSheet, FlatList } from 'react-native'
-import Post from '../Components/Post'
-import Test from '../Components/Test'
-import Test1 from '../Components/Test1'
+import PostsList from '../Components/PostsList'
 
 export default class HomeScreen extends Component {
 
@@ -11,10 +9,11 @@ export default class HomeScreen extends Component {
     }
 
     render() {
+
         return (
-            <View style={styles.container}>
-                <Test1/>
-            </View>
+            <ScrollView style={styles.container}>
+                <PostsList />
+            </ScrollView>
         )
     }
 }
