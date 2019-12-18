@@ -1,34 +1,52 @@
 import React, {Component} from 'react';
 import {Text, View, ImageBackground, Image, Dimensions} from 'react-native';
 import ViewsIcon from 'react-native-vector-icons/MaterialCommunityIcons'
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 export default class Test extends Component {
 
   componentDidMount() {
     Image.getSize(this.props.imageurl, (srcWidth, srcHeight) => {
       const maxHeight = Dimensions.get('window').height;
       const maxWidth = Dimensions.get('window').width;
-
-      const ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+      //console.log(srcWidth,srcHeight)
+      //console.log("width wala",maxWidth / srcWidth)
+      //console.log("height wala",maxHeight / srcHeight)
+      const ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight)
       this.setState({ width: srcWidth * ratio, height: srcHeight * ratio });
-    }, error => {
-      console.log('error:', error);
-    });
+    }, (error) => {
+
+    }
+    );
   }
 
   state = {
     liked: false,
-    width: 0,
-    height:0
+    width: undefined,
+    height: undefined
   }
 
   render() {
       const iconColor = this.state.liked ? 'red' : 'grey' 
     return (
-      <View style={{height:this.state.height+75, width: '47.5%',backgroundColor: 'white', borderTopLeftRadius: 15, borderTopRightRadius: 15, margin: '1%', borderColor:'red'}}>
+      <TouchableWithoutFeedback 
+        style = {
+          {
+            backgroundColor: 'white',
+            borderTopLeftRadius: 15,
+            borderTopRightRadius: 15,
+            margin: '1%', 
+            borderColor:'red'
+          }
+        }
+        onPress = {() => alert(this.props.title)}
+      >
         <View style={{}}>
           <Image
-            source={{uri: this.props.imageurl}}
-            style={{width: '100%', height: this.state.height}}></Image>
+              source={{uri: this.props.imageurl}}
+              style={{width: '100%', height: this.state.height<250? this.state.height : 150 }}
+              resizeMode='cover'
+          >
+          </Image>
         </View>
         <View style={{ paddingLeft: '5%'}}>
           <View
@@ -63,7 +81,8 @@ export default class Test extends Component {
             </View>
           </View>
         </View>
-      </View>
+      </TouchableWithoutFeedback>
     );
   }
 }
+
