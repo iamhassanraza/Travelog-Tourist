@@ -7,10 +7,10 @@ export default class Test extends Component {
     Image.getSize(this.props.imageurl, (srcWidth, srcHeight) => {
       const maxHeight = Dimensions.get('window').height;
       const maxWidth = Dimensions.get('window').width;
-      console.log(srcWidth,srcHeight)
-     // console.log("width wala",maxWidth / srcWidth)
+      //console.log(srcWidth,srcHeight)
+      //console.log("width wala",maxWidth / srcWidth)
       //console.log("height wala",maxHeight / srcHeight)
-      const ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+      const ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight)
       this.setState({ width: srcWidth * ratio, height: srcHeight * ratio });
     }, error => {
       console.log('error:', error);
@@ -19,18 +19,22 @@ export default class Test extends Component {
 
   state = {
     liked: false,
-    width: 0,
-    height:0
+    width: undefined,
+    height: undefined
   }
 
   render() {
       const iconColor = this.state.liked ? 'red' : 'grey' 
+      console.log(this.state.height)
     return (
-      <View style={{ width: '100%',backgroundColor: 'white', borderTopLeftRadius: 15, borderTopRightRadius: 15, margin: '1%', borderColor:'red'}}>
+      <View style={{backgroundColor: 'white', borderTopLeftRadius: 15, borderTopRightRadius: 15, margin: '1%', borderColor:'red'}}>
         <View style={{}}>
           <Image
-            source={{uri: this.props.imageurl}}
-            style={{width: '100%', height: this.state.height}}></Image>
+              source={{uri: this.props.imageurl}}
+              style={{width: '100%', height: this.state.height<250? this.state.height : 150 }}
+              resizeMode='cover'
+          >
+          </Image>
         </View>
         <View style={{ paddingLeft: '5%'}}>
           <View

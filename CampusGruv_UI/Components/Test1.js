@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
-import { Text, View , RefreshControl, SafeAreaView, ScrollView, FlatList} from 'react-native'
+import { Text, View , RefreshControl, SafeAreaView, ScrollView, FlatList, Dimensions} from 'react-native'
 import Test from '../Components/Test'
+import Masonry from 'react-native-masonry-layout'
+import ContentLoader, { Facebook } from 'react-content-loader/native'
 
 export default class Test1 extends Component {
 
@@ -86,7 +88,7 @@ export default class Test1 extends Component {
         else {
             return (
                 <View>
-                    <Text>Loading</Text>
+                    <ContentLoader speed={0.3} height={Dimensions.get('window').height*1}/>
                 </View>
             )
         }
