@@ -1,69 +1,45 @@
 import React, { Component } from 'react'
-import { Text, View, Picker } from 'react-native'
-
-const textcolor = '#b3b3b5';
-const headingclr = '#6e706f';
-
+import { Text, View, ScrollView } from 'react-native'
+import Category from '../Components/Component1';
+import {CatBrown,Catlight,CatBlue,CatGreen,Catpurple,CatLightBrown,CatLightBlue,CatSimit,CatRandom,CatService} from '../Assets/Colors';
 export default class CategoryList extends Component {
-
-    state = {
-        categoryName : "",
-        categoryId : null
-    }
-
-    
-      
-    renderCategories = () => {
-        return (
-            <View style={{borderWidth:1, width:'100%', alignSelf:"center", borderColor:textcolor}}>
-            <Text
-              style={{
-                marginLeft:18,
-                fontSize: 20,
-                fontWeight: 'bold',
-                marginBottom: '2%',
-                color: headingclr,
-                paddingTop:10
-               
-              }}>
-              Select Category
-            </Text>
-            <Picker
-              selectedValue={this.state.language}
-              style={{width: '90%', alignSelf: 'center', color:"grey"}}
-              onValueChange={(itemValue, itemIndex) =>
-                this.setState({categoryName: itemValue, categoryId:itemIndex})
-               
-              }>
-              <Picker.Item label="Blog" value="Blog" />
-              <Picker.Item label="Campusgram" value="Campusgram" />
-              <Picker.Item label="Deals" value="Deals" />
-              <Picker.Item label="DIY" value="DIY" />
-              <Picker.Item label="Events" value="Events" />
-              <Picker.Item label="Free and For Sale" value="Free and For Sale" />
-              <Picker.Item label="Housing" value="Housing" />
-              <Picker.Item label="Jobs" value="Jobs" />
-              <Picker.Item label="Lost and Found" value="Lost and Found" />
-              <Picker.Item label="News" value="News" />
-              <Picker.Item label="Random" value="Random" />
-              <Picker.Item label="Services" value="Services" />
- 
+  render() {
+    return (
+      <View style={{flex:1,flexDirection:'column'}}>
+        <ScrollView>
         
-            </Picker>
-
-          </View>
-        );
-      };
-    
-
-
-    render() {
-       console.log(this.state);
+        <View style={{flexDirection:"row",marginBottom:35,marginLeft:10,marginTop:10}}>
+        <Category title="Blog " color={CatBrown}/>
+        <Category title="Campusgram" color={Catlight}/>
+        </View>
+      
+        <View style={{flexDirection:"row",marginBottom:35,marginLeft:10}}>
+        <Category title="Deals " color={Catpurple}/>
+        <Category title="DIY" color={CatBlue}/>
+        </View>
   
-        return (
-            <View>
-                {this.renderCategories()}
-            </View>
-        )
-    }
+        <View style={{flexDirection:"row",marginBottom:35,marginLeft:10}}>
+        <Category title="Events " color={CatGreen}/>
+        <Category title="Free & For Sale" color={CatLightBrown}/>
+        </View>
+  
+        <View style={{flexDirection:"row",marginBottom:35,marginLeft:10}}>
+        <Category title="Housing " color={CatLightBlue}/>
+        <Category title="Jobs" color={CatLightBrown}/>
+        </View>
+
+        <View style={{flexDirection:"row",marginBottom:35,marginLeft:10}}>
+        <Category title="Lost & Found " color={CatLightBrown}/>
+        <Category title="News" color={CatSimit}/>
+        </View>
+
+        <View style={{flexDirection:"row",marginBottom:35,marginLeft:10}}>
+        <Category title="Random" color={CatRandom}/>
+        <Category title="Services" color={CatService}/>
+        </View>
+
+        </ScrollView>
+       </View>
+    ) 
+}
 }
