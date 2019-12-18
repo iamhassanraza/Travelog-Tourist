@@ -23,7 +23,6 @@ export default class CreatePost extends Component {
                 marginBottom: '2%',
                 color: headingclr,
                 paddingTop:10
-               
               }}>
               Select Category
             </Text>
