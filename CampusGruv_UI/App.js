@@ -10,7 +10,7 @@ import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons'
 import AddIcon from 'react-native-vector-icons/Entypo'
 import AliScreen from './Screens/CreateNewPost'
 import { createAppContainer } from 'react-navigation';
-
+import PostDetail from './Screens/PostDetail'
 // import CreatePost from './Screens/CreatePost'
 
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
@@ -27,7 +27,7 @@ const TabNavigator = createMaterialTopTabNavigator(
           }
       },
       Notifications: {
-        screen: Screen3,
+        screen: PostDetail,
         navigationOptions: {
             tabBarIcon: ({tintColor}) => (
                 <Icon2 name="bell-ring"color={tintColor}  style={{fontSize:22}}/>
