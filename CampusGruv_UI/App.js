@@ -9,11 +9,10 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons'
 import AddIcon from 'react-native-vector-icons/Entypo'
 import HomeScreen from './Screens/HomeScreen'
-import AliScreen from './Screens/CreateNewPost'
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import PostDetail from './Screens/PostDetail'
-import CreatePost from './Screens/CreatePost'
+import CreatePost from './Screens/CreateNewPost'
 import PostsList from './Components/PostsList'
 import CategoryList from './Screens/CategoryList'
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
@@ -32,14 +31,15 @@ const TabNavigator = createMaterialTopTabNavigator(
       Notifications: {
         screen: PostDetail,
         navigationOptions: {
+            //header: null,
             tabBarIcon: ({tintColor}) => (
                 <Icon2 name="bell-ring"color={tintColor}  style={{fontSize:22}}/>
             ),
             tabBarLabel: "Notifications"
         }
     }, 
-      followups: {
-          screen: Screen3,
+      AddPost: {
+          screen: CreatePost,
           navigationOptions: {
               tabBarIcon: ({tintColor}) => (
                   <AddIcon name="squared-plus" color={tintColor} style={{fontSize:22}}/>
@@ -101,7 +101,7 @@ const TabContainer = createAppContainer(TabNavigator);
 
 const RootStack = createStackNavigator({
     TabContainer,
-    PostDetail,
+   
     PostsList,
     HomeScreen,
     CreatePost,
@@ -132,7 +132,8 @@ const AppContainer = createAppContainer(RootStack);
 export default class App extends Component {
   render() {
     return (
-      <AppContainer/>
+    //   <AppContainer/>
+    <PostDetail></PostDetail>
     )
   }
 }

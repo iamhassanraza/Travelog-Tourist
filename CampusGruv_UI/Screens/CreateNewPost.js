@@ -4,12 +4,14 @@ import {
   View,
   TouchableWithoutFeedback,
   ScrollView,
+  Button,
   TextInput,
 } from 'react-native';
+import {withNavigation } from 'react-navigation';
 import CategoryButton from '../Components/CategoryButton';
 import DatePicker from 'react-native-datepicker';
 
-export default class CreateNewPost extends Component {
+class CreateNewPost extends Component {
   state = {
     Category: '',
     CategoryEventDate: '',
@@ -273,15 +275,18 @@ export default class CreateNewPost extends Component {
 
   renderShareButton = () => {
     return (
-      <View style={{alignItems: 'center'}}>
-        <CategoryButton
-          title="Share"
-          bgclr={'rgba(47, 144, 234, 0.95)'}
-          titlefontsize={{fontSize: 19, fontWeight: 'bold'}}
-          style={{width: 300}}></CategoryButton>
+      <View 
+        style={{alignItems: 'center'}}
+      >
+
+        <Button
+          onPress={()=> this.props.navigation.push('PostDetail')}
+          //bgclr={'rgba(47, 144, 234, 0.95)'}
+          title={"Share"}
+          ></Button>
       </View>
     );
-  };
+    }
 
 
 
@@ -294,14 +299,20 @@ export default class CreateNewPost extends Component {
 
   render() {
     return (
-      <ScrollView>
+      <TouchableWithoutFeedback >
+        <View>
         {this.renderTitle()}
         {this.renderCategories()}
         {this.state.Category === 'Events' ? this.renderDatePicker() : null}
         {this.state.Category === 'Free & For Sale' ? this.renderPrice() : null}
         {this.renderDescription()}
         {this.renderShareButton()}
-      </ScrollView>
+      </View>
+      </TouchableWithoutFeedback>
     );
   }
 }
+
+
+
+export default withNavigation(CreateNewPost);
