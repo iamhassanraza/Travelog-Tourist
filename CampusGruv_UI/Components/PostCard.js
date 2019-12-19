@@ -2,7 +2,10 @@ import React, {Component} from 'react';
 import {Text, View, ImageBackground, Image, Dimensions} from 'react-native';
 import ViewsIcon from 'react-native-vector-icons/MaterialCommunityIcons'
 import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
-export default class Test extends Component {
+import {withNavigation} from 'react-navigation'
+
+
+class PostCard extends Component {
 
   componentDidMount() {
     Image.getSize(this.props.imageurl, (srcWidth, srcHeight) => {
@@ -38,7 +41,7 @@ export default class Test extends Component {
             borderColor:'red'
           }
         }
-        onPress = {() => alert(this.props.title)}
+        onPress = {() => this.props.navigation.push('PostDetail')}
       >
         <View style={{}}>
           <Image
@@ -86,3 +89,4 @@ export default class Test extends Component {
   }
 }
 
+export default withNavigation(PostCard);

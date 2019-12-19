@@ -12,7 +12,7 @@ export default class HomeScreen extends Component {
 
         return (
             <ScrollView style={styles.container}>
-                <PostsList />
+                <PostsList /> 
             </ScrollView>
         )
     }

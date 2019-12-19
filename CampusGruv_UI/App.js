@@ -14,18 +14,19 @@ import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import PostDetail from './Screens/PostDetail'
 import CreatePost from './Screens/CreatePost'
+import PostsList from './Components/PostsList'
 import CategoryList from './Screens/CategoryList'
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 
 const TabNavigator = createMaterialTopTabNavigator(
   {
       Home: {
-          screen: HomeScreen,
-          navigationOptions: {
-              tabBarIcon: ({tintColor}) => (
-                  <Icon name="home" color={tintColor}  style={{fontSize:22}}/>
-              ),
-              tabBarLabel: "Home"
+        screen: HomeScreen,
+        navigationOptions: {
+            tabBarIcon: ({tintColor}) => (
+              <Icon name="home" color={tintColor}  style={{fontSize:22}}/>
+            ),
+            tabBarLabel: "Home"
           }
       },
       Notifications: {
@@ -101,6 +102,8 @@ const TabContainer = createAppContainer(TabNavigator);
 const RootStack = createStackNavigator({
     TabContainer,
     PostDetail,
+    PostsList,
+    HomeScreen,
     CreatePost,
     CategoryList
 },
@@ -108,16 +111,16 @@ const RootStack = createStackNavigator({
     initialRouteName:'TabContainer',
     headerLayoutPreset: 'center',
     defaultNavigationOptions: {
-        header: null
-            // <View style={{height:50, flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
-            // <View style={{marginLeft:'5%'}}>
-            //     <Text style={{fontSize:25,fontWeight:'bold', color: ThemeColor}}>TraveLog</Text>
-            // </View>
-            // <View style={{width:25, height:25,justifyContent:'center', marginRight:'4%',backgroundColor:BackgroundColor, borderRadius:50}}>
-            //     <Icon name="search" size={20} color={ThemeColor} style={{alignSelf:'center'}}></Icon>
-            // </View>
-            // </View>
-        
+        header: (
+            <View style={{height:50, flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
+            <View style={{marginLeft:'5%'}}>
+                <Text style={{fontSize:25,fontWeight:'bold', color: 'black'}}>TraveLog</Text>
+            </View>
+            <View style={{width:25, height:25,justifyContent:'center', marginRight:'4%',backgroundColor:'#F0F0F0', borderRadius:50}}>
+                <Icon name="search" size={20} color={'black'} style={{alignSelf:'center'}}></Icon>
+            </View>
+            </View>
+        )
     }
 
 }
