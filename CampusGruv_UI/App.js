@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-// import { Text, View } from 'react-native'
+import { Text, View } from 'react-native'
 // import HomeScreen from './Screens/HomeScreen'
 import 'react-native-gesture-handler'
 // import Screen1 from './Screens/CreatePost'
@@ -13,10 +13,9 @@ import AliScreen from './Screens/CreateNewPost'
 import { createAppContainer } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import PostDetail from './Screens/PostDetail'
-// import CreatePost from './Screens/CreatePost'
+import CreatePost from './Screens/CreatePost'
+import CategoryList from './Screens/CategoryList'
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
-
-
 
 const TabNavigator = createMaterialTopTabNavigator(
   {
@@ -97,13 +96,40 @@ const TabNavigator = createMaterialTopTabNavigator(
           }
       }
 );
+const TabContainer = createAppContainer(TabNavigator);
 
-const AppContianer = createAppContainer(TabNavigator);
+const RootStack = createStackNavigator({
+    TabContainer,
+    PostDetail,
+    CreatePost,
+    CategoryList
+},
+{
+    initialRouteName:'TabContainer',
+    headerLayoutPreset: 'center',
+    defaultNavigationOptions: {
+        header: null
+            // <View style={{height:50, flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
+            // <View style={{marginLeft:'5%'}}>
+            //     <Text style={{fontSize:25,fontWeight:'bold', color: ThemeColor}}>TraveLog</Text>
+            // </View>
+            // <View style={{width:25, height:25,justifyContent:'center', marginRight:'4%',backgroundColor:BackgroundColor, borderRadius:50}}>
+            //     <Icon name="search" size={20} color={ThemeColor} style={{alignSelf:'center'}}></Icon>
+            // </View>
+            // </View>
+        
+    }
+
+}
+);
+
+
+const AppContainer = createAppContainer(RootStack);
 
 export default class App extends Component {
   render() {
     return (
-      <Post/>
+      <AppContainer/>
     )
   }
 }
