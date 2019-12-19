@@ -34,10 +34,7 @@ class PostCard extends Component {
       <TouchableWithoutFeedback 
         style = {
           {
-            backgroundColor: 'white',
-            borderTopLeftRadius: 15,
-            borderTopRightRadius: 15,
-            margin: '1%', 
+            margin: '2%', 
             borderColor:'red'
           }
         }
@@ -46,12 +43,13 @@ class PostCard extends Component {
         <View style={{}}>
           <Image
               source={{uri: this.props.imageurl}}
-              style={{width: '100%', height: this.state.height<250? this.state.height : 150 }}
+              style={{width: '100%',borderTopLeftRadius: 15,
+              borderTopRightRadius: 15, height: this.state.height<300? this.state.height : 200 }}
               resizeMode='cover'
           >
           </Image>
         </View>
-        <View style={{ paddingLeft: '5%'}}>
+        <View style={{backgroundColor:'white', paddingLeft: '5%'}}>
           <View
             style={{
               //flex: 1,

@@ -88,7 +88,9 @@ export default class Test1 extends Component {
         else {
             return (
                 <View>
-                    <ContentLoader speed={0.3} height={Dimensions.get('window').height*1}/>
+                    <ContentLoader speed={0.5} height={Dimensions.get('window').height*1}>
+                        
+                    </ContentLoader>
                 </View>
             )
         }

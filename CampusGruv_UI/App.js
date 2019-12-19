@@ -73,7 +73,7 @@ const TabNavigator = createMaterialTopTabNavigator(
       swipeEnabled: true,
       tabBarOptions: {
           style: {
-              backgroundColor: "white",
+              backgroundColor: "#1192d1",
               height: 50,
           },
           iconStyle: {
@@ -90,7 +90,7 @@ const TabNavigator = createMaterialTopTabNavigator(
               height:2,
           },
           upperCaseLabel: false,
-          inactiveTintColor: 'grey',
+          inactiveTintColor: 'white',
           activeTintColor: 'black',
           showIcon: true,
           showLabel: false
@@ -112,12 +112,12 @@ const RootStack = createStackNavigator({
     headerLayoutPreset: 'center',
     defaultNavigationOptions: {
         header: (
-            <View style={{height:50, flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
+            <View style={{height:50, backgroundColor: '#1192d1', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
             <View style={{marginLeft:'5%'}}>
-                <Text style={{fontSize:25,fontWeight:'bold', color: 'black'}}>TraveLog</Text>
+                <Text style={{fontSize:25,fontWeight:'bold', color: 'white'}}>CampusGruv</Text>
             </View>
-            <View style={{width:25, height:25,justifyContent:'center', marginRight:'4%',backgroundColor:'#F0F0F0', borderRadius:50}}>
-                <Icon name="search" size={20} color={'black'} style={{alignSelf:'center'}}></Icon>
+            <View style={{width:25, height:25,justifyContent:'center', marginRight:'4%',backgroundColor:'#1192d1', borderRadius:50}}>
+                <Icon name="search" size={20} color={'white'} style={{alignSelf:'center'}}></Icon>
             </View>
             </View>
         )
