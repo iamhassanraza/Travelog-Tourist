@@ -8,15 +8,22 @@ export default class Test1 extends Component {
 
     state={
         posts:[],
-        refreshing:false
+        refreshing: false
     }
 
-    fetchdata = ()=>{
+    onRefresh = () => {
+        this.setState({
+            refreshing: true
+        });
+        this.fetchdata();
+    }
+
+    fetchdata = () => {
 
     
         
       this.setState({posts:[]},
-        ()=>{
+        () => {
 
 
             fetch("https://campus-gruv-heroku.herokuapp.com/api/v1/post/all",{
@@ -30,10 +37,11 @@ export default class Test1 extends Component {
             .then((responseJson)=> {
                 this.setState({
                     posts : responseJson,
-                    refreshing:false
+                    refreshing: false
                 })
             })
             .catch(err => console.log(err))
+
         })
 
 
@@ -51,10 +59,10 @@ export default class Test1 extends Component {
             const column2Data = this.state.posts.filter((item, i) => i%2 === 1);
 
             return (
-                <SafeAreaView 
+                <View 
                     style={{flexDirection: 'row',flex: 1, backgroundColor: '#F0F0F0'}}
                     RefreshControl = {
-                        <RefreshControl refreshing={this.state.refreshing} onRefresh={this.fetchdata}/>
+                        <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh}/>
                     }
                 >
                     <View style={{flex: 1}}>
@@ -82,7 +90,7 @@ export default class Test1 extends Component {
                             keyExtractor={item => item.tour_id}
                         />
                     </View>
-                </SafeAreaView>
+                </View>
             )
         }
         else {
