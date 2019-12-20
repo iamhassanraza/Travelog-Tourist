@@ -135,7 +135,9 @@ console.log(error);
         source={require('../Assets/Images/background.png')}
         resizeMode='cover'
         >
-                    <Text style={{color:'white',fontSize:16,margin:10,marginTop:20}}>Back</Text>
+                    <Text style={{color:'white',fontSize:16,margin:10,marginTop:20}}  onPress={()=>{
+    this.props.navigation.goBack()
+  }}>Back</Text>
   <View >
   <KeyboardAvoidingView   behavior="padding" enabled>
     <ScrollView>

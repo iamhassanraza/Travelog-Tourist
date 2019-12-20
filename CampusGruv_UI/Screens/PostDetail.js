@@ -58,7 +58,7 @@ export default class PostDetail extends Component {
 
   renderTitle = (title) => {
     return (
-      <View style={{alignItems: 'center', margin: 7}}>
+      <View style={{alignItems: 'center', marginTop:7}}>
         <Text style={{fontSize: 18}}>
        {title}
         </Text>
@@ -69,7 +69,7 @@ export default class PostDetail extends Component {
   renderDescription = (description) => {
     return (
       <View style={{alignItems: 'center', marginLeft: '5%', marginRight: '5%'}}>
-        <Text style={{fontSize: 15, textAlign: 'justify'}}>
+        <Text style={{fontSize: 14,padding:5,color:'grey'}}>
           {description}
         </Text>
       </View>

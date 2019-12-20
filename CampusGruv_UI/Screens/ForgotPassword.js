@@ -23,7 +23,9 @@ class ForgetPassword extends React.Component {
         source={require('../Assets/Images/background.png')}
         resizeMode='cover'
         >
-                    <Text style={{color:'white',fontSize:16,margin:10,marginTop:20}}>Back</Text>
+                    <Text style={{color:'white',fontSize:16,margin:10,marginTop:20}} onPress={()=>{
+    this.props.navigation.goBack()
+  }}>Back</Text>
   <View style={{flex:1,}}>
 
              <View style={{flex:0.5}}>

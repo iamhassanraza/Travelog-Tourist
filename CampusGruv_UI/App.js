@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons'
 import AddIcon from 'react-native-vector-icons/Entypo'
 import HomeScreen from './Screens/HomeScreen'
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import PostDetail from './Screens/PostDetail'
 import CreatePost from './Screens/CreateNewPost'
@@ -20,13 +20,40 @@ import inbox from './Screens/Inbox';
 import chat from './Screens/chat';
 import NotificationScreen from './Screens/NotificationScreen'
 import Login from './Screens/Login'
+import SignUp from './Screens/SignUp'
+import ForgotPassword from './Screens/ForgotPassword'
 import UserProfile from './Screens/UserProfile'
+import editprofile from './Screens/ProfileEdit'
+
+
+const AuthNavigator = createStackNavigator({
+    Login: {
+        screen: Login,
+        navigationOptions: {
+            header: null }
+        },
+        SignUp: {
+            screen: SignUp,
+            navigationOptions: {
+                header: null }
+            },
+            ForgotPassword: {
+                screen: ForgotPassword,
+                navigationOptions: {
+                    header: null }
+                }
+
+           
+
+})
+
+
 
 
 const TabNavigator = createMaterialTopTabNavigator(
   {
       Home: {
-        screen: UserProfile,
+        screen: HomeScreen,
         navigationOptions: {
             tabBarIcon: ({tintColor}) => (
               <Icon name="home" color={tintColor}  style={{fontSize:22}}/>
@@ -63,7 +90,7 @@ const TabNavigator = createMaterialTopTabNavigator(
         }
     },
       Profile: {
-          screen: PostDetail,
+          screen: UserProfile,
           navigationOptions: {
               tabBarIcon: ({tintColor}) => (
                   <Icon name="person" color={tintColor}  style={{fontSize:22}}/>
@@ -107,11 +134,11 @@ const TabContainer = createAppContainer(TabNavigator);
 
 const RootStack = createStackNavigator({
     TabContainer,
-    inbox,
+    editprofile,
     chat,
     PostsList,
-    HomeScreen,
-    CreatePost,
+ 
+   
     CategoryList,
     PostDetail
 },
@@ -134,8 +161,17 @@ const RootStack = createStackNavigator({
 }
 );
 
+const RootStackNavigator = createSwitchNavigator({
+    auth:{
+        screen:AuthNavigator
+    },
+    otherScreens:{
+        screen:RootStack
+    }
 
-const AppContainer = createAppContainer(RootStack);
+})
+
+const AppContainer = createAppContainer(RootStackNavigator);
 
 export default class App extends Component {
   render() {
