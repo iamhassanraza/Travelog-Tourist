@@ -39,10 +39,16 @@ class PostCard extends Component {
           }
         }
         onPress = {() => this.props.navigation.push('PostDetail',{
-          
+          PostData:{
+            uri: this.props.imageurl,
+            title:this.props.title,
+            userAvatar:this.props.imageurl,
+            username:this.props.name,
+            description:this.props.description
+          }
         })}
       >
-        <View style={{}}>
+        <View style={{ }}>
           <Image
               source={{uri: this.props.imageurl}}
               style={{width: '100%',borderTopLeftRadius: 15,

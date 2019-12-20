@@ -22,7 +22,7 @@ export default class PostDetail extends Component {
     });
   };
 
-  renderHeader = () => {
+  renderHeader = (userdp,username) => {
     return (
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <View
@@ -34,9 +34,9 @@ export default class PostDetail extends Component {
             marginTop: 5,
           }}>
           <Image
-            source={require('../Assets/Images/ema.jpg')}
+            source={{uri:userdp}}
             style={{width: 40, height: 40, borderRadius: 50}}></Image>
-          <Text style={{marginLeft: '7%', color: 'grey'}}>Mindy Z</Text>
+          <Text style={{marginLeft: '7%', color: 'grey'}}>{username}</Text>
         </View>
 
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -46,38 +46,37 @@ export default class PostDetail extends Component {
     );
   };
 
-  renderImage = () => {
+  renderImage = (image) => {
     return (
       <View>
         <ImageBackground
-          source={require('../Assets/Images/samandarkatha.jpg')}
+          source={{uri:image}}
           style={{width: '100%', height: 200}}></ImageBackground>
       </View>
     );
   };
 
-  renderTitle = () => {
+  renderTitle = (title) => {
     return (
       <View style={{alignItems: 'center', margin: 7}}>
         <Text style={{fontSize: 18}}>
-          Photos from the dance concert last night!
+       {title}
         </Text>
       </View>
     );
   };
 
-  renderDescription = () => {
+  renderDescription = (description) => {
     return (
       <View style={{alignItems: 'center', marginLeft: '5%', marginRight: '5%'}}>
         <Text style={{fontSize: 15, textAlign: 'justify'}}>
-          Good luck on finals this season! Come join Macy and I on the first
-          floor of the Cathedral of learning to meet many other therapy dogs!
+          {description}
         </Text>
       </View>
     );
   };
 
-  renderAddComment = () => {
+  renderAddComment = (dp) => {
     return (
       <View
         style={{
@@ -88,7 +87,7 @@ export default class PostDetail extends Component {
           paddingLeft: '2%',
         }}>
         <Image
-          source={require('../Assets/Images/ema.jpg')}
+          source={{uri:dp}}
           style={{width: 35, height: 35, borderRadius: 50}}></Image>
 
         <TextInput
@@ -118,7 +117,7 @@ export default class PostDetail extends Component {
     );
   };
 
-  renderAllComments = () => {
+  renderAllComments = (dp) => {
     return (
       <View style={{   flex: 1,paddingRight: '7%', marginTop: '2%'}}>
         <View
@@ -134,7 +133,7 @@ export default class PostDetail extends Component {
             paddingBottom:"2%"
           }}>
           <Image
-            source={require('../Assets/Images/mansehra.jpg')}
+            source={{uri:dp}}
             style={{width: 30, height: 30, borderRadius: 50}}></Image>
 
           <View style={{flexDirection: 'column', width: 270, marginLeft: '2%'}}>
@@ -151,23 +150,24 @@ export default class PostDetail extends Component {
   };
 
   render() {
-    console.log(this.state.currentComment);
+    const data = this.props.navigation.getParam('PostData', 'nothing to render');
+    console.log(data)
     return (
       <View style={{flex: 1, justifyContent: 'space-between'}}>
         <View style={{}}>
-          {this.renderHeader()}
+          {this.renderHeader(data.userAvatar,data.username)}
         
         </View>
         <ScrollView style={{height: 300}}>
-        {this.renderImage()}
-          {this.renderTitle()}
-          {this.renderDescription()}
-          {this.renderAllComments()}
-          {this.renderAllComments()}
+        {this.renderImage(data.uri)}
+          {this.renderTitle(data.title)}
+          {this.renderDescription(data.description)}
+          {this.renderAllComments(data.userAvatar)}
+          {this.renderAllComments(data.userAvatar)}
         </ScrollView>
 
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={-380}>
-          <View style={{}}>{this.renderAddComment()}</View>
+          <View style={{}}>{this.renderAddComment(data.userAvatar)}</View>
         </KeyboardAvoidingView>
       </View>
     );
