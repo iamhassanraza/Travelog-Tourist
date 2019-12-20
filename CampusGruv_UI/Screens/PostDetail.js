@@ -1,22 +1,26 @@
 import React, {Component} from 'react';
-import {Text, View, Image, ScrollView , ImageBackground, TextInput, KeyboardAvoidingView} from 'react-native';
+import {
+  Text,
+  View,
+  Image,
+  ScrollView,
+  ImageBackground,
+  TextInput,
+  KeyboardAvoidingView,
+} from 'react-native';
 import {ThemeConsumer} from 'react-native-elements';
 
 export default class PostDetail extends Component {
-
-
   state = {
     Allcomments: [],
-    currentComment: ''
-  }
+    currentComment: '',
+  };
 
-  changeCurrentCommentState = (comment) => {
+  changeCurrentCommentState = comment => {
     this.setState({
-      currentComment: comment
-    })
-      }
-
-
+      currentComment: comment,
+    });
+  };
 
   renderHeader = () => {
     return (
@@ -75,56 +79,96 @@ export default class PostDetail extends Component {
 
   renderAddComment = () => {
     return (
-      <View style={{flexDirection: 'row', backgroundColor:"white", height:50, alignItems:"center", paddingLeft:"2%"}}>
+      <View
+        style={{
+          flexDirection: 'row',
+          backgroundColor: 'white',
+          height: 50,
+          alignItems: 'center',
+          paddingLeft: '2%',
+        }}>
         <Image
           source={require('../Assets/Images/ema.jpg')}
-          style={{width: 35, height: 35, borderRadius: 50}}>
-          </Image>
+          style={{width: 35, height: 35, borderRadius: 50}}></Image>
 
-          <TextInput placeholder="Add your comment" 
-          style={{ 
+        <TextInput
+          placeholder="Add your comment"
+          style={{
             paddingLeft: '3%',
             marginLeft: '3%',
-            width: "73%",
+            width: '73%',
             height: 35,
             borderRadius: 9,
             borderWidth: 0.5,
-            borderColor: 'grey'
+            borderColor: 'grey',
           }}
-          
-          onChangeText={(text) => {this.changeCurrentCommentState(text)}}
-          >
-          </TextInput>
-           <Text style={{alignSelf:"center",fontSize:17, color: 'grey', paddingLeft:"2%"}}>Post</Text>
+          onChangeText={text => {
+            this.changeCurrentCommentState(text);
+          }}></TextInput>
+        <Text
+          style={{
+            alignSelf: 'center',
+            fontSize: 17,
+            color: 'grey',
+            paddingLeft: '2%',
+          }}>
+          Post
+        </Text>
       </View>
     );
-  }; 
+  };
+
+  renderAllComments = () => {
+    return (
+      <View style={{   flex: 1,paddingRight: '7%', marginTop: '2%'}}>
+        <View
+          style={{
+            width: '100%',
+         
+            backgroundColor: '#e6e4e1',
+            marginLeft: '4%',
+            flexDirection: 'row',
+            paddingTop: '2%',
+            paddingLeft: '3%',
+            borderRadius: 9,
+            paddingBottom:"2%"
+          }}>
+          <Image
+            source={require('../Assets/Images/mansehra.jpg')}
+            style={{width: 30, height: 30, borderRadius: 50}}></Image>
+
+          <View style={{flexDirection: 'column', width: 270, marginLeft: '2%'}}>
+            <Text style={{fontSize: 14, fontWeight: 'bold', color: 'grey'}}>
+              Mansehra Boy
+            </Text>
+            <Text style={{fontSize: 11, marginTop: '-1%', color: 'grey'}}>
+            Mansehrian boy is not doing good 
+            </Text>
+          </View>
+        </View>
+      </View>
+    );
+  };
 
   render() {
     console.log(this.state.currentComment);
     return (
-      <View style={{flex:1, justifyContent:"space-between"}}>
+      <View style={{flex: 1, justifyContent: 'space-between'}}>
         <View style={{}}>
-        {this.renderHeader()}
-        {this.renderImage()}
+          {this.renderHeader()}
+        
         </View>
-        <ScrollView style={{height:300}}>
-        {this.renderTitle()}
-        {this.renderDescription()}
-      
+        <ScrollView style={{height: 300}}>
+        {this.renderImage()}
+          {this.renderTitle()}
+          {this.renderDescription()}
+          {this.renderAllComments()}
+          {this.renderAllComments()}
         </ScrollView>
-       
-
 
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={-380}>
-      
-       <View style={{}}>
-       {this.renderAddComment()}
-       </View>
-
-         </KeyboardAvoidingView>
-       
-       
+          <View style={{}}>{this.renderAddComment()}</View>
+        </KeyboardAvoidingView>
       </View>
     );
   }
