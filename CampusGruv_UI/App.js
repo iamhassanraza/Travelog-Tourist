@@ -110,7 +110,8 @@ const RootStack = createStackNavigator({
     PostsList,
     HomeScreen,
     CreatePost,
-    CategoryList
+    CategoryList,
+    PostDetail
 },
 {
     initialRouteName:'TabContainer',

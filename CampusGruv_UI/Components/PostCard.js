@@ -23,13 +23,13 @@ class PostCard extends Component {
   }
 
   state = {
-    liked: false,
+
     width: undefined,
     height: undefined
   }
 
   render() {
-      const iconColor = this.state.liked ? 'red' : 'grey' 
+ 
     return (
       <TouchableWithoutFeedback 
         style = {
