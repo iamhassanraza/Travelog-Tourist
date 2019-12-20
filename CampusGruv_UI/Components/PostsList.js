@@ -60,10 +60,10 @@ export default class Test1 extends Component {
 
             return (
                 <View 
-                    style={{flexDirection: 'row',flex: 1, backgroundColor: '#F0F0F0'}}
-                    RefreshControl = {
-                        <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh}/>
-                    }
+                    style={{flexDirection: 'row',flex: 1, backgroundColor: 'white'}}
+                    // RefreshControl = {
+                    //     <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onRefresh}/>
+                    // }
                 >
                     <View style={{flex: 1}}>
                         <FlatList          
