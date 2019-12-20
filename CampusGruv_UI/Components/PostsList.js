@@ -62,7 +62,7 @@ export default class Test1 extends Component {
                                 scrollEnabled={false}
                                 showsVerticalScrollIndicator={false}
                                 renderItem={({ item }) => {
-                                        return <PostCard style={{}} name={item.users.first_name} title={item.title} imageurl={item.postDetail.length > 0 ? item.postDetail[0].image_url : 'https://travelog-pk.herokuapp.com/images/default.png' }>  </PostCard>
+                                        return <PostCard description={item.description} style={{}} name={item.users.first_name} title={item.title} imageurl={item.postDetail.length > 0 ? item.postDetail[0].image_url : 'https://travelog-pk.herokuapp.com/images/default.png' }>  </PostCard>
                                     }       
                                 }
                                 keyExtractor={item => item.tour_id}
@@ -74,8 +74,9 @@ export default class Test1 extends Component {
                                 data={column2Data}
                                 scrollEnabled={false}
                                 showsVerticalScrollIndicator={false}
-                                renderItem={({ item }) => {
-                                        return <PostCard name={item.users.first_name} title={item.title} imageurl={item.postDetail.length > 0 ? item.postDetail[0].image_url : 'https://travelog-pk.herokuapp.com/images/default.png' }>  </PostCard>
+                                renderItem={({ item,index }) => {
+                                        if(index === 1) {console.log(item)}
+                                        return <PostCard description={item.description} name={item.users.first_name} title={item.title} imageurl={item.postDetail.length > 0 ? item.postDetail[0].image_url : 'https://travelog-pk.herokuapp.com/images/default.png' }>  </PostCard>
                                     }       
                                 }
                                 keyExtractor={item => item.tour_id}

@@ -1,14 +1,22 @@
 import React, { Component } from 'react'
 import { Text, View, Platform, TouchableOpacity } from 'react-native';
 import { SearchBar,Avatar, Divider } from 'react-native-elements';
+import { withNavigation } from 'react-navigation';
 
 
-export default class InboxComponent extends Component {
+class InboxComponent extends Component {
 
     render() {
         return (
             <View>
-           <TouchableOpacity>
+           <TouchableOpacity onPress={()=>{
+             this.props.navigation.push('chat',{
+               avatar: this.props.uri,
+               name: this.props.title,
+               msg:this.props.subtitle
+             })
+           
+           }}>
 
 <View style={{padding:8,flexDirection:'row',justifyContent:'space-between'}}>
 <Avatar
@@ -31,3 +39,5 @@ export default class InboxComponent extends Component {
         )
     }
 }
+
+export default withNavigation(InboxComponent)

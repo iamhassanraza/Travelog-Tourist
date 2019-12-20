@@ -12,5 +12,28 @@ export const CatRandom =    'rgba(99,67,163,0.8)';
 export const CatService =    'rgba(174,80,118,0.8)';
 
 
+const tintColor = '#0c91cf';
+const primaryColor = '#0b91d0';
+const facebookColor = '#3b5995';
+const bkgdColor = '#E5E5E5';
+const overlayColor = '#1192d1'
+const greyColor = '#ACACAC';
+export default {
+  primaryColor,
+  tintColor,
+  facebookColor,
+  bkgdColor,
+  overlayColor,
+  greyColor,
+  tabIconDefault: 'grey',
+  tabIconSelected: tintColor,
+  tabBar: 'rgba(223, 223, 223, 0.95)',
+  errorBackground: 'red',
+  errorText: '#fff',
+  warningBackground: '#EAEB5E',
+  warningText: '#666804',
+  noticeBackground: tintColor,
+  noticeText: '#fff',
+};
 
 

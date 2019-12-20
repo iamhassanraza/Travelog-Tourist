@@ -16,11 +16,17 @@ import CreatePost from './Screens/CreateNewPost'
 import PostsList from './Components/PostsList'
 import CategoryList from './Screens/CategoryList'
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
+import inbox from './Screens/Inbox';
+import chat from './Screens/chat';
+import NotificationScreen from './Screens/NotificationScreen'
+import Login from './Screens/Login'
+import UserProfile from './Screens/UserProfile'
+
 
 const TabNavigator = createMaterialTopTabNavigator(
   {
       Home: {
-        screen: HomeScreen,
+        screen: UserProfile,
         navigationOptions: {
             tabBarIcon: ({tintColor}) => (
               <Icon name="home" color={tintColor}  style={{fontSize:22}}/>
@@ -29,7 +35,7 @@ const TabNavigator = createMaterialTopTabNavigator(
           }
       },
       Notifications: {
-        screen: PostDetail,
+        screen: NotificationScreen,
         navigationOptions: {
             //header: null,
             tabBarIcon: ({tintColor}) => (
@@ -48,7 +54,7 @@ const TabNavigator = createMaterialTopTabNavigator(
           }
       },
       Settings: {
-        screen: Screen3,
+        screen: inbox,
         navigationOptions: {
             tabBarIcon: ({tintColor}) => (
                 <Icon2 name="email-outline" color={tintColor}  style={{fontSize:22}}/>
@@ -57,7 +63,7 @@ const TabNavigator = createMaterialTopTabNavigator(
         }
     },
       Profile: {
-          screen: Screen3,
+          screen: PostDetail,
           navigationOptions: {
               tabBarIcon: ({tintColor}) => (
                   <Icon name="person" color={tintColor}  style={{fontSize:22}}/>
@@ -101,11 +107,13 @@ const TabContainer = createAppContainer(TabNavigator);
 
 const RootStack = createStackNavigator({
     TabContainer,
-   
+    inbox,
+    chat,
     PostsList,
     HomeScreen,
     CreatePost,
-    CategoryList
+    CategoryList,
+    PostDetail
 },
 {
     initialRouteName:'TabContainer',
@@ -148,7 +156,7 @@ export default class App extends Component {
   render() {
     return (
        <AppContainer/>
-    //<PostDetail></PostDetail>
+//   <Login></Login>
     )
   }
 }
