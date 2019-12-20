@@ -13,7 +13,7 @@ export default class CategoryButton extends Component {
           title={this.props.title}
           titleStyle={{fontSize: 13, ...this.props.titlefontsize}}
           buttonStyle={{
-            width: 100,
+            width: 110,
             height: 32,
             backgroundColor: this.props.bgclr,
             ...this.props.style,
@@ -25,7 +25,8 @@ export default class CategoryButton extends Component {
             borderBottomColor: '#dfede3',
             elevation: this.props.Elevation ? this.props.Elevation : 3,
             borderWidth: 0.2,
-          }}></View>
+          }}>
+          </View>
       </View>
     );
   }
