@@ -1,8 +1,23 @@
 import React, {Component} from 'react';
-import {Text, View, Image, ImageBackground, TextInput} from 'react-native';
+import {Text, View, Image, ScrollView , ImageBackground, TextInput, KeyboardAvoidingView} from 'react-native';
 import {ThemeConsumer} from 'react-native-elements';
 
 export default class PostDetail extends Component {
+
+
+  state = {
+    Allcomments: [],
+    currentComment: ''
+  }
+
+  changeCurrentCommentState = (comment) => {
+    this.setState({
+      currentComment: comment
+    })
+      }
+
+
+
   renderHeader = () => {
     return (
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
@@ -60,43 +75,55 @@ export default class PostDetail extends Component {
 
   renderAddComment = () => {
     return (
-      <View style={{flexDirection: 'row'}}>
+      <View style={{flexDirection: 'row', backgroundColor:"white", height:50, alignItems:"center", paddingLeft:"2%"}}>
         <Image
           source={require('../Assets/Images/ema.jpg')}
           style={{width: 35, height: 35, borderRadius: 50}}>
           </Image>
 
           <TextInput placeholder="Add your comment" 
-          style={{
+          style={{ 
             paddingLeft: '3%',
             marginLeft: '3%',
             width: "73%",
             height: 35,
             borderRadius: 9,
             borderWidth: 0.5,
-            borderColor: 'grey',
-          }}></TextInput>
+            borderColor: 'grey'
+          }}
+          
+          onChangeText={(text) => {this.changeCurrentCommentState(text)}}
+          >
+          </TextInput>
            <Text style={{alignSelf:"center",fontSize:17, color: 'grey', paddingLeft:"2%"}}>Post</Text>
       </View>
     );
-  };
+  }; 
 
   render() {
+    console.log(this.state.currentComment);
     return (
       <View style={{flex:1, justifyContent:"space-between"}}>
-        <View style={{flex:8}}>
+        <View style={{}}>
         {this.renderHeader()}
         {this.renderImage()}
         </View>
-        <View style={{flex:8}}>
+        <ScrollView style={{height:300}}>
         {this.renderTitle()}
         {this.renderDescription()}
-        </View>
+      
+        </ScrollView>
+       
 
-        <View style={{flex:1.5}}>
-        {this.renderAddComment()}
 
-        </View>
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={-380}>
+      
+       <View style={{}}>
+       {this.renderAddComment()}
+       </View>
+
+         </KeyboardAvoidingView>
+       
        
       </View>
     );
