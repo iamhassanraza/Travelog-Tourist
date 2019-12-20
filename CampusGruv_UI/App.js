@@ -19,12 +19,14 @@ import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import inbox from './Screens/Inbox';
 import chat from './Screens/chat';
 import NotificationScreen from './Screens/NotificationScreen'
+import Login from './Screens/Login'
+import UserProfile from './Screens/UserProfile'
 
 
 const TabNavigator = createMaterialTopTabNavigator(
   {
       Home: {
-        screen: HomeScreen,
+        screen: UserProfile,
         navigationOptions: {
             tabBarIcon: ({tintColor}) => (
               <Icon name="home" color={tintColor}  style={{fontSize:22}}/>
@@ -139,7 +141,7 @@ export default class App extends Component {
   render() {
     return (
        <AppContainer/>
-  
+//   <Login></Login>
     )
   }
 }
