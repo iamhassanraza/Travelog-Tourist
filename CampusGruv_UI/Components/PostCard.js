@@ -38,7 +38,9 @@ class PostCard extends Component {
             borderColor:'red'
           }
         }
-        onPress = {() => this.props.navigation.push('PostDetail')}
+        onPress = {() => this.props.navigation.push('PostDetail',{
+          
+        })}
       >
         <View style={{}}>
           <Image
