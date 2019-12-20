@@ -25,15 +25,19 @@ import UserProfile from './Screens/UserProfile'
 
 const TabNavigator = createMaterialTopTabNavigator(
   {
-      Home: {
-        screen: UserProfile,
-        navigationOptions: {
-            tabBarIcon: ({tintColor}) => (
-              <Icon name="home" color={tintColor}  style={{fontSize:22}}/>
-            ),
-            tabBarLabel: "Home"
-          }
-      },
+    Home: 
+        {
+            screen: HomeScreen,
+            navigationOptions: () => ( 
+                {
+                    tabBarIcon: ({tintColor}) => (
+                    <Icon name="home" color={tintColor}  style={{fontSize:22}}/>
+                    ),
+                    header: null,
+                    tabBarLabel: "Home"
+                }
+            )
+    },
       Notifications: {
         screen: NotificationScreen,
         navigationOptions: {
@@ -70,9 +74,8 @@ const TabNavigator = createMaterialTopTabNavigator(
               ),
               tabBarLabel: "Profile"
           }
-      }
-          
-  },
+      }     
+    },
   {
       initialRouteName: 'Home',
       tabBarPosition: 'bottom',
@@ -106,7 +109,12 @@ const TabNavigator = createMaterialTopTabNavigator(
 const TabContainer = createAppContainer(TabNavigator);
 
 const RootStack = createStackNavigator({
-    TabContainer,
+    TabContainer : {
+        screen: TabContainer,
+        navigationOptions: {
+            header: null
+        }
+    },
     inbox,
     chat,
     PostsList,
