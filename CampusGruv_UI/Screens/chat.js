@@ -11,12 +11,12 @@ export default class Chat extends React.Component {
       messages: [
         {
           _id: 1,
-          text: this.props.navigation.getParam('msg', 'NO-msg'),
+          text: this.props.navigation.getParam('msg', ''),
           createdAt: new Date(),
           user: {
             _id: 2,
             name: 'React Native',
-            avatar: this.props.navigation.getParam('avatar', 'NO-image') || 'https://placeimg.com/140/140/any',
+            avatar: this.props.navigation.getParam('avatar', ''),
           },
         },
       ],

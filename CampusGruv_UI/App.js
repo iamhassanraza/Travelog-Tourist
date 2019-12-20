@@ -17,7 +17,8 @@ import PostsList from './Components/PostsList'
 import CategoryList from './Screens/CategoryList'
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import inbox from './Screens/Inbox';
-import chat from './Screens/chat'
+import chat from './Screens/chat';
+import NotificationScreen from './Screens/NotificationScreen'
 
 
 const TabNavigator = createMaterialTopTabNavigator(
@@ -32,7 +33,7 @@ const TabNavigator = createMaterialTopTabNavigator(
           }
       },
       Notifications: {
-        screen: PostDetail,
+        screen: NotificationScreen,
         navigationOptions: {
             //header: null,
             tabBarIcon: ({tintColor}) => (
