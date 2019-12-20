@@ -132,8 +132,8 @@ const AppContainer = createAppContainer(RootStack);
 export default class App extends Component {
   render() {
     return (
-    //   <AppContainer/>
-    <PostDetail></PostDetail>
+       <AppContainer/>
+    //<PostDetail></PostDetail>
     )
   }
 }
