@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import { Text, View , RefreshControl, SafeAreaView, ScrollView, FlatList, Dimensions} from 'react-native'
 import PostCard from './PostCard'
 import Masonry from 'react-native-masonry-layout'
-import ContentLoader, { Facebook } from 'react-content-loader/native'
+import ContentLoader, { Rect } from 'react-content-loader/native'
 
 export default class Test1 extends Component {
 
@@ -50,12 +50,13 @@ export default class Test1 extends Component {
                 <ScrollView 
                     refreshControl={
                         <RefreshControl refreshing={this.state.refreshing} onRefresh={this.onPageRefresh}/>
-                }
+                    }
+                    style={{}}
                 >
                     <View 
-                        style={{height:'100%', flexDirection:'row', backgroundColor: 'white'}}
+                        style={{height:'100%', flexDirection:'row', backgroundColor:'#F0F0F0'}}
                     >
-                        <View style={{flex:1}}>
+                        <SafeAreaView style={{flex:1}}>
                             <FlatList          
                                 data={column1Data}
                                 scrollEnabled={false}
@@ -67,8 +68,8 @@ export default class Test1 extends Component {
                                 keyExtractor={item => item.tour_id}
                                 
                             />
-                        </View>
-                        <View style={{flex:1}}>
+                        </SafeAreaView>
+                        <SafeAreaView style={{flex:1}}>
                             <FlatList          
                                 data={column2Data}
                                 scrollEnabled={false}
@@ -79,7 +80,7 @@ export default class Test1 extends Component {
                                 }
                                 keyExtractor={item => item.tour_id}
                             />
-                        </View>
+                        </SafeAreaView>
                     </View>
                 </ScrollView>
             )
@@ -87,8 +88,13 @@ export default class Test1 extends Component {
         else {
             return (
                 <View>
-                    <ContentLoader speed={0.5} height={Dimensions.get('window').height*1}>
-                        
+                    <ContentLoader height={450}width={820} speed={0.2} height={Dimensions.get('window').height*1}>
+                        <Rect x="10" y="10" rx="5" ry="5" width="170" height="220" />
+                        <Rect x="190" y="10" rx="5" ry="5" width="170" height="280" />
+                        <Rect x="10" y="240" rx="5" ry="5" width="170" height="250" />
+                        <Rect x="190" y="300" rx="5" ry="5" width="170" height="280" />
+                        {/* <Rect x="280" y="300" rx="5" ry="5" width="260" height="140" />
+                        <Rect x="550" y="160" rx="5" ry="5" width="260" height="280" /> */}
                     </ContentLoader>
                 </View>
             )
