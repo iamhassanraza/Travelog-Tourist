@@ -61,7 +61,7 @@ const TabNavigator = createMaterialTopTabNavigator(
         }
     },
       Profile: {
-          screen: chat,
+          screen: PostDetail,
           navigationOptions: {
               tabBarIcon: ({tintColor}) => (
                   <Icon name="person" color={tintColor}  style={{fontSize:22}}/>
@@ -137,8 +137,8 @@ const AppContainer = createAppContainer(RootStack);
 export default class App extends Component {
   render() {
     return (
-      <AppContainer/>
-   
+       <AppContainer/>
+    //<PostDetail></PostDetail>
     )
   }
 }

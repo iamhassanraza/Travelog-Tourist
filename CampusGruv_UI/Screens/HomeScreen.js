@@ -11,9 +11,11 @@ export default class HomeScreen extends Component {
     render() {
 
         return (
-            <ScrollView style={styles.container}>
+            <View 
+                style={styles.container}
+            >
                 <PostsList /> 
-            </ScrollView>
+            </View>
         )
     }
 }
