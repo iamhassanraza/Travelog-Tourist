@@ -219,7 +219,7 @@ class CreateNewPost extends Component {
             paddingLeft: '3%',
             marginLeft: '3%',
             width: 100,
-            height: 35,
+            height: 40,
             borderRadius: 9,
             borderWidth: 0.5,
             borderColor: 'grey',
