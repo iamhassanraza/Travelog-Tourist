@@ -9,8 +9,8 @@ class PostCard extends Component {
 
   componentDidMount() {
     Image.getSize(this.props.imageurl, (srcWidth, srcHeight) => {
-      const maxHeight = Dimensions.get('window').height;
-      const maxWidth = Dimensions.get('window').width;
+      const maxHeight = Dimensions.get('window').height/2;
+      const maxWidth = Dimensions.get('window').width/2;
       //console.log(srcWidth,srcHeight)
       //console.log("width wala",maxWidth / srcWidth)
       //console.log("height wala",maxHeight / srcHeight)

@@ -49,9 +49,11 @@ export default class PostDetail extends Component {
   renderImage = (image) => {
     return (
       <View>
-        <ImageBackground
+        <Image
           source={{uri:image}}
-          style={{width: '100%', height: 200}}></ImageBackground>
+          resizeMethod='auto'
+          resizeMode='contain'
+          style={{width: '100%',height:350}}></Image>
       </View>
     );
   };

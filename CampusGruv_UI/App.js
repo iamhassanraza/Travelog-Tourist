@@ -48,13 +48,58 @@ const AuthNavigator = createStackNavigator({
 
 })
 
+const CreatePostStack = createStackNavigator({
+    AddPost,
+    CreatePost,
+    PostDetail
+
+},
+
+{
+    defaultNavigationOptions:{
+        header:null
+    }
+     }
+
+)
 
 
+const ProfileStack = createStackNavigator({
+    UserProfile,
+    editprofile
+},{
+    defaultNavigationOptions:{
+        header:null
+    }
+})
 
+const HomeStack = createStackNavigator({
+    HomeScreen,
+    PostDetail
+},
+{
+    defaultNavigationOptions:{
+        header:null
+    }
+     }
+)
+
+const MessageStack = createStackNavigator({
+    inbox,
+    chat,
+},
+{
+    defaultNavigationOptions:{
+        header:null
+    }
+     }
+
+
+)
 const TabNavigator = createMaterialTopTabNavigator(
   {
       Home: {
-        screen: HomeScreen,
+        screen: HomeStack,
         navigationOptions: {
             tabBarIcon: ({tintColor}) => (
               <Icon name="home" color={tintColor}  style={{fontSize:22}}/>
@@ -73,7 +118,7 @@ const TabNavigator = createMaterialTopTabNavigator(
         }
     }, 
       AddPost: {
-          screen: AddPost,
+          screen: CreatePostStack,
           navigationOptions: {
               tabBarIcon: ({tintColor}) => (
                   <AddIcon name="squared-plus" color={tintColor} style={{fontSize:22}}/>
@@ -81,8 +126,8 @@ const TabNavigator = createMaterialTopTabNavigator(
               tabBarLabel: 'Add Post'
           }
       },
-      Settings: {
-        screen: inbox,
+      messages: {
+        screen: MessageStack,
         navigationOptions: {
             tabBarIcon: ({tintColor}) => (
                 <Icon2 name="email-outline" color={tintColor}  style={{fontSize:22}}/>
@@ -91,7 +136,7 @@ const TabNavigator = createMaterialTopTabNavigator(
         }
     },
       Profile: {
-          screen: UserProfile,
+          screen: ProfileStack,
           navigationOptions: {
               tabBarIcon: ({tintColor}) => (
                   <Icon name="person" color={tintColor}  style={{fontSize:22}}/>
@@ -133,18 +178,15 @@ const TabNavigator = createMaterialTopTabNavigator(
 const TabContainer = createAppContainer(TabNavigator);
 
 const RootStack = createStackNavigator({
-    editprofile,
+   
     TabContainer : {
         screen: TabContainer,
-      
+        // navigationOptions: {
+        //     header: null }
     },
-    inbox,
-    chat,
-    PostsList,
+  
  
-   CreatePost,
-    CategoryList,
-    PostDetail
+
 },
 {
     initialRouteName:'TabContainer',
