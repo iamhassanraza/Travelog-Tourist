@@ -57,7 +57,8 @@ export default class CreatePost extends Component {
 
 
     render() {
-       console.log(this.state.category);
+       const Images = this.props.navigation.getParam('Images', 'nothing to render');
+      console.log(Images,'===================== imagess ============================')
   
         return (
             <View>

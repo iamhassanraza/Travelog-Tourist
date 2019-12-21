@@ -69,9 +69,10 @@ fetch(`${API_BASE_URL}/user/signin`, {
       }
       else{
         alert('login Success')
-        console.log(response.token)
+        console.log(response,'=========response=========')
         AsyncStorage.setItem('TOKEN',response.token);
-        this.props.navigation.navigate('otherScreens')
+        AsyncStorage.setItem('USER_ID',response.id.toString())
+        this.props.navigation.navigate('App')
       
       }
     }

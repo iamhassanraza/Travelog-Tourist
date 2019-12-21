@@ -57,7 +57,7 @@ class PostCard extends Component {
           >
           </Image>
         </View>
-        <View style={{backgroundColor:'white', paddingLeft: '5%'}}>
+        <View style={{backgroundColor:'white',borderBottomLeftRadius: 15, borderBottomRightRadius: 15, paddingLeft: '5%'}}>
           <View
             style={{
               //flex: 1,
@@ -77,7 +77,7 @@ class PostCard extends Component {
             }}>
             <View style={{flex:2}}>
               <Image
-                source={{uri: this.props.imageurl}}
+                source={{uri: 'https://depositphotos.com/121231710/stock-illustration-male-default-avatar-profile-gray.html'}}
                 style={{width: 30,borderColor:'#616963', borderWidth:0.3, height: 30, borderRadius: 50}}>
               </Image>
             </View>

@@ -24,7 +24,8 @@ import SignUp from './Screens/SignUp'
 import ForgotPassword from './Screens/ForgotPassword'
 import UserProfile from './Screens/UserProfile'
 import editprofile from './Screens/ProfileEdit'
-
+import AuthLoading from './Screens/AuthLoading'
+import AddPost from './Screens/AddNewPost'
 
 const AuthNavigator = createStackNavigator({
     Login: {
@@ -72,7 +73,7 @@ const TabNavigator = createMaterialTopTabNavigator(
         }
     }, 
       AddPost: {
-          screen: CreatePost,
+          screen: AddPost,
           navigationOptions: {
               tabBarIcon: ({tintColor}) => (
                   <AddIcon name="squared-plus" color={tintColor} style={{fontSize:22}}/>
@@ -97,9 +98,8 @@ const TabNavigator = createMaterialTopTabNavigator(
               ),
               tabBarLabel: "Profile"
           }
-      }
-          
-  },
+      }     
+    },
   {
       initialRouteName: 'Home',
       tabBarPosition: 'bottom',
@@ -133,12 +133,16 @@ const TabNavigator = createMaterialTopTabNavigator(
 const TabContainer = createAppContainer(TabNavigator);
 
 const RootStack = createStackNavigator({
-    TabContainer,
     editprofile,
+    TabContainer : {
+        screen: TabContainer,
+      
+    },
+    inbox,
     chat,
     PostsList,
  
-   
+   CreatePost,
     CategoryList,
     PostDetail
 },
@@ -146,30 +150,52 @@ const RootStack = createStackNavigator({
     initialRouteName:'TabContainer',
     headerLayoutPreset: 'center',
     defaultNavigationOptions: {
-        header: (
-            <View style={{height:50, backgroundColor: '#1192d1', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
-            <View style={{marginLeft:'5%'}}>
-                <Text style={{fontSize:25,fontWeight:'bold', color: 'white'}}>CampusGruv</Text>
+        headerStyle: {
+            backgroundColor: '#1192d1'
+        },
+        headerTitle:'CAMPUSGRUV',
+        headerTitleStyle: {
+            fontSize:25,
+            fontWeight:'bold',
+            color: 'white'
+        },
+        headerRight: (
+            <View style={{backgroundColor:'#1192d1', borderRadius:50, marginRight:10, width:25, justifyContent:'center', height: 25}}>
+                <Icon name='filter-list' size={22} color={'white'} style={{fontWeight:'bold', alignSelf:'center'}}/>
             </View>
-            <View style={{width:25, height:25,justifyContent:'center', marginRight:'4%',backgroundColor:'#1192d1', borderRadius:50}}>
-                <Icon name="search" size={20} color={'white'} style={{alignSelf:'center'}}></Icon>
-            </View>
-            </View>
-        )
+        ) 
+        
+        // header: (
+        //     <View style={{height:50, backgroundColor: '#1192d1', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
+        //     <View style={{}}>
+        //         <Text style={{fontSize:25,fontWeight:'bold', color: 'white'}}>CampusGruv</Text>
+        //     </View>
+        //     <View style={{width:25, height:25,justifyContent:'center', marginRight:'4%',backgroundColor:'#1192d1', borderRadius:50}}>
+        //         <Icon name="search" size={20} color={'white'} style={{alignSelf:'center'}}></Icon>
+        //     </View>
+        //     </View>
+        // )
     }
 
 }
 );
 
 const RootStackNavigator = createSwitchNavigator({
-    auth:{
+    AuthLoading:{
+        screen:AuthLoading
+    },
+    Auth:{
         screen:AuthNavigator
     },
-    otherScreens:{
+    App:{
         screen:RootStack
     }
 
-})
+},
+{
+    initialRouteName: 'AuthLoading',
+  }
+)
 
 const AppContainer = createAppContainer(RootStackNavigator);
 

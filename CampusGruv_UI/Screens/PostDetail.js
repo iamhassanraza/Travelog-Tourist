@@ -151,7 +151,7 @@ export default class PostDetail extends Component {
 
   render() {
     const data = this.props.navigation.getParam('PostData', 'nothing to render');
-    console.log(data)
+    
     return (
       <View style={{flex: 1, justifyContent: 'space-between'}}>
         <View style={{}}>
