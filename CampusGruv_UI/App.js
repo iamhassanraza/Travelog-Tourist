@@ -20,7 +20,7 @@ import CategoryList from './Screens/CategoryList'
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import inbox from './Screens/Inbox';
 import chat from './Screens/chat';
-import NotificationScreen from './Screens/NotificationScreen'
+import NotificationScreen from './Screens/Follow'
 import Login from './Screens/Login'
 import SignUp from './Screens/SignUp'
 import ForgotPassword from './Screens/ForgotPassword'
