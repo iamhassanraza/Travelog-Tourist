@@ -451,10 +451,8 @@ class CreateNewPost extends Component {
  
     // console.log(Images,'===================== imagess ============================')
     return (
-      <TouchableWithoutFeedback >
-        
-       
-       <View>
+      <TouchableWithoutFeedback > 
+       <ScrollView>
        <Spinner
           visible={this.state.spinner}
           textContent={'Uploading...'}
@@ -472,9 +470,7 @@ class CreateNewPost extends Component {
         {this.state.Category === 'Free & For Sale' ? this.renderPrice() : null}
         {this.renderDescription()}
         {this.renderShareButton()}
-        </View>
-      
-     
+        </ScrollView>
       </TouchableWithoutFeedback>
     );
   }

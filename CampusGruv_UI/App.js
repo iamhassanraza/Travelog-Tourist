@@ -1,13 +1,15 @@
 import React, { Component } from 'react'
-import { Text, View } from 'react-native'
+import { Text, View, TextInput, Image, TouchableOpacity } from 'react-native'
 // import HomeScreen from './Screens/HomeScreen'
-import 'react-native-gesture-handler'
+import  'react-native-gesture-handler'
 // import Screen1 from './Screens/CreatePost'
 // import Screen2 from './Screens/Screen1'
 import Screen3 from './Components/Post'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import PeopleIcon from 'react-native-vector-icons/FontAwesome5'
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons'
 import AddIcon from 'react-native-vector-icons/Entypo'
+import Logo from './Assets/Images/logo.png'
 import HomeScreen from './Screens/HomeScreen'
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
@@ -18,7 +20,7 @@ import CategoryList from './Screens/CategoryList'
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import inbox from './Screens/Inbox';
 import chat from './Screens/chat';
-import NotificationScreen from './Screens/NotificationScreen'
+import NotificationScreen from './Screens/Follow'
 import Login from './Screens/Login'
 import SignUp from './Screens/SignUp'
 import ForgotPassword from './Screens/ForgotPassword'
@@ -75,7 +77,8 @@ const ProfileStack = createStackNavigator({
 
 const HomeStack = createStackNavigator({
     HomeScreen,
-    PostDetail
+    PostDetail,
+    CategoryList
 },
 {
     defaultNavigationOptions:{
@@ -181,8 +184,53 @@ const RootStack = createStackNavigator({
    
     TabContainer : {
         screen: TabContainer,
-        // navigationOptions: {
-        //     header: null }
+        navigationOptions: {
+            // headerRight: (
+            //     <View style={{backgroundColor:'#1192d1', borderRadius:50, marginRight:10, width:25, justifyContent:'center', height: 25}}>
+            //         <Icon name='filter-list' size={22} color={'white'} style={{fontWeight:'bold', alignSelf:'center'}}/>
+            //     </View>
+            // ) 
+            header: props => 
+                <View style={{height:50, flexDirection: 'row', alignItems: 'center', backgroundColor: '#1192d1'}}>
+                    <View style={{flexDirection: 'row', alignItems: 'center', flex: 10}}>
+                        <View style={{marginLeft:'2%', flexDirection: 'row', alignSelf:'center'}}>
+                            <View style={{height:30, padding: 0, flexDirection: 'row' , alignItems:'center', width: 250, backgroundColor:'#F0F0F0', borderRadius: 10}}>
+                                <View style={{marginLeft:'2%'}}>
+                                    <Icon 
+                                        name="search" 
+                                        color="#1192d1" 
+                                        size={20}
+                                    />
+                                </View>
+                                <View style={{height:20}}>
+                                    <Image
+                                        source={Logo}
+                                        style={{width: 150,alignSelf:'flex-start', height: '100%'}}
+                                        resizeMode="contain"
+                                    />
+                                </View>
+                            </View>
+                        </View>
+                        <View style={{marginLeft: '2%'}}>
+                            <TouchableOpacity onPress={() => props.navigation.push('CategoryList')}>
+                                <Icon2 
+                                    name="view-grid" 
+                                    color="white" 
+                                    size={25}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                    </View>
+                    <View style={{flex: 1}}>
+                        <TouchableOpacity onPress={() => props.navigation.push('TabContainer', {
+                            categorySelected: true
+                        })}>
+                            <PeopleIcon name="users" color="white" size={20}/>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            
+        }
     },
   
  
@@ -200,12 +248,7 @@ const RootStack = createStackNavigator({
             fontSize:25,
             fontWeight:'bold',
             color: 'white'
-        },
-        headerRight: (
-            <View style={{backgroundColor:'#1192d1', borderRadius:50, marginRight:10, width:25, justifyContent:'center', height: 25}}>
-                <Icon name='filter-list' size={22} color={'white'} style={{fontWeight:'bold', alignSelf:'center'}}/>
-            </View>
-        ) 
+        }
         
         // header: (
         //     <View style={{height:50, backgroundColor: '#1192d1', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
