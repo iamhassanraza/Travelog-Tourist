@@ -8,15 +8,16 @@ import {
   TextInput,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
+  StyleSheet,
 } from 'react-native';
 import {ThemeConsumer} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconFeather from 'react-native-vector-icons/Feather';
 import BackIcon from 'react-native-vector-icons/Ionicons';
-import {ThemeBlue} from '../Assets/Colors'
+import {ThemeBlue} from '../Assets/Colors';
+import Modal from 'react-native-modal';
 
-const IconGrey = '#b4b8bf'
-
+const IconGrey = '#b4b8bf';
 
 export default class PostDetail extends Component {
   state = {
@@ -24,12 +25,17 @@ export default class PostDetail extends Component {
     currentComment: '',
     followed: true,
     saved: false,
+    isModalVisible: true,
   };
 
   changeCurrentCommentState = comment => {
     this.setState({
       currentComment: comment,
     });
+  };
+
+  toggleModal = () => {
+    this.setState({isModalVisible: !this.state.isModalVisible});
   };
 
   renderHeader = (userdp, username) => {
@@ -43,12 +49,18 @@ export default class PostDetail extends Component {
             marginBottom: 5,
             marginTop: 5,
           }}>
-         <View>
-         <BackIcon
-            name="ios-arrow-back"
-            onPress={() => alert('Back')}
-            style={{marginRight: 8, fontSize: 28, color: IconGrey ,paddingLeft:3, paddingRight:3}}></BackIcon>
-         </View>
+          <View>
+            <BackIcon
+              name="ios-arrow-back"
+              onPress={() => alert('Back')}
+              style={{
+                marginRight: 8,
+                fontSize: 28,
+                color: IconGrey,
+                paddingLeft: 3,
+                paddingRight: 3,
+              }}></BackIcon>
+          </View>
 
           <Image
             source={{uri: userdp}}
@@ -63,42 +75,88 @@ export default class PostDetail extends Component {
 
           <Icon
             name={this.state.followed ? 'star' : 'star-outline'}
-            style={{fontSize: 28, color: this.state.followed ? ThemeBlue : IconGrey, paddingRight:3}}
+            style={{
+              fontSize: 28,
+              color: this.state.followed ? ThemeBlue : IconGrey,
+              paddingRight: 3,
+            }}
             onPress={() => {
               this.setState(prevState => ({
                 followed: !prevState.followed,
               }));
-            }}>
-            </Icon>
+            }}></Icon>
 
           <Icon
             name="content-save-outline"
-            style={{fontSize: 28, paddingRight:3,color: this.state.saved ? ThemeBlue : IconGrey}}
+            style={{
+              fontSize: 28,
+              paddingRight: 3,
+              color: this.state.saved ? ThemeBlue : IconGrey,
+            }}
             onPress={() => {
               this.setState(prevState => ({
                 saved: !prevState.saved,
               }));
-            }}>
-            </Icon>
+            }}></Icon>
 
           <IconFeather
             name="send"
-            style={{fontSize: 25, color:IconGrey, paddingRight:3}}
-            onPress={() => alert('Share')}>
-            </IconFeather>
+            style={{fontSize: 25, color: IconGrey, paddingRight: 3}}
+            onPress={() => alert('Share')}></IconFeather>
 
+          <View>
             <Icon
-            name="dots-horizontal"
-            style={{fontSize: 30, color: IconGrey, paddingRight:3}}
-            onPress={() => {
-             alert('modal');
-            }}>
-            </Icon>
+              name="dots-horizontal"
+              style={{fontSize: 30, color: IconGrey, paddingRight: 3}}
+              onPress={this.toggleModal}></Icon>
 
+            <View>
+              <Modal
+              style={{margin:0}}
+                isVisible={this.state.isModalVisible}
+                onBackdropPress={() => this.setState({isModalVisible: false})}>
+                <View style={{flex: 1, justifyContent: 'flex-end'}}>
+                  
+
+
+                  <View style={styles.modalOptions}>
+                  <Icon name="flag-variant-outline" style={styles.optionIcon}></Icon>
+                  <Text
+                    onPress={() => alert('Report Post')}
+                    style={styles.TextWithNavigation}>
+                    Report Post
+                  </Text>
+                  </View>
+
+                  <View style={styles.modalOptions}>
+                  <IconFeather name="download" style={styles.optionIcon}></IconFeather>
+                  <Text
+                    onPress={() => alert('Download Post')}
+                    style={styles.TextWithNavigation}>
+                    Download Post
+                  </Text>
+                  </View>
+
+                  <View style={styles.modalOptions}>
+                  <Icon name="share-variant" style={styles.optionIcon}></Icon>
+                  <Text
+                    onPress={() => alert('Share Post')}
+                    style={styles.TextWithNavigation}>
+                    Share Post
+                  </Text>
+                  </View>
+
+                 
+                  {/* <Button title="Hide modal" onPress={this.toggleModal} /> */}
+                </View>
+              </Modal>
+            </View>
+          </View>
         </View>
       </View>
     );
   };
+
 
   renderImage = image => {
     return (
@@ -225,3 +283,22 @@ export default class PostDetail extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  TextWithNavigation: {
+    color: 'black',
+    backgroundColor:"white",
+    width:"100%",
+    fontSize: 17,
+    paddingLeft:'2%',
+    paddingBottom:20
+  },
+  modalOptions : {
+    backgroundColor:"white",
+    flexDirection:"row"
+  },
+  optionIcon : {
+    paddingLeft:"3%",
+    fontSize:25
+  }
+});
