@@ -184,32 +184,21 @@ export default class PostDetail extends Component {
   renderImage = image => {
     return (
       <View>
-<<<<<<< HEAD
-        <ImageBackground
-          source={{uri: image}}
-          style={{width: '100%', height: 200}}></ImageBackground>
-=======
         <Image
           source={{uri:image}}
           resizeMethod='auto'
           resizeMode='contain'
           style={{width: '100%',height:350}}></Image>
->>>>>>> 193daa8c71a052b6112632c2e789ab21fb9ba69a
       </View>
     );
   };
 
   renderTitle = title => {
     return (
-<<<<<<< HEAD
-      <View style={{alignItems: 'center', margin: 7}}>
-        <Text style={{fontSize: 18}}>{title}</Text>
-=======
       <View style={{alignItems: 'center', marginTop:7}}>
         <Text style={{fontSize: 18}}>
        {title}
         </Text>
->>>>>>> 193daa8c71a052b6112632c2e789ab21fb9ba69a
       </View>
     );
   };
@@ -217,13 +206,9 @@ export default class PostDetail extends Component {
   renderDescription = description => {
     return (
       <View style={{alignItems: 'center', marginLeft: '5%', marginRight: '5%'}}>
-<<<<<<< HEAD
-        <Text style={{fontSize: 15, textAlign: 'justify'}}>{description}</Text>
-=======
         <Text style={{fontSize: 14,padding:5,color:'grey'}}>
           {description}
         </Text>
->>>>>>> 193daa8c71a052b6112632c2e789ab21fb9ba69a
       </View>
     );
   };
@@ -302,16 +287,8 @@ export default class PostDetail extends Component {
   };
 
   render() {
-<<<<<<< HEAD
-    const data = this.props.navigation.getParam(
-      'PostData',
-      'nothing to render',
-    );
-    console.log(data);
-=======
     const data = this.props.navigation.getParam('PostData', 'nothing to render');
     
->>>>>>> 193daa8c71a052b6112632c2e789ab21fb9ba69a
     return (
       <View style={{flex: 1, justifyContent: 'space-between'}}>
         <View style={{}}>
