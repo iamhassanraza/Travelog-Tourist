@@ -267,6 +267,7 @@ class CreateNewPost extends Component {
           Add Description (optional)
         </Text>
         <TextInput
+        value={this.state.Description}
           multiline={true}
           style={{
             color:"grey",
@@ -363,6 +364,12 @@ class CreateNewPost extends Component {
         <Button
           onPress={()=> {
               this.uploadPost();
+              this.setState({
+             
+                description:''
+              
+              })
+            
           }}
           //bgclr={'rgba(47, 144, 234, 0.95)'}
           title={"Share"}

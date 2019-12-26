@@ -72,7 +72,7 @@ class Test1 extends PureComponent {
                                 scrollEnabled={false}
                                 showsVerticalScrollIndicator={false}
                                 renderItem={({ item }) => {
-                                        return <PostCard description={item.description} style={{}} name={item.users.first_name} title={item.title} imageurl={item.postDetail.length > 0 ? item.postDetail[0].image_url : 'https://travelog-pk.herokuapp.com/images/default.png' }>  </PostCard>
+                                        return <PostCard categoryName="New Category" description={item.description} style={{}} name={item.users.first_name} title={item.title} imageurl={item.postDetail.length > 0 ? item.postDetail[0].image_url : 'https://travelog-pk.herokuapp.com/images/default.png' }>  </PostCard>
                                     }       
                                 }
                                 keyExtractor={item => item.tour_id}
@@ -85,7 +85,7 @@ class Test1 extends PureComponent {
                                 scrollEnabled={false}
                                 showsVerticalScrollIndicator={false}
                                 renderItem={({ item }) => {
-                                        return <PostCard description={item.description} name={item.users.first_name} title={item.title} imageurl={item.postDetail.length > 0 ? item.postDetail[0].image_url : 'https://travelog-pk.herokuapp.com/images/default.png' }>  </PostCard>
+                                        return <PostCard categoryName="New Category" description={item.description} name={item.users.first_name} title={item.title} imageurl={item.postDetail.length > 0 ? item.postDetail[0].image_url : 'https://travelog-pk.herokuapp.com/images/default.png' }>  </PostCard>
                                     }       
                                 }
                                 keyExtractor={item => item.tour_id}
