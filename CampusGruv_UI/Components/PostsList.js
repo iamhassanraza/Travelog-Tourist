@@ -1,7 +1,7 @@
 import React, { Component ,PureComponent} from 'react'
 import { Text, View , RefreshControl, SafeAreaView, ScrollView, FlatList, Dimensions} from 'react-native'
 import PostCard from './PostCard'
-import Masonry from 'react-native-masonry-layout'
+
 import ContentLoader, { Rect } from 'react-content-loader/native'
 import { withNavigation } from 'react-navigation';
 

@@ -7,13 +7,26 @@ import {
   ImageBackground,
   TextInput,
   KeyboardAvoidingView,
+  TouchableWithoutFeedback,
+  StyleSheet,
 } from 'react-native';
 import {ThemeConsumer} from 'react-native-elements';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import CrossIcon from 'react-native-vector-icons/MaterialIcons';
+import IconFeather from 'react-native-vector-icons/Feather';
+import BackIcon from 'react-native-vector-icons/Ionicons';
+import {ThemeBlue} from '../Assets/Colors';
+import Modal from 'react-native-modal';
+
+const IconGrey = '#b4b8bf';
 
 export default class PostDetail extends Component {
   state = {
     Allcomments: [],
     currentComment: '',
+    followed: false,
+    saved: false,
+    isModalVisible: false,
   };
 
   changeCurrentCommentState = comment => {
@@ -22,31 +35,153 @@ export default class PostDetail extends Component {
     });
   };
 
-  renderHeader = (userdp,username) => {
+  toggleModal = () => {
+    this.setState({isModalVisible: !this.state.isModalVisible});
+  };
+
+  renderHeader = (userdp, username) => {
     return (
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <View
           style={{
             alignItems: 'center',
             flexDirection: 'row',
-            marginLeft: 35,
+            marginLeft: 11,
             marginBottom: 5,
             marginTop: 5,
           }}>
+          <View>
+            <BackIcon
+              name="ios-arrow-back"
+              onPress={() => alert('Back')}
+              style={{
+                marginRight: 8,
+                fontSize: 28,
+                color: IconGrey,
+                paddingLeft: 3,
+                paddingRight: 3,
+              }}></BackIcon>
+          </View>
+
           <Image
-            source={{uri:userdp}}
+            source={{uri: userdp}}
             style={{width: 40, height: 40, borderRadius: 50}}></Image>
-          <Text style={{marginLeft: '7%', color: 'grey'}}>{username}</Text>
+          <Text style={{marginLeft: '7%', color: IconGrey}}>{username}</Text>
         </View>
 
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text style={{marginRight: '3%', color: 'grey'}}>Edit Post</Text>
+          {/* <Text style={{marginRight: '3%', color: 'grey', borderWidth: 1}}>
+            Edit Post
+          </Text> */}
+
+          <Icon
+            name={this.state.followed ? 'star' : 'star-outline'}
+            style={{
+              fontSize: 28,
+              color: this.state.followed ? ThemeBlue : IconGrey,
+              paddingRight: 3,
+            }}
+            onPress={() => {
+              this.setState(prevState => ({
+                followed: !prevState.followed,
+              }));
+            }}></Icon>
+
+          <Icon
+            name="content-save-outline"
+            style={{
+              fontSize: 28,
+              paddingRight: 3,
+              color: this.state.saved ? ThemeBlue : IconGrey,
+            }}
+            onPress={() => {
+              this.setState(prevState => ({
+                saved: !prevState.saved,
+              }));
+            }}></Icon>
+
+          <IconFeather
+            name="send"
+            style={{fontSize: 25, color: IconGrey, paddingRight: 3}}
+            onPress={() => alert('Share')}></IconFeather>
+
+          <View>
+            <Icon
+              name="dots-horizontal"
+              style={{fontSize: 30, color: IconGrey, paddingRight: 3}}
+              onPress={this.toggleModal}></Icon>
+
+            <View>
+              <Modal
+                style={{margin: 0}}
+                isVisible={this.state.isModalVisible}
+                onBackdropPress={() => this.setState({isModalVisible: false})}>
+                <View style={{flex: 1, justifyContent: 'flex-end'}}>
+                  <View
+                    style={{
+                      backgroundColor: 'white',
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      paddingBottom:30
+                    }}>
+                    <CrossIcon
+                      name="cancel"
+                      onPress={() => this.setState({isModalVisible: false})}
+                      style={{
+                        flex: 0.65,
+                        paddingLeft:5,
+                        fontSize: 20,
+                        paddingTop:4,
+                        color:IconGrey
+                      }}></CrossIcon>
+                    <View
+                      style={{flex: 10, alignItems: 'center', paddingTop:3}}>
+                      <Text style={{fontSize:20, fontWeight:"bold", borderTopWidth:2, borderTopColor:IconGrey}} >
+                        More Options
+                      </Text>
+                    </View>
+                  </View>
+
+                  <View style={styles.modalOptions}>
+                    <Icon
+                      name="flag-variant-outline"
+                      style={styles.optionIcon}></Icon>
+                    <Text
+                      onPress={() => alert('Report Post')}
+                      style={styles.TextWithNavigation}>
+                      Report Post
+                    </Text>
+                  </View>
+
+                  <View style={styles.modalOptions}>
+                    <IconFeather
+                      name="download"
+                      style={styles.optionIcon}></IconFeather>
+                    <Text
+                      onPress={() => alert('Download Post')}
+                      style={styles.TextWithNavigation}>
+                      Download Post
+                    </Text>
+                  </View>
+
+                  <View style={styles.modalOptions}>
+                    <Icon name="share-variant" style={styles.optionIcon}></Icon>
+                    <Text
+                      onPress={() => alert('Share Post')}
+                      style={styles.TextWithNavigation}>
+                      Share Post
+                    </Text>
+                  </View>
+                </View>
+              </Modal>
+            </View>
+          </View>
         </View>
       </View>
     );
   };
 
-  renderImage = (image) => {
+  renderImage = image => {
     return (
       <View>
         <Image
@@ -58,7 +193,7 @@ export default class PostDetail extends Component {
     );
   };
 
-  renderTitle = (title) => {
+  renderTitle = title => {
     return (
       <View style={{alignItems: 'center', marginTop:7}}>
         <Text style={{fontSize: 18}}>
@@ -68,7 +203,7 @@ export default class PostDetail extends Component {
     );
   };
 
-  renderDescription = (description) => {
+  renderDescription = description => {
     return (
       <View style={{alignItems: 'center', marginLeft: '5%', marginRight: '5%'}}>
         <Text style={{fontSize: 14,padding:5,color:'grey'}}>
@@ -78,7 +213,7 @@ export default class PostDetail extends Component {
     );
   };
 
-  renderAddComment = (dp) => {
+  renderAddComment = dp => {
     return (
       <View
         style={{
@@ -89,7 +224,7 @@ export default class PostDetail extends Component {
           paddingLeft: '2%',
         }}>
         <Image
-          source={{uri:dp}}
+          source={{uri: dp}}
           style={{width: 35, height: 35, borderRadius: 50}}></Image>
 
         <TextInput
@@ -119,23 +254,23 @@ export default class PostDetail extends Component {
     );
   };
 
-  renderAllComments = (dp) => {
+  renderAllComments = dp => {
     return (
-      <View style={{   flex: 1,paddingRight: '7%', marginTop: '2%'}}>
+      <View style={{flex: 1, paddingRight: '7%', marginTop: '2%'}}>
         <View
           style={{
             width: '100%',
-         
+
             backgroundColor: '#e6e4e1',
             marginLeft: '4%',
             flexDirection: 'row',
             paddingTop: '2%',
             paddingLeft: '3%',
             borderRadius: 9,
-            paddingBottom:"2%"
+            paddingBottom: '2%',
           }}>
           <Image
-            source={{uri:dp}}
+            source={{uri: dp}}
             style={{width: 30, height: 30, borderRadius: 50}}></Image>
 
           <View style={{flexDirection: 'column', width: 270, marginLeft: '2%'}}>
@@ -143,7 +278,7 @@ export default class PostDetail extends Component {
               Mansehra Boy
             </Text>
             <Text style={{fontSize: 11, marginTop: '-1%', color: 'grey'}}>
-            Mansehrian boy is not doing good 
+              Mansehrian boy is not doing good
             </Text>
           </View>
         </View>
@@ -157,11 +292,10 @@ export default class PostDetail extends Component {
     return (
       <View style={{flex: 1, justifyContent: 'space-between'}}>
         <View style={{}}>
-          {this.renderHeader(data.userAvatar,data.username)}
-        
+          {this.renderHeader(data.userAvatar, data.username)}
         </View>
         <ScrollView style={{height: 300}}>
-        {this.renderImage(data.uri)}
+          {this.renderImage(data.uri)}
           {this.renderTitle(data.title)}
           {this.renderDescription(data.description)}
           {this.renderAllComments(data.userAvatar)}
@@ -175,3 +309,23 @@ export default class PostDetail extends Component {
     );
   }
 }
+
+const styles = StyleSheet.create({
+  TextWithNavigation: {
+    color: 'black',
+    backgroundColor: 'white',
+    width: '100%',
+    fontSize: 17,
+    paddingLeft: '4%',
+    paddingBottom: 20,
+  },
+  modalOptions: {
+    backgroundColor: 'white',
+    flexDirection: 'row',
+  },
+  optionIcon: {
+    paddingLeft: '3%',
+    fontSize: 25,
+  
+  },
+});
