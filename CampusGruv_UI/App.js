@@ -9,7 +9,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons'
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons'
 import AddIcon from 'react-native-vector-icons/Entypo'
 import HomeScreen from './Screens/HomeScreen'
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import PostDetail from './Screens/PostDetail'
 import CreatePost from './Screens/CreateNewPost'
@@ -19,12 +19,87 @@ import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import inbox from './Screens/Inbox';
 import chat from './Screens/chat';
 import NotificationScreen from './Screens/NotificationScreen'
+import Login from './Screens/Login'
+import SignUp from './Screens/SignUp'
+import ForgotPassword from './Screens/ForgotPassword'
+import UserProfile from './Screens/UserProfile'
+import editprofile from './Screens/ProfileEdit'
+import AuthLoading from './Screens/AuthLoading'
+import AddPost from './Screens/AddNewPost'
+
+const AuthNavigator = createStackNavigator({
+    Login: {
+        screen: Login,
+        navigationOptions: {
+            header: null }
+        },
+        SignUp: {
+            screen: SignUp,
+            navigationOptions: {
+                header: null }
+            },
+            ForgotPassword: {
+                screen: ForgotPassword,
+                navigationOptions: {
+                    header: null }
+                }
+
+           
+
+})
+
+const CreatePostStack = createStackNavigator({
+    AddPost,
+    CreatePost,
+    PostDetail
+
+},
+
+{
+    defaultNavigationOptions:{
+        header:null
+    }
+     }
+
+)
 
 
+const ProfileStack = createStackNavigator({
+    UserProfile,
+    editprofile
+},{
+    defaultNavigationOptions:{
+        header:null
+    }
+})
+
+const HomeStack = createStackNavigator({
+    HomeScreen,
+    PostDetail
+},
+{
+    defaultNavigationOptions:{
+        header:null
+    }
+     }
+)
+
+const MessageStack = createStackNavigator({
+    inbox,
+    chat,
+},
+{
+    defaultNavigationOptions:{
+        header:null
+    }
+     }
+
+
+)
 const TabNavigator = createMaterialTopTabNavigator(
   {
       Home: {
-        screen: HomeScreen,
+        screen: HomeStack,
         navigationOptions: {
             tabBarIcon: ({tintColor}) => (
               <Icon name="home" color={tintColor}  style={{fontSize:22}}/>
@@ -43,7 +118,7 @@ const TabNavigator = createMaterialTopTabNavigator(
         }
     }, 
       AddPost: {
-          screen: CreatePost,
+          screen: CreatePostStack,
           navigationOptions: {
               tabBarIcon: ({tintColor}) => (
                   <AddIcon name="squared-plus" color={tintColor} style={{fontSize:22}}/>
@@ -51,8 +126,8 @@ const TabNavigator = createMaterialTopTabNavigator(
               tabBarLabel: 'Add Post'
           }
       },
-      Settings: {
-        screen: inbox,
+      messages: {
+        screen: MessageStack,
         navigationOptions: {
             tabBarIcon: ({tintColor}) => (
                 <Icon2 name="email-outline" color={tintColor}  style={{fontSize:22}}/>
@@ -61,16 +136,15 @@ const TabNavigator = createMaterialTopTabNavigator(
         }
     },
       Profile: {
-          screen: PostDetail,
+          screen: ProfileStack,
           navigationOptions: {
               tabBarIcon: ({tintColor}) => (
                   <Icon name="person" color={tintColor}  style={{fontSize:22}}/>
               ),
               tabBarLabel: "Profile"
           }
-      }
-          
-  },
+      }     
+    },
   {
       initialRouteName: 'Home',
       tabBarPosition: 'bottom',
@@ -104,42 +178,75 @@ const TabNavigator = createMaterialTopTabNavigator(
 const TabContainer = createAppContainer(TabNavigator);
 
 const RootStack = createStackNavigator({
-    TabContainer,
-    inbox,
-    chat,
-    PostsList,
-    HomeScreen,
-    CreatePost,
-    CategoryList,
-    PostDetail
+   
+    TabContainer : {
+        screen: TabContainer,
+        // navigationOptions: {
+        //     header: null }
+    },
+  
+ 
+
 },
 {
     initialRouteName:'TabContainer',
     headerLayoutPreset: 'center',
     defaultNavigationOptions: {
-        header: (
-            <View style={{height:50, backgroundColor: '#1192d1', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
-            <View style={{marginLeft:'5%'}}>
-                <Text style={{fontSize:25,fontWeight:'bold', color: 'white'}}>CampusGruv</Text>
+        headerStyle: {
+            backgroundColor: '#1192d1'
+        },
+        headerTitle:'CAMPUSGRUV',
+        headerTitleStyle: {
+            fontSize:25,
+            fontWeight:'bold',
+            color: 'white'
+        },
+        headerRight: (
+            <View style={{backgroundColor:'#1192d1', borderRadius:50, marginRight:10, width:25, justifyContent:'center', height: 25}}>
+                <Icon name='filter-list' size={22} color={'white'} style={{fontWeight:'bold', alignSelf:'center'}}/>
             </View>
-            <View style={{width:25, height:25,justifyContent:'center', marginRight:'4%',backgroundColor:'#1192d1', borderRadius:50}}>
-                <Icon name="search" size={20} color={'white'} style={{alignSelf:'center'}}></Icon>
-            </View>
-            </View>
-        )
+        ) 
+        
+        // header: (
+        //     <View style={{height:50, backgroundColor: '#1192d1', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
+        //     <View style={{}}>
+        //         <Text style={{fontSize:25,fontWeight:'bold', color: 'white'}}>CampusGruv</Text>
+        //     </View>
+        //     <View style={{width:25, height:25,justifyContent:'center', marginRight:'4%',backgroundColor:'#1192d1', borderRadius:50}}>
+        //         <Icon name="search" size={20} color={'white'} style={{alignSelf:'center'}}></Icon>
+        //     </View>
+        //     </View>
+        // )
     }
 
 }
 );
 
+const RootStackNavigator = createSwitchNavigator({
+    AuthLoading:{
+        screen:AuthLoading
+    },
+    Auth:{
+        screen:AuthNavigator
+    },
+    App:{
+        screen:RootStack
+    }
 
-const AppContainer = createAppContainer(RootStack);
+},
+{
+    initialRouteName: 'AuthLoading',
+  }
+)
+
+const AppContainer = createAppContainer(RootStackNavigator);
 
 export default class App extends Component {
   render() {
     return (
-       <AppContainer/>
-  
+        <NotificationScreen/>
+    //    <AppContainer/>
+//   <Login></Login>
     )
   }
 }
