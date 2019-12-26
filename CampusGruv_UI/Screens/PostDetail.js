@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import {ThemeConsumer} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import CrossIcon from 'react-native-vector-icons/MaterialIcons';
 import IconFeather from 'react-native-vector-icons/Feather';
 import BackIcon from 'react-native-vector-icons/Ionicons';
 import {ThemeBlue} from '../Assets/Colors';
@@ -25,7 +26,7 @@ export default class PostDetail extends Component {
     currentComment: '',
     followed: true,
     saved: false,
-    isModalVisible: true,
+    isModalVisible: false,
   };
 
   changeCurrentCommentState = comment => {
@@ -112,42 +113,65 @@ export default class PostDetail extends Component {
 
             <View>
               <Modal
-              style={{margin:0}}
+                style={{margin: 0}}
                 isVisible={this.state.isModalVisible}
                 onBackdropPress={() => this.setState({isModalVisible: false})}>
                 <View style={{flex: 1, justifyContent: 'flex-end'}}>
-                  
-
-
-                  <View style={styles.modalOptions}>
-                  <Icon name="flag-variant-outline" style={styles.optionIcon}></Icon>
-                  <Text
-                    onPress={() => alert('Report Post')}
-                    style={styles.TextWithNavigation}>
-                    Report Post
-                  </Text>
+                  <View
+                    style={{
+                      backgroundColor: 'white',
+                      flexDirection: 'row',
+                      justifyContent: 'space-between',
+                      paddingBottom:30
+                    }}>
+                    <CrossIcon
+                      name="cancel"
+                      onPress={() => this.setState({isModalVisible: false})}
+                      style={{
+                        flex: 0.65,
+                        paddingLeft:5,
+                        fontSize: 20,
+                        paddingTop:4,
+                        color:IconGrey
+                      }}></CrossIcon>
+                    <View
+                      style={{flex: 10, alignItems: 'center', paddingTop:3}}>
+                      <Text style={{fontSize:20, fontWeight:"bold", borderTopWidth:2, borderTopColor:IconGrey}} >
+                        More Options
+                      </Text>
+                    </View>
                   </View>
 
                   <View style={styles.modalOptions}>
-                  <IconFeather name="download" style={styles.optionIcon}></IconFeather>
-                  <Text
-                    onPress={() => alert('Download Post')}
-                    style={styles.TextWithNavigation}>
-                    Download Post
-                  </Text>
+                    <Icon
+                      name="flag-variant-outline"
+                      style={styles.optionIcon}></Icon>
+                    <Text
+                      onPress={() => alert('Report Post')}
+                      style={styles.TextWithNavigation}>
+                      Report Post
+                    </Text>
                   </View>
 
                   <View style={styles.modalOptions}>
-                  <Icon name="share-variant" style={styles.optionIcon}></Icon>
-                  <Text
-                    onPress={() => alert('Share Post')}
-                    style={styles.TextWithNavigation}>
-                    Share Post
-                  </Text>
+                    <IconFeather
+                      name="download"
+                      style={styles.optionIcon}></IconFeather>
+                    <Text
+                      onPress={() => alert('Download Post')}
+                      style={styles.TextWithNavigation}>
+                      Download Post
+                    </Text>
                   </View>
 
-                 
-                  {/* <Button title="Hide modal" onPress={this.toggleModal} /> */}
+                  <View style={styles.modalOptions}>
+                    <Icon name="share-variant" style={styles.optionIcon}></Icon>
+                    <Text
+                      onPress={() => alert('Share Post')}
+                      style={styles.TextWithNavigation}>
+                      Share Post
+                    </Text>
+                  </View>
                 </View>
               </Modal>
             </View>
@@ -156,7 +180,6 @@ export default class PostDetail extends Component {
       </View>
     );
   };
-
 
   renderImage = image => {
     return (
@@ -287,18 +310,19 @@ export default class PostDetail extends Component {
 const styles = StyleSheet.create({
   TextWithNavigation: {
     color: 'black',
-    backgroundColor:"white",
-    width:"100%",
+    backgroundColor: 'white',
+    width: '100%',
     fontSize: 17,
-    paddingLeft:'2%',
-    paddingBottom:20
+    paddingLeft: '4%',
+    paddingBottom: 20,
   },
-  modalOptions : {
-    backgroundColor:"white",
-    flexDirection:"row"
+  modalOptions: {
+    backgroundColor: 'white',
+    flexDirection: 'row',
   },
-  optionIcon : {
-    paddingLeft:"3%",
-    fontSize:25
-  }
+  optionIcon: {
+    paddingLeft: '3%',
+    fontSize: 25,
+  
+  },
 });
