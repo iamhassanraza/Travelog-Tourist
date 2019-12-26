@@ -56,7 +56,7 @@ const CreatePostStack = createStackNavigator({
     PostDetail
 },
 {
-    initialRouteName: 'AddPost',
+
     defaultNavigationOptions:{
         header:null
     },
@@ -125,6 +125,7 @@ const TabNavigator = createMaterialTopTabNavigator(
       AddPost: {
           screen: CreatePostStack,
           navigationOptions: {
+              initialRouteName: 'AddPost',
               tabBarIcon: ({tintColor}) => (
                   <AddIcon name="squared-plus" color={tintColor} style={{fontSize:22}}/>
               ),
