@@ -31,12 +31,11 @@ const TabNavigator = createMaterialTopTabNavigator(
     Home: 
         {
             screen: HomeScreen,
-            navigationOptions: () => ( 
+            navigationOptions: (props) => ( 
                 {
                     tabBarIcon: ({tintColor}) => (
                     <Icon name="home" color={tintColor}  style={{fontSize:22}}/>
                     ),
-                    header: null,
                     tabBarLabel: "Home"
                 }
             )
@@ -152,7 +151,9 @@ const RootStack = createStackNavigator({
                         </View>
                     </View>
                     <View style={{flex: 1}}>
-                        <TouchableOpacity onPress={() => props.navigation.push('TabContainer')}>
+                        <TouchableOpacity onPress={() => props.navigation.push('TabContainer', {
+                            categorySelected: true
+                        })}>
                             <PeopleIcon name="users" color="white" size={20}/>
                         </TouchableOpacity>
                     </View>
