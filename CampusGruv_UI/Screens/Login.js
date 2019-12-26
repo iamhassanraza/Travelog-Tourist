@@ -1,222 +1,345 @@
-
-import React, { useState, useEffect } from 'react';
+import React, {useState, useEffect} from 'react';
 import {AsyncStorage} from 'react-native';
-import { Text, Image,ImageBackground, View, StyleSheet,KeyboardAvoidingView,TouchableOpacity, Dimensions, Platform,TextInput } from 'react-native';
-import HeaderTitle from './Heading'
+import {
+  Text,
+  Image,
+  ImageBackground,
+  View,
+  StyleSheet,
+  KeyboardAvoidingView,
+  TouchableOpacity,
+  Dimensions,
+  Platform,
+  TextInput,
+} from 'react-native';
+import Spinner from 'react-native-loading-spinner-overlay';
+import HeaderTitle from './Heading';
 import Colors from '../Assets/Colors';
-const API_BASE_URL = "https://campus-gruv-heroku.herokuapp.com/api/v1"
+const API_BASE_URL = 'https://campus-gruv-heroku.herokuapp.com/api/v1';
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from 'react-native-indicators';
+
+const screenwidth = Dimensions.get('window').width;
+const screenheight = Dimensions.get('window').height;
+
 class Login extends React.Component {
   static navigationOptions = {
-    header: null
+    header: null,
+  };
+  constructor(props) {
+    super(props);
+    this.state = {
+      resta: [],
+      email: '',
+      password: '',
+      emailError: false,
+      passwordError: false,
+      Spinner: false,
+    };
   }
-    constructor(props) {
-      super(props);
-      this.state = {
-        resta: [],
-          email: '',
-          password: '',
-          emailError:false,
-          passwordError:false,
-      };
+
+  validateForm = () => {
+    if (
+      !this.state.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
+    ) {
+      this.setState(
+        {
+          emailError: true,
+        },
+        () => {
+          setTimeout(() => this.setState({emailError: false}), 1000);
+        },
+      );
+      return false;
     }
+    if (this.state.password.length < 8) {
+      this.setState(
+        {
+          passwordError: true,
+        },
+        () => {
+          setTimeout(() => this.setState({passwordError: false}), 1000);
+        },
+      );
 
-     validateForm = () => {
-      if (!this.state.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)) {
-this.setState({
-emailError:true
-},()=>{
-  setTimeout(() => this.setState({emailError: false}), 1000)
-})
-return false;
-      }
-      if (this.state.password.length < 8) {
-        this.setState({
-          passwordError:true
-          },()=>{
-            setTimeout(() => this.setState({passwordError: false}), 1000)
-          })
-       
-        return false;
-      }
-      return true;
+      return false;
     }
+    return true;
+  };
 
-    submitForm = () => {
-      if(!this.validateForm()){
-        console.log('sendng req .....');
-      }
-      else{
+  submitForm = () => {
+    if (!this.validateForm()) {
+      console.log('sendng req .....');
+    } else {
+      // /////////////////////FETCH
+      this.setState({
+        Spinner: true,
+      });
+      fetch(`${API_BASE_URL}/user/signin`, {
+        method: 'POST',
+        headers: {
+          Accept: 'application/json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          email: this.state.email,
+          password: this.state.password,
+        }),
+      })
+        .then(res => {
+         
+          return res.json();
+        })
+        .then(response => {
+          if (response) {
+            console.log('=====>>>', response);
+            if (response.message) {
+              alert(response.message);
+            } else {
+           
+              console.log(response, '=========response=========');
+              AsyncStorage.setItem('TOKEN', response.token);
+              AsyncStorage.setItem('USER_ID', response.id.toString());
+              this.setState({
+                Spinner: false,
+              },()=>{
+                this.props.navigation.navigate('App');
+              });
+              
+            }
+          } else {
+            alert('User not Authorized');
+          }
 
-// /////////////////////FETCH
-fetch(`${API_BASE_URL}/user/signin`, {
-  method: 'POST',
-  headers: {
-    'Accept': 'application/json',
-    "Content-Type": "application/json"},
-  body: JSON.stringify({
-    email: this.state.email,
-    password: this.state.password
-  })
-})
-.then(res =>  res.json())
-  .then(response => {
-
-
-    if(response){
-      console.log("=====>>>", response);
-      if(response.message){
-        alert(response.message);
-      }
-      else{
-        alert('login Success')
-        console.log(response,'=========response=========')
-        AsyncStorage.setItem('TOKEN',response.token);
-        AsyncStorage.setItem('USER_ID',response.id.toString())
-        this.props.navigation.navigate('App')
-      
-      }
+          // callback(response);
+        })
+        .catch(error => {
+          console.log(error);
+          // callback(null);
+        });
+      // /////////////////////FETCH
     }
+  };
 
+  render() {
+    return (
+      <View>
+        <Spinner
+          visible={this.state.Spinner}
+          textContent={'Loading...'}
+          overlayColor={'rgba(0, 0, 0, 0.7)'}
+          textStyle={{color: 'black', fontSize: 25}}
+          customIndicator={
+            <View style={styles.container}>
+              <ImageBackground
+                style={styles.container}
+                source={require('../Assets/Images/background.png')}
+                resizeMode="cover">
+                <SkypeIndicator count={5} size={60} color={'black'} />
+              </ImageBackground>
+            </View>
+          }
+        />
 
-    else{
-      alert('User not Authorized');
-    }
+        <ImageBackground
+          style={styles.container}
+          source={require('../Assets/Images/background.png')}
+          resizeMode="cover">
+          <View
+            style={{
+              width: screenwidth,
+              height: screenheight,
+              justifyContent: 'space-between',
+            }}>
+              
+            <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled>
+              {/* MAIN TITLE */}
+              <View>
+                <HeaderTitle />
+              </View>
 
-    // callback(response);
+              <View style={{marginTop: 60}}>
+                {/* EMAIL FIELD */}
+                <View
+                  style={{
+                    width: '90%',
+                    marginLeft: '5%',
+                    marginTop: -20,
+                    borderColor: '#C4C4C4',
+                    backgroundColor: 'white',
+                    borderWidth: 0.5,
+                    borderRadius: 10,
+                  }}>
+                  <TextInput
+                    style={{
+                      width: '90%',
+                      marginLeft: 10,
+                      fontSize: 20,
+                      color: '#ACACAC',
+                    }}
+                    placeholder="Email"
+                    value={this.state.email}
+                    onChangeText={email => this.setState({email})}
+                    keyboardType="email-address"
+                  />
+                </View>
+                {/* EMAIL ERROR TEXT */}
+                {this.state.emailError ? (
+                  <Text style={{color: 'red', fontSize: 13, marginLeft: 20}}>
+                    Invalid email address
+                  </Text>
+                ) : null}
 
-  })
-  .catch(error => {
-    console.log(error);
-    // callback(null);
-  });
-// /////////////////////FETCH
-      }
+                {/* PASSWORD FIELD */}
+                <View
+                  style={{
+                    width: '90%',
+                    marginLeft: '5%',
+                    marginTop: 20,
+                    borderColor: '#C4C4C4',
+                    backgroundColor: 'white',
+                    borderWidth: 0.5,
+                    borderRadius: 10,
+                  }}>
+                  <TextInput
+                    style={{
+                      width: '90%',
+                      marginLeft: 10,
+                      fontSize: 20,
+                      color: '#ACACAC',
+                    }}
+                    placeholder="Password"
+                    value={this.state.password}
+                    onChangeText={password => this.setState({password})}
+                    secureTextEntry
+                  />
+                </View>
+                {/* PASSWORD ERROR TEXT */}
+                {this.state.passwordError ? (
+                  <Text style={{color: 'red', fontSize: 13, marginLeft: 20}}>
+                    Minimum 8 characters required
+                  </Text>
+                ) : null}
+                {/* LOG IN BUTTON */}
+                <View style={styles.butt}>
+                  <TouchableOpacity onPress={this.submitForm}>
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                        color: 'white',
+                      }}>
+                      Log in
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <Text
+                  style={{
+                    color: 'white',
+                    textAlign: 'center',
+                    fontSize: 18,
+                    marginTop: 20,
+                  }}
+                  onPress={() => {
+                    this.props.navigation.navigate('ForgotPassword');
+                  }}>
+                  Forgot your login details ?
+                </Text>
+              </View>
 
-    }
+              {/* SIGN UP NAVIGATION */}
+              <View style={{marginTop: 120}}>
+                <View />
+                <View>
+                  <Text
+                    style={{
+                      color: 'white',
+                      textAlign: 'center',
+                      fontSize: 18,
+                      marginTop: 10,
+                    }}>
+                    Don't have an account ?
+                  </Text>
+                  <Text
+                    style={{
+                      color: 'white',
+                      textAlign: 'center',
+                      fontSize: 18,
+                      marginTop: 10,
+                      fontWeight: 'bold',
+                    }}
+                    onPress={() => {
+                      this.props.navigation.navigate('SignUp');
+                    }}>
+                    Sign Up
+                  </Text>
+                </View>
+              </View>
+            </KeyboardAvoidingView>
+          </View>
+        </ImageBackground>
+      </View>
+    );
+  }
+}
 
-    render() {
-    
-  
-      
-      return (
-        <ImageBackground 
-        style={styles.container}
-        source={require('../Assets/Images/background.png')}
-        resizeMode='cover'
-        >
-  <View style={{flex:1,justifyContent:'space-between'}}>
-  <KeyboardAvoidingView  style={{ flex: 1}}  behavior="padding" enabled>
+const styles = StyleSheet.create({
+  butt: {
+    height: 40,
+    width: '50%',
+    marginLeft: '25%',
+    borderRadius: 10,
+    marginTop: 40,
+    justifyContent: 'center',
+    backgroundColor: 'transparent',
+    borderColor: 'white',
+    borderWidth: 0.6,
+  },
+  container: {
+    width: screenwidth,
+    height: screenheight,
+    backgroundColor: Colors.overlayColor,
+  },
+  overlay: {
+    flex: 1,
+    ...StyleSheet.absoluteFillObject,
+  },
+  signupOptions: {
+    alignItems: 'center',
+    justifyContent: 'space-between',
+    marginTop: 40,
+    marginBottom: 0,
+  },
+  heading: {
+    fontSize: 50,
+    color: 'white',
+  },
+  textStyle: {
+    fontSize: 20,
+    color: 'white',
+    marginBottom: 10,
+  },
+  buttonStyle: {
+    height: 40,
+    width: 200,
+    borderColor: 'rgba(255, 255, 255, 0.9)',
+    borderRadius: 15,
+    marginVertical: 10,
+  },
+  btnText: {
+    fontSize: 15,
+    color: 'white',
+  },
+});
 
-{/* MAIN TITLE */}
-             <View >
-         <HeaderTitle  />
-             </View>
-
-         <View style={{marginTop:60}}>
-
-           {/* EMAIL FIELD */}
-<View style={{width:'90%',marginLeft:'5%',marginTop:-20,borderColor:'#C4C4C4',backgroundColor:'white',borderWidth:0.5,borderRadius:10}}>
-<TextInput
-        style={{width:'90%',marginLeft:10,fontSize:20,color:'#ACACAC'}}
-        placeholder='Email'
-        value={this.state.email}
-        onChangeText={email => this.setState({ email })}
-        keyboardType='email-address'
-    />
-                    </View> 
-                               {/* EMAIL ERROR TEXT */}
-                    {
-this.state.emailError ?
-                      <Text style={{color: 'red', fontSize: 13,marginLeft:20}}>Invalid email address</Text>
-                    :null
-                    }
-
-                               {/* PASSWORD FIELD */}
-<View style={{width:'90%',marginLeft:'5%',marginTop:20,borderColor:'#C4C4C4',backgroundColor:'white',borderWidth:0.5,borderRadius:10}}>
-<TextInput
-        style={{width:'90%',marginLeft:10,fontSize:20,color:'#ACACAC'}}
-        placeholder='Password'
-        value={this.state.password}
-        onChangeText={password => this.setState({ password })}
-        secureTextEntry
-    />
-                    </View> 
-                               {/* PASSWORD ERROR TEXT */}
-                    {
-this.state.passwordError ?
-                      <Text style={{color: 'red', fontSize: 13,marginLeft:20}}>Minimum 8 characters required</Text>
-                    :null
-                    }
-                    {/* LOG IN BUTTON */}
-<View    style={styles.butt}>
-  <TouchableOpacity    onPress={this.submitForm}>
-      <Text style={{fontSize:16,fontWeight:'bold',textAlign:'center',color:'white'}}>Log in</Text>
-  </TouchableOpacity>
-        </View>
-<Text style={{color:'white',textAlign:'center',fontSize:18,marginTop:20}} onPress={()=>{
-    this.props.navigation.navigate('ForgotPassword')
-  }}>Forgot your login details ?</Text>
-
-         </View>
-
-{/* SIGN UP NAVIGATION */}
-<View style={{marginTop:120}}>
-  <View />
-  <View >
-  <Text style={{color:'white',textAlign:'center',fontSize:18,marginTop:10}}>Don't have an account ?</Text>
-  <Text style={{color:'white',textAlign:'center',fontSize:18,marginTop:10,fontWeight:'bold'}} onPress={()=>{
-    this.props.navigation.navigate('SignUp')
-  }}>Sign Up</Text>
-  </View>
-</View>
-
-
-</KeyboardAvoidingView>
-</View>
-</ImageBackground>
-        );
-      }
-    }
-
-    const styles = StyleSheet.create({
-      butt:{height:40,width:'50%',marginLeft:'25%',borderRadius:10,marginTop:40,justifyContent:'center',backgroundColor:'transparent',borderColor:'white',borderWidth:0.6},
-      container: {
-        flex: 1,
-        backgroundColor: Colors.overlayColor,
-  
-      },
-      overlay: {
-        flex: 1,
-        ...StyleSheet.absoluteFillObject
-      },
-      signupOptions: {
-        alignItems: 'center',
-        justifyContent: 'space-between',
-        marginTop: 40,
-        marginBottom: 0
-      },
-      heading: {
-        fontSize: 50,
-        color: 'white',
-      },
-      textStyle: {
-        fontSize: 20,
-        color: 'white',
-        marginBottom: 10  
-      },
-      buttonStyle: {
-          height: 40,
-          width: 200, 
-          borderColor: 'rgba(255, 255, 255, 0.9)',
-          borderRadius: 15,
-          marginVertical: 10
-      },
-      btnText: {
-          fontSize: 15,
-          color: 'white',
-      },
-  });
-  
- 
-  
-    export default Login;
+export default Login;
