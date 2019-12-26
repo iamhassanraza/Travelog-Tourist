@@ -24,7 +24,7 @@ export default class PostDetail extends Component {
   state = {
     Allcomments: [],
     currentComment: '',
-    followed: true,
+    followed: false,
     saved: false,
     isModalVisible: false,
   };
