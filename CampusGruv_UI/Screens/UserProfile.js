@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Text, Image, View, StyleSheet, Dimensions, Platform,TextInput } from 'react-native';
+import { Text, Image, View, StyleSheet, Dimensions, Platform,TextInput ,TouchableHighlight,AsyncStorage,TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class UserProfile extends React.Component {
@@ -12,13 +12,31 @@ class UserProfile extends React.Component {
         resta: []
       };
     }
+
+
+    _signOutAsync = async () => {
+      await AsyncStorage.clear();
+      this.props.navigation.navigate('Auth');
+    };
+
+
     render() {
       // const { navigate } = this.props.navigation;
       return (
           <View>
               {/* EDIT PROFILE BUTTON */}
-            <View style={{flexDirection:'row',justifyContent:'flex-end',margin:10}}>
+              <View style={{flexDirection:'row',justifyContent:'flex-end'}}>
+
+              
+            <TouchableOpacity style={{flexDirection:'row',justifyContent:'flex-end',margin:10}} onPress={()=>{
+              this.props.navigation.navigate('editprofile')
+            }}>
               <Text style={{color:'#ACACAC',borderWidth:0.5,padding:5,borderColor:'#ACACAC',borderRadius:10}}>Edit Profile</Text>
+            </TouchableOpacity>   
+             
+            <TouchableHighlight style={{flexDirection:'row',justifyContent:'flex-end',margin:10}} onPress={this._signOutAsync}>
+              <Text style={{color:'#ACACAC',borderWidth:0.5,padding:5,borderColor:'#ACACAC',borderRadius:10}}>Logout</Text>
+            </TouchableHighlight>
             </View>
 
 

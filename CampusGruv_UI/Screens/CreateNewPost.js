@@ -6,10 +6,26 @@ import {
   ScrollView,
   Button,
   TextInput,
+  KeyboardAvoidingView,
+  AsyncStorage,
 } from 'react-native';
 import {withNavigation } from 'react-navigation';
 import CategoryButton from '../Components/CategoryButton';
 import DatePicker from 'react-native-datepicker';
+import Spinner from 'react-native-loading-spinner-overlay';
+
+
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from 'react-native-indicators';
 
 class CreateNewPost extends Component {
   state = {
@@ -17,8 +33,21 @@ class CreateNewPost extends Component {
     CategoryEventDate: '',
     Title: '',
     Description: '',
-    Price : ''
+    Price : '',
+    spinner:false,
+    Images:''
+  
+
   };
+
+  componentDidMount = ()=>{
+      this.setState({
+        Images:this.props.navigation.getParam('Images', 'nothing to render'),
+        Title:this.props.navigation.getParam('title', 'nothing to render')
+      })
+  }
+    
+
 
   changeState = cat => {
     this.setState({
@@ -273,6 +302,58 @@ class CreateNewPost extends Component {
     );
   };
 
+
+  uploadPost = async ()=>{
+
+    if( this.state.Category === ''){
+      alert('Select Category')
+    }
+    else if (this.state.Description === '') {
+      alert('Enter Description First ')
+    }
+    else{
+
+    this.setState({spinner:true});
+    const Token = await AsyncStorage.getItem('TOKEN')
+    const user_id = await AsyncStorage.getItem('USER_ID')
+
+    let response = await fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/post/create',{
+      method:'POST',
+      headers:{
+        'Content-Type': 'application/json',
+        "Authorization": `Bearer ${Token}`,
+      },
+      body:JSON.stringify({user_id:user_id,category_id:15,title:this.state.Title,description:this.state.Description})
+    })
+    const postMasterResponse =  await response.json();
+
+    let raw_response = await fetch("https://campus-gruv-heroku.herokuapp.com/api/v1/post/detail", {
+      method: "POST",
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        "Authorization": `Bearer ${Token}`
+    },
+      body:this.createFormData(this.state.Images,{user_id:user_id,post_id:postMasterResponse.id})
+    })
+    
+    let imageResponse = await raw_response.json();
+    
+      console.log(imageResponse,'upload sucess')
+ 
+     this.setState({spinner:false,Description:''})
+     this.props.navigation.navigate('Home')
+    
+
+
+
+    }
+
+    
+
+
+
+  }
+
   renderShareButton = () => {
     return (
       <View 
@@ -280,7 +361,9 @@ class CreateNewPost extends Component {
       >
 
         <Button
-          onPress={()=> this.props.navigation.push('PostDetail')}
+          onPress={()=> {
+              this.uploadPost();
+          }}
           //bgclr={'rgba(47, 144, 234, 0.95)'}
           title={"Share"}
           ></Button>
@@ -288,9 +371,69 @@ class CreateNewPost extends Component {
     );
     }
 
+    createFormData = (images, body) => {
+      const data = new FormData();
+        data.append("post_detail_images[]", {
+          name: images.fileName,
+          type: images.type,
+          uri:
+            Platform.OS === "android" ? images.uri : images.uri.replace("file://", "")
+        });
+     
+      Object.keys(body).forEach(key => {
+        data.append(key, body[key]);
+      });
+      
+     
+      
+      return data;
+    
+    };
+
+    
+
+      
+     uploadPhoto = (title) => {
+
+      if( this.state.Category === ''){
+        alert('Select Category')
+      }
+      else if(this.state.Description === ''){
+        alert('Enter Description First ')
+      }
+      else{
+      
+      
+          fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/post/create',{
+            method:'POST',
+            headers:{
+              'Content-Type': 'application/json',
+              "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjM0NywiaWF0IjoxNTc2NzUzODQ4fQ.EorFB96f-mV9-29JyaBqaDRZhvyIfTGOCslN7m8j390`,
+            },
+            body:JSON.stringify({user_id:347,category_id:15,title:title,description:this.state.description})
+          })
+          .then((response) => response.json())
+          .then((response) => {
+            console.log("response=======>",response)
+            this.handleCreateImage(response.user_id,response.id)
+            this.setState({
+             
+              description:'',
+            
+            })
+          })
+          .catch((err) => {
+              console.log(err)
+          })
+      
+        }
+      
+        };
 
 
 
+      
+      
 
 
 
@@ -298,16 +441,33 @@ class CreateNewPost extends Component {
 
 
   render() {
+ 
+    // console.log(Images,'===================== imagess ============================')
     return (
       <TouchableWithoutFeedback >
-        <View>
-        {this.renderTitle()}
+        
+       
+       <ScrollView>
+       <Spinner
+          visible={this.state.spinner}
+          textContent={'Uploading...'}
+          textStyle={{color:'white'}}
+          customIndicator={
+           
+       
+          <BarIndicator count={5}  />
+  
+        }
+        />
+      
         {this.renderCategories()}
         {this.state.Category === 'Events' ? this.renderDatePicker() : null}
         {this.state.Category === 'Free & For Sale' ? this.renderPrice() : null}
         {this.renderDescription()}
         {this.renderShareButton()}
-      </View>
+        </ScrollView>
+      
+     
       </TouchableWithoutFeedback>
     );
   }

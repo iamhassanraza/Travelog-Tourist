@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput, Image } from 'react-native'
+import { Text, View, TextInput, Image, TouchableOpacity } from 'react-native'
 // import HomeScreen from './Screens/HomeScreen'
-import 'react-native-gesture-handler'
+import  'react-native-gesture-handler'
 // import Screen1 from './Screens/CreatePost'
 // import Screen2 from './Screens/Screen1'
 import Screen3 from './Components/Post'
@@ -11,7 +11,7 @@ import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons'
 import AddIcon from 'react-native-vector-icons/Entypo'
 import Logo from './Assets/Images/logo.png'
 import HomeScreen from './Screens/HomeScreen'
-import { createAppContainer } from 'react-navigation';
+import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import PostDetail from './Screens/PostDetail'
 import CreatePost from './Screens/CreateNewPost'
@@ -22,24 +22,94 @@ import inbox from './Screens/Inbox';
 import chat from './Screens/chat';
 import NotificationScreen from './Screens/NotificationScreen'
 import Login from './Screens/Login'
+import SignUp from './Screens/SignUp'
+import ForgotPassword from './Screens/ForgotPassword'
 import UserProfile from './Screens/UserProfile'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import editprofile from './Screens/ProfileEdit'
+import AuthLoading from './Screens/AuthLoading'
+import AddPost from './Screens/AddNewPost'
+
+const AuthNavigator = createStackNavigator({
+    Login: {
+        screen: Login,
+        navigationOptions: {
+            header: null }
+        },
+        SignUp: {
+            screen: SignUp,
+            navigationOptions: {
+                header: null }
+            },
+            ForgotPassword: {
+                screen: ForgotPassword,
+                navigationOptions: {
+                    header: null }
+                }
+
+           
+
+})
+
+const CreatePostStack = createStackNavigator({
+    AddPost,
+    CreatePost,
+    PostDetail
+
+},
+
+{
+    defaultNavigationOptions:{
+        header:null
+    }
+     }
+
+)
 
 
+const ProfileStack = createStackNavigator({
+    UserProfile,
+    editprofile
+},{
+    defaultNavigationOptions:{
+        header:null
+    }
+})
+
+const HomeStack = createStackNavigator({
+    HomeScreen,
+    PostDetail,
+    CategoryList
+},
+{
+    defaultNavigationOptions:{
+        header:null
+    }
+     }
+)
+
+const MessageStack = createStackNavigator({
+    inbox,
+    chat,
+},
+{
+    defaultNavigationOptions:{
+        header:null
+    }
+     }
+
+
+)
 const TabNavigator = createMaterialTopTabNavigator(
   {
-    Home: 
-        {
-            screen: HomeScreen,
-            navigationOptions: (props) => ( 
-                {
-                    tabBarIcon: ({tintColor}) => (
-                    <Icon name="home" color={tintColor}  style={{fontSize:22}}/>
-                    ),
-                    tabBarLabel: "Home"
-                }
-            )
-    },
+      Home: {
+        screen: HomeStack,
+        navigationOptions: {
+            tabBarIcon: ({tintColor}) => (
+              <Icon name="home" color={tintColor}  style={{fontSize:22}}/>
+            ),
+            tabBarLabel: "Home"
+          }
+      },
       Notifications: {
         screen: NotificationScreen,
         navigationOptions: {
@@ -51,7 +121,7 @@ const TabNavigator = createMaterialTopTabNavigator(
         }
     }, 
       AddPost: {
-          screen: CreatePost,
+          screen: CreatePostStack,
           navigationOptions: {
               tabBarIcon: ({tintColor}) => (
                   <AddIcon name="squared-plus" color={tintColor} style={{fontSize:22}}/>
@@ -59,8 +129,8 @@ const TabNavigator = createMaterialTopTabNavigator(
               tabBarLabel: 'Add Post'
           }
       },
-      Settings: {
-        screen: inbox,
+      messages: {
+        screen: MessageStack,
         navigationOptions: {
             tabBarIcon: ({tintColor}) => (
                 <Icon2 name="email-outline" color={tintColor}  style={{fontSize:22}}/>
@@ -69,7 +139,7 @@ const TabNavigator = createMaterialTopTabNavigator(
         }
     },
       Profile: {
-          screen: PostDetail,
+          screen: ProfileStack,
           navigationOptions: {
               tabBarIcon: ({tintColor}) => (
                   <Icon name="person" color={tintColor}  style={{fontSize:22}}/>
@@ -111,6 +181,7 @@ const TabNavigator = createMaterialTopTabNavigator(
 const TabContainer = createAppContainer(TabNavigator);
 
 const RootStack = createStackNavigator({
+   
     TabContainer : {
         screen: TabContainer,
         navigationOptions: {
@@ -161,13 +232,9 @@ const RootStack = createStackNavigator({
             
         }
     },
-    inbox,
-    chat,
-    PostsList,
-    HomeScreen,
-    CreatePost,
-    CategoryList,
-    PostDetail
+  
+ 
+
 },
 {
     initialRouteName:'TabContainer',
@@ -198,12 +265,29 @@ const RootStack = createStackNavigator({
 }
 );
 
+const RootStackNavigator = createSwitchNavigator({
+    AuthLoading:{
+        screen:AuthLoading
+    },
+    Auth:{
+        screen:AuthNavigator
+    },
+    App:{
+        screen:RootStack
+    }
 
-const AppContainer = createAppContainer(RootStack);
+},
+{
+    initialRouteName: 'AuthLoading',
+  }
+)
+
+const AppContainer = createAppContainer(RootStackNavigator);
 
 export default class App extends Component {
   render() {
     return (
+        // <NotificationScreen/>
        <AppContainer/>
 //   <Login></Login>
     )

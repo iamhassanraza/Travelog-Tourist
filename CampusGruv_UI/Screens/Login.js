@@ -1,5 +1,6 @@
 
 import React, { useState, useEffect } from 'react';
+import {AsyncStorage} from 'react-native';
 import { Text, Image,ImageBackground, View, StyleSheet,KeyboardAvoidingView,TouchableOpacity, Dimensions, Platform,TextInput } from 'react-native';
 import HeaderTitle from './Heading'
 import Colors from '../Assets/Colors';
@@ -68,7 +69,11 @@ fetch(`${API_BASE_URL}/user/signin`, {
       }
       else{
         alert('login Success')
-        console.log(response.token)
+        console.log(response,'=========response=========')
+        AsyncStorage.setItem('TOKEN',response.token);
+        AsyncStorage.setItem('USER_ID',response.id.toString())
+        this.props.navigation.navigate('App')
+      
       }
     }
 
@@ -148,7 +153,9 @@ this.state.passwordError ?
       <Text style={{fontSize:16,fontWeight:'bold',textAlign:'center',color:'white'}}>Log in</Text>
   </TouchableOpacity>
         </View>
-<Text style={{color:'white',textAlign:'center',fontSize:18,marginTop:10}}>Forgot your login details ?</Text>
+<Text style={{color:'white',textAlign:'center',fontSize:18,marginTop:20}} onPress={()=>{
+    this.props.navigation.navigate('ForgotPassword')
+  }}>Forgot your login details ?</Text>
 
          </View>
 
@@ -157,7 +164,9 @@ this.state.passwordError ?
   <View />
   <View >
   <Text style={{color:'white',textAlign:'center',fontSize:18,marginTop:10}}>Don't have an account ?</Text>
-  <Text style={{color:'white',textAlign:'center',fontSize:18,marginTop:10}}>Sign Up</Text>
+  <Text style={{color:'white',textAlign:'center',fontSize:18,marginTop:10,fontWeight:'bold'}} onPress={()=>{
+    this.props.navigation.navigate('SignUp')
+  }}>Sign Up</Text>
   </View>
 </View>
 
