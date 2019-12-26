@@ -342,8 +342,7 @@ class CreateNewPost extends Component {
       console.log(imageResponse,'upload sucess')
  
      this.setState({spinner:false,Description:''})
-     this.props.navigation.navigate('Home')
-    
+     this.props.navigation.navigate('PostDetail')
 
 
 
@@ -452,25 +451,27 @@ class CreateNewPost extends Component {
     // console.log(Images,'===================== imagess ============================')
     return (
       <TouchableWithoutFeedback > 
-       <ScrollView>
-       <Spinner
-          visible={this.state.spinner}
-          textContent={'Uploading...'}
-          textStyle={{color:'white'}}
-          customIndicator={
-           
-       
-          <BarIndicator count={5}  />
-  
-        }
-        />
+        <View>
+          <ScrollView>
+            <Spinner
+              visible={this.state.spinner}
+              textContent={'Uploading...'}
+              textStyle={{color:'white'}}
+              customIndicator={
+                <BarIndicator count={5} />
       
-        {this.renderCategories()}
-        {this.state.Category === 'Events' ? this.renderDatePicker() : null}
-        {this.state.Category === 'Free & For Sale' ? this.renderPrice() : null}
-        {this.renderDescription()}
-        {this.renderShareButton()}
-        </ScrollView>
+              }
+            />
+          
+            {this.renderCategories()}
+            {this.state.Category === 'Events' ? this.renderDatePicker() : null}
+            {this.state.Category === 'Free & For Sale' ? this.renderPrice() : null}
+            <KeyboardAvoidingView keyboardVerticalOffset={-100} behavior='padding' enabled>
+              {this.renderDescription()}
+              {this.renderShareButton()}
+            </KeyboardAvoidingView>
+          </ScrollView>
+        </View>
       </TouchableWithoutFeedback>
     );
   }
