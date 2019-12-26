@@ -244,6 +244,7 @@ const AppContainer = createAppContainer(RootStackNavigator);
 export default class App extends Component {
   render() {
     return (
+        // <NotificationScreen/>
        <AppContainer/>
 //   <Login></Login>
     )
