@@ -54,14 +54,16 @@ const CreatePostStack = createStackNavigator({
     AddPost,
     CreatePost,
     PostDetail
-
 },
-
 {
+    initialRouteName: 'AddPost',
     defaultNavigationOptions:{
         header:null
+    },
+    navigationOptions: {
+        tabBarVisible: false
     }
-     }
+}
 
 )
 
