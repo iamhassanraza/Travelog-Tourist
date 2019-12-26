@@ -444,9 +444,7 @@ class CreateNewPost extends Component {
  
     // console.log(Images,'===================== imagess ============================')
     return (
-      <TouchableWithoutFeedback >
-        
-       
+      <TouchableWithoutFeedback > 
        <ScrollView>
        <Spinner
           visible={this.state.spinner}
@@ -466,8 +464,6 @@ class CreateNewPost extends Component {
         {this.renderDescription()}
         {this.renderShareButton()}
         </ScrollView>
-      
-     
       </TouchableWithoutFeedback>
     );
   }
