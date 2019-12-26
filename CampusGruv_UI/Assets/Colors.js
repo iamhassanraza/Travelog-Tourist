@@ -1,4 +1,5 @@
 import { StyleSheet } from 'react-native'
+import { colors } from 'react-native-elements';
 
 export const ThemeBlue = '#1192d1'
 export const CatBrown = 'rgba(179,106,80,0.7)'
@@ -36,5 +37,4 @@ export default {
   noticeBackground: tintColor,
   noticeText: '#fff',
 };
-
 
