@@ -1,5 +1,6 @@
 import { StyleSheet } from 'react-native'
 
+export const ThemeBlue = '#1192d1'
 export const CatBrown = 'rgba(179,106,80,0.7)'
 export const Catlight ='rgba(162,119,117,0.9)'
 export const Catpurple = 'rgba(202,126,215,0.8)';
