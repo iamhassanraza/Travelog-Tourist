@@ -7,6 +7,13 @@ import {withNavigation} from 'react-navigation'
 
 class PostCard extends Component {
 
+  state = {
+
+    width: undefined,
+    height: undefined
+  }
+
+
   componentDidMount() {
     Image.getSize(this.props.imageurl, (srcWidth, srcHeight) => {
       const maxHeight = Dimensions.get('window').height/2;
@@ -22,12 +29,7 @@ class PostCard extends Component {
     );
   }
 
-  state = {
-
-    width: undefined,
-    height: undefined
-  }
-
+ 
   render() {
  
     return (

@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   StyleSheet,
+  PermissionsAndroid
 } from 'react-native';
 import {ThemeConsumer} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -17,6 +18,8 @@ import IconFeather from 'react-native-vector-icons/Feather';
 import BackIcon from 'react-native-vector-icons/Ionicons';
 import {ThemeBlue} from '../Assets/Colors';
 import Modal from 'react-native-modal';
+	
+import RNFetchBlob from 'rn-fetch-blob';
 
 const IconGrey = '#b4b8bf';
 

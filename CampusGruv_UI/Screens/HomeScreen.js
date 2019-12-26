@@ -4,7 +4,6 @@ import PostsList from '../Components/PostsList'
 
 export default class HomeScreen extends Component {
 
-  
 
     render() {
 
