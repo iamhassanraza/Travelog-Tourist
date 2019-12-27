@@ -259,7 +259,7 @@ export default class PostDetail extends Component {
         }}>
         <Image
           source={{uri: dp}}
-          style={{width: 30, alignSelf: 'center', height: 30, borderRadius: 50}}></Image>
+          style={{width: 40, alignSelf: 'center', height: 40, borderRadius: 50}}></Image>
 
         <TextInput
           placeholder="Add your comment"
