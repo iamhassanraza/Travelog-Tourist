@@ -138,12 +138,12 @@ console.log(error);
                     <Text style={{color:'white',fontSize:16,margin:10,marginTop:20}}  onPress={()=>{
     this.props.navigation.goBack()
   }}>Back</Text>
-  <View >
-  <KeyboardAvoidingView   behavior="padding" enabled>
+  <View>
+  <KeyboardAvoidingView   behavior="padding" keyboardVerticalOffset={-110} enabled>
     <ScrollView>
 
       {/* MAIN TITLE */}
-             <View >
+             <View style={{marginTop:-20}}>
          <HeaderTitle  />
              </View>
 
@@ -154,7 +154,7 @@ console.log(error);
 <InputView ph='Email' mt={20}/> */}
 
    {/* First name FIELD */}
-<View style={{width:'90%',marginLeft:'5%',marginTop:20,borderColor:'#C4C4C4',backgroundColor:'white',borderWidth:0.5,borderRadius:10}}>
+<View style={{width:'90%',marginLeft:'5%',borderColor:'#C4C4C4',backgroundColor:'white',borderWidth:0.5,borderRadius:10}}>
 <TextInput
         style={{width:'90%',marginLeft:10,fontSize:20,color:'#ACACAC'}}
         placeholder='First name'
@@ -238,7 +238,7 @@ this.state.passwordError ?
     }
 
     const styles = StyleSheet.create({
-      butt:{height:40,width:'50%',marginLeft:'25%',borderRadius:10,marginTop:40,justifyContent:'center',backgroundColor:'transparent',borderColor:'white',borderWidth:0.6},
+      butt:{height:40,width:'50%',marginLeft:'25%',borderRadius:10,marginTop:40,marginBottom:25,justifyContent:'center',backgroundColor:'transparent',borderColor:'white',borderWidth:0.6},
       container: {
         flex: 1,
         // alignItems: 'center',
