@@ -28,6 +28,7 @@ import UserProfile from './Screens/UserProfile'
 import editprofile from './Screens/ProfileEdit'
 import AuthLoading from './Screens/AuthLoading'
 import AddPost from './Screens/AddNewPost'
+import UploadDp from './Screens/UploadDp'
 
 const AuthNavigator = createStackNavigator({
     Login: {
@@ -291,8 +292,7 @@ export default class App extends Component {
   render() {
     return (
         // <NotificationScreen/>
-       <AppContainer/>
-//   <Login></Login>
+        <AppContainer/>
 
 )
   }

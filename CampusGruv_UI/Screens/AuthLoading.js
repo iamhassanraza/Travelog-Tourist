@@ -2,10 +2,19 @@ import React from 'react';
 import {
   ActivityIndicator,
   AsyncStorage,
+  Dimensions,
   StatusBar,
   StyleSheet,
   View,
+  ImageBackground
 } from 'react-native';
+import Colors from '../Assets/Colors'
+import HeaderTitle from './Heading';
+
+const screenwidth = Dimensions.get('window').width;
+const screenheight = Dimensions.get('window').height;
+
+
 
 class AuthLoading extends React.Component {
   componentDidMount() {
@@ -24,12 +33,30 @@ class AuthLoading extends React.Component {
   // Render any loading content that you like here
   render() {
     return (
-      <View>
-        <ActivityIndicator />
-        <StatusBar barStyle="default" />
-      </View>
+      <ImageBackground
+        style={styles.container}
+        source={require('../Assets/Images/background.png')}
+        resizeMode="cover">
+        <View style={{marginTop: '55%'}}>
+          <HeaderTitle></HeaderTitle>
+        </View>
+      </ImageBackground>
+   
     );
   }
 }
 
 export default AuthLoading;
+
+
+const styles = StyleSheet.create({
+  container: {
+    width: screenwidth,
+    height: screenheight / 1,
+    backgroundColor: Colors.overlayColor,
+  },
+  overlay: {
+    flex: 1,
+    ...StyleSheet.absoluteFillObject,
+  }
+});
