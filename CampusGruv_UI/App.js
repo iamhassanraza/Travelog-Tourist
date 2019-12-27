@@ -292,7 +292,9 @@ export default class App extends Component {
     return (
         // <NotificationScreen/>
     //    <AppContainer/>
-  <Login></Login>
-    )
+//   <Login></Login>
+<SignUp></SignUp>    
+
+)
   }
 }

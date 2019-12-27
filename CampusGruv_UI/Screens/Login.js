@@ -133,6 +133,7 @@ class Login extends React.Component {
 
   render() {
     return (
+   
       <ScrollView>
         <Spinner
           visible={this.state.Spinner}
@@ -290,6 +291,7 @@ class Login extends React.Component {
           </View>
         </ImageBackground>
       </ScrollView>
+
     );
   }
 }
