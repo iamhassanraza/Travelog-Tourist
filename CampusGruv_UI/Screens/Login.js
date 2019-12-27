@@ -11,6 +11,7 @@ import {
   Dimensions,
   Platform,
   TextInput,
+  ScrollView,
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import HeaderTitle from './Heading';
@@ -96,7 +97,6 @@ class Login extends React.Component {
         }),
       })
         .then(res => {
-         
           return res.json();
         })
         .then(response => {
@@ -105,16 +105,17 @@ class Login extends React.Component {
             if (response.message) {
               alert(response.message);
             } else {
-           
               console.log(response, '=========response=========');
               AsyncStorage.setItem('TOKEN', response.token);
               AsyncStorage.setItem('USER_ID', response.id.toString());
-              this.setState({
-                Spinner: false,
-              },()=>{
-                this.props.navigation.navigate('App');
-              });
-              
+              this.setState(
+                {
+                  Spinner: false,
+                },
+                () => {
+                  this.props.navigation.navigate('App');
+                },
+              );
             }
           } else {
             alert('User not Authorized');
@@ -132,7 +133,7 @@ class Login extends React.Component {
 
   render() {
     return (
-      <View>
+      <ScrollView>
         <Spinner
           visible={this.state.Spinner}
           textContent={'Loading...'}
@@ -160,7 +161,6 @@ class Login extends React.Component {
               height: screenheight,
               justifyContent: 'space-between',
             }}>
-              
             <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled>
               {/* MAIN TITLE */}
               <View>
@@ -173,7 +173,7 @@ class Login extends React.Component {
                   style={{
                     width: '90%',
                     marginLeft: '5%',
-                    marginTop: -20,
+                    marginTop: -30,
                     borderColor: '#C4C4C4',
                     backgroundColor: 'white',
                     borderWidth: 0.5,
@@ -248,7 +248,7 @@ class Login extends React.Component {
                     color: 'white',
                     textAlign: 'center',
                     fontSize: 18,
-                    marginTop: 20,
+                    marginTop: 15,
                   }}
                   onPress={() => {
                     this.props.navigation.navigate('ForgotPassword');
@@ -258,7 +258,7 @@ class Login extends React.Component {
               </View>
 
               {/* SIGN UP NAVIGATION */}
-              <View style={{marginTop: 120}}>
+              <View style={{marginTop: '15%'}}>
                 <View />
                 <View>
                   <Text
@@ -266,7 +266,6 @@ class Login extends React.Component {
                       color: 'white',
                       textAlign: 'center',
                       fontSize: 18,
-                      marginTop: 10,
                     }}>
                     Don't have an account ?
                   </Text>
@@ -288,7 +287,7 @@ class Login extends React.Component {
             </KeyboardAvoidingView>
           </View>
         </ImageBackground>
-      </View>
+      </ScrollView>
     );
   }
 }
@@ -307,7 +306,7 @@ const styles = StyleSheet.create({
   },
   container: {
     width: screenwidth,
-    height: screenheight,
+    height: screenheight / 1,
     backgroundColor: Colors.overlayColor,
   },
   overlay: {
