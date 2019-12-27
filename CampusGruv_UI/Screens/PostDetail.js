@@ -9,6 +9,7 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   StyleSheet,
+  PermissionsAndroid
 } from 'react-native';
 import {ThemeConsumer} from 'react-native-elements';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -17,6 +18,9 @@ import IconFeather from 'react-native-vector-icons/Feather';
 import BackIcon from 'react-native-vector-icons/Ionicons';
 import {ThemeBlue} from '../Assets/Colors';
 import Modal from 'react-native-modal';
+	
+import RNFetchBlob from 'rn-fetch-blob';
+
 
 const IconGrey = '#b4b8bf';
 
@@ -39,7 +43,38 @@ export default class PostDetail extends Component {
     this.setState({isModalVisible: !this.state.isModalVisible});
   };
 
-  renderHeader = (userdp, username) => {
+
+  getExtention = (filename) => {
+    return (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) :
+      undefined;
+  }
+
+  downloadImage = (image_URL) => {
+    this.setState({isModalVisible: false})
+    var date = new Date();
+    var ext = this.getExtention(image_URL);
+    ext = "." + ext[0];
+    const { config, fs } = RNFetchBlob;
+    let PictureDir = fs.dirs.PictureDir
+    let options = {
+      fileCache: true,
+      addAndroidDownloads: {
+        useDownloadManager: true,
+        notification: true,
+        path: PictureDir + "/image_" + Math.floor(date.getTime()
+          + date.getSeconds() / 2) + ext,
+        description: 'Image'
+      }
+    }
+    config(options).fetch('GET', image_URL).then((res) => {
+      alert('Download Complete')
+  
+    });
+  }
+
+
+
+  renderHeader = (userdp, username,image_URL) => {
     return (
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <View
@@ -53,7 +88,7 @@ export default class PostDetail extends Component {
           <View>
             <BackIcon
               name="ios-arrow-back"
-              onPress={() => alert('Back')}
+              onPress={() => this.props.navigation.goBack()}
               style={{
                 marginRight: 8,
                 fontSize: 28,
@@ -158,7 +193,7 @@ export default class PostDetail extends Component {
                       name="download"
                       style={styles.optionIcon}></IconFeather>
                     <Text
-                      onPress={() => alert('Download Post')}
+                      onPress={() => this.downloadImage(image_URL)}
                       style={styles.TextWithNavigation}>
                       Download Post
                     </Text>
@@ -292,7 +327,7 @@ export default class PostDetail extends Component {
     return (
       <View style={{flex: 1, justifyContent: 'space-between'}}>
         <View style={{}}>
-          {this.renderHeader(data.userAvatar, data.username)}
+          {this.renderHeader(data.userAvatar, data.username,data.uri)}
         </View>
         <ScrollView style={{height: 300}}>
           {this.renderImage(data.uri)}

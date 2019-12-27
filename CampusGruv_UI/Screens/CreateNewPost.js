@@ -8,11 +8,13 @@ import {
   TextInput,
   KeyboardAvoidingView,
   AsyncStorage,
+  PermissionsAndroid
 } from 'react-native';
 import {withNavigation } from 'react-navigation';
 import CategoryButton from '../Components/CategoryButton';
 import DatePicker from 'react-native-datepicker';
 import Spinner from 'react-native-loading-spinner-overlay';
+import RNFetchBlob from 'rn-fetch-blob';
 
 
 import {
@@ -47,7 +49,32 @@ class CreateNewPost extends Component {
       })
   }
     
+  getExtention = (filename) => {
+    return (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) :
+      undefined;
+  }
 
+  downloadImage = () => {
+    var date = new Date();
+    var image_URL = 'https://reactnativecode.com/wp-content/uploads/2018/02/motorcycle.jpg';
+    var ext = this.getExtention(image_URL);
+    ext = "." + ext[0];
+    const { config, fs } = RNFetchBlob;
+    let PictureDir = fs.dirs.PictureDir
+    let options = {
+      fileCache: true,
+      addAndroidDownloads: {
+        useDownloadManager: true,
+        notification: true,
+        path: PictureDir + "/image_" + Math.floor(date.getTime()
+          + date.getSeconds() / 2) + ext,
+        description: 'Image'
+      }
+    }
+    config(options).fetch('GET', image_URL).then((res) => {
+      Alert.alert("Image Downloaded Successfully.");
+    });
+  }
 
   changeState = cat => {
     this.setState({
@@ -267,6 +294,7 @@ class CreateNewPost extends Component {
           Add Description (optional)
         </Text>
         <TextInput
+        value={this.state.Description}
           multiline={true}
           style={{
             color:"grey",
@@ -341,8 +369,7 @@ class CreateNewPost extends Component {
       console.log(imageResponse,'upload sucess')
  
      this.setState({spinner:false,Description:''})
-     this.props.navigation.navigate('Home')
-    
+     this.props.navigation.navigate('PostDetail')
 
 
 
@@ -363,6 +390,12 @@ class CreateNewPost extends Component {
         <Button
           onPress={()=> {
               this.uploadPost();
+              this.setState({
+             
+                description:''
+              
+              })
+            
           }}
           //bgclr={'rgba(47, 144, 234, 0.95)'}
           title={"Share"}
@@ -445,25 +478,27 @@ class CreateNewPost extends Component {
     // console.log(Images,'===================== imagess ============================')
     return (
       <TouchableWithoutFeedback > 
-       <ScrollView>
-       <Spinner
-          visible={this.state.spinner}
-          textContent={'Uploading...'}
-          textStyle={{color:'white'}}
-          customIndicator={
-           
-       
-          <BarIndicator count={5}  />
-  
-        }
-        />
+        <View>
+          <ScrollView>
+            <Spinner
+              visible={this.state.spinner}
+              textContent={'Uploading...'}
+              textStyle={{color:'white'}}
+              customIndicator={
+                <BarIndicator count={5} />
       
-        {this.renderCategories()}
-        {this.state.Category === 'Events' ? this.renderDatePicker() : null}
-        {this.state.Category === 'Free & For Sale' ? this.renderPrice() : null}
-        {this.renderDescription()}
-        {this.renderShareButton()}
-        </ScrollView>
+              }
+            />
+          
+            {this.renderCategories()}
+            {this.state.Category === 'Events' ? this.renderDatePicker() : null}
+            {this.state.Category === 'Free & For Sale' ? this.renderPrice() : null}
+            <KeyboardAvoidingView keyboardVerticalOffset={-100} behavior='padding' enabled>
+              {this.renderDescription()}
+              {this.renderShareButton()}
+            </KeyboardAvoidingView>
+          </ScrollView>
+        </View>
       </TouchableWithoutFeedback>
     );
   }

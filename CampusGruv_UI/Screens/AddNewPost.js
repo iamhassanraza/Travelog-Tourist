@@ -3,6 +3,7 @@ import {Text, View, ImageBackground, TouchableOpacity,TextInput,Button} from 're
 import ImagePicker from 'react-native-image-picker';
 // import RNFetchBlob from 'react-native-fetch-blob';
 import { ScrollView } from 'react-native-gesture-handler';
+import  Icon  from 'react-native-vector-icons/AntDesign';
 
 const options = {
   title: 'Select Photo',
@@ -70,23 +71,10 @@ selectPhoto = () => {
 
   }
 
-
- 
-  render() {
-   
-    return (
-      <View style={{flex:1}}>
-        <ScrollView>
-       
-        {
-            this.state.imageSource != null?
-        <ImageBackground
-        style={{height: 200, width: 200, marginTop: 30, marginBottom: 20,alignSelf: 'center'}}
-        source={this.state.imageSource}
-        />
-        : null
-    }
-<View style={{width:170,backgroundColor:'#0C91CF',alignSelf:'center',marginTop:10,borderRadius:10}}>
+renderOptions = () => {
+  return(
+    <View>
+      <View style={{width:170,backgroundColor:'#0C91CF',alignSelf:'center',marginTop:10,borderRadius:10}}>
 <TouchableOpacity onPress={this.selectPhoto}>
    <ImageBackground source={require('../Assets/Images/picture.png',)}style={{width:160,height:140,alignSelf:'center'}}/>
     </TouchableOpacity>
@@ -98,6 +86,39 @@ selectPhoto = () => {
     <Text style={{color:'white',fontSize:16,alignSelf:'center',fontWeight:'bold'}}>Take Photo</Text>
     </TouchableOpacity>
 </View>
+    </View>
+  );
+};
+
+renderDeleteIcon = () =>{
+  return(
+    <View style={{justifyContent:"center", alignItems:"center"}}>
+      <Icon name="delete" style={{fontSize:30, color:"grey"}} onPress={()=> { this.setState({Images:undefined})}}></Icon>
+    </View>
+  );
+};
+ 
+
+
+
+
+  render() {
+   
+    return (
+      <View style={{flex:1}}>
+        <ScrollView>
+       
+        {
+            this.state.Images != null?
+        <ImageBackground
+        style={{height: 200, width: 200, marginTop: 30, marginBottom: 20,alignSelf: 'center'}}
+        source={this.state.imageSource}
+        />
+        : null
+    }
+
+    {this.state.Images ? this.renderDeleteIcon() : this.renderOptions()}
+
 
 
 <Text style={{alignSelf:'center',marginTop:10,color:'grey'}}>Title</Text>
