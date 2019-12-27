@@ -56,7 +56,7 @@ const CreatePostStack = createStackNavigator({
     PostDetail
 },
 {
-
+    initialRouteName:'AddPost',
     defaultNavigationOptions:{
         header:null
     },
@@ -64,7 +64,6 @@ const CreatePostStack = createStackNavigator({
         tabBarVisible: false
     }
 }
-
 )
 
 
@@ -154,7 +153,7 @@ const TabNavigator = createMaterialTopTabNavigator(
   {
       initialRouteName: 'Home',
       tabBarPosition: 'bottom',
-      swipeEnabled: true,
+      swipeEnabled: false,
       tabBarOptions: {
           style: {
               backgroundColor: "#1192d1",
