@@ -13,11 +13,14 @@ class Test1 extends PureComponent {
     }
 
     onPageRefresh = () => {
-        this.fetchdata();
+        this.setState({posts:[],refreshing:true},()=>{
+            this.fetchdata();
+        })
+     
     }
 
     fetchdata = () => {  
-        this.setState({posts:[]}, () => {
+        
             fetch("https://campus-gruv-heroku.herokuapp.com/api/v1/post/all",{
                 headers:{
                     'Authorization':'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjM1NCwiaWF0IjoxNTc2MTMzNzQwfQ.f6hcEx-YKAcIaUJM8ZdH66iWahJafbLEzFEFwvLagE8'
@@ -33,7 +36,7 @@ class Test1 extends PureComponent {
                 })
             })
             .catch(err => console.log(err))
-        })
+        
     }
 
     componentDidMount(){
@@ -41,7 +44,8 @@ class Test1 extends PureComponent {
      this.focusListener = navigation.addListener('didFocus', () => {
       // The screen is focused
       this.fetchdata();
-    });      }
+    });     
+ }
 
     componentWillUnmount() {
         // Remove the event listener

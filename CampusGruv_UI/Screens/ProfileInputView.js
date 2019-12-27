@@ -15,6 +15,7 @@ class InputView extends React.Component {
       };
     }
 
+
     // this.props.getdatas(this.state.text);
     render() {
       // const { navigate } = this.props.navigation;

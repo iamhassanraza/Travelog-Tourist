@@ -28,6 +28,7 @@ import UserProfile from './Screens/UserProfile'
 import editprofile from './Screens/ProfileEdit'
 import AuthLoading from './Screens/AuthLoading'
 import AddPost from './Screens/AddNewPost'
+import Searching from './Screens/Searching'
 
 const AuthNavigator = createStackNavigator({
     Login: {
@@ -82,7 +83,8 @@ const ProfileStack = createStackNavigator({
 const HomeStack = createStackNavigator({
     HomeScreen,
     PostDetail,
-    CategoryList
+    CategoryList,
+    Searching
 },
     {
         defaultNavigationOptions: {
