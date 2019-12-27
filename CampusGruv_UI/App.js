@@ -291,8 +291,8 @@ export default class App extends Component {
   render() {
     return (
         // <NotificationScreen/>
-       <AppContainer/>
-//   <Login></Login>
+    //    <AppContainer/>
+  <Login></Login>
     )
   }
 }
