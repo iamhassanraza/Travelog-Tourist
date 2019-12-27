@@ -28,6 +28,7 @@ import {
   UIActivityIndicator,
   WaveIndicator,
 } from 'react-native-indicators';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class CreateNewPost extends Component {
   state = {
@@ -383,24 +384,22 @@ class CreateNewPost extends Component {
 
   renderShareButton = () => {
     return (
-      <View 
+      <TouchableOpacity 
         style={{alignItems: 'center'}}
+        onPress={()=> {
+          this.uploadPost();
+          this.setState({
+         
+            description:''
+          
+          })
+        }
+      }
       >
-
-        <Button
-          onPress={()=> {
-              this.uploadPost();
-              this.setState({
-             
-                description:''
-              
-              })
-            
-          }}
-          //bgclr={'rgba(47, 144, 234, 0.95)'}
-          title={"Share"}
-          ></Button>
+      <View style={{width: 50, height: 30, backgroundColor: '#1192d1', alignSelf: 'center'}}>
+        <Text>Share</Text>
       </View>
+      </TouchableOpacity>
     );
     }
 
