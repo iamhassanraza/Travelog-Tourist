@@ -11,7 +11,7 @@ import {
   Dimensions,
   Platform,
   TextInput,
-  ScrollView
+  ScrollView,
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import HeaderTitle from './Heading';
@@ -97,7 +97,6 @@ class Login extends React.Component {
         }),
       })
         .then(res => {
-         
           return res.json();
         })
         .then(response => {
@@ -106,16 +105,17 @@ class Login extends React.Component {
             if (response.message) {
               alert(response.message);
             } else {
-           
               console.log(response, '=========response=========');
               AsyncStorage.setItem('TOKEN', response.token);
               AsyncStorage.setItem('USER_ID', response.id.toString());
-              this.setState({
-                Spinner: false,
-              },()=>{
-                this.props.navigation.navigate('App');
-              });
-              
+              this.setState(
+                {
+                  Spinner: false,
+                },
+                () => {
+                  this.props.navigation.navigate('App');
+                },
+              );
             }
           } else {
             alert('User not Authorized');
@@ -133,7 +133,6 @@ class Login extends React.Component {
 
   render() {
     return (
-   
       <ScrollView>
         <Spinner
           visible={this.state.Spinner}
@@ -162,7 +161,6 @@ class Login extends React.Component {
               height: screenheight,
               justifyContent: 'space-between',
             }}>
-              
             <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled>
               {/* MAIN TITLE */}
               <View>
@@ -260,7 +258,7 @@ class Login extends React.Component {
               </View>
 
               {/* SIGN UP NAVIGATION */}
-              <View style={{marginTop: "15%"}}>
+              <View style={{marginTop: '15%'}}>
                 <View />
                 <View>
                   <Text
@@ -268,7 +266,6 @@ class Login extends React.Component {
                       color: 'white',
                       textAlign: 'center',
                       fontSize: 18,
-                      
                     }}>
                     Don't have an account ?
                   </Text>
@@ -291,7 +288,6 @@ class Login extends React.Component {
           </View>
         </ImageBackground>
       </ScrollView>
-
     );
   }
 }
@@ -310,7 +306,7 @@ const styles = StyleSheet.create({
   },
   container: {
     width: screenwidth,
-    height: screenheight/1,
+    height: screenheight / 1,
     backgroundColor: Colors.overlayColor,
   },
   overlay: {
