@@ -1,19 +1,19 @@
 import React from 'react';
 import {Text, View, TouchableOpacity, ScrollView} from 'react-native';
 import {ThemeBlue} from '../Assets/Colors'
-import PostList from '../Components/PostsList'
+import AvatarUserStatus from '../Components/AvatarUserStatus'
+import AvatarCampusStatus from '../Components/AvatarCampusStatus'
 
 export default class Searching extends React.PureComponent {
   state = {
-    selection: '',
+    selection: 'Feed',
   };
 
   renderFeed = () => {
     return(
            
         <View>
-            <Text>hy feed</Text>
-        
+        <Text>Feeeed</Text>
         </View>
            
     )
@@ -21,13 +21,22 @@ export default class Searching extends React.PureComponent {
 
 renderUsers = () => {
     return(
-        <Text>renderUsers</Text>
+        <View>
+          
+        <AvatarUserStatus></AvatarUserStatus>
+        <AvatarUserStatus></AvatarUserStatus>
+        <AvatarUserStatus></AvatarUserStatus>
+        </View>
     )
 }
 
 renderCampuses = () => {
     return(
-        <Text>renderCampuses</Text>
+    <View>
+        <AvatarCampusStatus></AvatarCampusStatus>
+        <AvatarCampusStatus></AvatarCampusStatus>
+        <AvatarCampusStatus></AvatarCampusStatus>
+    </View>
     )
 }
 
