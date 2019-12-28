@@ -28,6 +28,7 @@ import {
   UIActivityIndicator,
   WaveIndicator,
 } from 'react-native-indicators';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class CreateNewPost extends Component {
   state = {
@@ -368,11 +369,14 @@ class CreateNewPost extends Component {
     
       console.log(imageResponse,'upload sucess')
  
-     this.setState({spinner:false,Description:''})
+     this.setState({
+       spinner:false,
+       Title: '',
+      Description:'',
+        Images: '',
+      Category:''
+    })
      this.props.navigation.navigate('PostDetail')
-
-
-
     }
 
     
@@ -383,24 +387,17 @@ class CreateNewPost extends Component {
 
   renderShareButton = () => {
     return (
-      <View 
-        style={{alignItems: 'center'}}
+      <TouchableOpacity 
+        style={{alignItems: 'center', marginTop:'3%'}}
+        onPress={()=> {
+          this.uploadPost();
+        }
+      }
       >
-
-        <Button
-          onPress={()=> {
-              this.uploadPost();
-              this.setState({
-             
-                description:''
-              
-              })
-            
-          }}
-          //bgclr={'rgba(47, 144, 234, 0.95)'}
-          title={"Share"}
-          ></Button>
+      <View style={{width: '30%', borderRadius: 5, height: 30, justifyContent: 'center', backgroundColor: '#1192d1', alignSelf: 'center'}}>
+        <Text style={{color: 'white', alignSelf: 'center'}}>SHARE</Text>
       </View>
+      </TouchableOpacity>
     );
     }
 
@@ -426,42 +423,43 @@ class CreateNewPost extends Component {
     
 
       
-     uploadPhoto = (title) => {
+    //  uploadPhoto = (title) => {
 
-      if( this.state.Category === ''){
-        alert('Select Category')
-      }
-      else if(this.state.Description === ''){
-        alert('Enter Description First ')
-      }
-      else{
+    //   if( this.state.Category === ''){
+    //     alert('Select Category')
+    //   }
+    //   else if(this.state.Description === ''){
+    //     alert('Enter Description First ')
+    //   }
+    //   else{
       
       
-          fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/post/create',{
-            method:'POST',
-            headers:{
-              'Content-Type': 'application/json',
-              "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjM0NywiaWF0IjoxNTc2NzUzODQ4fQ.EorFB96f-mV9-29JyaBqaDRZhvyIfTGOCslN7m8j390`,
-            },
-            body:JSON.stringify({user_id:347,category_id:15,title:title,description:this.state.description})
-          })
-          .then((response) => response.json())
-          .then((response) => {
-            console.log("response=======>",response)
-            this.handleCreateImage(response.user_id,response.id)
-            this.setState({
-             
-              description:'',
-            
-            })
-          })
-          .catch((err) => {
-              console.log(err)
-          })
+    //       fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/post/create',{
+    //         method:'POST',
+    //         headers:{
+    //           'Content-Type': 'application/json',
+    //           "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjM0NywiaWF0IjoxNTc2NzUzODQ4fQ.EorFB96f-mV9-29JyaBqaDRZhvyIfTGOCslN7m8j390`,
+    //         },
+    //         body:JSON.stringify({user_id:347,category_id:15,title:title,description:this.state.description})
+    //       })
+    //       .then((response) => response.json())
+    //       .then((response) => {
+    //         console.log("response=======>",response)
+    //         this.handleCreateImage(response.user_id,response.id)
+    //         this.setState({
+    //           Title: '',
+    //           description:'',
+    //           Images: '',
+    //           Category:''
+    //         })
+    //       })
+    //       .catch((err) => {
+    //           console.log(err)
+    //       })
       
-        }
+    //     }
       
-        };
+    //     };
 
 
 
@@ -478,7 +476,7 @@ class CreateNewPost extends Component {
     // console.log(Images,'===================== imagess ============================')
     return (
       <TouchableWithoutFeedback > 
-        <View>
+        <KeyboardAvoidingView style={{flex: 1}} keyboardVerticalOffset={90} behavior='padding'>
           <ScrollView>
             <Spinner
               visible={this.state.spinner}
@@ -493,12 +491,11 @@ class CreateNewPost extends Component {
             {this.renderCategories()}
             {this.state.Category === 'Events' ? this.renderDatePicker() : null}
             {this.state.Category === 'Free & For Sale' ? this.renderPrice() : null}
-            <KeyboardAvoidingView keyboardVerticalOffset={-100} behavior='padding' enabled>
+            
               {this.renderDescription()}
               {this.renderShareButton()}
-            </KeyboardAvoidingView>
           </ScrollView>
-        </View>
+          </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     );
   }
