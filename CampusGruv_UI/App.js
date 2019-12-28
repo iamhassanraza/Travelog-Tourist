@@ -47,7 +47,17 @@ const AuthNavigator = createStackNavigator({
                 screen: ForgotPassword,
                 navigationOptions: {
                     header: null }
-                }
+                },
+                RecoveryCode: {
+                    screen: RecoveryCode,
+                    navigationOptions: {
+                        header: null }
+                    },
+                    ResetPassword: {
+                        screen: ResetPassword,
+                        navigationOptions: {
+                            header: null }
+                        }
 
            
 
@@ -295,11 +305,12 @@ export default class App extends Component {
   render() {
     return (
         // <NotificationScreen/>
-        // <AppContainer/>
+        <AppContainer/>
 
         // <Searching></Searching>
         // <RecoveryCode></RecoveryCode>
-        <ResetPassword></ResetPassword>
+        // <ResetPassword></ResetPassword>
+        // <ForgotPassword></ForgotPassword>
 )
   }
 }

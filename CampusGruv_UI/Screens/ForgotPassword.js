@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import HeaderTitle from './Heading';
 import Colors from '../Assets/Colors';
+import { withNavigation } from 'react-navigation';
 
 class ForgetPassword extends React.Component {
   static navigationOptions = {
@@ -28,6 +29,25 @@ class ForgetPassword extends React.Component {
     };
   }
 
+
+
+  sendOTP = async () => {
+    if(this.validate(this.state.email)){
+      const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/send_otp?email=${this.state.email}`);
+    const JsonResponse = await Response.json();
+
+    if(parseInt(Response.status) === 404) {
+      alert(JsonResponse.message);
+    }
+    else if (parseInt(Response.status) === 200){
+      this.props.navigation.navigate('RecoveryCode');
+    }
+
+    }    
+  }
+
+
+
   validate = text => {
     console.log(text);
     let check = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
@@ -39,6 +59,7 @@ class ForgetPassword extends React.Component {
     } else {
       this.setState({email: text,error: ""});
       console.log('Email is Correct');
+      return true;
     }
   };
 
@@ -88,7 +109,8 @@ class ForgetPassword extends React.Component {
                 borderRadius: 10,
               }}>
               <TextInput
-                style={{width: '90%', fontSize: 20, color: '#ACACAC'}}
+              autoCapitalize = 'none'
+                style={{width: '90%', fontSize: 20, color: '#ACACAC',paddingLeft:"3%"}}
                 placeholder="Email"
                 // onChangeText={text => this.validate(text)}
                 onChangeText={text => this.setState({email:text})}
@@ -96,7 +118,7 @@ class ForgetPassword extends React.Component {
               />
             </View>
 
-            <TouchableOpacity onPress={()=> this.validate(this.state.email)}>
+            <TouchableOpacity onPress={()=> this.sendOTP()}>
 
           {this.state.error ? <View><Text style={{marginLeft: '7%',color:"#fa2a57", fontSize:15}}>{this.state.error}</Text></View> : null}
 
@@ -174,4 +196,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default ForgetPassword;
+export default withNavigation(ForgetPassword);

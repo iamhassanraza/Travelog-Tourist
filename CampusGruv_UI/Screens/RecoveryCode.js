@@ -14,6 +14,7 @@ import {
 } from 'react-native';
 import HeaderTitle from './Heading';
 import Colors from '../Assets/Colors';
+import { withNavigation } from 'react-navigation';
 
 class RecoverCode extends React.Component {
   static navigationOptions = {
@@ -27,6 +28,25 @@ class RecoverCode extends React.Component {
   }
 
   
+
+
+  checkOTP = async () => {
+    if(this.state.code){
+      const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/verify_otp?otp=${this.state.code}`);
+    const JsonResponse = await Response.json();
+
+    if(parseInt(Response.status) === 404) {
+      alert(JsonResponse.message);
+    }
+    else if (parseInt(Response.status) === 200){
+      this.props.navigation.navigate('ResetPassword', {OTP: this.state.code});
+      this.setState({code:""});
+    }
+
+    }    
+  }
+
+
 
   render() {
   
@@ -72,15 +92,14 @@ class RecoverCode extends React.Component {
                 borderRadius: 10,
               }}>
               <TextInput
+              autoCapitalize = 'none'
                 style={{width: '90%', fontSize: 20, color: '#ACACAC', paddingLeft:"30%"}}
                 onChangeText={text => this.setState({code:text})}
                 value={this.state.code}
               />
             </View>
 
-            <TouchableOpacity onPress={()=> alert('Agli Screen')}>
-
-          {this.state.code ? <View><Text style={{marginLeft: '7%',color:"#fa2a57", fontSize:15}}>Wrong Code</Text></View> : null}
+            <TouchableOpacity onPress={()=> this.checkOTP()}>
 
 
               <View style={{marginBottom: 10}}>
@@ -124,4 +143,4 @@ const styles = StyleSheet.create({
   }
 });
 
-export default RecoverCode;
+export default withNavigation(RecoverCode);
