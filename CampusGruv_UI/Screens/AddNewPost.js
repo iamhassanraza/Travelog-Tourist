@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
-import {Text, KeyboardAvoidingView, View, ImageBackground, TouchableOpacity,TextInput,Button} from 'react-native';
+import {Text, KeyboardAvoidingView, View, ImageBackground, TouchableOpacity,TextInput,Button, Dimensions} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 // import RNFetchBlob from 'react-native-fetch-blob';
-import { ScrollView } from 'react-native-gesture-handler';
+import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import  Icon  from 'react-native-vector-icons/AntDesign';
 
 const options = {
@@ -105,6 +105,7 @@ renderDeleteIcon = () =>{
   render() {
    
     return (
+      <TouchableWithoutFeedback style={{height:Dimensions.get('window').height}}>
       <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100} style={{flex: 1}}>
         <ScrollView>
        
@@ -150,7 +151,7 @@ renderDeleteIcon = () =>{
         } 
       }}
       >
-      <View style={{width: '30%', borderRadius: 5, height: 30, justifyContent: 'center', backgroundColor: '#1192d1', alignSelf: 'center'}}>
+      <View style={{width: '90%', borderRadius: 5, height: 30, justifyContent: 'center', backgroundColor: '#1192d1', alignSelf: 'center'}}>
         <Text style={{color: 'white', alignSelf: 'center'}}>NEXT</Text>
       </View>
       </TouchableOpacity>
@@ -162,6 +163,7 @@ renderDeleteIcon = () =>{
        
 
          </KeyboardAvoidingView>
+         </TouchableWithoutFeedback>
     );
   }
 }
