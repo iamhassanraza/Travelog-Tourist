@@ -29,6 +29,8 @@ import editprofile from './Screens/ProfileEdit'
 import AuthLoading from './Screens/AuthLoading'
 import AddPost from './Screens/AddNewPost'
 import Searching from './Screens/Searching'
+import RecoveryCode from './Screens/RecoveryCode'
+import ResetPassword from './Screens/ResetPassword'
 
 const AuthNavigator = createStackNavigator({
     Login: {
@@ -295,7 +297,9 @@ export default class App extends Component {
         // <NotificationScreen/>
         // <AppContainer/>
 
-        <Searching></Searching>
+        // <Searching></Searching>
+        // <RecoveryCode></RecoveryCode>
+        <ResetPassword></ResetPassword>
 )
   }
 }
