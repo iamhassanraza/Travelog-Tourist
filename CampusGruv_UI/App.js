@@ -56,8 +56,7 @@ const AuthNavigator = createStackNavigator({
 
 const CreatePostStack = createStackNavigator({
     AddPost,
-    CreatePost,
-    PostDetail
+    CreatePost
 },
     {
         initialRouteName: 'AddPost',

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, ImageBackground, TouchableOpacity,TextInput,Button} from 'react-native';
+import {Text, KeyboardAvoidingView, View, ImageBackground, TouchableOpacity,TextInput,Button} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 // import RNFetchBlob from 'react-native-fetch-blob';
 import { ScrollView } from 'react-native-gesture-handler';
@@ -105,7 +105,7 @@ renderDeleteIcon = () =>{
   render() {
    
     return (
-      <View style={{flex:1}}>
+      <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100} style={{flex: 1}}>
         <ScrollView>
        
         {
@@ -122,11 +122,11 @@ renderDeleteIcon = () =>{
 
 
 <Text style={{alignSelf:'center',marginTop:10,color:'grey'}}>Title</Text>
-                <TextInput style={{marginTop:10,marginLeft:'5%',width:'90%',height:35,borderRadius: 7,borderWidth:1,borderColor:'#B4B8BA'}}
-                placeholder="Enter value" value={this.state.title} onChangeText={(text)=>{this.setState({title:text})}}></TextInput>
+          <TextInput style={{marginTop:10,marginLeft:'5%',width:'90%',height:35,borderRadius: 7,borderWidth:1,borderColor:'#B4B8BA'}}
+          placeholder="Enter value" value={this.state.title} onChangeText={(text)=>{this.setState({title:text})}}></TextInput>
 
-<View style={{width:'90%',height:60,marginTop:20,marginLeft:'5%'}}>
-    <Button title="Next" onPress={()=>{
+
+    {/* <Button title="Next" onPress={()=>{
       // this.uploadPhoto
     
       if(this.state.Images && this.state.title !== ''){
@@ -137,8 +137,23 @@ renderDeleteIcon = () =>{
         })
       }
      
-    }}></Button>
-    </View>
+    }}></Button> */}
+  <TouchableOpacity 
+      style={{alignItems: 'center', marginTop:'3%'}}
+      onPress={()=>{      
+        if(this.state.Images && this.state.title !== ''){
+          this.setState({Images:undefined,title:'',imageSource:null})
+          this.props.navigation.navigate('CreatePost',{
+            Images: this.state.Images,
+            title: this.state.title
+          })
+        } 
+      }}
+      >
+      <View style={{width: '30%', borderRadius: 5, height: 30, justifyContent: 'center', backgroundColor: '#1192d1', alignSelf: 'center'}}>
+        <Text style={{color: 'white', alignSelf: 'center'}}>NEXT</Text>
+      </View>
+      </TouchableOpacity>
 
 
 
@@ -146,7 +161,7 @@ renderDeleteIcon = () =>{
     </ScrollView>
        
 
-         </View>
+         </KeyboardAvoidingView>
     );
   }
 }

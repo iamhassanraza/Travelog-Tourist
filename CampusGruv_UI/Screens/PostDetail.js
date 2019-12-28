@@ -13,6 +13,7 @@ import {
   Dimensions
 } from 'react-native';
 import {ThemeConsumer} from 'react-native-elements';
+import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CrossIcon from 'react-native-vector-icons/MaterialIcons';
 import IconFeather from 'react-native-vector-icons/Feather';
@@ -254,14 +255,22 @@ export default class PostDetail extends Component {
         style={{
           flexDirection: 'row',
           backgroundColor: 'white',
-          //height: 40,
-          paddingLeft: '2%',
+          alignItems: 'center',
+          //height: 60,
+          //paddingLeft: '2%',
+          //paddingTop:'1%',
+          //paddingBottom:'1%',
+          marginTop:'2%'
         }}>
-        <Image
-          source={{uri: dp}}
-          style={{width: 40, alignSelf: 'center', height: 40, borderRadius: 50}}></Image>
 
-        <TextInput
+        <View style={{marginLeft:'2%', width: 40, height: 40}}>
+          <Image
+            source={{uri: dp}}
+            style={{width:'100%', borderRadius: 50, height: '100%'}}>
+          </Image>
+        </View>
+
+        {/* <TextInput
           placeholder="Add your comment"
           multiline={true}
           style={{
@@ -273,26 +282,35 @@ export default class PostDetail extends Component {
             borderRadius: 9,
             //borderWidth: 0.2,
             borderColor: 'grey',
-          }}
-          onChangeText={text => {
+          }} */}
+          <View style={{width:'73%', marginLeft:'2%'}}>
+          <TextInput 
+            multiline={true}
+            placeholder="Add a comment"
+            style={{ borderRadius: 7, borderWidth:0.2, borderColor:'grey'}}
+            onChangeText={text => {
             this.changeCurrentCommentState(text);
           }}></TextInput>
+          </View>
+        <View>
         <Text
           style={{
-            alignSelf: 'center',
-            fontSize: 17,
+           //fontSize: 17,
             color: 'grey',
             paddingLeft: '2%',
           }}>
           Post
         </Text>
+        </View>
       </View>
     );
   };
 
   renderAllComments = dp => {
     return (
-      <View style={{paddingRight: '7%', marginTop: '1%', marginBottom:'1%'}}>
+      <View style={{paddingRight: '7%', marginTop: '1%', 
+      //marginBottom:'1%'
+    }}>
         <View
           style={{
             width: '100%',
@@ -325,11 +343,11 @@ export default class PostDetail extends Component {
     const data = this.props.navigation.getParam('PostData', 'nothing to render');
     
     return (
-        <View style={{flex: 1}}>
+        <View style={{height: Dimensions.get('window').height-125}}>
             {this.renderHeader(data.userAvatar, data.username,data.uri)}
            
-          <KeyboardAvoidingView behavior='padding' style={{}}>  
-          <ScrollView style={{height: Dimensions.get('window').height-215}}>
+          <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={-110} style={{flex: 1}}>  
+          <ScrollView style={{flex: 1}}>
             {this.renderImage(data.uri)}
             {this.renderTitle(data.title)}
             {this.renderDescription(data.description)}
@@ -341,13 +359,15 @@ export default class PostDetail extends Component {
             {this.renderAllComments(data.userAvatar)}
             {this.renderAllComments(data.userAvatar)}
             {this.renderAllComments(data.userAvatar)}
-            </ScrollView>
-            {this.renderAddComment(data.userAvatar)}
+            </ScrollView> 
             </KeyboardAvoidingView>
+                {this.renderAddComment(data.userAvatar)}
         </View>
     );
   }
 }
+
+//style={{height: Dimensions.get('window').height-215}}
 
 const styles = StyleSheet.create({
   TextWithNavigation: {
