@@ -5,7 +5,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 
 export default class AvatarCampusStatus extends Component {
   state = {
-    current: true,
+    current: this.props.status,
   };
 
   render() {
@@ -23,9 +23,8 @@ export default class AvatarCampusStatus extends Component {
           <Image
             source={require('../Assets/Images/mansehra.jpg')}
             style={{height: 40, width: 40, borderRadius: 50}}></Image>
-          <Text style={{fontSize: 18, fontWeight: 'bold', color: 'grey'}}>
-            {' '}
-            Avatar{' '}
+          <Text style={{fontSize: 18, fontWeight: 'bold', color: 'grey', paddingLeft:"2%"}}>
+          {this.props.name}
           </Text>
         </View>
 
