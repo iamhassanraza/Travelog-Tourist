@@ -8,13 +8,13 @@ import {
   TextInput,
   KeyboardAvoidingView,
   AsyncStorage,
-  PermissionsAndroid
+
 } from 'react-native';
 import {withNavigation } from 'react-navigation';
 import CategoryButton from '../Components/CategoryButton';
 import DatePicker from 'react-native-datepicker';
 import Spinner from 'react-native-loading-spinner-overlay';
-import RNFetchBlob from 'rn-fetch-blob';
+
 
 
 import {
@@ -28,7 +28,6 @@ import {
   UIActivityIndicator,
   WaveIndicator,
 } from 'react-native-indicators';
-import { TouchableOpacity } from 'react-native-gesture-handler';
 
 class CreateNewPost extends Component {
   state = {
@@ -50,33 +49,7 @@ class CreateNewPost extends Component {
       })
   }
     
-  getExtention = (filename) => {
-    return (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) :
-      undefined;
-  }
-
-  downloadImage = () => {
-    var date = new Date();
-    var image_URL = 'https://reactnativecode.com/wp-content/uploads/2018/02/motorcycle.jpg';
-    var ext = this.getExtention(image_URL);
-    ext = "." + ext[0];
-    const { config, fs } = RNFetchBlob;
-    let PictureDir = fs.dirs.PictureDir
-    let options = {
-      fileCache: true,
-      addAndroidDownloads: {
-        useDownloadManager: true,
-        notification: true,
-        path: PictureDir + "/image_" + Math.floor(date.getTime()
-          + date.getSeconds() / 2) + ext,
-        description: 'Image'
-      }
-    }
-    config(options).fetch('GET', image_URL).then((res) => {
-      Alert.alert("Image Downloaded Successfully.");
-    });
-  }
-
+  
   changeState = cat => {
     this.setState({
       Category: cat,
@@ -352,9 +325,10 @@ class CreateNewPost extends Component {
         'Content-Type': 'application/json',
         "Authorization": `Bearer ${Token}`,
       },
-      body:JSON.stringify({user_id:user_id,category_id:15,title:this.state.Title,description:this.state.Description})
+      body:JSON.stringify({user_id:user_id,category_id:1,title:this.state.Title,description:this.state.Description})
     })
     const postMasterResponse =  await response.json();
+  
 
     let raw_response = await fetch("https://campus-gruv-heroku.herokuapp.com/api/v1/post/detail", {
       method: "POST",
@@ -369,14 +343,11 @@ class CreateNewPost extends Component {
     
       console.log(imageResponse,'upload sucess')
  
-     this.setState({
-       spinner:false,
-       Title: '',
-      Description:'',
-        Images: '',
-      Category:''
-    })
+     this.setState({spinner:false,Description:''})
      this.props.navigation.navigate('PostDetail')
+
+
+
     }
 
     
@@ -387,17 +358,24 @@ class CreateNewPost extends Component {
 
   renderShareButton = () => {
     return (
-      <TouchableOpacity 
-        style={{alignItems: 'center', marginTop:'3%'}}
-        onPress={()=> {
-          this.uploadPost();
-        }
-      }
+      <View 
+        style={{alignItems: 'center'}}
       >
-      <View style={{width: '30%', borderRadius: 5, height: 30, justifyContent: 'center', backgroundColor: '#1192d1', alignSelf: 'center'}}>
-        <Text style={{color: 'white', alignSelf: 'center'}}>SHARE</Text>
+
+        <Button
+          onPress={()=> {
+              this.uploadPost();
+              this.setState({
+             
+                description:''
+              
+              })
+            
+          }}
+          //bgclr={'rgba(47, 144, 234, 0.95)'}
+          title={"Share"}
+          ></Button>
       </View>
-      </TouchableOpacity>
     );
     }
 
@@ -423,43 +401,42 @@ class CreateNewPost extends Component {
     
 
       
-    //  uploadPhoto = (title) => {
+     uploadPhoto = (title) => {
 
-    //   if( this.state.Category === ''){
-    //     alert('Select Category')
-    //   }
-    //   else if(this.state.Description === ''){
-    //     alert('Enter Description First ')
-    //   }
-    //   else{
+      if( this.state.Category === ''){
+        alert('Select Category')
+      }
+      else if(this.state.Description === ''){
+        alert('Enter Description First ')
+      }
+      else{
       
       
-    //       fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/post/create',{
-    //         method:'POST',
-    //         headers:{
-    //           'Content-Type': 'application/json',
-    //           "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjM0NywiaWF0IjoxNTc2NzUzODQ4fQ.EorFB96f-mV9-29JyaBqaDRZhvyIfTGOCslN7m8j390`,
-    //         },
-    //         body:JSON.stringify({user_id:347,category_id:15,title:title,description:this.state.description})
-    //       })
-    //       .then((response) => response.json())
-    //       .then((response) => {
-    //         console.log("response=======>",response)
-    //         this.handleCreateImage(response.user_id,response.id)
-    //         this.setState({
-    //           Title: '',
-    //           description:'',
-    //           Images: '',
-    //           Category:''
-    //         })
-    //       })
-    //       .catch((err) => {
-    //           console.log(err)
-    //       })
+          fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/post/create',{
+            method:'POST',
+            headers:{
+              'Content-Type': 'application/json',
+              "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjM0NywiaWF0IjoxNTc2NzUzODQ4fQ.EorFB96f-mV9-29JyaBqaDRZhvyIfTGOCslN7m8j390`,
+            },
+            body:JSON.stringify({user_id:347,category_id:15,title:title,description:this.state.description})
+          })
+          .then((response) => response.json())
+          .then((response) => {
+            console.log("response=======>",response)
+            this.handleCreateImage(response.user_id,response.id)
+            this.setState({
+             
+              description:'',
+            
+            })
+          })
+          .catch((err) => {
+              console.log(err)
+          })
       
-    //     }
+        }
       
-    //     };
+        };
 
 
 
@@ -476,7 +453,7 @@ class CreateNewPost extends Component {
     // console.log(Images,'===================== imagess ============================')
     return (
       <TouchableWithoutFeedback > 
-        <KeyboardAvoidingView style={{flex: 1}} keyboardVerticalOffset={90} behavior='padding'>
+        <View>
           <ScrollView>
             <Spinner
               visible={this.state.spinner}
@@ -491,11 +468,12 @@ class CreateNewPost extends Component {
             {this.renderCategories()}
             {this.state.Category === 'Events' ? this.renderDatePicker() : null}
             {this.state.Category === 'Free & For Sale' ? this.renderPrice() : null}
-            
+            <KeyboardAvoidingView keyboardVerticalOffset={-100} behavior='padding' enabled>
               {this.renderDescription()}
               {this.renderShareButton()}
+            </KeyboardAvoidingView>
           </ScrollView>
-          </KeyboardAvoidingView>
+        </View>
       </TouchableWithoutFeedback>
     );
   }

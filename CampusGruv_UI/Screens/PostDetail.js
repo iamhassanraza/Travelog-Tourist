@@ -13,7 +13,7 @@ import {
   Dimensions
 } from 'react-native';
 import {ThemeConsumer} from 'react-native-elements';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
+
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CrossIcon from 'react-native-vector-icons/MaterialIcons';
 import IconFeather from 'react-native-vector-icons/Feather';
@@ -293,7 +293,10 @@ export default class PostDetail extends Component {
           }}></TextInput>
           </View>
         <View>
-        <Text
+        <Text onPress={()=>{
+          //CALL API FOR COMMENT , USER ID ,POST ID , COMMENT DESCRIPTION 
+          alert('call api')
+        }}
           style={{
            //fontSize: 17,
             color: 'grey',

@@ -304,9 +304,9 @@ export default class App extends Component {
   render() {
     return (
         // <NotificationScreen/>
-        // <AppContainer/>
+        <AppContainer/>
 
-        <Searching></Searching>
+        // <Searching></Searching>
         // <RecoveryCode></RecoveryCode>
         // <ResetPassword></ResetPassword>
         // <ForgotPassword></ForgotPassword>

@@ -3,6 +3,8 @@ import {Text, View, TouchableOpacity, ScrollView, FlatList} from 'react-native';
 import {ThemeBlue} from '../Assets/Colors';
 import AvatarUserStatus from '../Components/AvatarUserStatus';
 import AvatarCampusStatus from '../Components/AvatarCampusStatus';
+import PostList from '../Components/PostsList'
+import HomeScreen from './HomeScreen';
 
 export default class Searching extends React.PureComponent {
   state = {
@@ -22,9 +24,10 @@ export default class Searching extends React.PureComponent {
   ];
 
   renderFeed = () => {
+
     return (
       <View>
-        <Text>Feeeed</Text>
+        <PostList></PostList>
       </View>
     );
   };
