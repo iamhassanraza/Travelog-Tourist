@@ -63,7 +63,7 @@ export default class UserSettings extends Component {
                       backgroundColor: 'white',
                       flexDirection: 'row',
                       justifyContent: 'space-between',
-                      paddingBottom:30
+                      paddingBottom:30,borderTopRightRadius:23, borderTopLeftRadius:23
                     }}>
                     <CrossIcon
                       name="cancel"
