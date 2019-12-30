@@ -101,21 +101,17 @@ class Login extends React.Component {
         })
         .then(response => {
           if (response) {
-            console.log('=====>>>', response);
+            this.setState({
+              Spinner: false,
+            });
             if (response.message) {
               alert(response.message);
             } else {
               console.log(response, '=========response=========');
               AsyncStorage.setItem('TOKEN', response.token);
               AsyncStorage.setItem('USER_ID', response.id.toString());
-              this.setState(
-                {
-                  Spinner: false,
-                },
-                () => {
-                  this.props.navigation.navigate('App');
-                },
-              );
+
+              this.props.navigation.navigate('App');
             }
           } else {
             alert('User not Authorized');
@@ -134,7 +130,7 @@ class Login extends React.Component {
   render() {
     return (
       <ScrollView>
-        <Spinner
+        {/* <Spinner
           visible={this.state.Spinner}
           textContent={'Loading...'}
           overlayColor={'rgba(0, 0, 0, 0.7)'}
@@ -149,7 +145,7 @@ class Login extends React.Component {
               </ImageBackground>
             </View>
           }
-        />
+        /> */}
 
         <ImageBackground
           style={styles.container}
@@ -232,15 +228,22 @@ class Login extends React.Component {
                 {/* LOG IN BUTTON */}
                 <View style={styles.butt}>
                   <TouchableOpacity onPress={this.submitForm}>
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontWeight: 'bold',
-                        textAlign: 'center',
-                        color: 'white',
-                      }}>
-                      Log in
-                    </Text>
+                    {this.state.Spinner ? (
+                      <View style={{ flexDirection:'row',justifyContent:'center'}}>
+                        <Text style={{color:'white',fontWeight:'bold',fontSize:18}}>Loading  </Text>
+                        <BarIndicator style={{flex:0}} count={3} size={20} color={'white'} />
+                      </View>
+                    ) : (
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontWeight: 'bold',
+                          textAlign: 'center',
+                          color: 'white',
+                        }}>
+                        Log in
+                      </Text>
+                    )}
                   </TouchableOpacity>
                 </View>
                 <Text
