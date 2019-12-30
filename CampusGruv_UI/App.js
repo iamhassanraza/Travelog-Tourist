@@ -108,6 +108,7 @@ const CreatePostStack = createStackNavigator({
                     <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
                         <TouchableOpacity 
                             onPress = {() => {
+                                props.navigation.dispatch(StackActions.popToTop());
                                 props.navigation.navigate('HomeScreen')
                             }}
                         >
@@ -124,8 +125,8 @@ const CreatePostStack = createStackNavigator({
     {
         initialRouteName: 'AddPost',
         navigationOptions: {
-            tabBarVisible: false
-        }
+            tabBarVisible: false,
+        },
     }
 )
 
@@ -259,6 +260,12 @@ const TabNavigator = createMaterialTopTabNavigator(
         initialRouteName: 'Home',
         tabBarPosition: 'bottom',
         swipeEnabled: false,
+        defaultNavigationOptions: {
+            tabBarOnPress: ({navigation, defaultHandler}) => {
+                navigation.dispatch(StackActions.popToTop());
+                defaultHandler();
+            }
+        },
         tabBarOptions: {
             style: {
                 backgroundColor: "white",
