@@ -4,6 +4,7 @@ import ImagePicker from 'react-native-image-picker';
 // import RNFetchBlob from 'react-native-fetch-blob';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import  Icon  from 'react-native-vector-icons/AntDesign';
+import { StackActions, NavigationActions } from 'react-navigation';
 
 const options = {
   title: 'Select Photo',

@@ -13,6 +13,7 @@ import Logo from './Assets/Images/logo.png'
 import HomeScreen from './Screens/HomeScreen'
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { StackActions, NavigationActions } from 'react-navigation';
 import PostDetail from './Screens/PostDetail'
 import CreatePost from './Screens/CreateNewPost'
 import PostsList from './Components/PostsList'
