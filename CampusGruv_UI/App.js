@@ -33,6 +33,7 @@ import RecoveryCode from './Screens/RecoveryCode'
 import ResetPassword from './Screens/ResetPassword'
 import Followers from './Screens/Followers'
 import Following from './Screens/Following'
+import UserSettings from './Screens/UserSettings'
 
 const AuthNavigator = createStackNavigator({
     Login: {
@@ -305,7 +306,7 @@ export default class App extends Component {
     return (
     
         //  <AppContainer/>
- <Following></Following>
+<UserSettings></UserSettings>
 )
   }
 }
