@@ -64,7 +64,8 @@ const CreatePostStack = createStackNavigator({
             header: null
         },
         navigationOptions: {
-            tabBarVisible: false
+            tabBarVisible: false,
+            headerVisible: false
         }
     }
 )
@@ -141,7 +142,8 @@ const TabNavigator = createMaterialTopTabNavigator(
                 tabBarIcon: ({ tintColor }) => (
                     <Icon2 name="email-outline" color={tintColor} style={{ fontSize: 22 }} />
                 ),
-                tabBarLabel: "Messages"
+                tabBarLabel: "Messages",
+                header: null
             }
         },
         Profile: {
