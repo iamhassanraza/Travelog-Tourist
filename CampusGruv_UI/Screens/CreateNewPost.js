@@ -355,6 +355,7 @@ class CreateNewPost extends Component {
       body:JSON.stringify({user_id:user_id,category_id:15,title:this.state.Title,description:this.state.Description})
     })
     const postMasterResponse =  await response.json();
+    console.log(postMasterResponse)
 
     let raw_response = await fetch("https://campus-gruv-heroku.herokuapp.com/api/v1/post/detail", {
       method: "POST",
