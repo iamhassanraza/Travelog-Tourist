@@ -29,27 +29,35 @@ import editprofile from './Screens/ProfileEdit'
 import AuthLoading from './Screens/AuthLoading'
 import AddPost from './Screens/AddNewPost'
 import Searching from './Screens/Searching'
+import RecoveryCode from './Screens/RecoveryCode'
+import ResetPassword from './Screens/ResetPassword'
 
 const AuthNavigator = createStackNavigator({
     Login: {
         screen: Login,
         navigationOptions: {
-            header: null
-        }
-    },
-    SignUp: {
-        screen: SignUp,
-        navigationOptions: {
-            header: null
-        }
-    },
-    ForgotPassword: {
-        screen: ForgotPassword,
-        navigationOptions: {
-            header: null
-        }
-    }
-
+            header: null }
+        },
+        SignUp: {
+            screen: SignUp,
+            navigationOptions: {
+                header: null }
+            },
+            ForgotPassword: {
+                screen: ForgotPassword,
+                navigationOptions: {
+                    header: null }
+                },
+                RecoveryCode: {
+                    screen: RecoveryCode,
+                    navigationOptions: {
+                        header: null }
+                    },
+                    ResetPassword: {
+                        screen: ResetPassword,
+                        navigationOptions: {
+                            header: null }
+                        }
 
 
 })
@@ -293,13 +301,15 @@ const RootStackNavigator = createSwitchNavigator({
 const AppContainer = createAppContainer(RootStackNavigator);
 
 export default class App extends Component {
-    render() {
-        return (
-            // <NotificationScreen/>
-            <AppContainer />
-            //<Login></Login>
-            //<SignUp></SignUp>    
+  render() {
+    return (
+        // <NotificationScreen/>
+        <AppContainer/>
 
-        )
-    }
+        // <Searching></Searching>
+        // <RecoveryCode></RecoveryCode>
+        // <ResetPassword></ResetPassword>
+        // <ForgotPassword></ForgotPassword>
+)
+  }
 }
