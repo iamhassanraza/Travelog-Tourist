@@ -31,6 +31,8 @@ import AddPost from './Screens/AddNewPost'
 import Searching from './Screens/Searching'
 import RecoveryCode from './Screens/RecoveryCode'
 import ResetPassword from './Screens/ResetPassword'
+import Followers from './Screens/Followers'
+import Following from './Screens/Following'
 
 const AuthNavigator = createStackNavigator({
     Login: {
@@ -301,13 +303,9 @@ const AppContainer = createAppContainer(RootStackNavigator);
 export default class App extends Component {
   render() {
     return (
-        // <NotificationScreen/>
-        <AppContainer/>
-
-        // <Searching></Searching>
-        // <RecoveryCode></RecoveryCode>
-        // <ResetPassword></ResetPassword>
-        // <ForgotPassword></ForgotPassword>
+    
+        //  <AppContainer/>
+ <Following></Following>
 )
   }
 }
