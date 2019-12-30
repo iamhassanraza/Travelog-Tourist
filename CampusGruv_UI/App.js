@@ -95,7 +95,7 @@ const CreatePostStack = createStackNavigator({
                     <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
                         <TouchableOpacity 
                             onPress = {() => {
-                                props.navigation.goBack();
+                                props.navigation.navigate("AddPost");
                             }}
                         >
                             <Icon name="arrow-back" color="white" size={25} />

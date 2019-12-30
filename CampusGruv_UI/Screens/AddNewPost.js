@@ -143,7 +143,6 @@ renderDeleteIcon = () =>{
       style={{alignItems: 'center', marginTop:'3%'}}
       onPress={()=>{      
         if(this.state.Images && this.state.title !== ''){
-          this.setState({Images:undefined,title:'',imageSource:null})
           this.props.navigation.navigate('CreatePost',{
             Images: this.state.Images,
             title: this.state.title
