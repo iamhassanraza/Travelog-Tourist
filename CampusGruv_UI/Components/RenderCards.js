@@ -12,7 +12,7 @@ class RenderCards extends PureComponent {
     render() {
         // {this.state.posts[0].users?  console.log(this.state.posts[0].users.first_name) : console.log('console')}
         if(this.props.posts) {
-            console.log(this.props.posts,'=========== POOOSTENE')
+        
             const column1Data = this.props.posts.filter((item, i) => i%2 === 0);
             const column2Data = this.props.posts.filter((item, i) => i%2 === 1);
 

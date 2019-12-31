@@ -13,6 +13,7 @@ import Logo from './Assets/Images/logo.png'
 import HomeScreen from './Screens/HomeScreen'
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
+import { StackActions, NavigationActions } from 'react-navigation';
 import PostDetail from './Screens/PostDetail'
 import CreatePost from './Screens/CreateNewPost'
 import PostsList from './Components/PostsList'
@@ -31,6 +32,8 @@ import AddPost from './Screens/AddNewPost'
 import Searching from './Screens/Searching'
 import RecoveryCode from './Screens/RecoveryCode'
 import ResetPassword from './Screens/ResetPassword'
+import { TouchableWithoutFeedback, TouchableHighlight } from 'react-native-gesture-handler'
+import UserSettings from './Screens/UserSettings'
 
 const AuthNavigator = createStackNavigator({
     Login: {
@@ -63,18 +66,69 @@ const AuthNavigator = createStackNavigator({
 })
 
 const CreatePostStack = createStackNavigator({
-    AddPost,
-    CreatePost
+    AddPost: {
+        screen: AddPost,
+        navigationOptions: {
+            header: (props) => (
+                <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+                    <View style={{alignSelf: 'center'}}>
+                        <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>New post</Text>
+                    </View>
+                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
+                        <TouchableOpacity 
+                            onPress = {() => {
+                                props.navigation.navigate('HomeScreen')
+                            }}
+                        >
+                            <Text style={{color: 'white', padding: 2}}>
+                                close
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            )
+        },
+    },
+    PostDetail,
+    CreatePost: {
+        screen: CreatePost,
+        navigationOptions: {
+            header: (props) => (
+                <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
+                        <TouchableOpacity 
+                            onPress = {() => {
+                                props.navigation.navigate("AddPost");
+                            }}
+                        >
+                            <Icon name="arrow-back" color="white" size={25} />
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{alignSelf: 'center'}}>
+                        <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>New post</Text>
+                    </View>
+                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
+                        <TouchableOpacity 
+                            onPress = {() => {
+                                props.navigation.dispatch(StackActions.popToTop());
+                                props.navigation.navigate('HomeScreen')
+                            }}
+                        >
+                            <Text style={{color: 'white', padding: 2}}>
+                                close
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View> 
+            )
+        },
+    }
 },
     {
         initialRouteName: 'AddPost',
-        defaultNavigationOptions: {
-            header: null
-        },
         navigationOptions: {
             tabBarVisible: false,
-            headerVisible: false
-        }
+        },
     }
 )
 
@@ -96,7 +150,45 @@ const HomeStack = createStackNavigator({
 },
     {
         defaultNavigationOptions: {
-            header: null
+        header: props =>
+        <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', backgroundColor: '#1192d1' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', flex: 10 }}>
+                <View style={{ marginLeft: '2%', flexDirection: 'row', alignSelf: 'center' }}>
+                    <View style={{ height: 30, padding: 0, flexDirection: 'row', alignItems: 'center', width: 250, backgroundColor: '#F0F0F0', borderRadius: 10 }}>
+                        <View style={{ marginLeft: '2%' }}>
+                            <Icon
+                                name="search"
+                                color="#1192d1"
+                                size={20}
+                            />
+                        </View>
+                        <View style={{ height: 20 }}>
+                            <Image
+                                source={Logo}
+                                style={{ width: 150, alignSelf: 'flex-start', height: '100%' }}
+                                resizeMode="contain"
+                            />
+                        </View>
+                    </View>
+                </View>
+                <View style={{ marginLeft: '2%' }}>
+                    <TouchableOpacity onPress={() => props.navigation.navigate('CategoryList')}>
+                        <Icon2
+                            name="view-grid"
+                            color="white"
+                            size={25}
+                        />
+                    </TouchableOpacity>
+                </View>
+            </View>
+            <View style={{ flex: 1 }}>
+                <TouchableOpacity onPress={() => props.navigation.push('TabContainer', {
+                    categorySelected: true
+                })}>
+                    <PeopleIcon name="users" color="white" size={20} />
+                </TouchableOpacity>
+            </View>
+        </View>
         }
     }
 )
@@ -107,7 +199,9 @@ const MessageStack = createStackNavigator({
 },
     {
         defaultNavigationOptions: {
-            header: null
+            headerStyle: {
+                backgroundColor: '#1192d1'
+            }
         }
     }
 
@@ -151,7 +245,7 @@ const TabNavigator = createMaterialTopTabNavigator(
                     <Icon2 name="email-outline" color={tintColor} style={{ fontSize: 22 }} />
                 ),
                 tabBarLabel: "Messages",
-                header: null
+                hederMode: 'none'
             }
         },
         Profile: {
@@ -168,6 +262,12 @@ const TabNavigator = createMaterialTopTabNavigator(
         initialRouteName: 'Home',
         tabBarPosition: 'bottom',
         swipeEnabled: false,
+        defaultNavigationOptions: {
+            tabBarOnPress: ({navigation, defaultHandler}) => {
+                navigation.dispatch(StackActions.popToTop());
+                defaultHandler();
+            }
+        },
         tabBarOptions: {
             style: {
                 backgroundColor: "white",
@@ -196,90 +296,110 @@ const TabNavigator = createMaterialTopTabNavigator(
 );
 const TabContainer = createAppContainer(TabNavigator);
 
-const RootStack = createStackNavigator({
+// const RootStack = createStackNavigator({
 
-    TabContainer: {
-        screen: TabContainer,
-        navigationOptions: {
-            // headerRight: (
-            //     <View style={{backgroundColor:'#1192d1', borderRadius:50, marginRight:10, width:25, justifyContent:'center', height: 25}}>
-            //         <Icon name='filter-list' size={22} color={'white'} style={{fontWeight:'bold', alignSelf:'center'}}/>
-            //     </View>
-            // ) 
-            header: props =>
-                <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', backgroundColor: '#1192d1' }}>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', flex: 10 }}>
-                        <View style={{ marginLeft: '2%', flexDirection: 'row', alignSelf: 'center' }}>
-                            <View style={{ height: 30, padding: 0, flexDirection: 'row', alignItems: 'center', width: 250, backgroundColor: '#F0F0F0', borderRadius: 10 }}>
-                                <View style={{ marginLeft: '2%' }}>
-                                    <Icon
-                                        name="search"
-                                        color="#1192d1"
-                                        size={20}
-                                    />
-                                </View>
-                                <View style={{ height: 20 }}>
-                                    <Image
-                                        source={Logo}
-                                        style={{ width: 150, alignSelf: 'flex-start', height: '100%' }}
-                                        resizeMode="contain"
-                                    />
-                                </View>
-                            </View>
-                        </View>
-                        <View style={{ marginLeft: '2%' }}>
-                            <TouchableOpacity onPress={() => props.navigation.push('CategoryList')}>
-                                <Icon2
-                                    name="view-grid"
-                                    color="white"
-                                    size={25}
-                                />
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                    <View style={{ flex: 1 }}>
-                        <TouchableOpacity onPress={() => props.navigation.push('TabContainer', {
-                            categorySelected: true
-                        })}>
-                            <PeopleIcon name="users" color="white" size={20} />
-                        </TouchableOpacity>
-                    </View>
-                </View>
+//     TabContainer: {
+//         screen: TabContainer
+//         // navigationOptions: {
+//         //     header: props =>
+//         //         <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', backgroundColor: '#1192d1' }}>
+//         //             <View style={{ flexDirection: 'row', alignItems: 'center', flex: 10 }}>
+//         //                 <View style={{ marginLeft: '2%', flexDirection: 'row', alignSelf: 'center' }}>
+//         //                     <View style={{ height: 30, padding: 0, flexDirection: 'row', alignItems: 'center', width: 250, backgroundColor: '#F0F0F0', borderRadius: 10 }}>
+//         //                         <View style={{ marginLeft: '2%' }}>
+//         //                             <Icon
+//         //                                 name="search"
+//         //                                 color="#1192d1"
+//         //                                 size={20}
+//         //                             />
+//         //                         </View>
+//         //                         <View style={{ height: 20 }}>
+//         //                             <Image
+//         //                                 source={Logo}
+//         //                                 style={{ width: 150, alignSelf: 'flex-start', height: '100%' }}
+//         //                                 resizeMode="contain"
+//         //                             />
+//         //                         </View>
+//         //                     </View>
+//         //                 </View>
+//         //                 <View style={{ marginLeft: '2%' }}>
+//         //                     <TouchableOpacity onPress={() => props.navigation.push('CategoryList')}>
+//         //                         <Icon2
+//         //                             name="view-grid"
+//         //                             color="white"
+//         //                             size={25}
+//         //                         />
+//         //                     </TouchableOpacity>
+//         //                 </View>
+//         //             </View>
+//         //             <View style={{ flex: 1 }}>
+//         //                 <TouchableOpacity onPress={() => props.navigation.push('TabContainer', {
+//         //                     categorySelected: true
+//         //                 })}>
+//         //                     <PeopleIcon name="users" color="white" size={20} />
+//         //                 </TouchableOpacity>
+//         //             </View>
+//         //         </View>
+//         // }
+//     },
 
-        }
-    },
-
-
-
-},
-    {
-        initialRouteName: 'TabContainer',
-        headerLayoutPreset: 'center',
-        defaultNavigationOptions: {
-            headerStyle: {
-                backgroundColor: '#1192d1'
-            },
-            headerTitle: 'CAMPUSGRUV',
-            headerTitleStyle: {
-                fontSize: 25,
-                fontWeight: 'bold',
-                color: 'white'
-            }
-
-            // header: (
-            //     <View style={{height:50, backgroundColor: '#1192d1', flexDirection:'row', alignItems:'center', justifyContent:'space-between'}}>
-            //     <View style={{}}>
-            //         <Text style={{fontSize:25,fontWeight:'bold', color: 'white'}}>CampusGruv</Text>
-            //     </View>
-            //     <View style={{width:25, height:25,justifyContent:'center', marginRight:'4%',backgroundColor:'#1192d1', borderRadius:50}}>
-            //         <Icon name="search" size={20} color={'white'} style={{alignSelf:'center'}}></Icon>
-            //     </View>
-            //     </View>
-            // )
-        }
-
-    }
-);
+// },
+//     {
+//         initialRouteName: 'TabContainer',
+//         headerLayoutPreset: 'center',
+//         headerMode:'none',
+//         defaultNavigationOptions: {
+//             headerStyle: {
+//                 backgroundColor: '#1192d1'
+//             },
+//             headerTitle: 'CAMPUSGRUV',
+//             headerTitleStyle: {
+//                 fontSize: 25,
+//                 fontWeight: 'bold',
+//                 color: 'white'
+//             },
+//             header: props =>
+//                     <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', backgroundColor: '#1192d1' }}>
+//                         <View style={{ flexDirection: 'row', alignItems: 'center', flex: 10 }}>
+//                             <View style={{ marginLeft: '2%', flexDirection: 'row', alignSelf: 'center' }}>
+//                                 <View style={{ height: 30, padding: 0, flexDirection: 'row', alignItems: 'center', width: 250, backgroundColor: '#F0F0F0', borderRadius: 10 }}>
+//                                     <View style={{ marginLeft: '2%' }}>
+//                                         <Icon
+//                                             name="search"
+//                                             color="#1192d1"
+//                                             size={20}
+//                                         />
+//                                     </View>
+//                                     <View style={{ height: 20 }}>
+//                                         <Image
+//                                             source={Logo}
+//                                             style={{ width: 150, alignSelf: 'flex-start', height: '100%' }}
+//                                             resizeMode="contain"
+//                                         />
+//                                     </View>
+//                                 </View>
+//                             </View>
+//                             <View style={{ marginLeft: '2%' }}>
+//                                 <TouchableOpacity onPress={() => props.navigation.navigate('CategoryList')}>
+//                                     <Icon2
+//                                         name="view-grid"
+//                                         color="white"
+//                                         size={25}
+//                                     />
+//                                 </TouchableOpacity>
+//                             </View>
+//                         </View>
+//                         <View style={{ flex: 1 }}>
+//                             <TouchableOpacity onPress={() => props.navigation.navigate('TabContainer', {
+//                                 categorySelected: true
+//                             })}>
+//                                 <PeopleIcon name="users" color="white" size={20} />
+//                             </TouchableOpacity>
+//                         </View>
+//                     </View>
+//         },  
+//     }
+// );
 
 const RootStackNavigator = createSwitchNavigator({
     AuthLoading: {
@@ -289,7 +409,7 @@ const RootStackNavigator = createSwitchNavigator({
         screen: AuthNavigator
     },
     App: {
-        screen: RootStack
+        screen: TabContainer
     }
 
 },
@@ -303,13 +423,10 @@ const AppContainer = createAppContainer(RootStackNavigator);
 export default class App extends Component {
   render() {
     return (
-        // <NotificationScreen/>
-        <AppContainer/>
+    
+         <AppContainer/>
+        // <UserSettings></UserSettings>
 
-        // <Searching></Searching>
-        // <RecoveryCode></RecoveryCode>
-        // <ResetPassword></ResetPassword>
-        // <ForgotPassword></ForgotPassword>
 )
   }
 }

@@ -328,7 +328,7 @@ class CreateNewPost extends Component {
       body:JSON.stringify({user_id:user_id,category_id:1,title:this.state.Title,description:this.state.Description})
     })
     const postMasterResponse =  await response.json();
-  
+    console.log(postMasterResponse,'--------------------------------- POST MASTER ')
 
     let raw_response = await fetch("https://campus-gruv-heroku.herokuapp.com/api/v1/post/detail", {
       method: "POST",
@@ -341,10 +341,21 @@ class CreateNewPost extends Component {
     
     let imageResponse = await raw_response.json();
     
-      console.log(imageResponse,'upload sucess')
+
+      console.log(imageResponse,'IMAGEEEEEEEEEEEEEEEEEEEEEEEE')
  
      this.setState({spinner:false,Description:''})
-     this.props.navigation.navigate('PostDetail')
+     this.props.navigation.push('PostDetail', {
+        PostData: {
+          uri: imageResponse.image_url,
+          title: postMasterResponse.title,
+          userAvatar: imageResponse.image_url,
+          username: 'API NEEDED',
+          description: postMasterResponse.description,
+        }
+      }
+
+     )
 
 
 

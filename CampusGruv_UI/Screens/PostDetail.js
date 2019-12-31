@@ -159,7 +159,7 @@ export default class PostDetail extends Component {
                       backgroundColor: 'white',
                       flexDirection: 'row',
                       justifyContent: 'space-between',
-                      paddingBottom:30
+                      paddingBottom:30,borderTopRightRadius:23, borderTopLeftRadius:23
                     }}>
                     <CrossIcon
                       name="cancel"
@@ -344,6 +344,7 @@ export default class PostDetail extends Component {
 
   render() {
     const data = this.props.navigation.getParam('PostData', 'nothing to render');
+    console.log(data,'============================= post detail me received data ================== ')
     
     return (
         <View style={{height: Dimensions.get('window').height-125}}>
