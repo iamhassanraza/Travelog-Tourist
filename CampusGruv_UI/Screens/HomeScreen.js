@@ -49,7 +49,7 @@ export default class HomeScreen extends PureComponent {
         return response.json();
       })
       .then(responseJson => {
-        console.log(responseJson.data)
+      
         this.setState({
           posts: responseJson.data,
           refreshing: false,
@@ -82,7 +82,7 @@ export default class HomeScreen extends PureComponent {
               onRefresh={this.onPageRefresh}
             />
           }>
-          {/* <RenderCards posts={this.state.posts}></RenderCards> */}
+          <RenderCards posts={this.state.posts}></RenderCards>
         </ScrollView>
       );
     } else {

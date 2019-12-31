@@ -308,7 +308,7 @@ class CreateNewPost extends Component {
     this.setState({spinner:true});
     const Token = await AsyncStorage.getItem('TOKEN')
     const user_id = await AsyncStorage.getItem('USER_ID')
-
+      
     let response = await fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/post/create',{
       method:'POST',
       headers:{
