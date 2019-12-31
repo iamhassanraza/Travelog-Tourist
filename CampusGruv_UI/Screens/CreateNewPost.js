@@ -8,14 +8,14 @@ import {
   TextInput,
   KeyboardAvoidingView,
   AsyncStorage,
-  PermissionsAndroid
+  PermissionsAndroid,
+  FlatList
 } from 'react-native';
-import {withNavigation } from 'react-navigation';
+import {withNavigation} from 'react-navigation';
 import CategoryButton from '../Components/CategoryButton';
 import DatePicker from 'react-native-datepicker';
 import Spinner from 'react-native-loading-spinner-overlay';
 import RNFetchBlob from 'rn-fetch-blob';
-
 
 import {
   BallIndicator,
@@ -28,7 +28,7 @@ import {
   UIActivityIndicator,
   WaveIndicator,
 } from 'react-native-indicators';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {TouchableOpacity} from 'react-native-gesture-handler';
 
 class CreateNewPost extends Component {
   state = {
@@ -36,46 +36,74 @@ class CreateNewPost extends Component {
     CategoryEventDate: '',
     Title: '',
     Description: '',
-    Price : '',
-    spinner:false,
-    Images:''
-  
-
+    Price: '',
+    spinner: false,
+    Images: '',
+    DATA: undefined,
   };
 
-  componentDidMount = ()=>{
-      this.setState({
-        Images:this.props.navigation.getParam('Images', 'nothing to render'),
-        Title:this.props.navigation.getParam('title', 'nothing to render')
-      })
-  }
-    
-  getExtention = (filename) => {
-    return (/[.]/.exec(filename)) ? /[^.]+$/.exec(filename) :
-      undefined;
-  }
+  getCategories = async () => {
+    const Token = await AsyncStorage.getItem('TOKEN');
+
+    const Response = await fetch(
+      `https://campus-gruv-heroku.herokuapp.com/api/v1/post/categories`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Token}`,
+        },
+      },
+    );
+
+    const JsonResponse = await Response.json();
+
+    if (parseInt(Response.status) === 401) {
+      alert('Error');
+    } else if (parseInt(Response.status) === 200) {
+      console.log('API called Successfully');
+    }
+  };
+
+  componentDidMount = () => {
+    this.getCategories();
+    this.setState({
+      Images: this.props.navigation.getParam('Images', 'nothing to render'),
+      Title: this.props.navigation.getParam('title', 'nothing to render'),
+    });
+  };
+
+  getExtention = filename => {
+    return /[.]/.exec(filename) ? /[^.]+$/.exec(filename) : undefined;
+  };
 
   downloadImage = () => {
     var date = new Date();
-    var image_URL = 'https://reactnativecode.com/wp-content/uploads/2018/02/motorcycle.jpg';
+    var image_URL =
+      'https://reactnativecode.com/wp-content/uploads/2018/02/motorcycle.jpg';
     var ext = this.getExtention(image_URL);
-    ext = "." + ext[0];
-    const { config, fs } = RNFetchBlob;
-    let PictureDir = fs.dirs.PictureDir
+    ext = '.' + ext[0];
+    const {config, fs} = RNFetchBlob;
+    let PictureDir = fs.dirs.PictureDir;
     let options = {
       fileCache: true,
       addAndroidDownloads: {
         useDownloadManager: true,
         notification: true,
-        path: PictureDir + "/image_" + Math.floor(date.getTime()
-          + date.getSeconds() / 2) + ext,
-        description: 'Image'
-      }
-    }
-    config(options).fetch('GET', image_URL).then((res) => {
-      Alert.alert("Image Downloaded Successfully.");
-    });
-  }
+        path:
+          PictureDir +
+          '/image_' +
+          Math.floor(date.getTime() + date.getSeconds() / 2) +
+          ext,
+        description: 'Image',
+      },
+    };
+    config(options)
+      .fetch('GET', image_URL)
+      .then(res => {
+        Alert.alert('Image Downloaded Successfully.');
+      });
+  };
 
   changeState = cat => {
     this.setState({
@@ -85,133 +113,74 @@ class CreateNewPost extends Component {
 
   changeTitleState = title => {
     this.setState({
-      Title: title
-    })
-  }
+      Title: title,
+    });
+  };
 
   changeDescriptionState = desc => {
     this.setState({
-      Description: desc
-    })
-  }
+      Description: desc,
+    });
+  };
 
   changePriceState = price => {
     this.setState({
-      Price : price
-    })
-  }
+      Price: price,
+    });
+  };
 
+  getCategories = async () => {
+
+    const Token = await AsyncStorage.getItem('TOKEN');
+
+    const Response = await fetch(
+      `https://campus-gruv-heroku.herokuapp.com/api/v1/post/categories`,
+      {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Token}`,
+        },
+      },
+    );
+
+    const JsonResponse = await Response.json();
+
+    if (parseInt(Response.status) === 401) {
+      alert('Error');
+    } else if (parseInt(Response.status) === 200) {
+      console.log('API called Successfully');
+      this.setState({DATA: JsonResponse});
+    }
+  };
 
   renderCategories = () => {
     return (
       <View>
         <View style={{alignItems: 'center'}}>
-          <Text style={{fontSize: 22, color: 'grey'}}> Select Category </Text>
+          <Text style={{fontSize: 22, color: 'grey', marginBottom:10}}> Select Category </Text>
         </View>
-
-        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-          <CategoryButton
-            title="Blog"
-            bgclr={ this.state.Category === 'Blog' ? 'rgba(229, 110, 73, 0.95)' : 'rgba(229, 110, 73, 0.65)'}
-            onSelect={this.changeState}
-            Elevation={
-              this.state.Category === 'Blog' ? 14 : null
-            }></CategoryButton>
-
-          <CategoryButton
-            title="CampusGram"
-            bgclr={this.state.Category === 'CampusGram' ? 'rgba(239, 149, 149, 0.95)' : 'rgba(239, 149, 149, 0.65)'}
-            onSelect={this.changeState}
-            Elevation={
-              this.state.Category === 'CampusGram' ? 14 : null
-            }></CategoryButton>
-
-          <CategoryButton
-            title="Deals"
-            bgclr={ this.state.Category === 'Deals' ? 'rgba(207, 59, 232, 0.95)' : 'rgba(207, 59, 232, 0.65)'}
-            onSelect={this.changeState}
-            Elevation={
-              this.state.Category === 'Deals' ? 14 : null
-            }></CategoryButton>
-        </View>
-
-        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-          <CategoryButton
-            title="Events"
-            bgclr={this.state.Category === 'Events' ? 'rgba(30, 199, 15, 0.95)' : 'rgba(30, 199, 15, 0.65)'}
-            onSelect={this.changeState}
-            Elevation={
-              this.state.Category === 'Events' ? 14 : null
-            }></CategoryButton>
-
-          <CategoryButton
-            title="DIY"
-            bgclr={this.state.Category === 'DIY' ? 'rgba(47, 144, 234, 0.95)' : 'rgba(47, 144, 234, 0.65)'}
-            onSelect={this.changeState}
-            Elevation={
-              this.state.Category === 'DIY' ? 14 : null
-            }></CategoryButton>
-
-          <CategoryButton
-            title="Free & For Sale"
-            bgclr={this.state.Category === 'Free & For Sale' ? 'rgba(230, 200, 48, 0.95)' : 'rgba(230, 200, 48, 0.65)'}
-            onSelect={this.changeState}
-            Elevation={
-              this.state.Category === 'Free & For Sale' ? 14 : null
-            }></CategoryButton>
-        </View>
-
-        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-          <CategoryButton
-            title="Housing"
-            bgclr={this.state.Category === 'Housing' ? 'rgba(25, 192, 215, 0.95)' : 'rgba(25, 192, 215, 0.65)'}
-            onSelect={this.changeState}
-            Elevation={
-              this.state.Category === 'Housing' ? 14 : null
-            }></CategoryButton>
-
-          <CategoryButton
-            title="Jobs"
-            bgclr={this.state.Category === 'Jobs' ? 'rgba(218, 65, 0, 0.95)' : 'rgba(218, 65, 0, 0.65)'}
-            onSelect={this.changeState}
-            Elevation={
-              this.state.Category === 'Jobs' ? 14 : null
-            }></CategoryButton>
-
-          <CategoryButton
-            title="Lost and Found"
-            bgclr={ this.state.Category === 'Lost and Found' ? 'rgba(251, 136, 2, 0.95)' : 'rgba(251, 136, 2, 0.65)'}
-            onSelect={this.changeState}
-            Elevation={
-              this.state.Category === 'Lost and Found' ? 14 : null
-            }></CategoryButton>
-        </View>
-
-        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-          <CategoryButton
-            title="News"
-            bgclr={this.state.Category === 'News' ? 'rgba(60, 143, 128, 0.95)' : 'rgba(60, 143, 128, 0.65)'}
-            onSelect={this.changeState}
-            Elevation={
-              this.state.Category === 'News' ? 14 : null
-            }></CategoryButton>
-
-          <CategoryButton
-            title="Random"
-            bgclr={this.state.Category === 'Random' ? 'rgba(138, 69, 250, 0.95)' : 'rgba(138, 69, 250, 0.65)'}
-            onSelect={this.changeState}
-            Elevation={
-              this.state.Category === 'Random' ? 14 : null
-            }></CategoryButton>
-
-          <CategoryButton
-            title="Service"
-            bgclr={this.state.Category === 'Service' ? 'rgba(244, 61, 105, 0.95)' : 'rgba(244, 61, 105, 0.65)'}
-            onSelect={this.changeState}
-            Elevation={
-              this.state.Category === 'Service' ? 14 : null
-            }></CategoryButton>
-        </View>
+        
+        <FlatList
+          vertical
+          numColumns={3}
+          data={this.state.DATA}
+          keyExtractor={item => item.id}
+          showsHorizontalScrollIndicator={false}
+          renderItem={({item}) => (
+            <CategoryButton
+              title={item.description}
+              cat_id={item.id}
+              bgclr={
+                this.state.Category === item.id ? `rgba(${item.rgba_colors}, 0.95)` : `rgba(${item.rgba_colors}, 0.65)`
+              }
+              onSelect={this.changeState}
+              Elevation={
+                this.state.Category === item.id ? 14 : null
+              }>
+              </CategoryButton>
+          )}
+        />
       </View>
     );
   };
@@ -281,7 +250,9 @@ class CreateNewPost extends Component {
             borderWidth: 0.5,
             borderColor: 'grey',
           }}
-          onChangeText ={(text)=>{this.changePriceState(text)}}
+          onChangeText={text => {
+            this.changePriceState(text);
+          }}
         />
       </View>
     );
@@ -295,18 +266,19 @@ class CreateNewPost extends Component {
           Add Description (optional)
         </Text>
         <TextInput
-        value={this.state.Description}
+          value={this.state.Description}
           multiline={true}
           style={{
-            color:"grey",
+            color: 'grey',
             width: '92%',
             borderWidth: 0.5,
             borderColor: 'grey',
             margin: 10,
             borderRadius: 8,
           }}
-          onChangeText ={(text)=>{this.changeDescriptionState(text)}}
-          ></TextInput>
+          onChangeText={text => {
+            this.changeDescriptionState(text);
+          }}></TextInput>
       </View>
     );
   };
@@ -325,12 +297,14 @@ class CreateNewPost extends Component {
             margin: 10,
             borderRadius: 8,
           }}
-          onChangeText ={(text)=>{this.changeTitleState(text)}}
-          ></TextInput>
+          onChangeText={text => {
+            this.changeTitleState(text);
+          }}></TextInput>
       </View>
     );
   };
 
+  
 
   uploadPost = async ()=>{
 
@@ -345,17 +319,16 @@ class CreateNewPost extends Component {
     this.setState({spinner:true});
     const Token = await AsyncStorage.getItem('TOKEN')
     const user_id = await AsyncStorage.getItem('USER_ID')
-
+      
     let response = await fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/post/create',{
       method:'POST',
       headers:{
         'Content-Type': 'application/json',
         "Authorization": `Bearer ${Token}`,
       },
-      body:JSON.stringify({user_id:user_id,category_id:15,title:this.state.Title,description:this.state.Description})
+      body:JSON.stringify({user_id:user_id,category_id:this.state.Category,title:this.state.Title,description:this.state.Description})
     })
     const postMasterResponse =  await response.json();
-    console.log(postMasterResponse)
 
     let raw_response = await fetch("https://campus-gruv-heroku.herokuapp.com/api/v1/post/detail", {
       method: "POST",
@@ -368,140 +341,100 @@ class CreateNewPost extends Component {
     
     let imageResponse = await raw_response.json();
     
-      console.log(imageResponse,'upload sucess')
+    console.log(imageResponse,'IMAGEE ka responseE')
+      console.log(imageResponse.image_url,'IMAGEEEEEEEEEEEEEEEEEEEEEEEE')
  
-     this.setState({
-       spinner:false,
-       Title: '',
-      Description:'',
-        Images: '',
-      Category:''
-    })
-     this.props.navigation.navigate('PostDetail')
+     this.setState({spinner:false,Description:''})
+     
+     const RefreshFunc =  this.props.navigation.getParam('refereshFunction', 'nothing to render')
+      RefreshFunc();
+   
+    this.props.navigation.navigate('HomeScreen')
+    //  this.props.navigation.push('PostDetail', {
+    //     PostData: {
+    //       uri: imageResponse.image_url,
+    //       title: postMasterResponse.title,
+    //       userAvatar: 'Api needed',
+    //       username: 'API NEEDED',
+    //       description: postMasterResponse.description,
+    //     }
+    //   }
+
+    //  )
+
+
+
     }
-
-    
-
-
-
-  }
+  };
 
   renderShareButton = () => {
     return (
-      <TouchableOpacity 
-        style={{alignItems: 'center', marginTop:'3%'}}
-        onPress={()=> {
+      <TouchableOpacity
+        style={{alignItems: 'center', marginTop: '3%'}}
+        onPress={() => {
           this.uploadPost();
-        }
-      }
-      >
-      <View style={{width: '30%', borderRadius: 5, height: 30, justifyContent: 'center', backgroundColor: '#1192d1', alignSelf: 'center'}}>
-        <Text style={{color: 'white', alignSelf: 'center'}}>SHARE</Text>
-      </View>
+        }}>
+        <View
+          style={{
+            width: '30%',
+            borderRadius: 5,
+            height: 30,
+            justifyContent: 'center',
+            backgroundColor: '#1192d1',
+            alignSelf: 'center',
+          }}>
+          <Text style={{color: 'white', alignSelf: 'center'}}>SHARE</Text>
+        </View>
       </TouchableOpacity>
     );
-    }
+  };
 
-    createFormData = (images, body) => {
-      const data = new FormData();
-        data.append("post_detail_images[]", {
-          name: images.fileName,
-          type: images.type,
-          uri:
-            Platform.OS === "android" ? images.uri : images.uri.replace("file://", "")
-        });
-     
-      Object.keys(body).forEach(key => {
-        data.append(key, body[key]);
-      });
-      
-     
-      
-      return data;
-    
-    };
+  createFormData = (images, body) => {
+    const data = new FormData();
+    data.append('post_detail_images[]', {
+      name: images.fileName,
+      type: images.type,
+      uri:
+        Platform.OS === 'android'
+          ? images.uri
+          : images.uri.replace('file://', ''),
+    });
 
-    
+    Object.keys(body).forEach(key => {
+      data.append(key, body[key]);
+    });
 
-      
-    //  uploadPhoto = (title) => {
-
-    //   if( this.state.Category === ''){
-    //     alert('Select Category')
-    //   }
-    //   else if(this.state.Description === ''){
-    //     alert('Enter Description First ')
-    //   }
-    //   else{
-      
-      
-    //       fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/post/create',{
-    //         method:'POST',
-    //         headers:{
-    //           'Content-Type': 'application/json',
-    //           "Authorization": `Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjM0NywiaWF0IjoxNTc2NzUzODQ4fQ.EorFB96f-mV9-29JyaBqaDRZhvyIfTGOCslN7m8j390`,
-    //         },
-    //         body:JSON.stringify({user_id:347,category_id:15,title:title,description:this.state.description})
-    //       })
-    //       .then((response) => response.json())
-    //       .then((response) => {
-    //         console.log("response=======>",response)
-    //         this.handleCreateImage(response.user_id,response.id)
-    //         this.setState({
-    //           Title: '',
-    //           description:'',
-    //           Images: '',
-    //           Category:''
-    //         })
-    //       })
-    //       .catch((err) => {
-    //           console.log(err)
-    //       })
-      
-    //     }
-      
-    //     };
-
-
-
-      
-      
-
-
-
-//                        " WHOLE RENDER METHOD ""
-
+    return data;
+  };
 
   render() {
- 
-    // console.log(Images,'===================== imagess ============================')
     return (
-      <TouchableWithoutFeedback > 
-        <KeyboardAvoidingView style={{flex: 1}} keyboardVerticalOffset={90} behavior='padding'>
+      <TouchableWithoutFeedback>
+        <KeyboardAvoidingView
+          style={{flex: 1}}
+          keyboardVerticalOffset={90}
+          behavior="padding">
           <ScrollView>
             <Spinner
               visible={this.state.spinner}
               textContent={'Uploading...'}
-              textStyle={{color:'white'}}
-              customIndicator={
-                <BarIndicator count={5} />
-      
-              }
+              textStyle={{color: 'white'}}
+              customIndicator={<BarIndicator count={5} />}
             />
-          
+
             {this.renderCategories()}
-            {this.state.Category === 'Events' ? this.renderDatePicker() : null}
-            {this.state.Category === 'Free & For Sale' ? this.renderPrice() : null}
-            
-              {this.renderDescription()}
-              {this.renderShareButton()}
+            {this.state.Category === 5 ? this.renderDatePicker() : null}
+            {this.state.Category === 7
+              ? this.renderPrice()
+              : null}
+
+            {this.renderDescription()}
+            {this.renderShareButton()}
           </ScrollView>
-          </KeyboardAvoidingView>
+        </KeyboardAvoidingView>
       </TouchableWithoutFeedback>
     );
   }
 }
-
-
 
 export default withNavigation(CreateNewPost);

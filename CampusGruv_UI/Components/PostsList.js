@@ -56,7 +56,7 @@ class Test1 extends PureComponent {
     render() {
         // {this.state.posts[0].users?  console.log(this.state.posts[0].users.first_name) : console.log('console')}
         if(this.state.posts[0]) {
-
+            console.log(this.state.posts.ke,'================ posts ===========')
             const column1Data = this.state.posts.filter((item, i) => i%2 === 0);
             const column2Data = this.state.posts.filter((item, i) => i%2 === 1);
 

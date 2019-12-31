@@ -9,6 +9,7 @@ export default class AvatarUserStatus extends Component {
   };
 
   render() {
+   
     return (
       <View
         style={{
@@ -21,7 +22,7 @@ export default class AvatarUserStatus extends Component {
         }}>
         <View style={{flexDirection: 'row', flex: 4, alignItems: 'center'}}>
           <Image
-            source={require('../Assets/Images/samandarkatha.jpg')}
+            source={this.props.pic}
             style={{height: 40, width: 40, borderRadius: 50}}></Image>
           <Text style={{fontSize: 18, fontWeight: 'bold', color: 'grey', paddingLeft:"2%"}}>
           {this.props.name}

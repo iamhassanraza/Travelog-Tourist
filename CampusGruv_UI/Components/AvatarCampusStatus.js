@@ -21,7 +21,7 @@ export default class AvatarCampusStatus extends Component {
         }}>
         <View style={{flexDirection: 'row', flex: 4, alignItems: 'center'}}>
           <Image
-            source={require('../Assets/Images/mansehra.jpg')}
+            source={this.props.pic}
             style={{height: 40, width: 40, borderRadius: 50}}></Image>
           <Text style={{fontSize: 18, fontWeight: 'bold', color: 'grey', paddingLeft:"2%"}}>
           {this.props.name}

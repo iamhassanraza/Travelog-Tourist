@@ -13,7 +13,7 @@ import {
   Dimensions
 } from 'react-native';
 import {ThemeConsumer} from 'react-native-elements';
-import {KeyboardAwareScrollView} from 'react-native-keyboard-aware-scrollview'
+
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CrossIcon from 'react-native-vector-icons/MaterialIcons';
 import IconFeather from 'react-native-vector-icons/Feather';
@@ -159,7 +159,7 @@ export default class PostDetail extends Component {
                       backgroundColor: 'white',
                       flexDirection: 'row',
                       justifyContent: 'space-between',
-                      paddingBottom:30
+                      paddingBottom:30,borderTopRightRadius:23, borderTopLeftRadius:23
                     }}>
                     <CrossIcon
                       name="cancel"
@@ -293,7 +293,10 @@ export default class PostDetail extends Component {
           }}></TextInput>
           </View>
         <View>
-        <Text
+        <Text onPress={()=>{
+          //CALL API FOR COMMENT , USER ID ,POST ID , COMMENT DESCRIPTION 
+          alert('call api')
+        }}
           style={{
            //fontSize: 17,
             color: 'grey',
@@ -341,6 +344,7 @@ export default class PostDetail extends Component {
 
   render() {
     const data = this.props.navigation.getParam('PostData', 'nothing to render');
+    console.log(data,'============================= post detail me received data ================== ')
     
     return (
         <View style={{height: Dimensions.get('window').height-125}}>
