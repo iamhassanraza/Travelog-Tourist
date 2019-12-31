@@ -41,8 +41,8 @@ class RenderCards extends PureComponent {
                                 showsVerticalScrollIndicator={false}
                                 renderItem={({ item,index }) => {
                                     if(index===0)
-                                    {console.log('======================',item.postCategory.description,'===============')}
-                                        return <PostCard categoryName={item.postCategory.description} description={item.description} name={item.users.first_name + ' ' + item.users.last_name} title={item.title} imageurl={item.postDetail.length > 0 ? item.postDetail[0].image_url : 'https://travelog-pk.herokuapp.com/images/default.png' }>  </PostCard>
+                                    {console.log('======================',item,'===============')}
+                                        return <PostCard categoryName={item.postCategory.description} categoryColor={item.postCategory.rgba_colors} description={item.description} name={item.users.first_name + ' ' + item.users.last_name} title={item.title} imageurl={item.postDetail.length > 0 ? item.postDetail[0].image_url : 'https://travelog-pk.herokuapp.com/images/default.png' }>  </PostCard>
                                     }       
                                 }
                                 keyExtractor={item => item.title}

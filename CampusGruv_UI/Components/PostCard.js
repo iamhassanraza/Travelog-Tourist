@@ -68,7 +68,7 @@ class PostCard extends Component {
               justifyContent: 'center',
               alignItems: 'center',
               padding:3,
-              backgroundColor:"rgba(174,80,118,0.9)",
+              backgroundColor:`rgba(${this.props.categoryColor},0.9)`,
               borderRadius:5,}}>{this.props.categoryName}</Text>
         
         </View>

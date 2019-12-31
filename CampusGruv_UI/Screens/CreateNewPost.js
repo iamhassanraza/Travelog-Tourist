@@ -158,9 +158,9 @@ class CreateNewPost extends Component {
     return (
       <View>
         <View style={{alignItems: 'center'}}>
-          <Text style={{fontSize: 22, color: 'grey'}}> Select Category </Text>
+          <Text style={{fontSize: 22, color: 'grey', marginBottom:10}}> Select Category </Text>
         </View>
-
+        
         <FlatList
           vertical
           numColumns={3}
@@ -326,7 +326,7 @@ class CreateNewPost extends Component {
         'Content-Type': 'application/json',
         "Authorization": `Bearer ${Token}`,
       },
-      body:JSON.stringify({user_id:user_id,category_id:1,title:this.state.Title,description:this.state.Description})
+      body:JSON.stringify({user_id:user_id,category_id:this.state.Category,title:this.state.Title,description:this.state.Description})
     })
     const postMasterResponse =  await response.json();
 
@@ -349,18 +349,18 @@ class CreateNewPost extends Component {
      const RefreshFunc =  this.props.navigation.getParam('refereshFunction', 'nothing to render')
       RefreshFunc();
    
+    this.props.navigation.navigate('HomeScreen')
+    //  this.props.navigation.push('PostDetail', {
+    //     PostData: {
+    //       uri: imageResponse.image_url,
+    //       title: postMasterResponse.title,
+    //       userAvatar: 'Api needed',
+    //       username: 'API NEEDED',
+    //       description: postMasterResponse.description,
+    //     }
+    //   }
 
-     this.props.navigation.push('PostDetail', {
-        PostData: {
-          uri: imageResponse.image_url,
-          title: postMasterResponse.title,
-          userAvatar: 'Api needed',
-          username: 'API NEEDED',
-          description: postMasterResponse.description,
-        }
-      }
-
-     )
+    //  )
 
 
 

@@ -1,11 +1,14 @@
 import React, {Component} from 'react';
-import {Text, View} from 'react-native';
+import {Text, View,Dimensions} from 'react-native';
 import {Button} from 'react-native-elements';
+
+const mywidth = Dimensions.get('window').width/22
+const myheight = Dimensions.get('screen').height/28
 
 export default class CategoryButton extends Component {
   render() {
     return (
-      <View style={{marginTop: "5%", marginLeft:"2%"}}>
+      <View style={{marginLeft:mywidth,marginBottom:myheight}}>
         <Button
           onPress={() => {
             this.props.onSelect(this.props.cat_id);

@@ -33,6 +33,7 @@ import Searching from './Screens/Searching'
 import RecoveryCode from './Screens/RecoveryCode'
 import ResetPassword from './Screens/ResetPassword'
 import UserSettings from './Screens/UserSettings'
+import { TouchableHighlight } from 'react-native-gesture-handler'
 
 const AuthNavigator = createStackNavigator({
     Login: {
@@ -153,22 +154,26 @@ const HomeStack = createStackNavigator({
         <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', backgroundColor: '#1192d1' }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', flex: 10 }}>
                 <View style={{ marginLeft: '2%', flexDirection: 'row', alignSelf: 'center' }}>
-                    <View style={{ height: 30, padding: 0, flexDirection: 'row', alignItems: 'center', width: 250, backgroundColor: '#F0F0F0', borderRadius: 10 }}>
-                        <View style={{ marginLeft: '2%' }}>
-                            <Icon
-                                name="search"
-                                color="#1192d1"
-                                size={20}
-                            />
+                    <TouchableOpacity
+                        onPress={()=> props.navigation.navigate('Searching')}
+                    >
+                        <View style={{ height: 30, padding: 0, flexDirection: 'row', alignItems: 'center', width: 250, backgroundColor: '#F0F0F0', borderRadius: 10 }}>
+                            <View style={{ marginLeft: '2%' }}>
+                                <Icon
+                                    name="search"
+                                    color="#1192d1"
+                                    size={20}
+                                />
+                            </View>
+                            <View style={{ height: 20 }}>
+                                <Image
+                                    source={Logo}
+                                    style={{ width: 150, alignSelf: 'flex-start', height: '100%' }}
+                                    resizeMode="contain"
+                                />
+                            </View>
                         </View>
-                        <View style={{ height: 20 }}>
-                            <Image
-                                source={Logo}
-                                style={{ width: 150, alignSelf: 'flex-start', height: '100%' }}
-                                resizeMode="contain"
-                            />
-                        </View>
-                    </View>
+                    </TouchableOpacity>
                 </View>
                 <View style={{ marginLeft: '2%' }}>
                     <TouchableOpacity onPress={() => props.navigation.navigate('CategoryList')}>
@@ -193,15 +198,36 @@ const HomeStack = createStackNavigator({
 )
 
 const MessageStack = createStackNavigator({
-    inbox,
-    chat,
+    inbox: {
+        screen: inbox,
+        navigationOptions: {
+            header: (props) => (
+                <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+                    <View style={{alignSelf: 'center'}}>
+                        <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>Messages</Text>
+                    </View>
+                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
+                        <TouchableOpacity 
+                            onPress = {() => {
+                                props.navigation.navigate('HomeScreen')
+                            }}
+                        >
+                            <PeopleIcon name="pen-square" color="white" size={25}/>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            )
+        },
+    },
+    chat: {
+        screen: chat,
+        navigationOptions:{
+            header: null
+        }
+    },
 },
     {
-        defaultNavigationOptions: {
-            headerStyle: {
-                backgroundColor: '#1192d1'
-            }
-        }
+        initialRouteName: 'inbox'
     }
 
 
