@@ -5,10 +5,10 @@ import {Button} from 'react-native-elements';
 export default class CategoryButton extends Component {
   render() {
     return (
-      <View style={{marginTop: 15}}>
+      <View style={{marginTop: "5%", marginLeft:"2%"}}>
         <Button
           onPress={() => {
-            this.props.onSelect(this.props.title);
+            this.props.onSelect(this.props.cat_id);
           }}
           title={this.props.title}
           titleStyle={{fontSize: 13, ...this.props.titlefontsize}}
