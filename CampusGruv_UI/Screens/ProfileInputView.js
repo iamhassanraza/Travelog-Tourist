@@ -20,22 +20,19 @@ class InputView extends React.Component {
     render() {
       // const { navigate } = this.props.navigation;
       return (
-          <View>
-        
-
+        <View>
+    
         {/* OPTIONS */}
 
-        <View style={{width:'90%',marginLeft:'5%',marginTop:this.props.mt,borderColor:'#C4C4C4',backgroundColor:'white',borderWidth:0.5,borderRadius:10}}>
-<TextInput
-        style={{width:'90%',fontSize:20,color:'#ACACAC'}}
-        placeholder={this.props.ph}
-    
-                      />
+          <View style={{width:'90%',marginLeft:'5%',marginTop:this.props.mt,borderColor:'#C4C4C4',backgroundColor:'white',borderWidth:0.5,borderRadius:10}}>
+            <TextInput
+              style={{width:'90%',fontSize:20,color:'#ACACAC'}}
+              placeholder={this.props.ph}
+              title={this.props}
+            />
+          </View>
+
         </View>
-
-
-        
-            </View>
         );
       }
     }
