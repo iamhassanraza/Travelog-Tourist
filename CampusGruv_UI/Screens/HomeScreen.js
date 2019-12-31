@@ -7,6 +7,7 @@ import {
   ScrollView,
   FlatList,
   Dimensions,
+  AsyncStorage
 } from 'react-native';
 import PostCard from '../Components/PostCard';
 
@@ -33,22 +34,24 @@ export default class HomeScreen extends PureComponent {
 
 
 
-  fetchdata = () => {
+  fetchdata = async () => {
+    const Token = await this.getToken();
     this.setState({
         loading:false
     })
-    fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/post/all', {
+    fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_all&page=1', {
       headers: {
         Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjM1NCwiaWF0IjoxNTc2MTMzNzQwfQ.f6hcEx-YKAcIaUJM8ZdH66iWahJafbLEzFEFwvLagE8',
+          `Bearer ${Token}`,
       },
     })
       .then(response => {
         return response.json();
       })
       .then(responseJson => {
+        console.log(responseJson.data)
         this.setState({
-          posts: responseJson,
+          posts: responseJson.data,
           refreshing: false,
           loading:false
         });
@@ -79,7 +82,7 @@ export default class HomeScreen extends PureComponent {
               onRefresh={this.onPageRefresh}
             />
           }>
-          <RenderCards posts={this.state.posts}></RenderCards>
+          {/* <RenderCards posts={this.state.posts}></RenderCards> */}
         </ScrollView>
       );
     } else {

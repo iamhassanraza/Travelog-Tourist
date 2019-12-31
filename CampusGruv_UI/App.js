@@ -32,7 +32,6 @@ import AddPost from './Screens/AddNewPost'
 import Searching from './Screens/Searching'
 import RecoveryCode from './Screens/RecoveryCode'
 import ResetPassword from './Screens/ResetPassword'
-
 import UserSettings from './Screens/UserSettings'
 
 const AuthNavigator = createStackNavigator({
