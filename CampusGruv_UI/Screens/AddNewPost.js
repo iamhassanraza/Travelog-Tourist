@@ -124,7 +124,7 @@ renderDeleteIcon = () =>{
 
 
 <Text style={{alignSelf:'center',marginTop:10,color:'grey'}}>Title</Text>
-          <TextInput style={{marginTop:10,marginLeft:'5%',width:'90%',height:35,borderRadius: 7,borderWidth:1,borderColor:'#B4B8BA'}}
+          <TextInput style={{padding:0,paddingStart:10,marginTop:10,marginLeft:'5%',width:'90%',height:35,borderRadius: 7,borderWidth:1,borderColor:'#B4B8BA'}}
           placeholder="Enter value" value={this.state.title} onChangeText={(text)=>{this.setState({title:text})}}></TextInput>
 
 
@@ -142,13 +142,25 @@ renderDeleteIcon = () =>{
     }}></Button> */}
   <TouchableOpacity 
       style={{alignItems: 'center', marginTop:'3%'}}
-      onPress={()=>{      
+      onPress={()=>{ 
+        if(this.state.title === '')
+        {
+          alert('Enter Title To Proceed')
+        }
+        else if(this.state.Images === undefined)
+        {
+          alert('Image Not Selected')
+        }        
+
+
+
         if(this.state.Images && this.state.title !== ''){
           this.props.navigation.navigate('CreatePost',{
             Images: this.state.Images,
             title: this.state.title
           })
         } 
+       
       }}
       >
       <View style={{width: '90%', borderRadius: 5, height: 30, justifyContent: 'center', backgroundColor: '#1192d1', alignSelf: 'center'}}>

@@ -17,17 +17,7 @@ import Spinner from 'react-native-loading-spinner-overlay';
 
 
 
-import {
-  BallIndicator,
-  BarIndicator,
-  DotIndicator,
-  MaterialIndicator,
-  PacmanIndicator,
-  PulseIndicator,
-  SkypeIndicator,
-  UIActivityIndicator,
-  WaveIndicator,
-} from 'react-native-indicators';
+import { BarIndicator} from 'react-native-indicators';
 
 class CreateNewPost extends Component {
   state = {
@@ -328,7 +318,6 @@ class CreateNewPost extends Component {
       body:JSON.stringify({user_id:user_id,category_id:1,title:this.state.Title,description:this.state.Description})
     })
     const postMasterResponse =  await response.json();
-    console.log(postMasterResponse,'--------------------------------- POST MASTER ')
 
     let raw_response = await fetch("https://campus-gruv-heroku.herokuapp.com/api/v1/post/detail", {
       method: "POST",
@@ -341,15 +330,15 @@ class CreateNewPost extends Component {
     
     let imageResponse = await raw_response.json();
     
-
-      console.log(imageResponse,'IMAGEEEEEEEEEEEEEEEEEEEEEEEE')
+    console.log(imageResponse,'IMAGEE ka responseE')
+      console.log(imageResponse.image_url,'IMAGEEEEEEEEEEEEEEEEEEEEEEEE')
  
      this.setState({spinner:false,Description:''})
      this.props.navigation.push('PostDetail', {
         PostData: {
           uri: imageResponse.image_url,
           title: postMasterResponse.title,
-          userAvatar: imageResponse.image_url,
+          userAvatar: 'Api needed',
           username: 'API NEEDED',
           description: postMasterResponse.description,
         }

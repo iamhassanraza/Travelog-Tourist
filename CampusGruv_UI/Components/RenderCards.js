@@ -40,6 +40,7 @@ class RenderCards extends PureComponent {
                                 scrollEnabled={false}
                                 showsVerticalScrollIndicator={false}
                                 renderItem={({ item }) => {
+                                    {console.log('======================',item,'===============')}
                                         return <PostCard categoryName="New Category" description={item.description} name={item.users.first_name} title={item.title} imageurl={item.postDetail.length > 0 ? item.postDetail[0].image_url : 'https://travelog-pk.herokuapp.com/images/default.png' }>  </PostCard>
                                     }       
                                 }

@@ -26,6 +26,13 @@ export default class HomeScreen extends PureComponent {
     });
   };
 
+  getToken = async ()=>{
+    const Token = await AsyncStorage.getItem('TOKEN')
+    return Token
+  }
+
+
+
   fetchdata = () => {
     this.setState({
         loading:false

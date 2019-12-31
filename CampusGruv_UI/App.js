@@ -21,7 +21,7 @@ import CategoryList from './Screens/CategoryList'
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import inbox from './Screens/Inbox';
 import chat from './Screens/chat';
-import NotificationScreen from './Screens/Follow'
+import NotificationScreen from './Screens/NotificationScreen'
 import Login from './Screens/Login'
 import SignUp from './Screens/SignUp'
 import ForgotPassword from './Screens/ForgotPassword'
@@ -32,7 +32,7 @@ import AddPost from './Screens/AddNewPost'
 import Searching from './Screens/Searching'
 import RecoveryCode from './Screens/RecoveryCode'
 import ResetPassword from './Screens/ResetPassword'
-import { TouchableWithoutFeedback, TouchableHighlight } from 'react-native-gesture-handler'
+
 import UserSettings from './Screens/UserSettings'
 
 const AuthNavigator = createStackNavigator({
