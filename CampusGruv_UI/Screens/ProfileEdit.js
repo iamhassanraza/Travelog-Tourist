@@ -3,7 +3,7 @@ import {
   Text, 
   Image, 
   ScrollView, 
-  View, TouchableOpacity,
+  View, TouchableOpacity, Picker,
   StyleSheet, Dimensions, Platform,TextInput, KeyboardAvoidingView } from 'react-native';
 import InputView from '../Components/ProfileEdit/InputViews'
 import ImagePicker from 'react-native-image-picker'
@@ -11,50 +11,53 @@ import defaultAvatar from '../Assets/Images/defaultAvatar.jpg'
 import SearchableDropdown from 'react-native-searchable-dropdown'
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
+
+items = [
+  {
+    id: 1,
+    name: 'Columbia university',
+  },
+  {
+    id: 2,
+    name: 'Institute of Business administration',
+  },
+  {
+    id: 3,
+    name: 'LUMS',
+  },
+  {
+    id: 4,
+    name: 'NED',
+  },
+  {
+    id: 5,
+    name: 'MIT',
+  },
+  {
+    id: 6,
+    name: 'Harvard',
+  },
+  {
+    id: 7,
+    name: 'Go',
+  },
+  {
+    id: 8,
+    name: 'Swift',
+  },
+];
+
 class ProfilePage extends React.Component {
 
     // componentDidMount() {
     //   fetch()
     // }
-    items = [
-      {
-        id: 1,
-        name: 'Columbia university',
-      },
-      {
-        id: 2,
-        name: 'Institute of Business administration',
-      },
-      {
-        id: 3,
-        name: 'LUMS',
-      },
-      {
-        id: 4,
-        name: 'NED',
-      },
-      {
-        id: 5,
-        name: 'MIT',
-      },
-      {
-        id: 6,
-        name: 'Harvard',
-      },
-      {
-        id: 7,
-        name: 'Go',
-      },
-      {
-        id: 8,
-        name: 'Swift',
-      },
-    ];
 
     state = {
-        resta: [],
+        //resta: [],
         imageUri: 'https://www.bluefrosthvac.com/wp-content/uploads/2019/08/default-person.png' ,
-        selectedItems: []
+        campuses: ['lums', 'iba', 'ned'],
+        selectedCampus: 'ned'
       };
 
     uploadProfilePicture = () => {
@@ -80,6 +83,12 @@ class ProfilePage extends React.Component {
       });
     }
     render() {
+
+      let serviceItems = this.state.campuses.map( (s, i) => {
+        return <Picker.Item key={i} value={s} label={s} />
+      });
+
+
       //const { navigate } = this.props.navigation;
       return (
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={50}>
@@ -103,16 +112,20 @@ class ProfilePage extends React.Component {
               {/* <InputView name='Campus' ph='University of Pittsburgh'/> */}
               <View style={{flexDirection: 'row', justifyContent:'space-between', marginTop:10}}>
                 <Text style={{fontSize:20,marginTop:15,marginLeft:10,width:'25%'}}>Campus</Text>
-                <SearchableDropdown
-                  onItemSelect={({item}) => {
-                    console.log(item)
-                    const items = this.state.selectedItems;
-                    items.push(item)
-                    this.setState({ selectedItems: items });
-                    console.log(this.state.selectedItems)
-                  }}
+                {/* <SearchableDropdown
+                  multi={true}
+                  // onItemSelect = {(item) => {
+                  //   console.log('on select item')
+                  //   const items = this.state.selectedItems;
+                  //   items.push(item)
+                  //   this.setState({ selectedItems: items });
+                  //   console.log(this.state.selectedItems)
+                  // }}
+                  onItemSelect={(item) =>  alert(JSON.stringify(item))}
+
                   containerStyle={{ width: '60%', borderBottomColor:'#C4C4C4', borderBottomWidth:0.5 }}
                   onRemoveItem={(item, index) => {
+                    console.log('onremove item')
                     const items = this.state.selectedItems.filter((sitem) => sitem.id !== item.id);
                     this.setState({ selectedItems: items });
                   }}
@@ -126,18 +139,18 @@ class ProfilePage extends React.Component {
                   }}
                   itemTextStyle={{ color: '#222' }}
                   itemsContainerStyle={{ maxHeight: 140 }}
-                  items={this.items}
-                  defaultIndex={1}
+                  items={items}
+                  //defaultIndex={1}
                   resetValue={false}
                   textInputProps={
                     {
-                      placeholder: this.state.selectedItems[0]? this.state.selectedItems[0].name : 'select campus',
+                      placeholder: 'select campus',
                       underlineColorAndroid: "transparent",
                       style: {
                         fontSize:20,
                         color:'#ACACAC'
                       },
-                      //onTextChange: text => alert(text)
+                      onTextChange: text => alert(text)
                     }
                   }
                   listProps={
@@ -145,7 +158,24 @@ class ProfilePage extends React.Component {
                       nestedScrollEnabled: true,
                     }
                   }
-                />
+                /> */}
+                <Picker
+                  style={{width: '60%', borderBottomColor:'#C4C4C4'}}
+                  itemStyle={{
+                    // padding: 10,
+                    // marginTop: 2,
+                    // backgroundColor: '#ddd',
+                    // borderColor: '#bbb',
+                    // borderWidth: 1,
+                    // borderRadius: 5,
+                  }}
+                  onValueChange={(itemValue) => {
+                    this.setState({selectedCampus: itemValue})
+                    console.log('picked')
+                  }}
+                >
+                    {serviceItems}
+                </Picker>
                 <Icon name="pencil" color='#C4C4C4' size={26} style={{width:'10%',marginTop:15}}/>
               </View>
               <InputView name='Major' ph='Major'/>
