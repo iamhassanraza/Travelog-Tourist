@@ -25,6 +25,9 @@ export default class AddNewPost extends Component {
   };
 
 
+  refreshingState = () => {
+    this.setState({title:'',Images:undefined})
+  }
 
 selectPhoto = () => {
   ImagePicker.showImagePicker((response) => {
@@ -157,7 +160,8 @@ renderDeleteIcon = () =>{
         if(this.state.Images && this.state.title !== ''){
           this.props.navigation.navigate('CreatePost',{
             Images: this.state.Images,
-            title: this.state.title
+            title: this.state.title,
+            refereshFunction: this.refreshingState
           })
         } 
        

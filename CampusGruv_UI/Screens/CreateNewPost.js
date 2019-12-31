@@ -345,6 +345,11 @@ class CreateNewPost extends Component {
       console.log(imageResponse.image_url,'IMAGEEEEEEEEEEEEEEEEEEEEEEEE')
  
      this.setState({spinner:false,Description:''})
+     
+     const RefreshFunc =  this.props.navigation.getParam('refereshFunction', 'nothing to render')
+      RefreshFunc();
+   
+
      this.props.navigation.push('PostDetail', {
         PostData: {
           uri: imageResponse.image_url,
