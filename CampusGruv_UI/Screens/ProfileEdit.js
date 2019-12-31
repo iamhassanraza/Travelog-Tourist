@@ -57,7 +57,7 @@ class ProfilePage extends React.Component {
         //resta: [],
         imageUri: 'https://www.bluefrosthvac.com/wp-content/uploads/2019/08/default-person.png' ,
         campuses: ['lums', 'iba', 'ned'],
-        selectedCampus: 'ned'
+        selectedCampus: 'lums'
       };
 
     uploadProfilePicture = () => {
@@ -110,7 +110,7 @@ class ProfilePage extends React.Component {
             <View style={{borderBottomColor:'#C4C4C4', marginTop:20}}>
               <InputView name='Name' ph='Jessica Z'/>
               {/* <InputView name='Campus' ph='University of Pittsburgh'/> */}
-              <View style={{flexDirection: 'row', justifyContent:'space-between', marginTop:10}}>
+              <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
                 <Text style={{fontSize:20,marginTop:15,marginLeft:10,width:'25%'}}>Campus</Text>
                 {/* <SearchableDropdown
                   multi={true}
@@ -159,23 +159,25 @@ class ProfilePage extends React.Component {
                     }
                   }
                 /> */}
-                <Picker
-                  style={{width: '60%', borderBottomColor:'#C4C4C4'}}
-                  itemStyle={{
-                    // padding: 10,
-                    // marginTop: 2,
-                    // backgroundColor: '#ddd',
-                    // borderColor: '#bbb',
-                    // borderWidth: 1,
-                    // borderRadius: 5,
-                  }}
-                  onValueChange={(itemValue) => {
-                    this.setState({selectedCampus: itemValue})
-                    console.log('picked')
-                  }}
-                >
-                    {serviceItems}
-                </Picker>
+                <View style={{width: '60%', marginTop: 5, borderBottomWidth: 0.5, borderBottomColor:'#C4C4C4'}}>
+                  <Picker
+                    selectedValue={this.state.selectedCampus}
+                    // itemStyle={{
+                    //   padding: 10,
+                    //   marginTop: 2,
+                    //   backgroundColor: '#ddd',
+                    //   borderColor: '#bbb',
+                    //   borderWidth: 1,
+                    //   borderRadius: 5,
+                    // }}
+                    onValueChange={(itemValue) => {
+                      this.setState({selectedCampus: itemValue})
+                      console.log('picked')
+                    }}
+                  >
+                      {serviceItems}
+                  </Picker>
+                </View>
                 <Icon name="pencil" color='#C4C4C4' size={26} style={{width:'10%',marginTop:15}}/>
               </View>
               <InputView name='Major' ph='Major'/>

@@ -20,8 +20,8 @@ class InputView extends React.Component {
 
         {/* OPTIONS */}
 
-        <View style={{flexDirection:'row',justifyContent:'space-around',marginTop:10}}>
-      <Text style={{fontSize:20,marginTop:15,marginLeft:10,width:'25%'}}>{this.props.name}</Text>
+        <View style={{flexDirection:'row',justifyContent:'space-around'}}>
+      <Text style={{fontSize:20, marginTop:15,marginLeft:10,width:'25%'}}>{this.props.name}</Text>
 <TextInput
         style={{width:'60%',borderBottomColor:'#C4C4C4',borderBottomWidth:0.5,fontSize:20,color:'#ACACAC'}}
         placeholder={this.props.ph}
