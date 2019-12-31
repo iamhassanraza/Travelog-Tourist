@@ -104,7 +104,8 @@ class ProfilePage extends React.Component {
               <View style={{flexDirection: 'row', justifyContent:'space-between', marginTop:10}}>
                 <Text style={{fontSize:20,marginTop:15,marginLeft:10,width:'25%'}}>Campus</Text>
                 <SearchableDropdown
-                  onItemSelect={(item) => {
+                  onItemSelect={({item}) => {
+                    console.log(item)
                     const items = this.state.selectedItems;
                     items.push(item)
                     this.setState({ selectedItems: items });
@@ -127,7 +128,7 @@ class ProfilePage extends React.Component {
                   itemsContainerStyle={{ maxHeight: 140 }}
                   items={this.items}
                   defaultIndex={1}
-                  //resetValue={false}
+                  resetValue={false}
                   textInputProps={
                     {
                       placeholder: this.state.selectedItems[0]? this.state.selectedItems[0].name : 'select campus',
