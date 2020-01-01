@@ -164,9 +164,8 @@ class CreateNewPost extends Component {
         style={{
           width: screenWidth,
           height: screenHeight / 3.1,
-          paddingTop:"2%",
-          alignItems: 'center'
-         
+          paddingTop: '2%',
+          alignItems: 'center',
         }}>
         <FlatList
           vertical
@@ -269,22 +268,34 @@ class CreateNewPost extends Component {
   renderDescription = () => {
     return (
       <View
-        style={{justifyContent: 'center', alignItems: 'center', marginTop: 5,width:screenWidth}}>
-        <Text style={{fontSize: 17, color: 'grey', marginBottom:7}}>
+        style={{
+          justifyContent: 'center',
+          alignItems: 'center',
+          marginTop: 5,
+          width: screenWidth,
+        }}>
+        <Text style={{fontSize: 17, color: 'grey', marginBottom: 7}}>
           Add Description (optional)
         </Text>
-        <View style={{height:screenHeight/3.9, width:screenWidth/1.1, marginLeft:"2.5%" ,marginRight:"2.5%",borderColor: 'grey',  borderRadius: 8, borderWidth:1}}>
-        <TextInput
-          value={this.state.Description}
-          multiline={true}
-          style={{
-            color: 'grey',
-            width: '100%',
-
-          }}
-          onChangeText={text => {
-            this.changeDescriptionState(text);
-          }}></TextInput>
+        <View style={{}}>
+          <TextInput
+            value={this.state.Description}
+            multiline={true}
+            style={{
+              color: 'grey',
+              width: '100%',
+              height: screenHeight / 3.9,
+              width: screenWidth / 1.1,
+              marginLeft: '2.5%',
+              marginRight: '2.5%',
+              borderColor: 'grey',
+              borderRadius: 8,
+              borderWidth: 1,
+              textAlignVertical:'top'
+            }}
+            onChangeText={text => {
+              this.changeDescriptionState(text);
+            }}></TextInput>
         </View>
       </View>
     );
@@ -437,13 +448,13 @@ class CreateNewPost extends Component {
               customIndicator={<BarIndicator count={5} />}
             />
 
-            <View style={{alignItems: 'center', paddingTop:"5%"}}>
-              <Text style={{fontSize: 20, color: 'grey'}}>
-                Select Category
-              </Text>
+            <View style={{alignItems: 'center', paddingTop: '5%'}}>
+              <Text style={{fontSize: 20, color: 'grey'}}>Select Category</Text>
             </View>
 
-            {this.state.DATA ? (this.renderCategories()) : (
+            {this.state.DATA ? (
+              this.renderCategories()
+            ) : (
               <View style={{marginTop: '10%', marginBottom: '10%'}}>
                 <SkypeIndicator count={5} />
               </View>

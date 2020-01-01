@@ -15,7 +15,23 @@ class UserProfile extends React.Component {
       };
     }
 
-    componentDidMount = async ()=>{
+
+    componentDidMount() {
+      const {navigation} = this.props;
+      this.focusListener = navigation.addListener('didFocus', () => {
+        // The screen is focused
+        this.fetchdata();
+      });
+    }
+
+    
+  componentWillUnmount() {
+    // Remove the event listener
+    this.focusListener.remove();
+  }
+
+    fetchdata = async ()=>{
+      console.log('calling')
       const userId = await AsyncStorage.getItem('USER_ID');
       const Token = await AsyncStorage.getItem('TOKEN')
       const response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/search/user?type=post&user_id=${userId}&page=1`,{
@@ -28,7 +44,7 @@ class UserProfile extends React.Component {
       this.setState({
           posts:jsonresponse.data
       })
-      console.log('RESP------>' , jsonresponse.data)
+      
     }
 
     _signOutAsync = async () => {
