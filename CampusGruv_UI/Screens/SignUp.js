@@ -15,18 +15,6 @@ import HeaderTitle from './Heading';
 import Colors from '../Assets/Colors';
 import {ScrollView} from 'react-native-gesture-handler';
 const API_BASE_URL = 'https://campus-gruv-heroku.herokuapp.com/api/v1';
-import {
-  BallIndicator,
-  BarIndicator,
-  DotIndicator,
-  MaterialIndicator,
-  PacmanIndicator,
-  PulseIndicator,
-  SkypeIndicator,
-  UIActivityIndicator,
-  WaveIndicator,
-} from 'react-native-indicators';
-
 class Signup extends React.Component {
   static navigationOptions = {
     header: null,
@@ -42,8 +30,7 @@ class Signup extends React.Component {
       first_nameError: false,
       last_nameError: false,
       emailError: false,
-      passwordError: false,
-      spinner:false
+      passwordError: false
     };
   }
 
@@ -106,7 +93,6 @@ class Signup extends React.Component {
   // //////////////FETCH FUNCTION
 
   submitForm = () => {
-    this.setState({spinner:true})
     if (!this.validateForm()) {
       console.log('sendng req .....');
     } else {
@@ -119,7 +105,8 @@ class Signup extends React.Component {
           last_name: this.state.last_name,
           email: this.state.email,
           password: this.state.password,
-          campus_id:'1'
+          campus_id: '1',
+          profile_pic: '',
           // email_verified:'0',
           // active:'0',
         }),
@@ -128,21 +115,17 @@ class Signup extends React.Component {
         .then(res => res.json())
         .then(response => {
           console.log('=====>>>', response);
-          this.setState({
-            spinner:false
-          })
-          if (response) {
-            
-            console.log('=====>>>', response);
-            if (response.message ) {
-              alert(response.message);
-          
-            }
-            if(response.message==='Signup success'){
-              this.props.navigation.navigate('Login')
 
+          if (response) {
+            console.log('=====>>>', response);
+            if (response.message) {
+              alert(response.message);
+            } else {
+              alert('Sign Up Success');
             }
-          } 
+          } else {
+            alert('Sign Up Unsuccessfull');
+          }
         })
         .catch(error => {
           console.log(error);
@@ -307,38 +290,15 @@ class Signup extends React.Component {
                 {/* Sign up BUTTON */}
                 <View style={styles.butt}>
                   <TouchableOpacity onPress={this.submitForm}>
-                    {this.state.spinner ? (
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'center',
-                        }}>
-                        <Text
-                          style={{
-                            color: 'white',
-                            fontWeight: 'bold',
-                            fontSize: 18,
-                          }}>
-                          Loading{' '}
-                        </Text>
-                        <BarIndicator
-                          style={{flex: 0}}
-                          count={3}
-                          size={20}
-                          color={'white'}
-                        />
-                      </View>
-                    ) : (
-                      <Text
-                        style={{
-                          fontSize: 16,
-                          fontWeight: 'bold',
-                          textAlign: 'center',
-                          color: 'white',
-                        }}>
-                        Sign up
-                      </Text>
-                    )}
+                    <Text
+                      style={{
+                        fontSize: 16,
+                        fontWeight: 'bold',
+                        textAlign: 'center',
+                        color: 'white',
+                      }}>
+                      Sign up
+                    </Text>
                   </TouchableOpacity>
                 </View>
               </View>
