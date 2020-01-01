@@ -199,8 +199,8 @@ class CreateNewPost extends Component {
         style={{
           flexDirection: 'row',
           justifyContent: 'flex-end',
-          marginTop: 22,
-          marginRight: 10,
+          marginTop: 4,
+          marginRight: "5%",
         }}>
         <DatePicker
           style={{width: '60%', justifyContent: 'center', alignSelf: 'center'}}
@@ -243,8 +243,8 @@ class CreateNewPost extends Component {
         style={{
           flexDirection: 'row',
           justifyContent: 'flex-end',
-          marginTop: 20,
-          marginRight: 20,
+          marginTop: 4,
+          marginRight: "5%",
         }}>
         <Text style={{alignSelf: 'center', color: 'grey'}}>Set Price</Text>
         <TextInput
@@ -291,26 +291,26 @@ class CreateNewPost extends Component {
     );
   };
 
-  renderTitle = () => {
-    return (
-      <View
-        style={{justifyContent: 'center', alignItems: 'center', marginTop: 15}}>
-        <Text style={{fontSize: 17, color: 'grey'}}>Title</Text>
-        <TextInput
-          style={{
-            height: 40,
-            width: '92%',
-            borderWidth: 0.5,
-            borderColor: 'grey',
-            margin: 10,
-            borderRadius: 8,
-          }}
-          onChangeText={text => {
-            this.changeTitleState(text);
-          }}></TextInput>
-      </View>
-    );
-  };
+  // renderTitle = () => {
+  //   return (
+  //     <View
+  //       style={{justifyContent: 'center', alignItems: 'center', marginTop: 15}}>
+  //       <Text style={{fontSize: 17, color: 'grey'}}>Title</Text>
+  //       <TextInput
+  //         style={{
+  //           height: 40,
+  //           width: '92%',
+  //           borderWidth: 0.5,
+  //           borderColor: 'grey',
+  //           margin: 10,
+  //           borderRadius: 8,
+  //         }}
+  //         onChangeText={text => {
+  //           this.changeTitleState(text);
+  //         }}></TextInput>
+  //     </View>
+  //   );
+  // };
 
   
 
