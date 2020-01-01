@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from 'react';
-import { Text, Image, View, StyleSheet, Dimensions, Platform,TextInput ,TouchableHighlight,AsyncStorage,TouchableOpacity} from 'react-native';
+import { ScrollView,Text, Image, View, StyleSheet, Dimensions, Platform,TextInput ,TouchableHighlight,AsyncStorage,TouchableOpacity} from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import RenderCards from '../Components/RenderCards';
+
 
 class UserProfile extends React.Component {
   static navigationOptions = {
@@ -9,10 +11,25 @@ class UserProfile extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        resta: []
+          posts:[]
       };
     }
 
+    componentDidMount = async ()=>{
+      const userId = await AsyncStorage.getItem('USER_ID');
+      const Token = await AsyncStorage.getItem('TOKEN')
+      const response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/search/user?type=post&user_id=${userId}&page=1`,{
+        headers: {
+          Authorization:
+            `Bearer ${Token}`,
+        },
+      })
+      const jsonresponse = await response.json()
+      this.setState({
+          posts:jsonresponse.data
+      })
+      console.log('RESP------>' , jsonresponse.data)
+    }
 
     _signOutAsync = async () => {
       await AsyncStorage.clear();
@@ -23,7 +40,7 @@ class UserProfile extends React.Component {
     render() {
       // const { navigate } = this.props.navigation;
       return (
-          <View>
+          <ScrollView>
               {/* EDIT PROFILE BUTTON */}
               <View style={{flexDirection:'row',justifyContent:'flex-end'}}>
 
@@ -80,9 +97,11 @@ class UserProfile extends React.Component {
 <Text style={{fontSize:20,fontWeight:'bold',color:'#B4B8BA'}}> Saves</Text>
 </View>
   </View>
+            <View style={{paddingTop:10}}>
+             <RenderCards posts={this.state.posts}></RenderCards>
+            </View>
 
-
-          </View>
+          </ScrollView>
         );
       }
     }

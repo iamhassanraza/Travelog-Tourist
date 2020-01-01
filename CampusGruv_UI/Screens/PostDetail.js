@@ -242,7 +242,7 @@ export default class PostDetail extends Component {
   renderDescription = description => {
     return (
       <View style={{alignItems: 'center', marginLeft: '5%', marginRight: '5%'}}>
-        <Text style={{fontSize: 14, marginTop:'2%', borderWidth: 1, color:'grey'}}>
+        <Text style={{fontSize: 14, marginTop:'2%', color:'grey',marginBottom:10}}>
           {description}
         </Text>
       </View>
@@ -357,12 +357,12 @@ export default class PostDetail extends Component {
             {this.renderDescription(data.description)}
             {this.renderAllComments(data.userAvatar)}
             {this.renderAllComments(data.userAvatar)}
+            {/* {this.renderAllComments(data.userAvatar)}
             {this.renderAllComments(data.userAvatar)}
             {this.renderAllComments(data.userAvatar)}
             {this.renderAllComments(data.userAvatar)}
             {this.renderAllComments(data.userAvatar)}
-            {this.renderAllComments(data.userAvatar)}
-            {this.renderAllComments(data.userAvatar)}
+            {this.renderAllComments(data.userAvatar)} */}
             </ScrollView> 
             </KeyboardAvoidingView>
                 {this.renderAddComment(data.userAvatar)}
