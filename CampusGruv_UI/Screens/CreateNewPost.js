@@ -9,7 +9,8 @@ import {
   KeyboardAvoidingView,
   AsyncStorage,
   PermissionsAndroid,
-  FlatList
+  FlatList,
+  Dimensions
 } from 'react-native';
 import {withNavigation} from 'react-navigation';
 import CategoryButton from '../Components/CategoryButton';
@@ -30,6 +31,10 @@ import {
 } from 'react-native-indicators';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
+
+const screenWidth = Dimensions.get('window').width;
+const screenHeight = Dimensions.get('window').height;
+
 class CreateNewPost extends Component {
   state = {
     Category: '',
@@ -42,28 +47,29 @@ class CreateNewPost extends Component {
     DATA: undefined,
   };
 
-  getCategories = async () => {
-    const Token = await AsyncStorage.getItem('TOKEN');
 
-    const Response = await fetch(
-      `https://campus-gruv-heroku.herokuapp.com/api/v1/post/categories`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${Token}`,
-        },
-      },
-    );
+  // getCategories = async () => {
+  //   const Token = await AsyncStorage.getItem('TOKEN');
 
-    const JsonResponse = await Response.json();
+  //   const Response = await fetch(
+  //     `https://campus-gruv-heroku.herokuapp.com/api/v1/post/categories`,
+  //     {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: `Bearer ${Token}`,
+  //       },
+  //     },
+  //   );
 
-    if (parseInt(Response.status) === 401) {
-      alert('Error');
-    } else if (parseInt(Response.status) === 200) {
-      console.log('API called Successfully');
-    }
-  };
+  //   const JsonResponse = await Response.json();
+
+  //   if (parseInt(Response.status) === 401) {
+  //     alert('Error');
+  //   } else if (parseInt(Response.status) === 200) {
+  //     console.log('API called Successfully');
+  //   }
+  // };
 
   componentDidMount = () => {
     this.getCategories();
@@ -154,9 +160,11 @@ class CreateNewPost extends Component {
     }
   };
 
+
+
   renderCategories = () => {
     return (
-      <View>
+      <View style={{width:screenWidth , height:screenHeight/2.5, alignItems:"center"}}>
         <View style={{alignItems: 'center'}}>
           <Text style={{fontSize: 22, color: 'grey', marginBottom:10}}> Select Category </Text>
         </View>
