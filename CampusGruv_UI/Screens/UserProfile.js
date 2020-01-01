@@ -29,7 +29,7 @@ class UserProfile extends React.Component {
 
               
             <TouchableOpacity style={{flexDirection:'row',justifyContent:'flex-end',margin:10}} onPress={()=>{
-              this.props.navigation.navigate('editprofile')
+              this.props.navigation.navigate('EditProfile')
             }}>
               <Text style={{color:'#ACACAC',borderWidth:0.5,padding:5,borderColor:'#ACACAC',borderRadius:10}}>Edit Profile</Text>
             </TouchableOpacity>   

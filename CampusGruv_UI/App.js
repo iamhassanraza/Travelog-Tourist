@@ -5,6 +5,7 @@ import 'react-native-gesture-handler'
 // import Screen1 from './Screens/CreatePost'
 // import Screen2 from './Screens/Screen1'
 import Screen3 from './Components/Post'
+import PostIcon from 'react-native-vector-icons/Foundation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import PeopleIcon from 'react-native-vector-icons/FontAwesome5'
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons'
@@ -26,7 +27,7 @@ import Login from './Screens/Login'
 import SignUp from './Screens/SignUp'
 import ForgotPassword from './Screens/ForgotPassword'
 import UserProfile from './Screens/UserProfile'
-import editprofile from './Screens/ProfileEdit'
+import EditProfile from './Screens/ProfileEdit'
 import AuthLoading from './Screens/AuthLoading'
 import AddPost from './Screens/AddNewPost'
 import Searching from './Screens/Searching'
@@ -134,13 +135,71 @@ const CreatePostStack = createStackNavigator({
 
 
 const ProfileStack = createStackNavigator({
-    UserProfile,
-    editprofile
-}, {
-    defaultNavigationOptions: {
-        header: null
+    UserProfile: {
+        screen: UserProfile,
+        navigationOptions: {
+            header: (props) => (
+                <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+                    <View style={{alignSelf: 'center'}}>
+                        <Image
+                            source={Logo}
+                            style={{ width: 150, alignSelf: 'flex-start', height: '90%' }}
+                            resizeMode="contain"
+                        />
+                        </View>
+                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
+                        <TouchableOpacity 
+                            // onPress = {() => {
+                            //     props.navigation.navigate('HomeScreen')
+                            // }}
+                        >
+                            <Icon name="menu" color="white" size={25}/>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            )
+        },
+    },
+    EditProfile: {
+        screen: EditProfile,
+        navigationOptions: {
+            header: (props) => (
+                <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
+                        <TouchableOpacity 
+                            // onPress = {() => {
+                            //     props.navigation.navigate("AddPost");
+                            // }}
+                        >
+                            <Text style={{color: 'white', padding: 2}}>
+                                back
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                    <View style={{alignSelf: 'center'}}>
+                        <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>Edit profile</Text>
+                    </View>
+                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
+                        <TouchableOpacity 
+                            // onPress = {() => {
+                            //     props.navigation.dispatch(StackActions.popToTop());
+                            //     props.navigation.navigate('HomeScreen')
+                            // }}
+                        >
+                            <Text style={{color: 'white', padding: 2}}>
+                                done
+                            </Text>
+                        </TouchableOpacity>
+                    </View>
+                </View> 
+            )
+        },
     }
-})
+}, 
+{
+    initialRouteName: 'UserProfile'
+}
+)
 
 const HomeStack = createStackNavigator({
     HomeScreen,
@@ -209,10 +268,10 @@ const MessageStack = createStackNavigator({
                     <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
                         <TouchableOpacity 
                             onPress = {() => {
-                                props.navigation.navigate('HomeScreen')
+                                props.navigation.push('inbox')
                             }}
                         >
-                            <PeopleIcon name="pen-square" color="white" size={25}/>
+                            <PostIcon name="clipboard-pencil" color="white" size={25}/>
                         </TouchableOpacity>
                     </View>
                 </View>
