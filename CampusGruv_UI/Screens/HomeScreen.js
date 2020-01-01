@@ -69,6 +69,8 @@ export default class HomeScreen extends PureComponent {
   }
 
   render() {
+console.log(this.props.navigation.getParam('CategoryID', 'undefined'))
+
     if (this.state.loading===false) {
       return (
         <ScrollView
