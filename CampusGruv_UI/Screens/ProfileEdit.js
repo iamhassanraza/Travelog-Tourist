@@ -12,41 +12,6 @@ import SearchableDropdown from 'react-native-searchable-dropdown'
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
-items = [
-  {
-    id: 1,
-    name: 'Columbia university',
-  },
-  {
-    id: 2,
-    name: 'Institute of Business administration',
-  },
-  {
-    id: 3,
-    name: 'LUMS',
-  },
-  {
-    id: 4,
-    name: 'NED',
-  },
-  {
-    id: 5,
-    name: 'MIT',
-  },
-  {
-    id: 6,
-    name: 'Harvard',
-  },
-  {
-    id: 7,
-    name: 'Go',
-  },
-  {
-    id: 8,
-    name: 'Swift',
-  },
-];
-
 class ProfilePage extends React.Component {
 
   static navigationOptions = (props) => {
@@ -56,9 +21,9 @@ class ProfilePage extends React.Component {
         <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
             <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
                 <TouchableOpacity 
-                    onPress = {() => {
-                        props.navigation.navigate("UserProfile");
-                    }}
+                    // onPress = {() => {
+                    //     props.navigation.navigate("UserProfile");
+                    // }}
                 >
                     <Text style={{color: 'white', padding: 2}}>
                         back
@@ -95,7 +60,7 @@ class ProfilePage extends React.Component {
     .then(res => {
       // const campuses = [this.state.campuses,...res]
       const cam = [...this.state.campuses,...res]
-      console.log(cam,'---------')
+    
       this.setState({
         campuses: cam
       })
@@ -106,7 +71,11 @@ class ProfilePage extends React.Component {
     this.props.navigation.setParams({
           handleThis: () => {
             if(this.state.selectedId)
-              alert(this.state.selectedId)
+              {
+                this.UpdateProfile()
+        
+               
+              }
             else
               alert('no campus selected')
           }
@@ -146,6 +115,35 @@ class ProfilePage extends React.Component {
         }
       });
     }
+
+
+    UpdateProfile = async ()=>{
+
+      const Token = await AsyncStorage.getItem('TOKEN');
+      const Campusid = await AsyncStorage.getItem('CAMPUS_ID');
+
+      let response = await fetch(
+        'https://campus-gruv-heroku.herokuapp.com/api/v1/edit/profile',
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${Token}`,
+          },
+          body: JSON.stringify({
+          campus_id:this.state.selectedId
+          }),
+        },
+      );
+      const postMasterResponse = await response.json();
+      this.props.navigation.navigate('App')
+      console.log(postMasterResponse,'patch request')
+
+
+    }
+
+
+
 
     render() {
 

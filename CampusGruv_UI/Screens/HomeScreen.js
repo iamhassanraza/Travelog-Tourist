@@ -27,15 +27,11 @@ export default class HomeScreen extends PureComponent {
     });
   };
 
-  getToken = async () => {
-    const Token = await AsyncStorage.getItem('TOKEN')
-    return Token
-  }
 
 
 
   fetchdata = async () => {
-    const Token = await this.getToken();
+    const Token = await AsyncStorage.getItem('TOKEN')
     this.setState({
         loading: false
     })

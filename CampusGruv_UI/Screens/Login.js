@@ -77,7 +77,7 @@ class Login extends React.Component {
     return true;
   };
 
-  submitForm = () => {
+  submitForm =  () => {
     var status = '';
     if (!this.validateForm()) {
       console.log('sendng req .....');
@@ -105,14 +105,15 @@ class Login extends React.Component {
 
           return res.json();
         })
-        .then(response => {
+        .then(async (response) => {
           if (status === 200) {
             //good to go
-            AsyncStorage.setItem('TOKEN', response.token);
-            AsyncStorage.setItem('USER_ID', response.id.toString());
+             await AsyncStorage.setItem('TOKEN', response.token);
+             await AsyncStorage.setItem('USER_ID', response.id.toString());
+              
             if(response.campus_id===null)
             {     
-                AsyncStorage.setItem('CAMPUS_ID', '');
+             await AsyncStorage.setItem('CAMPUS_ID', 'nahi_hai');
                 this.props.navigation.navigate('EditProfile')
             }
             else{

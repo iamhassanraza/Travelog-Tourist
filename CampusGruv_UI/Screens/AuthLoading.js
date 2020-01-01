@@ -29,11 +29,11 @@ class AuthLoading extends React.Component {
     console.log(campus_id,'===========campus id')
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    if(userToken && campus_id !== null)
+    if(userToken && campus_id !== 'nahi_hai')
     {
       this.props.navigation.navigate('App')
     }
-    else if(userToken && campus_id === null)
+    else if(userToken && campus_id === 'nahi_hai')
     {
       this.props.navigation.navigate('EditProfile')
 
