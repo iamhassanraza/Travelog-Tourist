@@ -28,13 +28,13 @@ class UserProfile extends React.Component {
               <View style={{flexDirection:'row',justifyContent:'flex-end'}}>
 
               
-            <TouchableOpacity style={{flexDirection:'row',justifyContent:'flex-end',margin:10}} onPress={()=>{
+            <TouchableOpacity style={{marginTop:5, flexDirection:'row',justifyContent:'flex-end'}} onPress={()=>{
               this.props.navigation.navigate('EditProfile')
             }}>
               <Text style={{color:'#ACACAC',borderWidth:0.5,padding:5,borderColor:'#ACACAC',borderRadius:10}}>Edit Profile</Text>
             </TouchableOpacity>   
              
-            <TouchableHighlight style={{flexDirection:'row',justifyContent:'flex-end',margin:10}} onPress={this._signOutAsync}>
+            <TouchableHighlight style={{marginLeft: 5, marginTop:5, flexDirection:'row',justifyContent:'flex-end'}} onPress={this._signOutAsync}>
               <Text style={{color:'#ACACAC',borderWidth:0.5,padding:5,borderColor:'#ACACAC',borderRadius:10}}>Logout</Text>
             </TouchableHighlight>
             </View>

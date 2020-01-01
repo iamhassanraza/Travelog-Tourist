@@ -27,7 +27,7 @@ export default class HomeScreen extends PureComponent {
     });
   };
 
-  getToken = async ()=>{
+  getToken = async () => {
     const Token = await AsyncStorage.getItem('TOKEN')
     return Token
   }
@@ -37,7 +37,7 @@ export default class HomeScreen extends PureComponent {
   fetchdata = async () => {
     const Token = await this.getToken();
     this.setState({
-        loading:false
+        loading: false
     })
     fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_all&page=1', {
       headers: {

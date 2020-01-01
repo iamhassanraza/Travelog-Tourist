@@ -4,7 +4,7 @@ import {
   Image, 
   ScrollView, 
   View, TouchableOpacity, Picker,
-  StyleSheet, Dimensions, Platform,TextInput, KeyboardAvoidingView } from 'react-native';
+  StyleSheet, Dimensions, Platform,TextInput, AsyncStorage, KeyboardAvoidingView } from 'react-native';
 import InputView from '../Components/ProfileEdit/InputViews'
 import ImagePicker from 'react-native-image-picker'
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg'
@@ -49,15 +49,34 @@ items = [
 
 class ProfilePage extends React.Component {
 
-    // componentDidMount() {
-    //   fetch()
-    // }
+    componentDidMount = async () => {
+      const Token = await AsyncStorage.getItem('TOKEN')
+      fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/fetch/campuses', {
+        headers: {
+          Authorization:
+            `Bearer ${Token}`,
+        },
+      }
+    ) 
+    .then(res => res.json())
+    .then(res => {
+      // const campuses = [this.state.campuses,...res]
+      const cam = [...this.state.campuses,...res]
+      console.log(cam,'---------')
+      this.setState({
+        campuses: cam
+      })
+      console.log(this.state.campuses)
+    })
+    .catch(err => console.log('error is',err))
+    }
 
     state = {
         //resta: [],
         imageUri: 'https://www.bluefrosthvac.com/wp-content/uploads/2019/08/default-person.png' ,
-        campuses: ['lums', 'iba', 'ned'],
-        selectedCampus: 'lums'
+        campuses: [{description: "Select campus"}],
+        selectedCampus: null,
+        selectedId: null
       };
 
     uploadProfilePicture = () => {
@@ -84,9 +103,9 @@ class ProfilePage extends React.Component {
     }
     render() {
 
-      let serviceItems = this.state.campuses.map( (s, i) => {
-        return <Picker.Item key={i} value={s} label={s} />
-      });
+      let pickerItems = this.state.campuses[0]? this.state.campuses.map( (s, i) => {
+        return <Picker.Item key={i} value={s.id} label={s.description} />
+      }) : null;
 
 
       //const { navigate } = this.props.navigation;
@@ -161,7 +180,7 @@ class ProfilePage extends React.Component {
                 /> */}
                 <View style={{width: '60%', marginTop: 5, borderBottomWidth: 0.5, borderBottomColor:'#C4C4C4'}}>
                   <Picker
-                    selectedValue={this.state.selectedCampus}
+                    selectedValue={this.state.selectedId}
                     // itemStyle={{
                     //   padding: 10,
                     //   marginTop: 2,
@@ -171,11 +190,14 @@ class ProfilePage extends React.Component {
                     //   borderRadius: 5,
                     // }}
                     onValueChange={(itemValue) => {
-                      this.setState({selectedCampus: itemValue})
-                      console.log('picked')
+                      if(itemValue !== "select campus")
+                      this.setState({
+                        selectedId: itemValue
+                      },
+                      console.log(this.state.selectedId))
                     }}
                   >
-                      {serviceItems}
+                      {pickerItems}
                   </Picker>
                 </View>
                 <Icon name="pencil" color='#C4C4C4' size={26} style={{width:'10%',marginTop:15}}/>

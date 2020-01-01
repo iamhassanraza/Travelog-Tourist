@@ -167,9 +167,9 @@ const ProfileStack = createStackNavigator({
                 <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
                     <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
                         <TouchableOpacity 
-                            // onPress = {() => {
-                            //     props.navigation.navigate("AddPost");
-                            // }}
+                            onPress = {() => {
+                                props.navigation.navigate("UserProfile");
+                            }}
                         >
                             <Text style={{color: 'white', padding: 2}}>
                                 back
