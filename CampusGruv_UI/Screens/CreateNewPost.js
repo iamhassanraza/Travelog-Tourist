@@ -10,7 +10,7 @@ import {
   AsyncStorage,
   PermissionsAndroid,
   FlatList,
-  Dimensions
+  Dimensions,
 } from 'react-native';
 import {withNavigation} from 'react-navigation';
 import CategoryButton from '../Components/CategoryButton';
@@ -31,7 +31,6 @@ import {
 } from 'react-native-indicators';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-
 const screenWidth = Dimensions.get('window').width;
 const screenHeight = Dimensions.get('window').height;
 
@@ -45,8 +44,8 @@ class CreateNewPost extends Component {
     spinner: false,
     Images: '',
     DATA: undefined,
+    loadingCategory: false,
   };
-
 
   // getCategories = async () => {
   //   const Token = await AsyncStorage.getItem('TOKEN');
@@ -136,7 +135,6 @@ class CreateNewPost extends Component {
   };
 
   getCategories = async () => {
-
     const Token = await AsyncStorage.getItem('TOKEN');
 
     const Response = await fetch(
@@ -160,15 +158,16 @@ class CreateNewPost extends Component {
     }
   };
 
-
-
   renderCategories = () => {
     return (
-      <View style={{width:screenWidth , height:screenHeight/2.5, alignItems:"center"}}>
-        <View style={{alignItems: 'center'}}>
-          <Text style={{fontSize: 22, color: 'grey', marginBottom:10}}> Select Category </Text>
-        </View>
-        
+      <View
+        style={{
+          width: screenWidth,
+          height: screenHeight / 3.1,
+          paddingTop:"2%",
+          alignItems: 'center'
+         
+        }}>
         <FlatList
           vertical
           numColumns={3}
@@ -180,13 +179,14 @@ class CreateNewPost extends Component {
               title={item.description}
               cat_id={item.id}
               bgclr={
-                this.state.Category === item.id ? `rgba(${item.rgba_colors}, 0.95)` : `rgba(${item.rgba_colors}, 0.65)`
+                this.state.Category === item.id
+                  ? `rgba(${item.rgba_colors}, 0.95)`
+                  : `rgba(${item.rgba_colors}, 0.65)`
               }
               onSelect={this.changeState}
               Elevation={
                 this.state.Category === item.id ? 14 : null
-              }>
-              </CategoryButton>
+              }></CategoryButton>
           )}
         />
       </View>
@@ -199,8 +199,8 @@ class CreateNewPost extends Component {
         style={{
           flexDirection: 'row',
           justifyContent: 'flex-end',
-          marginTop: 22,
-          marginRight: 10,
+          marginTop: 0,
+          marginRight: '5%',
         }}>
         <DatePicker
           style={{width: '60%', justifyContent: 'center', alignSelf: 'center'}}
@@ -243,8 +243,8 @@ class CreateNewPost extends Component {
         style={{
           flexDirection: 'row',
           justifyContent: 'flex-end',
-          marginTop: 20,
-          marginRight: 20,
+          marginTop: 0,
+          marginRight: '5%',
         }}>
         <Text style={{alignSelf: 'center', color: 'grey'}}>Set Price</Text>
         <TextInput
@@ -269,109 +269,116 @@ class CreateNewPost extends Component {
   renderDescription = () => {
     return (
       <View
-        style={{justifyContent: 'center', alignItems: 'center', marginTop: 15}}>
-        <Text style={{fontSize: 17, color: 'grey'}}>
+        style={{justifyContent: 'center', alignItems: 'center', marginTop: 5,width:screenWidth}}>
+        <Text style={{fontSize: 17, color: 'grey', marginBottom:7}}>
           Add Description (optional)
         </Text>
+        <View style={{height:screenHeight/3.9, width:screenWidth/1.1, marginLeft:"2.5%" ,marginRight:"2.5%",borderColor: 'grey',  borderRadius: 8, borderWidth:1}}>
         <TextInput
           value={this.state.Description}
           multiline={true}
           style={{
             color: 'grey',
-            width: '92%',
-            borderWidth: 0.5,
-            borderColor: 'grey',
-            margin: 10,
-            borderRadius: 8,
+            width: '100%',
+
           }}
           onChangeText={text => {
             this.changeDescriptionState(text);
           }}></TextInput>
+        </View>
       </View>
     );
   };
 
-  renderTitle = () => {
-    return (
-      <View
-        style={{justifyContent: 'center', alignItems: 'center', marginTop: 15}}>
-        <Text style={{fontSize: 17, color: 'grey'}}>Title</Text>
-        <TextInput
-          style={{
-            height: 40,
-            width: '92%',
-            borderWidth: 0.5,
-            borderColor: 'grey',
-            margin: 10,
-            borderRadius: 8,
-          }}
-          onChangeText={text => {
-            this.changeTitleState(text);
-          }}></TextInput>
-      </View>
-    );
-  };
+  // renderTitle = () => {
+  //   return (
+  //     <View
+  //       style={{justifyContent: 'center', alignItems: 'center', marginTop: 15}}>
+  //       <Text style={{fontSize: 17, color: 'grey'}}>Title</Text>
+  //       <TextInput
+  //         style={{
+  //           height: 40,
+  //           width: '92%',
+  //           borderWidth: 0.5,
+  //           borderColor: 'grey',
+  //           margin: 10,
+  //           borderRadius: 8,
+  //         }}
+  //         onChangeText={text => {
+  //           this.changeTitleState(text);
+  //         }}></TextInput>
+  //     </View>
+  //   );
+  // };
 
-  
+  uploadPost = async () => {
+    if (this.state.Category === '') {
+      alert('Select Category');
+    } else if (this.state.Description === '') {
+      alert('Enter Description First ');
+    } else {
+      this.setState({spinner: true});
+      const Token = await AsyncStorage.getItem('TOKEN');
+      const user_id = await AsyncStorage.getItem('USER_ID');
 
-  uploadPost = async ()=>{
+      let response = await fetch(
+        'https://campus-gruv-heroku.herokuapp.com/api/v1/post/create',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${Token}`,
+          },
+          body: JSON.stringify({
+            user_id: user_id,
+            category_id: this.state.Category,
+            title: this.state.Title,
+            description: this.state.Description,
+          }),
+        },
+      );
+      const postMasterResponse = await response.json();
 
-    if( this.state.Category === ''){
-      alert('Select Category')
-    }
-    else if (this.state.Description === '') {
-      alert('Enter Description First ')
-    }
-    else{
+      let raw_response = await fetch(
+        'https://campus-gruv-heroku.herokuapp.com/api/v1/post/detail',
+        {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${Token}`,
+          },
+          body: this.createFormData(this.state.Images, {
+            user_id: user_id,
+            post_id: postMasterResponse.id,
+          }),
+        },
+      );
 
-    this.setState({spinner:true});
-    const Token = await AsyncStorage.getItem('TOKEN')
-    const user_id = await AsyncStorage.getItem('USER_ID')
-      
-    let response = await fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/post/create',{
-      method:'POST',
-      headers:{
-        'Content-Type': 'application/json',
-        "Authorization": `Bearer ${Token}`,
-      },
-      body:JSON.stringify({user_id:user_id,category_id:this.state.Category,title:this.state.Title,description:this.state.Description})
-    })
-    const postMasterResponse =  await response.json();
+      let imageResponse = await raw_response.json();
 
-    let raw_response = await fetch("https://campus-gruv-heroku.herokuapp.com/api/v1/post/detail", {
-      method: "POST",
-      headers: {
-        'Content-Type': 'multipart/form-data',
-        "Authorization": `Bearer ${Token}`
-    },
-      body:this.createFormData(this.state.Images,{user_id:user_id,post_id:postMasterResponse.id})
-    })
-    
-    let imageResponse = await raw_response.json();
-    
-    console.log(imageResponse,'IMAGEE ka responseE')
-      console.log(imageResponse.image_url,'IMAGEEEEEEEEEEEEEEEEEEEEEEEE')
- 
-     this.setState({spinner:false,Description:''})
-     
-     const RefreshFunc =  this.props.navigation.getParam('refereshFunction', 'nothing to render')
+      console.log(imageResponse, 'IMAGEE ka responseE');
+      console.log(imageResponse.image_url, 'IMAGEEEEEEEEEEEEEEEEEEEEEEEE');
+
+      this.setState({spinner: false, Description: ''});
+
+      const RefreshFunc = this.props.navigation.getParam(
+        'refereshFunction',
+        'nothing to render',
+      );
       RefreshFunc();
-   
-    this.props.navigation.navigate('HomeScreen')
-    //  this.props.navigation.push('PostDetail', {
-    //     PostData: {
-    //       uri: imageResponse.image_url,
-    //       title: postMasterResponse.title,
-    //       userAvatar: 'Api needed',
-    //       username: 'API NEEDED',
-    //       description: postMasterResponse.description,
-    //     }
-    //   }
 
-    //  )
+      this.props.navigation.navigate('HomeScreen');
+      //  this.props.navigation.push('PostDetail', {
+      //     PostData: {
+      //       uri: imageResponse.image_url,
+      //       title: postMasterResponse.title,
+      //       userAvatar: 'Api needed',
+      //       username: 'API NEEDED',
+      //       description: postMasterResponse.description,
+      //     }
+      //   }
 
-
-
+      //  )
     }
   };
 
@@ -384,14 +391,14 @@ class CreateNewPost extends Component {
         }}>
         <View
           style={{
-            width: '30%',
+            width: '90%',
             borderRadius: 5,
             height: 30,
             justifyContent: 'center',
-            backgroundColor: '#1192d1',
+            backgroundColor: '#0C91CF',
             alignSelf: 'center',
           }}>
-          <Text style={{color: 'white', alignSelf: 'center'}}>SHARE</Text>
+          <Text style={{color: 'white', alignSelf: 'center'}}>Share</Text>
         </View>
       </TouchableOpacity>
     );
@@ -420,7 +427,7 @@ class CreateNewPost extends Component {
       <TouchableWithoutFeedback>
         <KeyboardAvoidingView
           style={{flex: 1}}
-          keyboardVerticalOffset={90}
+          keyboardVerticalOffset={80}
           behavior="padding">
           <ScrollView>
             <Spinner
@@ -430,12 +437,20 @@ class CreateNewPost extends Component {
               customIndicator={<BarIndicator count={5} />}
             />
 
-            {this.renderCategories()}
-            {this.state.Category === 5 ? this.renderDatePicker() : null}
-            {this.state.Category === 7
-              ? this.renderPrice()
-              : null}
+            <View style={{alignItems: 'center', paddingTop:"5%"}}>
+              <Text style={{fontSize: 20, color: 'grey'}}>
+                Select Category
+              </Text>
+            </View>
 
+            {this.state.DATA ? (this.renderCategories()) : (
+              <View style={{marginTop: '10%', marginBottom: '10%'}}>
+                <SkypeIndicator count={5} />
+              </View>
+            )}
+
+            {this.state.Category === 5 ? this.renderDatePicker() : null}
+            {this.state.Category === 7 ? this.renderPrice() : null}
             {this.renderDescription()}
             {this.renderShareButton()}
           </ScrollView>
