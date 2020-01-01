@@ -78,6 +78,7 @@ class Login extends React.Component {
   };
 
   submitForm = () => {
+    var status = '';
     if (!this.validateForm()) {
       console.log('sendng req .....');
     } else {
@@ -97,33 +98,35 @@ class Login extends React.Component {
         }),
       })
         .then(res => {
+          status = res.status;
+          this.setState({
+            Spinner: false,
+          });
+
           return res.json();
         })
         .then(response => {
-          if (response) {
-            this.setState({
-              Spinner: false,
-            });
-            if (response.message) {
-              alert(response.message);
-            } else {
-              console.log(response, '=========response=========');
-              AsyncStorage.setItem('TOKEN', response.token);
-              AsyncStorage.setItem('USER_ID', response.id.toString());
-
-              this.props.navigation.navigate('App');
+          if (status === 200) {
+            //good to go
+            AsyncStorage.setItem('TOKEN', response.token);
+            AsyncStorage.setItem('USER_ID', response.id.toString());
+            if(response.campus_id===null)
+            {
+                //navigate to edit profile
             }
-          } else {
-            alert('User not Authorized');
+            else{
+              //navigate to app
+            }
+          } else if (status === 401) {
+            //user not found with credentials
+            alert(response.message.split(':')[1]);
           }
 
-          // callback(response);
+          console.log(response, 'json response -----');
         })
         .catch(error => {
           console.log(error);
-          // callback(null);
         });
-      // /////////////////////FETCH
     }
   };
 
@@ -229,9 +232,25 @@ class Login extends React.Component {
                 <View style={styles.butt}>
                   <TouchableOpacity onPress={this.submitForm}>
                     {this.state.Spinner ? (
-                      <View style={{ flexDirection:'row',justifyContent:'center'}}>
-                        <Text style={{color:'white',fontWeight:'bold',fontSize:18}}>Loading  </Text>
-                        <BarIndicator style={{flex:0}} count={3} size={20} color={'white'} />
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'center',
+                        }}>
+                        <Text
+                          style={{
+                            color: 'white',
+                            fontWeight: 'bold',
+                            fontSize: 18,
+                          }}>
+                          Loading{' '}
+                        </Text>
+                        <BarIndicator
+                          style={{flex: 0}}
+                          count={3}
+                          size={20}
+                          color={'white'}
+                        />
                       </View>
                     ) : (
                       <Text

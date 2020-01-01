@@ -36,6 +36,7 @@ import ResetPassword from './Screens/ResetPassword'
 import UserSettings from './Screens/UserSettings'
 import { TouchableHighlight } from 'react-native-gesture-handler'
 
+
 const AuthNavigator = createStackNavigator({
     Login: {
         screen: Login,

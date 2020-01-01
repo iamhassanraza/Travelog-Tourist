@@ -27,7 +27,7 @@ class RenderCards extends PureComponent {
                                 scrollEnabled={false}
                                 showsVerticalScrollIndicator={false}
                                 renderItem={({ item }) => {
-                                        return <PostCard categoryName={item.postCategory.description} description={item.description} style={{}} name={item.users.first_name + ' ' + item.users.last_name} title={item.title} imageurl={item.postDetail.length > 0 ? item.postDetail[0].image_url : 'https://travelog-pk.herokuapp.com/images/default.png' }>  </PostCard>
+                                        return <PostCard categoryName={item.postCategory.description} categoryColor={item.postCategory.rgba_colors} description={item.description} style={{}} name={item.users.first_name + ' ' + item.users.last_name} title={item.title} imageurl={item.postDetail.length > 0 ? item.postDetail[0].image_url : 'https://travelog-pk.herokuapp.com/images/default.png' }>  </PostCard>
                                     }       
                                 }
                                 keyExtractor={item => item.title}
@@ -39,9 +39,7 @@ class RenderCards extends PureComponent {
                                 data={column2Data}
                                 scrollEnabled={false}
                                 showsVerticalScrollIndicator={false}
-                                renderItem={({ item,index }) => {
-                                    if(index===0)
-                                    {console.log('======================',item,'===============')}
+                                renderItem={({ item }) => {
                                         return <PostCard categoryName={item.postCategory.description} categoryColor={item.postCategory.rgba_colors} description={item.description} name={item.users.first_name + ' ' + item.users.last_name} title={item.title} imageurl={item.postDetail.length > 0 ? item.postDetail[0].image_url : 'https://travelog-pk.herokuapp.com/images/default.png' }>  </PostCard>
                                     }       
                                 }
