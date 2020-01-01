@@ -111,11 +111,13 @@ class Login extends React.Component {
             AsyncStorage.setItem('TOKEN', response.token);
             AsyncStorage.setItem('USER_ID', response.id.toString());
             if(response.campus_id===null)
-            {
-                //navigate to edit profile
+            {     
+                AsyncStorage.setItem('CAMPUS_ID', '');
+                this.props.navigation.navigate('EditProfile')
             }
             else{
-              //navigate to app
+              AsyncStorage.setItem('CAMPUS_ID', response.campus_id.toString());
+              this.props.navigation.navigate('App')
             }
           } else if (status === 401) {
             //user not found with credentials

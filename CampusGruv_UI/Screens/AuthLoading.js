@@ -24,10 +24,27 @@ class AuthLoading extends React.Component {
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
     const userToken = await AsyncStorage.getItem('TOKEN');
+    const campus_id = await AsyncStorage.getItem('CAMPUS_ID');
 
+    console.log(campus_id,'===========campus id')
     // This will switch to the App screen or Auth screen and this loading
     // screen will be unmounted and thrown away.
-    this.props.navigation.navigate(userToken ? 'App' : 'Auth');
+    if(userToken && campus_id !== null)
+    {
+      this.props.navigation.navigate('App')
+    }
+    else if(userToken && campus_id === null)
+    {
+      this.props.navigation.navigate('EditProfile')
+
+    }
+    else{
+      this.props.navigation.navigate('Auth')
+    }
+
+
+
+    // this.props.navigation.navigate(userToken && campus_id !== '' ? 'App' : 'Auth');
   };
 
   // Render any loading content that you like here

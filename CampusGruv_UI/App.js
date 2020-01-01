@@ -463,6 +463,9 @@ const RootStackNavigator = createSwitchNavigator({
     },
     App: {
         screen: TabContainer
+    },
+    EditProfile:{
+        screen:EditProfile
     }
 
 },
