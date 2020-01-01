@@ -162,38 +162,6 @@ const ProfileStack = createStackNavigator({
     },
     EditProfile: {
         screen: EditProfile,
-        navigationOptions: {
-            header: (props) => (
-                <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
-                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
-                        <TouchableOpacity 
-                            onPress = {() => {
-                                props.navigation.navigate("UserProfile");
-                            }}
-                        >
-                            <Text style={{color: 'white', padding: 2}}>
-                                back
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{alignSelf: 'center'}}>
-                        <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>Edit profile</Text>
-                    </View>
-                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
-                        <TouchableOpacity 
-                            // onPress = {() => {
-                            //     props.navigation.dispatch(StackActions.popToTop());
-                            //     props.navigation.navigate('HomeScreen')
-                            // }}
-                        >
-                            <Text style={{color: 'white', padding: 2}}>
-                                done
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                </View> 
-            )
-        },
     }
 }, 
 {

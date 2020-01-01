@@ -49,6 +49,39 @@ items = [
 
 class ProfilePage extends React.Component {
 
+  static navigationOptions = (props) => {
+    const {params = {}} = props.navigation.state;
+    return {
+    header: (
+        <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+            <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
+                <TouchableOpacity 
+                    onPress = {() => {
+                        props.navigation.navigate("UserProfile");
+                    }}
+                >
+                    <Text style={{color: 'white', padding: 2}}>
+                        back
+                    </Text>
+                </TouchableOpacity>
+            </View>
+            <View style={{alignSelf: 'center'}}>
+                <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>Edit profile</Text>
+            </View>
+            <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
+                <TouchableOpacity 
+                    onPress = {() => params.handleThis()}
+                >
+                    <Text style={{color: 'white', padding: 2}}>
+                        done
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        </View> 
+    )
+  }
+}
+
     componentDidMount = async () => {
       const Token = await AsyncStorage.getItem('TOKEN')
       fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/fetch/campuses', {
@@ -69,14 +102,26 @@ class ProfilePage extends React.Component {
       console.log(this.state.campuses)
     })
     .catch(err => console.log('error is',err))
+
+    this.props.navigation.setParams({
+          handleThis: () => {
+            if(this.state.selectedId)
+              alert(this.state.selectedId)
+            else
+              alert('no campus selected')
+          }
+      });
     }
+
+    
 
     state = {
         //resta: [],
         imageUri: 'https://www.bluefrosthvac.com/wp-content/uploads/2019/08/default-person.png' ,
         campuses: [{description: "Select campus"}],
         selectedCampus: null,
-        selectedId: null
+        selectedId: null,
+        text: 'hello'
       };
 
     uploadProfilePicture = () => {
@@ -101,6 +146,7 @@ class ProfilePage extends React.Component {
         }
       });
     }
+
     render() {
 
       let pickerItems = this.state.campuses[0]? this.state.campuses.map( (s, i) => {
@@ -114,20 +160,20 @@ class ProfilePage extends React.Component {
           <ScrollView>
               {/* EDIT PROFILE IMAGE */}
             <View style={{flexDirection:'row',justifyContent:'center',marginTop:20}}>
-              <Image source={{ uri: this.state.imageUri}} style={{width:150, height:150, borderColor:'grey',borderWidth:0.9,borderRadius:80}} />
+              <Image source={{ uri: this.state.imageUri}} style={{width:120, height:120, borderColor:'grey',borderWidth:0.9,borderRadius:80}} />
             </View>
             <TouchableOpacity
               onPress = {this.uploadProfilePicture}
             >
-              <View style={{flexDirection:'row',justifyContent:'center',marginTop:20}}>
+              <View style={{flexDirection:'row',justifyContent:'center',marginTop:10}}>
                 <Text style={{color:'#0C91CF',fontWeight:'bold',fontSize:20}}>Change Profile Picture</Text>
               </View>
             </TouchableOpacity>
     
         {/* OPTIONS */}
 
-            <View style={{borderBottomColor:'#C4C4C4', marginTop:20}}>
-              <InputView name='Name' ph='Jessica Z'/>
+            <View style={{borderBottomColor:'#C4C4C4', marginTop:10}}>
+              <InputView name='Name' ph='Enter name'/>
               {/* <InputView name='Campus' ph='University of Pittsburgh'/> */}
               <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
                 <Text style={{fontSize:20,marginTop:15,marginLeft:10,width:'25%'}}>Campus</Text>
@@ -181,20 +227,11 @@ class ProfilePage extends React.Component {
                 <View style={{width: '60%', marginTop: 5, borderBottomWidth: 0.5, borderBottomColor:'#C4C4C4'}}>
                   <Picker
                     selectedValue={this.state.selectedId}
-                    // itemStyle={{
-                    //   padding: 10,
-                    //   marginTop: 2,
-                    //   backgroundColor: '#ddd',
-                    //   borderColor: '#bbb',
-                    //   borderWidth: 1,
-                    //   borderRadius: 5,
-                    // }}
                     onValueChange={(itemValue) => {
                       if(itemValue !== "select campus")
                       this.setState({
                         selectedId: itemValue
-                      },
-                      console.log(this.state.selectedId))
+                      })
                     }}
                   >
                       {pickerItems}
