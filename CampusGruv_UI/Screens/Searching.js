@@ -10,10 +10,16 @@ import i2 from '../Assets/Images/book.jpg'
 import i3 from '../Assets/Images/ema.jpg'
 import i4 from '../Assets/Images/mansehra.jpg'
 import i5 from '../Assets/Images/samandarkatha.jpg'
+import RenderCards from '../Components/RenderCards';
+
+import ContentLoader, {Rect} from 'react-content-loader/native';
 
 export default class Searching extends React.PureComponent {
   state = {
     selection: 'Feed',
+    posts: [],
+    refreshing: false,
+    loading:false
   };
 
   dataUsers = [
@@ -46,13 +52,71 @@ export default class Searching extends React.PureComponent {
     {name: 'Steven Gerrad', current: false , pic : i4}
   ];
 
+
+  getToken = async ()=>{
+    const Token = await AsyncStorage.getItem('TOKEN')
+    return Token
+  }
+
+
+  fetchdata = async () => {
+    const Token = await this.getToken();
+    this.setState({
+        loading:false
+    })
+    fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_all&page=1', {
+      headers: {
+        Authorization:
+          `Bearer ${Token}`,
+      },
+    })
+      .then(response => {
+        return response.json();
+      })
+      .then(responseJson => {
+      
+        this.setState({
+          posts: responseJson.data,
+          refreshing: false,
+          loading:false
+        });
+      })
+      .catch(err => console.log(err));
+  };
+
+
   renderFeed = () => {
 
-    return (
-      <View>
-        <PostList></PostList>
-      </View>
-    );
+    if (this.state.loading===false) {
+      return (
+        <ScrollView
+          refreshControl={
+            <RefreshControl
+              refreshing={this.state.refreshing}
+              onRefresh={this.onPageRefresh}
+            />
+          }>
+          <RenderCards posts={this.state.posts}></RenderCards>
+        </ScrollView>
+      );
+    } else {
+      return (
+        <View>
+          <ContentLoader
+            height={450}
+            width={820}
+            speed={0.2}
+            height={Dimensions.get('window').height * 1}>
+            <Rect x="10" y="10" rx="5" ry="5" width="185" height="220" />
+            <Rect x="200" y="10" rx="5" ry="5" width="200" height="280" />
+            <Rect x="10" y="240" rx="5" ry="5" width="185" height="250" />
+            <Rect x="200" y="300" rx="5" ry="5" width="200" height="280" />
+            {/* <Rect x="280" y="300" rx="5" ry="5" width="260" height="140" />
+                    <Rect x="550" y="160" rx="5" ry="5" width="260" height="280" /> */}
+          </ContentLoader>
+        </View>
+      );
+    }
   };
 
   renderUsers = () => {
