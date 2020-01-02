@@ -86,7 +86,7 @@ class ProfilePage extends React.Component {
 
     state = {
         //resta: [],
-        imageUri: 'https://www.bluefrosthvac.com/wp-content/uploads/2019/08/default-person.png' ,
+        imageUri: '' ,
         campuses: [{description: "Select campus"}],
         selectedCampus: null,
         selectedId: null,
@@ -183,7 +183,7 @@ class ProfilePage extends React.Component {
           <ScrollView>
               {/* EDIT PROFILE IMAGE */}
             <View style={{flexDirection:'row',justifyContent:'center',marginTop:20}}>
-              <Image source={{ uri: this.state.imageUri.uri}} style={{width:120, height:120, borderColor:'grey',borderWidth:0.9,borderRadius:80}} />
+              <Image source={{ uri: this.state.imageUri!== '' ? this.state.imageUri.uri : 'https://www.bluefrosthvac.com/wp-content/uploads/2019/08/default-person.png'}} style={{width:120, height:120, borderColor:'grey',borderWidth:0.9,borderRadius:80}} />
             </View>
             <TouchableOpacity
               onPress = {this.uploadProfilePicture}
