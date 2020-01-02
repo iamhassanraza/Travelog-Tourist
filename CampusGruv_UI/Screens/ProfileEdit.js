@@ -109,7 +109,7 @@ class ProfilePage extends React.Component {
           } 
           else {
           this.setState({
-            imageUri : response.uri 
+            imageUri : response
           })
           }
         }
@@ -117,7 +117,34 @@ class ProfilePage extends React.Component {
     }
 
 
+    createFormData = (images, body) => {
+      const data = new FormData();
+      data.append('profile_pic', {
+        name: images.fileName,
+        type: images.type,
+        uri:
+          Platform.OS === 'android'
+            ? images.uri
+            : images.uri.replace('file://', ''),
+      });
+  
+      Object.keys(body).forEach(key => {
+        data.append(key, body[key]);
+      });
+  
+      return data;
+    };
+
+
+
     UpdateProfile = async ()=>{
+        const profiledata  = new FormData()
+        profiledata.append('first_name','babaa jeeee')
+        profiledata.append('campus_id','2')
+        profiledata.append('profile_pic', {
+          uri: this.state.imageUri
+        })
+
 
       const Token = await AsyncStorage.getItem('TOKEN');
       //const Campusid = await AsyncStorage.getItem('CAMPUS_ID');
@@ -127,12 +154,10 @@ class ProfilePage extends React.Component {
         {
           method: 'PATCH',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${Token}`,
           },
-          body: JSON.stringify({
-          campus_id:this.state.selectedId
-          }),
+          body: this.createFormData(this.state.imageUri,{campus_id:2}),
         },
       );
       const postMasterResponse = await response.json();
@@ -153,13 +178,12 @@ class ProfilePage extends React.Component {
       }) : null;
 
 
-      //const { navigate } = this.props.navigation;
       return (
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={50}>
           <ScrollView>
               {/* EDIT PROFILE IMAGE */}
             <View style={{flexDirection:'row',justifyContent:'center',marginTop:20}}>
-              <Image source={{ uri: this.state.imageUri}} style={{width:120, height:120, borderColor:'grey',borderWidth:0.9,borderRadius:80}} />
+              <Image source={{ uri: this.state.imageUri.uri}} style={{width:120, height:120, borderColor:'grey',borderWidth:0.9,borderRadius:80}} />
             </View>
             <TouchableOpacity
               onPress = {this.uploadProfilePicture}

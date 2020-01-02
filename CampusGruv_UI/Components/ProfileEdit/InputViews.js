@@ -3,9 +3,7 @@ import { Text, Image, View, StyleSheet, Dimensions, Platform,TextInput } from 'r
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 class InputView extends React.Component {
-  static navigationOptions = {
-    header: null
-  }
+
     constructor(props) {
       super(props);
       this.state = {
@@ -22,7 +20,7 @@ class InputView extends React.Component {
 
         <View style={{flexDirection:'row',justifyContent:'space-around'}}>
       <Text style={{fontSize:20, marginTop:15,marginLeft:10,width:'25%'}}>{this.props.name}</Text>
-<TextInput
+      <TextInput
         style={{width:'60%',borderBottomColor:'#C4C4C4',borderBottomWidth:0.5,fontSize:20,color:'#ACACAC'}}
         placeholder={this.props.ph}
                       />
