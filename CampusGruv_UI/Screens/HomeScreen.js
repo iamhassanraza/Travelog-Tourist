@@ -7,10 +7,10 @@ import {
   ScrollView,
   FlatList,
   Dimensions,
-  AsyncStorage
+  AsyncStorage,
 } from 'react-native';
 import PostCard from '../Components/PostCard';
-
+import CrossIcon from 'react-native-vector-icons/MaterialIcons';
 import ContentLoader, {Rect} from 'react-content-loader/native';
 import RenderCards from '../Components/RenderCards';
 
@@ -18,38 +18,63 @@ export default class HomeScreen extends PureComponent {
   state = {
     posts: [],
     refreshing: false,
-    loading:false
+    loading: false,
+    CategoryPosts: undefined,
+    Category: 'undefined',
+    Category_Name: 'undefined',
   };
 
   onPageRefresh = () => {
-    this.setState({ posts:[],loading: true}, () => {
+    this.setState({posts: [], loading: true}, () => {
       this.fetchdata();
     });
   };
 
+  fetchCategoryPosts = async () => {
+    const Token = await AsyncStorage.getItem('TOKEN');
+    const Response = await fetch(
+      `https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_category&category_id=${this.props.navigation.getParam(
+        'CategoryID',
+        'undefined',
+      )}&page=1`,
+      {
+        headers: {
+          Authorization: `Bearer ${Token}`,
+        },
+      },
+    );
 
-
+    const JsonResponse = await Response.json();
+    if (parseInt(Response.status) === 401) {
+      console.log('none');
+    } else if (parseInt(Response.status) === 200) {
+      console.log('Category aagyi yayyyy');
+      this.setState({posts: JsonResponse.data});
+    }
+  };
 
   fetchdata = async () => {
-    const Token = await AsyncStorage.getItem('TOKEN')
+    const Token = await AsyncStorage.getItem('TOKEN');
     this.setState({
-        loading: false
-    })
-    fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_all&page=1', {
-      headers: {
-        Authorization:
-          `Bearer ${Token}`,
+      loading: false,
+    });
+    fetch(
+      'https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_all&page=1',
+      {
+        headers: {
+          Authorization: `Bearer ${Token}`,
+        },
       },
-    })
+    )
       .then(response => {
         return response.json();
       })
       .then(responseJson => {
-      
         this.setState({
           posts: responseJson.data,
           refreshing: false,
-          loading:false
+          loading: false,
+          Category: 'undefined'
         });
       })
       .catch(err => console.log(err));
@@ -59,7 +84,12 @@ export default class HomeScreen extends PureComponent {
     const {navigation} = this.props;
     this.focusListener = navigation.addListener('didFocus', () => {
       // The screen is focused
-      this.fetchdata();
+
+      if (this.state.Category === 'undefined') {
+        this.fetchdata();
+      } else {
+        this.fetchCategoryPosts();
+      }
     });
   }
 
@@ -68,10 +98,44 @@ export default class HomeScreen extends PureComponent {
     this.focusListener.remove();
   }
 
-  render() {
-console.log(this.props.navigation.getParam('CategoryID', 'undefined'))
 
-    if (this.state.loading===false) {
+                   // For Cancelling the category and rerender Home
+
+
+  // renderCancelCategory = () => {
+  //   return (
+  //     <View style={{flexDirection: 'row', alignItems: 'center', height: 32}}>
+  //       <Text
+  //         style={{
+  //           backgroundColor: '#1192d1',
+  //           paddingLeft: '2%',
+  //           paddingRight: '2%',
+  //           borderRadius: 10,
+  //           color: 'white',
+  //           paddingTop: '0.2%',
+  //           height: 25,
+  //         }}>
+  //         {this.state.Category_Name}
+  //       </Text>
+  //       <CrossIcon
+  //         name="cancel"
+  //         style={{fontSize: 25, color: '#1192d1'}}
+  //         onPress={() => {
+           
+  //           this.fetchdata();
+  //         }}></CrossIcon>
+  //     </View>
+  //   );
+  // };
+
+  render() {
+    const catid = this.props.navigation.getParam('CategoryID', 'undefined');
+    const catname = this.props.navigation.getParam('CategoryName', 'undefi');
+    this.setState({Category: catid, Category_Name: catname});
+ 
+
+
+    if (this.state.loading === false) {
       return (
         <ScrollView
           refreshControl={
@@ -80,7 +144,9 @@ console.log(this.props.navigation.getParam('CategoryID', 'undefined'))
               onRefresh={this.onPageRefresh}
             />
           }>
+             
           <RenderCards posts={this.state.posts}></RenderCards>
+
         </ScrollView>
       );
     } else {
