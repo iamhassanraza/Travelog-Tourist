@@ -64,7 +64,7 @@ class ProfilePage extends React.Component {
       this.setState({
         campuses: cam
       })
-      console.log(this.state.campuses)
+      
     })
     .catch(err => console.log('error is',err))
 
@@ -120,7 +120,7 @@ class ProfilePage extends React.Component {
     UpdateProfile = async ()=>{
 
       const Token = await AsyncStorage.getItem('TOKEN');
-      const Campusid = await AsyncStorage.getItem('CAMPUS_ID');
+      //const Campusid = await AsyncStorage.getItem('CAMPUS_ID');
 
       let response = await fetch(
         'https://campus-gruv-heroku.herokuapp.com/api/v1/edit/profile',
@@ -136,13 +136,14 @@ class ProfilePage extends React.Component {
         },
       );
       const postMasterResponse = await response.json();
+      await AsyncStorage.setItem('CAMPUS_ID', this.state.selectedId.toString());
       this.props.navigation.navigate('App')
       console.log(postMasterResponse,'patch request')
 
 
     }
 
-
+    
 
 
     render() {
