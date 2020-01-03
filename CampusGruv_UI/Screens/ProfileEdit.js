@@ -119,14 +119,18 @@ class ProfilePage extends React.Component {
 
     createFormData = (images, body) => {
       const data = new FormData();
-      data.append('profile_pic', {
-        name: images.fileName,
-        type: images.type,
-        uri:
-          Platform.OS === 'android'
-            ? images.uri
-            : images.uri.replace('file://', ''),
-      });
+      if(this.state.imageUri !== '')
+      {
+        data.append('profile_pic', {
+          name: images.fileName,
+          type: images.type,
+          uri:
+            Platform.OS === 'android'
+              ? images.uri
+              : images.uri.replace('file://', ''),
+        });
+      }
+   
   
       Object.keys(body).forEach(key => {
         data.append(key, body[key]);

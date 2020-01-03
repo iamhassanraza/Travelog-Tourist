@@ -11,6 +11,8 @@ import {
 import Colors from '../Assets/Colors'
 import HeaderTitle from './Heading';
 
+import { connect } from "react-redux";
+import { CreateUserDetails } from "../ReduxStore/Actions/index"
 const screenwidth = Dimensions.get('window').width;
 const screenheight = Dimensions.get('window').height;
 
