@@ -11,19 +11,46 @@ import defaultAvatar from '../Assets/Images/defaultAvatar.jpg'
 import SearchableDropdown from 'react-native-searchable-dropdown'
 import { TouchableHighlight } from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
-
+//cam_id === 'nahi_hai'
 class ProfilePage extends React.Component {
-
   static navigationOptions = (props) => {
+    tabBarVisibile = false
     const {params = {}} = props.navigation.state;
     return {
-    header: (
+    header: params.cam_id === 'nahi_hai' ? (
         <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
-            <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
+            {/* <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
                 <TouchableOpacity 
                     // onPress = {() => {
                     //     props.navigation.navigate("UserProfile");
                     // }}
+                >
+                    <Text style={{color: 'white', padding: 2}}>
+                        back
+                    </Text>
+                </TouchableOpacity>
+            </View> */}
+            <View style={{alignSelf: 'center'}}>
+                <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>Edit profile</Text>
+            </View>
+            <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
+                <TouchableOpacity 
+                    onPress = {() => params.handleThis()}
+                >
+                    <Text style={{color: 'white', padding: 2}}>
+                        done
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        </View> 
+    ) : 
+    (
+      <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+            <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
+                <TouchableOpacity 
+                    onPress = {() => {
+                        props.navigation.navigate("UserProfile");
+                    }}
                 >
                     <Text style={{color: 'white', padding: 2}}>
                         back
@@ -49,6 +76,8 @@ class ProfilePage extends React.Component {
 
     componentDidMount = async () => {
       const Token = await AsyncStorage.getItem('TOKEN')
+      const campusId = await AsyncStorage.getItem('CAMPUS_ID');
+      await this.setState({currentCampus: campusId});
       fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/fetch/campuses', {
         headers: {
           Authorization:
@@ -57,14 +86,31 @@ class ProfilePage extends React.Component {
       }
     ) 
     .then(res => res.json())
-    .then(res => {
+    .then( async (res) => {
+      //console.log(campusId)
       // const campuses = [this.state.campuses,...res]
-      const cam = [...this.state.campuses,...res]
-    
-      this.setState({
-        campuses: cam
-      })
-      
+      if(campusId === 'nahi_hai') {
+        const cam = [...[{description: 'select campus'}],...res]
+        //console.log('no campus')
+        this.setState({
+          campuses: cam
+        })
+      }
+      else {
+        await res.filter((campus) => {
+          if(campus.id === parseInt(campusId)) {
+            const cam = [...[campus],...res]
+            console.log(campus)
+            this.setState({
+              selectedId: campus,
+              campuses: cam
+            })
+          }
+          else {
+            return null
+          }
+        })
+      }
     })
     .catch(err => console.log('error is',err))
 
@@ -73,12 +119,11 @@ class ProfilePage extends React.Component {
             if(this.state.selectedId)
               {
                 this.UpdateProfile()
-        
-               
               }
             else
               alert('no campus selected')
-          }
+          },
+          cam_id: this.state.currentCampus
       });
     }
 
@@ -86,8 +131,9 @@ class ProfilePage extends React.Component {
 
     state = {
         //resta: [],
-        imageUri: '' ,
-        campuses: [{description: "Select campus"}],
+        imageUri: 'https://www.bluefrosthvac.com/wp-content/uploads/2019/08/default-person.png' ,
+        campuses: [],
+        currentCampus: {},
         selectedCampus: null,
         selectedId: null,
         text: 'hello'
@@ -109,7 +155,7 @@ class ProfilePage extends React.Component {
           } 
           else {
           this.setState({
-            imageUri : response
+            imageUri : response.uri 
           })
           }
         }
@@ -117,34 +163,7 @@ class ProfilePage extends React.Component {
     }
 
 
-    createFormData = (images, body) => {
-      const data = new FormData();
-      data.append('profile_pic', {
-        name: images.fileName,
-        type: images.type,
-        uri:
-          Platform.OS === 'android'
-            ? images.uri
-            : images.uri.replace('file://', ''),
-      });
-  
-      Object.keys(body).forEach(key => {
-        data.append(key, body[key]);
-      });
-  
-      return data;
-    };
-
-
-
     UpdateProfile = async ()=>{
-        const profiledata  = new FormData()
-        profiledata.append('first_name','babaa jeeee')
-        profiledata.append('campus_id','2')
-        profiledata.append('profile_pic', {
-          uri: this.state.imageUri
-        })
-
 
       const Token = await AsyncStorage.getItem('TOKEN');
       //const Campusid = await AsyncStorage.getItem('CAMPUS_ID');
@@ -154,21 +173,22 @@ class ProfilePage extends React.Component {
         {
           method: 'PATCH',
           headers: {
-            'Content-Type': 'multipart/form-data',
+            'Content-Type': 'application/json',
             Authorization: `Bearer ${Token}`,
           },
-          body: this.createFormData(this.state.imageUri,{campus_id:2}),
+          body: JSON.stringify({
+          campus_id:this.state.selectedId
+          }),
         },
       );
       const postMasterResponse = await response.json();
       await AsyncStorage.setItem('CAMPUS_ID', this.state.selectedId.toString());
-      this.props.navigation.navigate('App')
+      AsyncStorage.getItem('CAMPUS_ID') === 'nahi_hai' ? this.props.navigation.navigate('App') : this.props.navigation.navigate('HomeScreen')
       console.log(postMasterResponse,'patch request')
-
 
     }
 
-    
+
 
 
     render() {
@@ -178,12 +198,13 @@ class ProfilePage extends React.Component {
       }) : null;
 
 
+      //const { navigate } = this.props.navigation;
       return (
-        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={50}>
+        <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100}>
           <ScrollView>
               {/* EDIT PROFILE IMAGE */}
             <View style={{flexDirection:'row',justifyContent:'center',marginTop:20}}>
-              <Image source={{ uri: this.state.imageUri!== '' ? this.state.imageUri.uri : 'https://www.bluefrosthvac.com/wp-content/uploads/2019/08/default-person.png'}} style={{width:120, height:120, borderColor:'grey',borderWidth:0.9,borderRadius:80}} />
+              <Image source={{ uri: this.state.imageUri}} style={{width:120, height:120, borderColor:'grey',borderWidth:0.9,borderRadius:80}} />
             </View>
             <TouchableOpacity
               onPress = {this.uploadProfilePicture}
@@ -200,53 +221,6 @@ class ProfilePage extends React.Component {
               {/* <InputView name='Campus' ph='University of Pittsburgh'/> */}
               <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
                 <Text style={{fontSize:20,marginTop:15,marginLeft:10,width:'25%'}}>Campus</Text>
-                {/* <SearchableDropdown
-                  multi={true}
-                  // onItemSelect = {(item) => {
-                  //   console.log('on select item')
-                  //   const items = this.state.selectedItems;
-                  //   items.push(item)
-                  //   this.setState({ selectedItems: items });
-                  //   console.log(this.state.selectedItems)
-                  // }}
-                  onItemSelect={(item) =>  alert(JSON.stringify(item))}
-
-                  containerStyle={{ width: '60%', borderBottomColor:'#C4C4C4', borderBottomWidth:0.5 }}
-                  onRemoveItem={(item, index) => {
-                    console.log('onremove item')
-                    const items = this.state.selectedItems.filter((sitem) => sitem.id !== item.id);
-                    this.setState({ selectedItems: items });
-                  }}
-                  itemStyle={{
-                    padding: 10,
-                    marginTop: 2,
-                    backgroundColor: '#ddd',
-                    borderColor: '#bbb',
-                    borderWidth: 1,
-                    borderRadius: 5,
-                  }}
-                  itemTextStyle={{ color: '#222' }}
-                  itemsContainerStyle={{ maxHeight: 140 }}
-                  items={items}
-                  //defaultIndex={1}
-                  resetValue={false}
-                  textInputProps={
-                    {
-                      placeholder: 'select campus',
-                      underlineColorAndroid: "transparent",
-                      style: {
-                        fontSize:20,
-                        color:'#ACACAC'
-                      },
-                      onTextChange: text => alert(text)
-                    }
-                  }
-                  listProps={
-                    {
-                      nestedScrollEnabled: true,
-                    }
-                  }
-                /> */}
                 <View style={{width: '60%', marginTop: 5, borderBottomWidth: 0.5, borderBottomColor:'#C4C4C4'}}>
                   <Picker
                     selectedValue={this.state.selectedId}
