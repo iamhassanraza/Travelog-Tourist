@@ -31,7 +31,7 @@ import {
 } from 'react-native-indicators';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-const screenWidth = Dimensions.get('window').width;
+
 const screenHeight = Dimensions.get('window').height;
 
 class CreateNewPost extends Component {
@@ -162,8 +162,8 @@ class CreateNewPost extends Component {
     return (
       <View
         style={{
-          width: screenWidth,
-          height: screenHeight / 3.1,
+          width: Dimensions.get('window').width,
+          height: Dimensions.get('window').height / 3.1,
           paddingTop: '2%',
           alignItems: 'center',
         }}>
@@ -179,12 +179,15 @@ class CreateNewPost extends Component {
               cat_id={item.id}
               bgclr={
                 this.state.Category === item.id
-                  ? `rgba(${item.rgba_colors}, 0.95)`
-                  : `rgba(${item.rgba_colors}, 0.65)`
+                  ? `rgba(${item.rgba_colors}, 4)`
+                  : `rgba(${item.rgba_colors}, 0.55)`
               }
+              bold = {this.state.Category === item.id ? "bold" : "100"}
+              fsize={this.state.Category === item.id ? 14 : 12}
+              // borderbottom= {this.state.Category === item.id ? 4 : 0}
               onSelect={this.changeState}
               Elevation={
-                this.state.Category === item.id ? 14 : null
+                this.state.Category === item.id ? 10 : null
               }></CategoryButton>
           )}
         />
@@ -272,7 +275,7 @@ class CreateNewPost extends Component {
           justifyContent: 'center',
           alignItems: 'center',
           marginTop: 5,
-          width: screenWidth,
+          width: Dimensions.get('window').width,
         }}>
         <Text style={{fontSize: 17, color: 'grey', marginBottom: 7}}>
           Add Description (optional)
@@ -284,8 +287,8 @@ class CreateNewPost extends Component {
             style={{
               color: 'grey',
               width: '100%',
-              height: screenHeight / 3.9,
-              width: screenWidth / 1.1,
+              height: Dimensions.get('window').height / 3.9,
+              width: Dimensions.get('window').width / 1.1,
               marginLeft: '2.5%',
               marginRight: '2.5%',
               borderColor: 'grey',
