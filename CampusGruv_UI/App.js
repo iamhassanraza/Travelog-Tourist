@@ -35,6 +35,7 @@ import RecoveryCode from './Screens/RecoveryCode'
 import ResetPassword from './Screens/ResetPassword'
 import UserSettings from './Screens/UserSettings'
 import { TouchableHighlight } from 'react-native-gesture-handler'
+import NoPost from './Components/NoPost'
 
 
 const AuthNavigator = createStackNavigator({
@@ -480,8 +481,9 @@ export default class App extends Component {
   render() {
     return (
     
-         <AppContainer/>
+        //  <AppContainer/>
         // <UserSettings></UserSettings>
+        <NoPost></NoPost>
 
 )
   }

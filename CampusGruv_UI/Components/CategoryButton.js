@@ -12,19 +12,22 @@ export default class CategoryButton extends Component {
             this.props.onSelect(this.props.cat_id);
           }}
           title={this.props.title}
-          titleStyle={{fontSize: 13, ...this.props.titlefontsize}}
+          titleStyle={{fontSize: this.props.fsize, fontWeight:this.props.bold}}
           buttonStyle={{
             width:"100%",
             height: 34,
             backgroundColor: this.props.bgclr,
+            borderBottomWidth:this.props.borderbottom,
+            borderBottomColor:"rgba(5,5,5,0.5)",
             ...this.props.style,
           }}
         />
         <View
           style={{
-            borderTopColor: '#dfede3',
-            borderBottomColor: '#dfede3',
-            elevation: this.props.Elevation ? this.props.Elevation : 3,
+            borderTopColor: this.props.bgclr,
+            borderBottomColor: this.props.bgclr,
+            borderBottomLeftRadius:5,
+            elevation: this.props.Elevation ? this.props.Elevation : 2,
             borderWidth: 0.2,
           }}>
           </View>

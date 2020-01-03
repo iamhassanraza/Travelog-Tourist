@@ -6,7 +6,8 @@ import { withNavigation } from 'react-navigation';
 export default class CategoryList extends Component {
   state = {
     Data: undefined,
-    Category_id: undefined
+    Category_id: undefined,
+    CategoryName: ""
   };
 
 
@@ -15,8 +16,11 @@ export default class CategoryList extends Component {
     this.setState({Category_id: cat})
   }
 
-  move = (cat_id) =>{
-    this.props.navigation.navigate("HomeScreen", {CategoryID : cat_id})
+  move = (cat_id,cat_name) =>{
+    this.props.navigation.navigate("HomeScreen", {
+      CategoryID : cat_id ,
+      CategoryName: cat_name
+    })
   }
   
 
