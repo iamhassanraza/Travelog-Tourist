@@ -7,7 +7,8 @@ class InputView extends React.Component {
     constructor(props) {
       super(props);
       this.state = {
-        resta: []
+        resta: [],
+        focused:false
       };
     }
     render() {
@@ -21,10 +22,14 @@ class InputView extends React.Component {
         <View style={{flexDirection:'row',justifyContent:'space-around'}}>
       <Text style={{fontSize:20, marginTop:15,marginLeft:10,width:'25%'}}>{this.props.name}</Text>
       <TextInput
+        onFocus={()=>{this.setState({focused:true})}}
+        onBlur={()=>{this.setState({focused:false})}}
         style={{width:'60%',borderBottomColor:'#C4C4C4',borderBottomWidth:0.5,fontSize:20,color:'#ACACAC'}}
         placeholder={this.props.ph}
-                      />
-        <Icon name="pencil" color='#C4C4C4' size={26} style={{width:'10%',marginTop:15}}/>
+        onChangeText={(text)=>{
+        this.props.changestate(text)
+        }}              />
+        <Icon name="pencil" color={this.state.focused?'#1192d1':'#C4C4C4'} size={26} style={{width:'10%',marginTop:15}}/>
         </View>
 
 

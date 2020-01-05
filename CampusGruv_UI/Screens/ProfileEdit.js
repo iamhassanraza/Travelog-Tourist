@@ -136,7 +136,13 @@ class ProfilePage extends React.Component {
         currentCampus: {},
         selectedCampus: null,
         selectedId: null,
-        text: 'hello'
+        text: 'hello',
+        major:'',
+        dob:'',
+        phone:'',
+        gradutationYear:'',
+        name:'',
+
       };
 
     uploadProfilePicture = () => {
@@ -201,7 +207,13 @@ class ProfilePage extends React.Component {
             Authorization: `Bearer ${Token}`,
           },
           body: JSON.stringify({
-          campus_id:this.state.selectedId
+          campus_id:this.state.selectedId,
+          dob:this.state.dob,
+          major:this.state.major,
+          first_name:this.state.name.split(' ')[0],
+          last_name:this.state.name.split(' ')[1],
+          contact_no:this.state.contact_no,
+          graduate_year:this.state.gradutationYear
           }),
         },
       );
@@ -221,7 +233,7 @@ class ProfilePage extends React.Component {
         return <Picker.Item key={i} value={s.id} label={s.description} />
       }) : null;
 
-
+      console.log(this.state.major,'==================major============')
       //const { navigate } = this.props.navigation;
       return (
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100}>
@@ -241,7 +253,7 @@ class ProfilePage extends React.Component {
         {/* OPTIONS */}
 
             <View style={{borderBottomColor:'#C4C4C4', marginTop:10}}>
-              <InputView name='Name' ph='Enter name'/>
+              <InputView name='Name' ph='Enter name' changestate={(text)=>{this.setState({name:text})}}/>
               {/* <InputView name='Campus' ph='University of Pittsburgh'/> */}
               <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
                 <Text style={{fontSize:20,marginTop:15,marginLeft:10,width:'25%'}}>Campus</Text>
@@ -260,10 +272,10 @@ class ProfilePage extends React.Component {
                 </View>
                 <Icon name="pencil" color='#C4C4C4' size={26} style={{width:'10%',marginTop:15}}/>
               </View>
-              <InputView name='Major' ph='Major'/>
-              <InputView name='Birth Date' ph='MM/DD/YY'/>
-              <InputView name='Phone' ph='XXX-XXXXX-XXXX'/>
-              <InputView name='Grad Year' ph='2019'/>
+              <InputView name='Major' ph='Major' changestate={(text)=>{this.setState({major:text})}}/>
+              <InputView name='Birth Date' ph='MM/DD/YY' changestate={(text)=>{this.setState({dob:text})}} />
+              <InputView name='Phone' ph='XXX-XXXXX-XXXX' changestate={(text)=>{this.setState({phone:text})}} />
+              <InputView name='Grad Year' ph='2019' changestate={(text)=>{this.setState({gradutationYear:text})}}/>
             </View>
           </ScrollView>
         </KeyboardAvoidingView>

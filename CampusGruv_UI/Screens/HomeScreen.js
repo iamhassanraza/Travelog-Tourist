@@ -31,6 +31,7 @@ export default class HomeScreen extends PureComponent {
   };
 
   fetchCategoryPosts = async () => {
+    this.setState({posts:[]})
     const Token = await AsyncStorage.getItem('TOKEN');
     const Response = await fetch(
       `https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_category&category_id=${this.props.navigation.getParam(
