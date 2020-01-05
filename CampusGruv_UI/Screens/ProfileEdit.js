@@ -131,7 +131,7 @@ class ProfilePage extends React.Component {
 
     state = {
         //resta: [],
-        imageUri: 'https://www.bluefrosthvac.com/wp-content/uploads/2019/08/default-person.png' ,
+        imageUri: '' ,
         campuses: [],
         currentCampus: {},
         selectedCampus: null,
@@ -161,7 +161,7 @@ class ProfilePage extends React.Component {
           } 
           else {
           this.setState({
-            imageUri : response.uri 
+            imageUri : response 
           })
           }
         }
@@ -203,18 +203,19 @@ class ProfilePage extends React.Component {
         {
           method: 'PATCH',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${Token}`,
           },
-          body: JSON.stringify({
-          campus_id:this.state.selectedId,
-          dob:this.state.dob,
-          major:this.state.major,
-          first_name:this.state.name.split(' ')[0],
-          last_name:this.state.name.split(' ')[1],
-          contact_no:this.state.contact_no,
-          graduate_year:this.state.gradutationYear
-          }),
+          body: this.createFormData(this.state.imageUri,{
+            campus_id:this.state.selectedId,
+            dob:this.state.dob,
+            major:this.state.major,
+            first_name:this.state.name.split(' ')[0],
+            last_name:this.state.name.split(' ')[1],
+            contact_no:this.state.contact_no,
+            graduate_year:this.state.gradutationYear
+            })
+         ,
         },
       );
       const postMasterResponse = await response.json();
@@ -233,14 +234,14 @@ class ProfilePage extends React.Component {
         return <Picker.Item key={i} value={s.id} label={s.description} />
       }) : null;
 
-      console.log(this.state.major,'==================major============')
+      // console.log(this.state.imageUri,'==================major============')
       //const { navigate } = this.props.navigation;
       return (
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100}>
           <ScrollView>
               {/* EDIT PROFILE IMAGE */}
             <View style={{flexDirection:'row',justifyContent:'center',marginTop:20}}>
-              <Image source={{ uri: this.state.imageUri}} style={{width:120, height:120, borderColor:'grey',borderWidth:0.9,borderRadius:80}} />
+              <Image source={{ uri: this.state.imageUri!== '' ? this.state.imageUri.uri : 'https://www.bluefrosthvac.com/wp-content/uploads/2019/08/default-person.png'}} style={{width:120, height:120, borderColor:'grey',borderWidth:0.9,borderRadius:80}} />
             </View>
             <TouchableOpacity
               onPress = {this.uploadProfilePicture}

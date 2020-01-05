@@ -99,9 +99,7 @@ class PostCard extends Component {
             <View style={{flex: 2}}>
               <Image
                 source={{
-                  uri:
-                    'https://depositphotos.com/121231710/stock-illustration-male-default-avatar-profile-gray.html',
-                }}
+                  uri: this.props.userdp    }}
                 style={{
                   width: 30,
                   borderColor: '#616963',
