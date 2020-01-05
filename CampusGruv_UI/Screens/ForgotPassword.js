@@ -33,14 +33,20 @@ class ForgetPassword extends React.Component {
 
   sendOTP = async () => {
     if(this.validate(this.state.email)){
-      const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/send_otp?email=${this.state.email}`);
+      const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/send_otp?email=${this.state.email}&type=reset_password`);
     const JsonResponse = await Response.json();
-
+      console.log(JsonResponse)
     if(parseInt(Response.status) === 404) {
       alert(JsonResponse.message);
     }
     else if (parseInt(Response.status) === 200){
-      this.props.navigation.navigate('RecoveryCode');
+      this.props.navigation.navigate('RecoveryCode',{
+        type:'forgotPassword',
+        email:this.state.email
+      });
+    }
+    else{
+      alert('something went wrong')
     }
 
     }    

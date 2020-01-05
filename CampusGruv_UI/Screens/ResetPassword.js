@@ -32,7 +32,7 @@ class ResetPassword extends React.Component {
 
 changePassword = async () => {
 
-        const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/reset_password?otp=${this.props.navigation.getParam('OTP', '000')}&password=${this.state.confirmPassword}`);
+        const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/reset_password?otp=${this.props.navigation.getParam('OTP', '000')}&password=${this.state.confirmPassword}&email=m.h.raxa1@gmail.com`);
       const JsonResponse = await Response.json();
       if(parseInt(Response.status)=== 400) {
           alert(JsonResponse.message);
@@ -142,7 +142,7 @@ changePassword = async () => {
                       : this.changePassword();
                   }
 
-                  console.log(this.state.error);
+                  console.log(this.state.error,'error?');
                 }}>
                 {this.state.error ? (
                   <View>

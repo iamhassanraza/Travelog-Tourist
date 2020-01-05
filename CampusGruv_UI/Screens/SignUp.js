@@ -10,6 +10,7 @@ import {
   Dimensions,
   Platform,
   TextInput,
+  AsyncStorage
 } from 'react-native';
 import HeaderTitle from './Heading';
 import Colors from '../Assets/Colors';
@@ -103,9 +104,19 @@ class Signup extends React.Component {
     return true;
   };
 
-  // //////////////FETCH FUNCTION
+  ////////////////FETCH FUNCTION
+
+  
+  
+
+
+
+
 
   submitForm = () => {
+
+    var status = undefined
+
     this.setState({spinner:true})
     if (!this.validateForm()) {
       console.log('sendng req .....');
@@ -128,9 +139,7 @@ class Signup extends React.Component {
         .then(res => res.json())
         .then(response => {
           console.log('=====>>>', response);
-          this.setState({
-            spinner:false
-          })
+          
           if (response) {
             
             console.log('=====>>>', response);
@@ -139,20 +148,71 @@ class Signup extends React.Component {
           
             }
             if(response.message==='Signup success'){
-              this.props.navigation.navigate('Login')
+              // this.props.navigation.navigate('Login')
+              //===================================================
 
+              fetch(`${API_BASE_URL}/user/signin`, {
+                method: 'POST',
+                headers: {
+                  Accept: 'application/json',
+                  'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                  email: this.state.email,
+                  password: this.state.password,
+                }),
+              })
+                .then(res => {
+                  status = res.status
+                  return res.json();
+                })
+                .then(async (response) => {
+                  if (status === 200) {
+                    //good to go
+                    // console.log(response,'============respines e =============')
+                     await AsyncStorage.setItem('TOKEN', response.token);
+                     await AsyncStorage.setItem('email', response.email);
+                     await AsyncStorage.setItem('USER_ID', response.id.toString());
+                     await AsyncStorage.setItem('isVerified', response.email_verified.toString());
+                    //  AsyncStorage.setItem('CAMPUS_ID', response.campus_id.toString());
+                     await AsyncStorage.setItem('CAMPUS_ID', 'nahi_hai');
+                     this.setState({
+                      spinner:false
+                    })
+                    
+                    this.props.navigation.navigate('RecoveryCode',{
+                      type:'verify_email',
+                      email:response.email
+                    })
+                  } else if (status === 401) {
+                    //user not found with credentials
+                    alert(response.message.split(':')[1]);
+                  }
+        
+                  // console.log(response, 'json response -----');
+                })
+                .catch(error => {
+                  console.log(error);
+                });
+
+
+              //===============================================
+            }
+            else{
+              this.setState({
+                spinner:false
+              })
             }
           } 
         })
         .catch(error => {
           console.log(error);
-          // callback(null);
+    
         });
-      // /////////////////////FETCH
+    
     }
   };
 
-  ///////////FETCH FUNCTION END
 
   render() {
     // const { navigate } = this.props.navigation;
