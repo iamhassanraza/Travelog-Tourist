@@ -15,6 +15,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import RenderCards from '../Components/RenderCards';
 import NoPosts from '../Components/NoPost'
+import ContentLoader, {Rect} from 'react-content-loader/native';
 
 class UserProfile extends React.Component {
   static navigationOptions = {
@@ -84,6 +85,26 @@ renderNoPost = () => {
   )
 }
 
+
+
+renderLoading = () => {
+  return(
+    <View>
+    <ContentLoader
+      height={450}
+      width={820}
+      speed={0.2}
+      height={Dimensions.get('window').height * 1}>
+      <Rect x="10" y="10" rx="5" ry="5" width="185" height="220" />
+      <Rect x="200" y="10" rx="5" ry="5" width="200" height="280" />
+      <Rect x="10" y="240" rx="5" ry="5" width="185" height="250" />
+      <Rect x="200" y="300" rx="5" ry="5" width="200" height="280" />
+      {/* <Rect x="280" y="300" rx="5" ry="5" width="260" height="140" />
+              <Rect x="550" y="160" rx="5" ry="5" width="260" height="280" /> */}
+    </ContentLoader>
+  </View>
+  )
+}
 
 
   render() {
@@ -230,7 +251,7 @@ renderNoPost = () => {
           <RenderCards posts={this.state.posts}></RenderCards>
         </View> : <Text>Loader>>></Text>} */}
  
-{/* {this.state.total === 0 ? this.renderNoPost() : (this.state.total > 0 ? this.renderPost() : <Text>Loading</Text>)} */}
+{this.state.total === 0 ? this.renderNoPost() : (this.state.total > 0 ? this.renderPost() : this.renderLoading())}
       
 <View style={{paddingTop: 10}}>
           <RenderCards posts={this.state.posts}></RenderCards>
