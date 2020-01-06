@@ -15,6 +15,7 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import RenderCards from '../Components/RenderCards';
 import NoPosts from '../Components/NoPost'
+import ContentLoader, {Rect} from 'react-content-loader/native';
 
 class UserProfile extends React.Component {
   static navigationOptions = {
@@ -86,6 +87,26 @@ renderNoPost = () => {
 
 
 
+renderLoading = () => {
+  return(
+    <View>
+    <ContentLoader
+      height={450}
+      width={820}
+      speed={0.2}
+      height={Dimensions.get('window').height * 1}>
+      <Rect x="10" y="10" rx="5" ry="5" width="185" height="220" />
+      <Rect x="200" y="10" rx="5" ry="5" width="200" height="280" />
+      <Rect x="10" y="240" rx="5" ry="5" width="185" height="250" />
+      <Rect x="200" y="300" rx="5" ry="5" width="200" height="280" />
+      {/* <Rect x="280" y="300" rx="5" ry="5" width="260" height="140" />
+              <Rect x="550" y="160" rx="5" ry="5" width="260" height="280" /> */}
+    </ContentLoader>
+  </View>
+  )
+}
+
+
   render() {
     // const { navigate } = this.props.navigation;
     return (
@@ -135,19 +156,19 @@ renderNoPost = () => {
         </View>
 
         {/* IMAGE and NAME  */}
-        <View style={{flexDirection: 'row', marginLeft: 10}}>
+        <View style={{flexDirection: 'row', marginLeft: 10, alignItems:"center"}}>
           <Image
             source={{
               uri:
                 'https://img.freepik.com/free-photo/beautiful-girl-stands-near-walll-with-leaves_8353-5378.jpg',
             }}
-            style={{width: 100, height: 100, borderRadius: 50}}
+            style={{width: 80, height: 80, borderRadius: 50}}
           />
-          <View style={{marginTop: 20, marginLeft: 5}}>
-            <Text style={{fontSize: 28, fontWeight: 'bold', color: '#727272'}}>
+          <View style={{ marginLeft: 5}}>
+            <Text style={{fontSize: 25, fontWeight: 'bold', color: '#727272'}}>
               Jessica Z.
             </Text>
-            <Text style={{fontSize: 18, color: '#727272'}}>
+            <Text style={{fontSize: 13, color: '#727272'}}>
               University of Pittsurgh
             </Text>
           </View>
@@ -155,22 +176,22 @@ renderNoPost = () => {
 
         {/* FOLLORWERS */}
         <View style={{flexDirection: 'row', marginLeft: 10, marginTop: 15}}>
-          <Text style={{color: '#727272', fontSize: 18, fontWeight: 'bold'}}>
+          <Text style={{color: '#727272', fontSize: 13, fontWeight: 'bold'}}>
             75{' '}
           </Text>
-          <Text style={{color: '#B4B8BA', fontSize: 18, fontWeight: 'bold'}}>
+          <Text style={{color: '#B4B8BA', fontSize: 13, fontWeight: 'bold'}}>
             Posts{' '}
           </Text>
-          <Text style={{color: '#727272', fontSize: 18, fontWeight: 'bold'}}>
+          <Text style={{color: '#727272', fontSize: 13, fontWeight: 'bold'}}>
             1204{' '}
           </Text>
-          <Text style={{color: '#B4B8BA', fontSize: 18, fontWeight: 'bold'}}>
+          <Text style={{color: '#B4B8BA', fontSize: 13, fontWeight: 'bold'}}>
             Followers{' '}
           </Text>
-          <Text style={{color: '#727272', fontSize: 18, fontWeight: 'bold'}}>
+          <Text style={{color: '#727272', fontSize: 13, fontWeight: 'bold'}}>
             1204{' '}
           </Text>
-          <Text style={{color: '#B4B8BA', fontSize: 18, fontWeight: 'bold'}}>
+          <Text style={{color: '#B4B8BA', fontSize: 13, fontWeight: 'bold'}}>
             Following{' '}
           </Text>
         </View>
@@ -189,24 +210,27 @@ renderNoPost = () => {
               borderColor: '#C4C4C4',
               width: '60%',
               marginLeft: 0,
-              borderRadius: 15,
+              borderRadius: 12,
+              paddingTop:"2%",
+              paddingLeft:"2%",
+              height:"75%"
             }}>
             <Icon
               name="search"
               color="#C4C4C4"
-              size={26}
-              style={{margin: 10}}
+              size={20}
+              style={{}}
             />
             <TextInput
-              style={{width: '100%', fontSize: 20, color: '#ACACAC'}}
+              style={{width: '100%', fontSize: 15, color: '#ACACAC', paddingTop:0}}
               placeholder="Search"
               // value={this.state.password}
               // onChangeText={password => this.setState({ password })}
             />
           </View>
 
-          <View style={{flexDirection: 'row', marginTop: 15, marginLeft: 10}}>
-            <Text style={{fontSize: 20, fontWeight: 'bold', color: '#0C91CF'}}>
+          <View style={{flexDirection: 'row', marginTop: 0, marginLeft: 10}}>
+            <Text style={{fontSize: 13, fontWeight: 'bold', color: '#0C91CF'}}>
               Posts{' '}
             </Text>
             <View
@@ -218,7 +242,7 @@ renderNoPost = () => {
                 backgroundColor: '#B4B8BA',
               }}
             />
-            <Text style={{fontSize: 20, fontWeight: 'bold', color: '#B4B8BA'}}>
+            <Text style={{fontSize: 13, fontWeight: 'bold', color: '#B4B8BA'}}>
               {' '}
               Saves
             </Text>
@@ -230,7 +254,7 @@ renderNoPost = () => {
           <RenderCards posts={this.state.posts}></RenderCards>
         </View> : <Text>Loader>>></Text>} */}
  
-{/* {this.state.total === 0 ? this.renderNoPost() : (this.state.total > 0 ? this.renderPost() : <Text>Loading</Text>)} */}
+{this.state.total === 0 ? this.renderNoPost() : (this.state.total > 0 ? this.renderPost() : this.renderLoading())}
       
 <View style={{paddingTop: 10}}>
           <RenderCards posts={this.state.posts}></RenderCards>
