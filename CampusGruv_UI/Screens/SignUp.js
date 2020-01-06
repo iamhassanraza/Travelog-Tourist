@@ -173,7 +173,7 @@ class Signup extends React.Component {
                      await AsyncStorage.setItem('TOKEN', response.token);
                      await AsyncStorage.setItem('email', response.email);
                      await AsyncStorage.setItem('USER_ID', response.id.toString());
-                     await AsyncStorage.setItem('isVerified', response.email_verified.toString());
+                     await AsyncStorage.setItem('isverified', response.email_verified.toString());
                     //  AsyncStorage.setItem('CAMPUS_ID', response.campus_id.toString());
                      await AsyncStorage.setItem('CAMPUS_ID', 'nahi_hai');
                      this.setState({
