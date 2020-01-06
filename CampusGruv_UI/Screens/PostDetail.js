@@ -342,6 +342,40 @@ export default class PostDetail extends Component {
     );
   };
 
+
+
+
+  postComment = () => {
+
+    const Token = await AsyncStorage.getItem('TOKEN');
+    const userId = await AsyncStorage.getItem('USER_ID');
+
+    const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/get/user?user_id=416`, {
+      method: 'POST',
+      body: JSON.stringify({
+    
+        post_id: POST ID aaegi,
+        user_id: userId ,
+        description: this.state.currentComment ,
+      
+      }),
+      headers: {
+        Authorization: `Bearer ${Token}`,
+      },
+    });
+    const JsonResponse = await Response.json();
+    if(parseInt(Response.status)=== 400) {
+        alert(JsonResponse.message);
+    }
+    else if (parseInt(Response.status)=== 200){
+        alert(JsonResponse.message);
+
+    }
+  }
+
+
+
+
   render() {
     const data = this.props.navigation.getParam('PostData', 'nothing to render');
     console.log(data,'============================= post detail me received data ================== ')

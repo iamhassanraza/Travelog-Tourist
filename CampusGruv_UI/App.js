@@ -165,6 +165,9 @@ const ProfileStack = createStackNavigator({
     },
     EditProfile: {
         screen: EditProfile,
+    },
+    UserSettings : {
+        screen: UserSettings
     }
 }, 
 {
@@ -486,7 +489,7 @@ export default class App extends Component {
     return (
     
         <AppContainer/>
-        // <UserSettings></UserSettings>
+        //<UserSettings></UserSettings>
       
 
 )
