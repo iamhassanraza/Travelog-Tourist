@@ -45,7 +45,7 @@ class RecoverCode extends React.Component {
         } else if (parseInt(Response.status) === 200) {
           alert(JsonResponse.message);
           this.setState({code: ''});
-          await AsyncStorage.setItem('isVerified', '1');
+          await AsyncStorage.setItem('isverified', '1');
           this.props.navigation.navigate('EditProfile');
         } else {
           alert('something went wront');

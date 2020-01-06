@@ -55,9 +55,10 @@ class UserProfile extends React.Component {
       },
     );
     const jsonresponse = await response.json();
+    console.log(jsonresponse)
     this.setState({
       posts: jsonresponse.data,
-      total: 0,
+      total: jsonresponse.total,
     });
   };
 
