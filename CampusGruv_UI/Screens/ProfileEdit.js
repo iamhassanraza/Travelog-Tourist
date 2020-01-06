@@ -131,12 +131,18 @@ class ProfilePage extends React.Component {
 
     state = {
         //resta: [],
-        imageUri: 'https://www.bluefrosthvac.com/wp-content/uploads/2019/08/default-person.png' ,
+        imageUri: '' ,
         campuses: [],
         currentCampus: {},
         selectedCampus: null,
         selectedId: null,
-        text: 'hello'
+        text: 'hello',
+        major:'',
+        dob:'',
+        phone:'',
+        gradutationYear:'',
+        name:'',
+
       };
 
     uploadProfilePicture = () => {
@@ -155,7 +161,7 @@ class ProfilePage extends React.Component {
           } 
           else {
           this.setState({
-            imageUri : response.uri 
+            imageUri : response 
           })
           }
         }
@@ -197,12 +203,19 @@ class ProfilePage extends React.Component {
         {
           method: 'PATCH',
           headers: {
-            'Content-Type': 'application/json',
+            'Content-Type': 'multipart/form-data',
             Authorization: `Bearer ${Token}`,
           },
-          body: JSON.stringify({
-          campus_id:this.state.selectedId
-          }),
+          body: this.createFormData(this.state.imageUri,{
+            campus_id:this.state.selectedId,
+            dob:this.state.dob,
+            major:this.state.major,
+            first_name:this.state.name.split(' ')[0],
+            last_name:this.state.name.split(' ')[1],
+            contact_no:this.state.contact_no,
+            graduate_year:this.state.gradutationYear
+            })
+         ,
         },
       );
       const postMasterResponse = await response.json();
@@ -221,14 +234,14 @@ class ProfilePage extends React.Component {
         return <Picker.Item key={i} value={s.id} label={s.description} />
       }) : null;
 
-
+      // console.log(this.state.imageUri,'==================major============')
       //const { navigate } = this.props.navigation;
       return (
         <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100}>
           <ScrollView>
               {/* EDIT PROFILE IMAGE */}
             <View style={{flexDirection:'row',justifyContent:'center',marginTop:20}}>
-              <Image source={{ uri: this.state.imageUri}} style={{width:120, height:120, borderColor:'grey',borderWidth:0.9,borderRadius:80}} />
+              <Image source={{ uri: this.state.imageUri!== '' ? this.state.imageUri.uri : 'https://www.bluefrosthvac.com/wp-content/uploads/2019/08/default-person.png'}} style={{width:120, height:120, borderColor:'grey',borderWidth:0.9,borderRadius:80}} />
             </View>
             <TouchableOpacity
               onPress = {this.uploadProfilePicture}
@@ -241,7 +254,7 @@ class ProfilePage extends React.Component {
         {/* OPTIONS */}
 
             <View style={{borderBottomColor:'#C4C4C4', marginTop:10}}>
-              <InputView name='Name' ph='Enter name'/>
+              <InputView name='Name' ph='Enter name' changestate={(text)=>{this.setState({name:text})}}/>
               {/* <InputView name='Campus' ph='University of Pittsburgh'/> */}
               <View style={{flexDirection: 'row', justifyContent:'space-between'}}>
                 <Text style={{fontSize:20,marginTop:15,marginLeft:10,width:'25%'}}>Campus</Text>
@@ -260,10 +273,10 @@ class ProfilePage extends React.Component {
                 </View>
                 <Icon name="pencil" color='#C4C4C4' size={26} style={{width:'10%',marginTop:15}}/>
               </View>
-              <InputView name='Major' ph='Major'/>
-              <InputView name='Birth Date' ph='MM/DD/YY'/>
-              <InputView name='Phone' ph='XXX-XXXXX-XXXX'/>
-              <InputView name='Grad Year' ph='2019'/>
+              <InputView name='Major' ph='Major' changestate={(text)=>{this.setState({major:text})}}/>
+              <InputView name='Birth Date' ph='MM/DD/YY' changestate={(text)=>{this.setState({dob:text})}} />
+              <InputView name='Phone' ph='XXX-XXXXX-XXXX' changestate={(text)=>{this.setState({phone:text})}} />
+              <InputView name='Grad Year' ph='2019' changestate={(text)=>{this.setState({gradutationYear:text})}}/>
             </View>
           </ScrollView>
         </KeyboardAvoidingView>
