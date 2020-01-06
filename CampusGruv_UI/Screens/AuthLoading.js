@@ -41,8 +41,7 @@ class AuthLoading extends React.Component {
         { 
           if(isverified !== '1')
           {
-            this.props.navigation.navigate('RecoveryCode',{
-              type:'verify_email',
+            this.props.navigation.navigate('EmailVerification',{
               email:email
             })
           }

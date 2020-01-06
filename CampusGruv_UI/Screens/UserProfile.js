@@ -17,6 +17,7 @@ import RenderCards from '../Components/RenderCards';
 import NoPosts from '../Components/NoPost'
 import ContentLoader, {Rect} from 'react-content-loader/native';
 
+
 class UserProfile extends React.Component {
   static navigationOptions = {
     header: null,

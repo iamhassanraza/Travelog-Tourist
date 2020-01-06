@@ -180,8 +180,7 @@ class Signup extends React.Component {
                       spinner:false
                     })
                     
-                    this.props.navigation.navigate('RecoveryCode',{
-                      type:'verify_email',
+                    this.props.navigation.navigate('EmailVerification',{
                       email:response.email
                     })
                   } else if (status === 401) {
