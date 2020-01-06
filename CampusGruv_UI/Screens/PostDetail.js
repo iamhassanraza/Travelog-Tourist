@@ -10,7 +10,8 @@ import {
   TouchableWithoutFeedback,
   StyleSheet,
   PermissionsAndroid,
-  Dimensions
+  Dimensions,
+  AppState
 } from 'react-native';
 import {ThemeConsumer} from 'react-native-elements';
 
@@ -345,7 +346,7 @@ export default class PostDetail extends Component {
 
 
 
-  postComment = () => {
+  postComment = async () => {
 
     const Token = await AsyncStorage.getItem('TOKEN');
     const userId = await AsyncStorage.getItem('USER_ID');
