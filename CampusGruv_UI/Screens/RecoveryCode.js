@@ -17,46 +17,37 @@ import HeaderTitle from './Heading';
 import Colors from '../Assets/Colors';
 import {withNavigation} from 'react-navigation';
 import LogoutButton from '../Components/LogoutButton';
+import {
+  BarIndicator,
+ 
+} from 'react-native-indicators';
+
 
 class RecoverCode extends React.Component {
-  static navigationOptions = {
-    header: null,
-  };
+ 
   constructor(props) {
     super(props);
     this.state = {
       code: '',
+      spinner:false
     };
   }
 
   checkOTP = async () => {
-    const type = await this.props.navigation.getParam('type', 'forgotPassword');
     const email = await this.props.navigation.getParam('email', 'no email');
 
     if (this.state.code !== '') {
-      if (type === 'verify_email') {
-        const Response = await fetch(
-          `https://campus-gruv-heroku.herokuapp.com/api/v1/user/verify_otp?otp=${this.state.code}&type=email&email=${email}`,
-        );
-        const JsonResponse = await Response.json();
-        console.log(JsonResponse, '======== response ');
-        if (parseInt(Response.status) === 404) {
-          alert(JsonResponse.message);
-        } else if (parseInt(Response.status) === 200) {
-          alert(JsonResponse.message);
-          this.setState({code: ''});
-          await AsyncStorage.setItem('isVerified', '1');
-          this.props.navigation.navigate('EditProfile');
-        } else {
-          alert('something went wront');
-        }
-      } else {
-        //type === forgotpassword
+      this.setState({
+        spinner:true
+      })
         const Response = await fetch(
           `https://campus-gruv-heroku.herokuapp.com/api/v1/user/verify_otp?otp=${this.state.code}&type=reset_password&email=${email}`,
         );
         const JsonResponse = await Response.json();
-        console.log(JsonResponse, '======== response ');
+        this.setState({
+          spinner:false
+        })
+      
         if (parseInt(Response.status) === 404) {
           alert(JsonResponse.message);
         } else if (parseInt(Response.status) === 200) {
@@ -67,7 +58,7 @@ class RecoverCode extends React.Component {
         } else {
           alert('something went wront');
         }
-      }
+      
     } else {
       alert('Enter CODE');
     }
@@ -130,7 +121,35 @@ class RecoverCode extends React.Component {
 
               <TouchableOpacity onPress={() => this.checkOTP()}>
                 <View style={{marginBottom: 10}}>
-                  <View
+                  {this.state.spinner ? (<View
+                      style={{
+                        height: 40,
+                        width: '50%',
+                        marginLeft: '25%',
+                        borderRadius: 10,
+                        marginTop: 40,
+                        justifyContent: 'center',
+                        backgroundColor: 'transparent',
+                        borderColor: 'white',
+                        borderWidth: 0.6,flexDirection:'row',justifyContent:'center',
+                        alignItems:'center'
+                      }}>
+                      <Text
+                        style={{
+                            fontSize: 16,
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                            color: 'white',
+                        }}>
+                        Loading{' '}
+                      </Text>
+                      <BarIndicator
+                        style={{flex: 0}}
+                        count={3}
+                        size={20}
+                        color={'white'}
+                      />
+                    </View>)  : (<View
                     style={{
                       height: 40,
                       width: '50%',
@@ -151,20 +170,14 @@ class RecoverCode extends React.Component {
                       }}>
                       Continue
                     </Text>
-                  </View>
+                  </View>)}
+                  
                 </View>
               </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>
         </ScrollView>
-      <LogoutButton style={{   alignSelf: 'center',
-            position: 'absolute',
-            bottom: 50,
-            borderWidth: 0.5,
-            padding: 5,
-            color: 'white',
-            borderColor: 'white',
-            fontWeight: 'bold'}}></LogoutButton>
+      
       </ImageBackground>
     );
   }
