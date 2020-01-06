@@ -354,7 +354,7 @@ export default class PostDetail extends Component {
       method: 'POST',
       body: JSON.stringify({
     
-        post_id: POST ID aaegi,
+        post_id: 6976,
         user_id: userId ,
         description: this.state.currentComment ,
       
