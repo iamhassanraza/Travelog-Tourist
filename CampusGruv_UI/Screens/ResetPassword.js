@@ -15,6 +15,7 @@ import {
 import HeaderTitle from './Heading';
 import Colors from '../Assets/Colors';
 import { withNavigation } from 'react-navigation';
+import { BarIndicator } from 'react-native-indicators';
 
 class ResetPassword extends React.Component {
   static navigationOptions = {
@@ -26,12 +27,17 @@ class ResetPassword extends React.Component {
       newPassword: '',
       confirmPassword: '',
       error: '',
+      Spinner: false
     };
   }
 
 
 changePassword = async () => {
 
+
+  this.setState({
+    Spinner: true,
+  });
         const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/reset_password?otp=${this.props.navigation.getParam('OTP', '000')}&password=${this.state.confirmPassword}&email=m.h.raxa1@gmail.com`);
       const JsonResponse = await Response.json();
       if(parseInt(Response.status)=== 400) {
@@ -89,6 +95,7 @@ changePassword = async () => {
                   borderRadius: 10,
                 }}>
                 <TextInput
+                secureTextEntry
                   autoCapitalize="none"
                   style={{
                     width: '90%',
@@ -122,6 +129,7 @@ changePassword = async () => {
                   borderRadius: 10,
                 }}>
                 <TextInput
+                secureTextEntry
                   autoCapitalize="none"
                   style={{
                     width: '90%',
@@ -137,9 +145,7 @@ changePassword = async () => {
               <TouchableOpacity
                 onPress={() => {
                   {
-                    this.state.newPassword != this.state.confirmPassword
-                      ? this.setState({error: 'Password Not Match'})
-                      : this.changePassword();
+                    this.state.newPassword.length < 8 ? this.setState({error: 'Minimum 8 characters required'})  : this.state.newPassword != this.state.confirmPassword ? this.setState({error: 'Password Not Match'}) : this.changePassword();
                   }
 
                   console.log(this.state.error,'error?');
@@ -157,7 +163,43 @@ changePassword = async () => {
                   </View>
                 ) : null}
 
-                <View style={{marginBottom: 10}}>
+                
+
+                {this.state.Spinner ? (
+                     
+                     <View style={{marginBottom: 10}}>
+                     <View
+                       style={{
+                         height: 40,
+                         width: '50%',
+                         marginLeft: '25%',
+                         borderRadius: 10,
+                         marginTop: 40,
+                         justifyContent: 'center',
+                         backgroundColor: 'transparent',
+                         borderColor: 'white',
+                         borderWidth: 0.6,
+                         flexDirection:"row"
+                       }}>
+                       <Text
+                         style={{
+                           fontSize: 16,
+                           fontWeight: 'bold',
+                           textAlign: 'center',
+                           color: 'white',
+                         }}>
+                         Continue
+                       </Text>
+                     </View>
+                     <BarIndicator
+                          count={3}
+                          size={20}
+                          color={'white'}
+                        />
+                   </View>
+                      
+                    ) : (
+                      <View style={{marginBottom: 10}}>
                   <View
                     style={{
                       height: 40,
@@ -181,6 +223,7 @@ changePassword = async () => {
                     </Text>
                   </View>
                 </View>
+                    )}
               </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>

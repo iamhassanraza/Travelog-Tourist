@@ -57,7 +57,7 @@ class UserProfile extends React.Component {
     const jsonresponse = await response.json();
     this.setState({
       posts: jsonresponse.data,
-      total: 0,
+      total: jsonresponse.total,
     });
   };
 
@@ -156,7 +156,7 @@ renderLoading = () => {
         </View>
 
         {/* IMAGE and NAME  */}
-        <View style={{flexDirection: 'row', marginLeft: 10, alignItems:"center"}}>
+        <View style={{flexDirection: 'row', marginLeft: 5, alignItems:"center"}}>
           <Image
             source={{
               uri:
@@ -175,7 +175,7 @@ renderLoading = () => {
         </View>
 
         {/* FOLLORWERS */}
-        <View style={{flexDirection: 'row', marginLeft: 10, marginTop: 15}}>
+        <View style={{flexDirection: 'row', marginLeft: 10, marginTop: 5}}>
           <Text style={{color: '#727272', fontSize: 13, fontWeight: 'bold'}}>
             75{' '}
           </Text>
@@ -200,15 +200,16 @@ renderLoading = () => {
         <View
           style={{
             flexDirection: 'row',
-            marginTop: 20,
+            marginTop: 10,
             justifyContent: 'space-around',
+            alignItems:"center"
           }}>
           <View
             style={{
               flexDirection: 'row',
               borderWidth: 1,
               borderColor: '#C4C4C4',
-              width: '60%',
+              width: '65%',
               marginLeft: 0,
               borderRadius: 12,
               paddingTop:"2%",
@@ -229,8 +230,8 @@ renderLoading = () => {
             />
           </View>
 
-          <View style={{flexDirection: 'row', marginTop: 0, marginLeft: 10}}>
-            <Text style={{fontSize: 13, fontWeight: 'bold', color: '#0C91CF'}}>
+          <View style={{flexDirection: 'row', marginTop: 0, marginLeft: 0, alignItems:"center", height:"70%",paddingRight:"3%",paddingLeft:"1%"}}>
+            <Text style={{fontSize: 17, fontWeight: 'bold', color: '#0C91CF'}}>
               Posts{' '}
             </Text>
             <View
@@ -242,7 +243,7 @@ renderLoading = () => {
                 backgroundColor: '#B4B8BA',
               }}
             />
-            <Text style={{fontSize: 13, fontWeight: 'bold', color: '#B4B8BA'}}>
+            <Text style={{fontSize: 17, fontWeight: 'bold', color: '#B4B8BA'}}>
               {' '}
               Saves
             </Text>

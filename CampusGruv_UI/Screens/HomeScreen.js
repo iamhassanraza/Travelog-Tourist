@@ -13,6 +13,7 @@ import PostCard from '../Components/PostCard';
 import CrossIcon from 'react-native-vector-icons/MaterialIcons';
 import ContentLoader, {Rect} from 'react-content-loader/native';
 import RenderCards from '../Components/RenderCards';
+import NoPosts from '../Components/NoPost'
 
 export default class HomeScreen extends PureComponent {
   state = {
@@ -22,6 +23,7 @@ export default class HomeScreen extends PureComponent {
     CategoryPosts: undefined,
     Category: 'undefined',
     Category_Name: 'undefined',
+    total : undefined
   };
 
   onPageRefresh = () => {
@@ -50,7 +52,7 @@ export default class HomeScreen extends PureComponent {
       console.log('none');
     } else if (parseInt(Response.status) === 200) {
       console.log('Category aagyi yayyyy');
-      this.setState({posts: JsonResponse.data});
+      this.setState({posts: JsonResponse.data}, {total: JsonResponse.total});
     }
   };
 
@@ -73,6 +75,7 @@ export default class HomeScreen extends PureComponent {
       .then(responseJson => {
         this.setState({
           posts: responseJson.data,
+          total: responseJson.total,
           refreshing: false,
           loading: false,
           Category: 'undefined'
@@ -129,44 +132,90 @@ export default class HomeScreen extends PureComponent {
   //   );
   // };
 
+
+  renderPost = () =>{
+    console.log("renderpost");
+    return(
+      <View style={{paddingTop: 10}}>
+            <RenderCards posts={this.state.posts}></RenderCards>
+            </View>
+    )
+  }
+  
+  renderNoPost = () => {
+    console.log("nopost");
+    return(
+  <View style={{paddingTop:"45%", height:"100%"}}>
+        <NoPosts></NoPosts>
+        </View>
+    )
+  }
+  
+  
+  
+  renderLoading = () => {
+    return(
+      <View>
+      <ContentLoader
+        height={450}
+        width={820}
+        speed={0.2}
+        height={Dimensions.get('window').height * 1}>
+        <Rect x="10" y="10" rx="5" ry="5" width="185" height="220" />
+        <Rect x="200" y="10" rx="5" ry="5" width="200" height="280" />
+        <Rect x="10" y="240" rx="5" ry="5" width="185" height="250" />
+        <Rect x="200" y="300" rx="5" ry="5" width="200" height="280" />
+        {/* <Rect x="280" y="300" rx="5" ry="5" width="260" height="140" />
+                <Rect x="550" y="160" rx="5" ry="5" width="260" height="280" /> */}
+      </ContentLoader>
+    </View>
+    )
+  }
+  
+
   render() {
     const catid = this.props.navigation.getParam('CategoryID', 'undefined');
     const catname = this.props.navigation.getParam('CategoryName', 'undefi');
     this.setState({Category: catid, Category_Name: catname});
  
 
+    return(
+      <ScrollView>
+        {this.state.total === 0 ? this.renderNoPost() : (this.state.total > 0 ? this.renderPost() : this.renderLoading())}
+      </ScrollView>
+    )
 
-    if (this.state.loading === false) {
-      return (
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this.onPageRefresh}
-            />
-          }>
+    // if (this.state.loading === false) {
+    //   return (
+    //     <ScrollView
+    //       refreshControl={
+    //         <RefreshControl
+    //           refreshing={this.state.refreshing}
+    //           onRefresh={this.onPageRefresh}
+    //         />
+    //       }>
              
-          <RenderCards posts={this.state.posts}></RenderCards>
+    //       <RenderCards posts={this.state.posts}></RenderCards>
 
-        </ScrollView>
-      );
-    } else {
-      return (
-        <View>
-          <ContentLoader
-            height={450}
-            width={820}
-            speed={0.2}
-            height={Dimensions.get('window').height * 1}>
-            <Rect x="10" y="10" rx="5" ry="5" width="185" height="220" />
-            <Rect x="200" y="10" rx="5" ry="5" width="200" height="280" />
-            <Rect x="10" y="240" rx="5" ry="5" width="185" height="250" />
-            <Rect x="200" y="300" rx="5" ry="5" width="200" height="280" />
-            {/* <Rect x="280" y="300" rx="5" ry="5" width="260" height="140" />
-                    <Rect x="550" y="160" rx="5" ry="5" width="260" height="280" /> */}
-          </ContentLoader>
-        </View>
-      );
-    }
+    //     </ScrollView>
+    //   );
+    // } else {
+    //   return (
+    //     <View>
+    //       <ContentLoader
+    //         height={450}
+    //         width={820}
+    //         speed={0.2}
+    //         height={Dimensions.get('window').height * 1}>
+    //         <Rect x="10" y="10" rx="5" ry="5" width="185" height="220" />
+    //         <Rect x="200" y="10" rx="5" ry="5" width="200" height="280" />
+    //         <Rect x="10" y="240" rx="5" ry="5" width="185" height="250" />
+    //         <Rect x="200" y="300" rx="5" ry="5" width="200" height="280" />
+    //         {/* <Rect x="280" y="300" rx="5" ry="5" width="260" height="140" />
+    //                 <Rect x="550" y="160" rx="5" ry="5" width="260" height="280" /> */}
+    //       </ContentLoader>
+    //     </View>
+    //   );
+    // }
   }
 }
