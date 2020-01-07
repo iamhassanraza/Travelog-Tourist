@@ -31,8 +31,9 @@ const IconGrey = '#b4b8bf';
 
 export default class PostDetail extends Component {
   state = {
-    comments: this.props.navigation.getParam('PostData', 'nothing to render').comments,
+    comments: this.props.navigation.getParam('PostData', 'no comments').comments,
     currentComment: '',
+    username: this.props.navigation.getParam('PostData', 'no username').username,
     followed: false,
     saved: false,
     isModalVisible: false,
@@ -365,7 +366,7 @@ export default class PostDetail extends Component {
     else if (parseInt(Response.status) === 200){
         alert(JsonResponse.id,'comment created');
         const comments = this.state.comments
-        comments.push({...JsonResponse,user:{first_name:'hassan'}})
+        comments.push({...JsonResponse,user:{first_name: this.state.username}})
         await this.setState({
           comments: comments
         })
