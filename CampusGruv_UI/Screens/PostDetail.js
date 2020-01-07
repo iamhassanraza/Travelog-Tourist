@@ -41,6 +41,7 @@ class PostDetail extends Component {
     followed: false,
     saved: false,
     isModalVisible: false,
+    post_id: undefined
   };
 
   changeCurrentCommentState = comment => {
@@ -352,7 +353,7 @@ class PostDetail extends Component {
     const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/comment/create`, {
       method: 'POST',
       body: JSON.stringify({
-        post_id: postId,
+        post_id: this.state.post_id,
         user_id: userId,
         description: this.state.currentComment
       }),
@@ -382,7 +383,33 @@ class PostDetail extends Component {
   }
 
 
+  likePost = async (postId) => {
 
+    const Token = await AsyncStorage.getItem('TOKEN');
+    const userId = await AsyncStorage.getItem('USER_ID');
+
+    const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/post/like`, {
+      method: 'POST',
+      body: JSON.stringify({
+    
+        post_id: this.state.post_id,
+        user_id: userId,
+        description: this.state.currentComment,
+      
+      }),
+      headers: {
+        Authorization: `Bearer ${Token}`,
+      },
+    });
+    const JsonResponse = await Response.json();
+    if(parseInt(Response.status)=== 400) {
+        alert(JsonResponse.message);
+    }
+    else if (parseInt(Response.status)=== 200){
+        alert(JsonResponse.message);
+
+    }
+  }
 
   render() {
     const data = this.props.navigation.getParam('PostData', 'nothing to render');

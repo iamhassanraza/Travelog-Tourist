@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, TouchableOpacity, ScrollView, FlatList,RefreshControl} from 'react-native';
+import {Text, View, TouchableOpacity, ScrollView, FlatList,RefreshControl,TextInput, AsyncStorage} from 'react-native';
 import {ThemeBlue} from '../Assets/Colors';
 import AvatarUserStatus from '../Components/AvatarUserStatus';
 import AvatarCampusStatus from '../Components/AvatarCampusStatus';
@@ -11,46 +11,163 @@ import i3 from '../Assets/Images/ema.jpg'
 import i4 from '../Assets/Images/mansehra.jpg'
 import i5 from '../Assets/Images/samandarkatha.jpg'
 import RenderCards from '../Components/RenderCards';
-
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import ContentLoader, {Rect} from 'react-content-loader/native';
+
+
 
 export default class Searching extends React.PureComponent {
   state = {
     selection: 'Feed',
     posts: [],
     refreshing: false,
-    loading:false
+    loading:false,
+    error: false,
+    total: undefined,
+    Users : [],
+    Campuses : [],
+    search: ""
   };
 
-  dataUsers = [
-    {name: 'Jack Jones', follow: false, pic: i1},
-    {name: 'Frenkie De Jong', follow: true , pic : i2},
-    {name: 'Lucas Morra', follow: false , pic : i3},
-    {name: 'Arturo Vidal', follow: false, pic: i4},
-    {name: 'Lukas Modric', follow: true , pic : i5},
-    {name: 'De Ligt', follow: false , pic : i3},
-    {name: 'Sam Tadic', follow: false, pic: i4},
-    {name: 'Sergio Busquets', follow: true , pic : i2},
-    {name: 'Eden Hazzard', follow: false , pic : i5},
-    {name: 'Greame Smith', follow: false, pic: i3},
-    {name: 'Mark Boucher', follow: true , pic : i2},
-    {name: 'Steven Gerrad', follow: false , pic : i4}
-  ];
 
-  dataCampuses = [
-    {name: 'Jack Jones', current: false, pic: i1},
-    {name: 'Frenkie De Jong', current: true , pic : i2},
-    {name: 'Lucas Morra', current: false , pic : i3},
-    {name: 'Arturo Vidal', current: false, pic: i4},
-    {name: 'Lukas Modric', current: false , pic : i5},
-    {name: 'De Ligt', current: false , pic : i3},
-    {name: 'Sam Tadic', current: false, pic: i4},
-    {name: 'Sergio Busquets', current: false , pic : i2},
-    {name: 'Eden Hazzard', current: false , pic : i5},
-    {name: 'Greame Smith', current: false, pic: i3},
-    {name: 'Mark Boucher', current: false , pic : i2},
-    {name: 'Steven Gerrad', current: false , pic : i4}
-  ];
+  fetchFeed = async (text) => {
+
+        const Token = await AsyncStorage.getItem('TOKEN');
+        const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_search&description=${text}&page=1`,{
+          headers: {
+            Authorization: `Bearer ${Token}`,
+          },
+        });
+
+        const JsonResponse = await Response.json();
+        console.log(JsonResponse.message);
+
+        if(parseInt(Response.status)=== 400) {
+           
+            this.setState({error : true})
+        }
+        else if (parseInt(Response.status)=== 200){
+           
+            if(JsonResponse.total > 0) {
+              this.setState({posts : JsonResponse.data})
+            }
+
+            else if (JsonResponse.total === 0) {
+              this.setState({total: 0})
+            }  
+        }
+  }
+
+
+
+  fetchUsers = async (text) => {
+
+    const Token = await AsyncStorage.getItem('TOKEN');
+    const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/search/user?type=user&description=${text}&page=1`,{
+      headers: {
+        Authorization: `Bearer ${Token}`,
+      },
+    });
+    const JsonResponse = await Response.json();
+    
+    if(parseInt(Response.status)=== 400) {
+       
+        this.setState({error : true})
+    }
+    else if (parseInt(Response.status)=== 200){
+      
+        if(JsonResponse.total > 0) {
+          this.setState({Users : JsonResponse.data})
+        }
+
+        else if (JsonResponse.total === 0) {
+          this.setState({total: 0})
+        }  
+    }
+}
+
+
+
+fetchCampuses = async (text) => {
+
+  const Token = await AsyncStorage.getItem('TOKEN');
+  const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/search/campus?description=${text}&page=1`,{
+    headers: {
+      Authorization: `Bearer ${Token}`,
+    },
+  });
+  const JsonResponse = await Response.json();
+  if(parseInt(Response.status)=== 400) {
+    
+      this.setState({error : true})
+  }
+  else if (parseInt(Response.status)=== 200){
+      
+      if(JsonResponse.total > 0) {
+        this.setState({Campuses : JsonResponse.data})
+      }
+
+      else if (JsonResponse.total === 0) {
+        this.setState({total: 0})
+      }  
+  }
+}
+
+
+
+SearchItems = (text) => {
+  if(this.state.selection === "Feed") {
+    this.fetchFeed(text);
+    console.log("feedddddddddddddddd");
+  }
+
+  else if(this.state.selection === 'Users'){
+    this.fetchUsers(text);
+    console.log("userrrrrrrrrrrrrrrrrrr");
+  }
+
+  else if(this.state.selection === 'Campuses') {
+    this.fetchCampuses(text);
+    console.log("camppppppppppppp");
+  }
+  
+  else{
+
+    console.log("teeno nahi chalay");
+
+  }
+}
+
+
+  // dataUsers = [
+  //   {name: 'Jack Jones', follow: false, pic: i1},
+  //   {name: 'Frenkie De Jong', follow: true , pic : i2},
+  //   {name: 'Lucas Morra', follow: false , pic : i3},
+  //   {name: 'Arturo Vidal', follow: false, pic: i4},
+  //   {name: 'Lukas Modric', follow: true , pic : i5},
+  //   {name: 'De Ligt', follow: false , pic : i3},
+  //   {name: 'Sam Tadic', follow: false, pic: i4},
+  //   {name: 'Sergio Busquets', follow: true , pic : i2},
+  //   {name: 'Eden Hazzard', follow: false , pic : i5},
+  //   {name: 'Greame Smith', follow: false, pic: i3},
+  //   {name: 'Mark Boucher', follow: true , pic : i2},
+  //   {name: 'Steven Gerrad', follow: false , pic : i4}
+  // ];
+
+  // dataCampuses = [
+  //   {name: 'Jack Jones', current: false, pic: i1},
+  //   {name: 'Frenkie De Jong', current: true , pic : i2},
+  //   {name: 'Lucas Morra', current: false , pic : i3},
+  //   {name: 'Arturo Vidal', current: false, pic: i4},
+  //   {name: 'Lukas Modric', current: false , pic : i5},
+  //   {name: 'De Ligt', current: false , pic : i3},
+  //   {name: 'Sam Tadic', current: false, pic: i4},
+  //   {name: 'Sergio Busquets', current: false , pic : i2},
+  //   {name: 'Eden Hazzard', current: false , pic : i5},
+  //   {name: 'Greame Smith', current: false, pic: i3},
+  //   {name: 'Mark Boucher', current: false , pic : i2},
+  //   {name: 'Steven Gerrad', current: false , pic : i4}
+  // ];
 
 
   getToken = async ()=>{
@@ -59,30 +176,30 @@ export default class Searching extends React.PureComponent {
   }
 
 
-  fetchdata = async () => {
-    const Token = await this.getToken();
-    this.setState({
-        loading:false
-    })
-    fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_all&page=1', {
-      headers: {
-        Authorization:
-          `Bearer ${Token}`,
-      },
-    })
-      .then(response => {
-        return response.json();
-      })
-      .then(responseJson => {
+  // fetchdata = async () => {
+  //   const Token = await this.getToken();
+  //   this.setState({
+  //       loading:false
+  //   })
+  //   fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_all&page=1', {
+  //     headers: {
+  //       Authorization:
+  //         `Bearer ${Token}`,
+  //     },
+  //   })
+  //     .then(response => {
+  //       return response.json();
+  //     })
+  //     .then(responseJson => {
       
-        this.setState({
-          posts: responseJson.data,
-          refreshing: false,
-          loading:false
-        });
-      })
-      .catch(err => console.log(err));
-  };
+  //       this.setState({
+  //         posts: responseJson.data,
+  //         refreshing: false,
+  //         loading:false
+  //       });
+  //     })
+  //     .catch(err => console.log(err));
+  // };
 
 
   renderFeed = () => {
@@ -124,11 +241,11 @@ export default class Searching extends React.PureComponent {
       <View>
         <FlatList
           vertical
-          data={this.dataUsers}
-          keyExtractor={item => item.name}
+          data={this.state.Users}
+          keyExtractor={item => item.id}
           showsHorizontalScrollIndicator={false}
           renderItem={({item}) => (
-            <AvatarUserStatus name={item.name} status={item.follow} pic={item.pic}></AvatarUserStatus>
+            <AvatarUserStatus name={item.first_name} status={true} pic={item.profile_pic_url}></AvatarUserStatus>
           )}
         />
       </View>
@@ -140,11 +257,11 @@ export default class Searching extends React.PureComponent {
       <View>
         <FlatList
           vertical
-          data={this.dataCampuses}
-          keyExtractor={item => item.name}
+          data={this.state.Campuses}
+          keyExtractor={item => item.id}
           showsHorizontalScrollIndicator={false}
           renderItem={({item}) => (
-            <AvatarCampusStatus name={item.name} status={item.current} pic={item.pic}></AvatarCampusStatus>
+            <AvatarCampusStatus name={item.description} status={false} pic={i4}></AvatarCampusStatus>
           )}
         />
       </View>
@@ -155,6 +272,21 @@ export default class Searching extends React.PureComponent {
     console.log(this.state);
     return (
       <View>
+
+      <View style={{backgroundColor:ThemeBlue, height:50, flexDirection:"row"}}>
+       <View style={{flexDirection:"row", width:"65%",backgroundColor:"white",margin:5,borderRadius:8}}>
+       <Icon name = "search" style={{alignSelf:"center", fontSize:20,paddingLeft:"3%",color:"grey"}}></Icon>
+        <TextInput 
+        placeholder="Search" 
+        style={{height:"90%" ,margin:4,width:"100%"}}
+        onChangeText={(text) => {
+          this.setState({search : text});
+          this.SearchItems(text);
+        }}
+        ></TextInput>
+       </View>
+      </View>
+
         <View
           style={{
             borderBottomWidth: 1,
