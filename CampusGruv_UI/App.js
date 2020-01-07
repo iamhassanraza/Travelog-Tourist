@@ -179,7 +179,12 @@ const HomeStack = createStackNavigator({
     HomeScreen,
     PostDetail,
     CategoryList,
-    Searching
+    Searching: {
+        screen : Searching,
+        navigationOptions: {
+            header: null
+        }
+    }
 },
     {
         defaultNavigationOptions: {
