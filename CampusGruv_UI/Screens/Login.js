@@ -17,6 +17,10 @@ import Spinner from 'react-native-loading-spinner-overlay';
 import HeaderTitle from './Heading';
 import Colors from '../Assets/Colors';
 const API_BASE_URL = 'https://campus-gruv-heroku.herokuapp.com/api/v1';
+import { connect } from "react-redux";
+import { CreateUserDetails } from "../ReduxStore/Actions/index";
+
+
 import {
   BarIndicator,
 
@@ -102,6 +106,7 @@ class Login extends React.Component {
           if (status === 200) {
             //good to go
             console.log(response)
+            this.props.CreateUserDetails(response)
              await AsyncStorage.setItem('TOKEN', response.token);
              await AsyncStorage.setItem('email', response.email);
              console.log(response.email_verified.toString())
@@ -136,23 +141,6 @@ class Login extends React.Component {
   render() {
     return (
       <ScrollView>
-        {/* <Spinner
-          visible={this.state.Spinner}
-          textContent={'Loading...'}
-          overlayColor={'rgba(0, 0, 0, 0.7)'}
-          textStyle={{color: 'black', fontSize: 25}}
-          customIndicator={
-            <View style={styles.container}>
-              <ImageBackground
-                style={styles.container}
-                source={require('../Assets/Images/background.png')}
-                resizeMode="cover">
-                <SkypeIndicator count={5} size={60} color={'black'} />
-              </ImageBackground>
-            </View>
-          }
-        /> */}
-
         <ImageBackground
           style={styles.container}
           source={require('../Assets/Images/background.png')}
@@ -366,4 +354,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Login;
+export default connect(null ,{ CreateUserDetails })(Login);

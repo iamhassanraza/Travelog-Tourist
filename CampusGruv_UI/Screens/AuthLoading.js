@@ -35,7 +35,8 @@ class AuthLoading extends React.Component {
       },
     })
     let JsonResponse  =  await response.json()
-    console.log(JsonResponse,'=========USER==============')
+    this.props.CreateUserDetails(JsonResponse)
+
 
   }
 

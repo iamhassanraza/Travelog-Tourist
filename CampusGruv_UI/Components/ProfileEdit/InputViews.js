@@ -8,7 +8,7 @@ class InputView extends React.Component {
       super(props);
       this.state = {
         resta: [],
-        focused:false
+        focused:false,
       };
     }
     render() {
@@ -24,9 +24,11 @@ class InputView extends React.Component {
       <TextInput
         onFocus={()=>{this.setState({focused:true})}}
         onBlur={()=>{this.setState({focused:false})}}
+        value={this.props.value}
         style={{width:'60%',borderBottomColor:'#C4C4C4',borderBottomWidth:0.5,fontSize:20,color:'#ACACAC'}}
         placeholder={this.props.ph}
         onChangeText={(text)=>{
+          this.setState({value:text})
         this.props.changestate(text)
         }}              />
         <Icon name="pencil" color={this.state.focused?'#1192d1':'#C4C4C4'} size={26} style={{width:'10%',marginTop:15}}/>
