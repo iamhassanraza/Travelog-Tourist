@@ -1,8 +1,8 @@
 //Write all action creaters here with named exports
 
-export  const action_creater = ()=>{
+export  const CreateUserDetails = (userObject)=>{
     return {
-        type:"ACTION_TYPE",
-        payload:"data here"
+        type:"CREATE_USER_DETAILS",
+        payload:userObject
     }
 }

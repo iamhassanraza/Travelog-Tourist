@@ -12,14 +12,14 @@ import Colors from '../Assets/Colors'
 import HeaderTitle from './Heading';
 
 import { connect } from "react-redux";
-import { CreateUserDetails } from "../ReduxStore/Actions/index";
+import { CreateUserDetails } from "../ReduxStore/Actions/index"
 
 const screenwidth = Dimensions.get('window').width;
 const screenheight = Dimensions.get('window').height;
 
 
 
-class AuthLoading extends React.Component {
+class CheckState extends React.Component {
   componentDidMount() {
     this._bootstrapAsync();
     // this.props.CreateUserDetails({name:'hassan',id:'asndas'})
@@ -29,52 +29,26 @@ class AuthLoading extends React.Component {
   _bootstrapAsync = async () => {
     const userToken = await AsyncStorage.getItem('TOKEN');
     const campus_id = await AsyncStorage.getItem('CAMPUS_ID');
-    const isverified = await AsyncStorage.getItem('isverified');
-    const email = await AsyncStorage.getItem('email');
+
    
-    console.log(userToken,'===========token id')
-    console.log(isverified,'===========verified?')
+
     console.log(campus_id,'===========campus id')
-    console.log(email,'===================email')
-
-        if(userToken)   //means logged in hai
-        { 
-          if(isverified !== '1')
-          {
-            this.props.navigation.navigate('EmailVerification',{
-              email:email
-            })
-          }
-          else if(isverified === '1' && campus_id === 'nahi_hai'){
-            this.props.navigation.navigate('EditProfile')
-          }
-          else if(isverified === '1' && campus_id !== 'nahi_hai'){
-            this.props.navigation.navigate('App')
-          }
-
-        }
-        else
-        {  
-          this.props.navigation.navigate('Auth')
-        }
-
-
-
-
     // This will switch to the App screen or Auth screen and this loading
-                  // // screen will be unmounted and thrown away.
-                  // if(userToken && campus_id !== 'nahi_hai')
-                  // {
-                  //   this.props.navigation.navigate('App')
-                  // }
-                  // else if(userToken && campus_id === 'nahi_hai')
-                  // {
-                  //   this.props.navigation.navigate('EditProfile')
-
-                  // }
-                  // else{
-                  //   this.props.navigation.navigate('Auth')
-                  // }
+    // screen will be unmounted and thrown away.
+    if(userToken && campus_id !== 'nahi_hai')
+    {
+        console.log('navigate to app')
+    //   this.props.navigation.navigate('App') 
+    }
+    else if(userToken && campus_id === 'nahi_hai')
+    {
+    //   this.props.navigation.navigate('EditProfile')
+        console.log('navigate to edit profile')
+    }
+    else{
+    //   this.props.navigation.navigate('Auth')
+    console.log('navigate to auth screen')
+    }
 
 
 
@@ -108,7 +82,7 @@ mapStateToProps = (state)=>{ //this state will contain FULL redux store all the 
   }
 
 
-export default connect(mapStateToProps,{ CreateUserDetails })(AuthLoading);
+export default connect(mapStateToProps,{ CreateUserDetails })(CheckState);
 
 
 const styles = StyleSheet.create({

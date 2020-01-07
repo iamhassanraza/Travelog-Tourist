@@ -6,18 +6,18 @@ export default class NoPost extends Component {
     return (
       <View
         style={{
-          flex: 1,
+         
           justifyContent: 'center',
-          backgroundColor: '#E5E5E5',
+          // backgroundColor: '#E5E5E5',
           alignItems: 'center'
         }}>
-        <Image style={{height:'35%', width:"35%"}} source={require('../Assets/Images/NO.png')}/>
+        <Image style={{height:130, width:130}} source={require('../Assets/Images/NO.png')}/>
         <Text
           style={{
             color: '#b5b3b3',
             fontSize: 25,
             fontWeight: 'bold',
-            marginTop:"-10%"
+            marginTop:-20
           }}>
           No Post Availiable
         </Text>

@@ -36,6 +36,7 @@ import ResetPassword from './Screens/ResetPassword'
 import UserSettings from './Screens/UserSettings'
 import { TouchableHighlight } from 'react-native-gesture-handler'
 import NoPost from './Components/NoPost'
+import EmailVerification from './Screens/EmailVerification'
 
 
 const AuthNavigator = createStackNavigator({
@@ -164,6 +165,9 @@ const ProfileStack = createStackNavigator({
     },
     EditProfile: {
         screen: EditProfile,
+    },
+    UserSettings : {
+        screen: UserSettings
     }
 }, 
 {
@@ -467,6 +471,9 @@ const RootStackNavigator = createSwitchNavigator({
     },
     EditProfile:{
         screen:createStackNavigator({EditProfile})
+    },
+    EmailVerification:{
+        screen:EmailVerification
     }
 
 },
@@ -481,9 +488,9 @@ export default class App extends Component {
   render() {
     return (
     
-          <AppContainer/>
-        // <UserSettings></UserSettings>
-        //<NoPost></NoPost>
+        <AppContainer/>
+        //<UserSettings></UserSettings>
+      
 
 )
   }

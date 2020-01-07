@@ -43,7 +43,7 @@ class PostCard extends Component {
             PostData: {
               uri: this.props.imageurl,
               title: this.props.title,
-              userAvatar: this.props.imageurl,
+              userAvatar: this.props.userdp ,
               username: this.props.name,
               description: this.props.description,
             },
@@ -99,9 +99,7 @@ class PostCard extends Component {
             <View style={{flex: 2}}>
               <Image
                 source={{
-                  uri:
-                    'https://depositphotos.com/121231710/stock-illustration-male-default-avatar-profile-gray.html',
-                }}
+                  uri: this.props.userdp    }}
                 style={{
                   width: 30,
                   borderColor: '#616963',

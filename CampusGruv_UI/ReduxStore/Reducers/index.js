@@ -3,35 +3,35 @@
 
 import {combineReducers} from 'redux';
 
-const reducer1 = (initial_state = null, action) => {
-  if (action.type === 'ACTION_TYPE') {
+const User = (initial_state = {}, action) => {
+  switch (action.type) {
+    case 'CREATE_USER_DETAILS':
+      return {...initial_state, ...action.payload}
+    case 'TOGGLE_TODO':
+      return state.map(todo =>
+        todo.id === action.id ? {...todo, completed: !todo.completed} : todo,
+      );
+    default:
+      return initial_state;
   }
-  //do somethhing or add action.payload in iniitial state
-  //return new state always
-  else action.type === 'Action_Type2';
-  {
-    //do something with and return state
-  }
-
-  return initial_state;
 };
 
-const reducer2 = (initial_state = null, action) => {
-  if (action.type === 'ACTION_TYPE3') {
-  }
-  //do somethhing or add action.payload in iniitial state
-  //return new state always
-  else action.type === 'Action_Type4';
-  {
-    //do something with and return state
-  }
+// const reducer2 = (initial_state = null, action) => {
+//   if (action.type === 'ACTION_TYPE3') {
+//   }
+//   //do somethhing or add action.payload in iniitial state
+//   //return new state always
+//   else action.type === 'Action_Type4';
+//   {
+//     //do something with and return state
+//   }
 
-  return initial_state;
-};
+//   return initial_state;
+// };
 
 //Combining reducers so that they can be put into store
 
 export default combineReducers({
-  reducer1: reducer1,
-  reducer2: reducer2,
+  User: User,
+  // reducer2: reducer2,
 });

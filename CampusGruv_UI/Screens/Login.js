@@ -108,18 +108,25 @@ class Login extends React.Component {
         .then(async (response) => {
           if (status === 200) {
             //good to go
+            console.log(response)
              await AsyncStorage.setItem('TOKEN', response.token);
+             await AsyncStorage.setItem('email', response.email);
+             console.log(response.email_verified.toString())
+             await AsyncStorage.setItem('isverified', response.email_verified.toString());
              await AsyncStorage.setItem('USER_ID', response.id.toString());
               
             if(response.campus_id===null)
             {     
              await AsyncStorage.setItem('CAMPUS_ID', 'nahi_hai');
-                this.props.navigation.navigate('EditProfile')
+               
             }
             else{
-              AsyncStorage.setItem('CAMPUS_ID', response.campus_id.toString());
-              this.props.navigation.navigate('App')
+              AsyncStorage.setItem('CAMPUS_ID', response.campus_id.toString());    
             }
+
+            this.props.navigation.navigate('AuthLoading')
+
+
           } else if (status === 401) {
             //user not found with credentials
             alert(response.message.split(':')[1]);

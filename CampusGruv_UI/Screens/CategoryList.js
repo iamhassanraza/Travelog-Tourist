@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, ScrollView, FlatList} from 'react-native';
+import {Text, View, ScrollView, FlatList, AsyncStorage} from 'react-native';
 import Category from '../Components/CategoryComp';
 import { withNavigation } from 'react-navigation';
 
@@ -26,11 +26,12 @@ export default class CategoryList extends Component {
 
 
 
-  componentDidMount() {
+  componentDidMount = async() =>{
+         const Token = await AsyncStorage.getItem('TOKEN')
     fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/post/categories', {
       headers: {
         Authorization:
-          'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjQxNiwiaWF0IjoxNTc3NzkyOTcxfQ.MiJREVokrDWIf6PQZA5u23hFHFBaSYUrM3h-zVc0VWw',
+          `Bearer ${Token}`,
       },
     })
       .then(response => response.json())

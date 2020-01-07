@@ -15,6 +15,11 @@ import {
 import HeaderTitle from './Heading';
 import Colors from '../Assets/Colors';
 import { withNavigation } from 'react-navigation';
+import Spinner from 'react-native-loading-spinner-overlay';
+import {
+  BarIndicator,
+ 
+} from 'react-native-indicators';
 
 class ForgetPassword extends React.Component {
   static navigationOptions = {
@@ -25,7 +30,8 @@ class ForgetPassword extends React.Component {
     this.state = {
       resta: [],
       email: undefined,
-      error: ""
+      error: "",
+      spinner : false
     };
   }
 
@@ -33,14 +39,21 @@ class ForgetPassword extends React.Component {
 
   sendOTP = async () => {
     if(this.validate(this.state.email)){
-      const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/send_otp?email=${this.state.email}`);
+      this.setState({spinner:true})
+      const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/send_otp?email=${this.state.email}&type=reset_password`);
     const JsonResponse = await Response.json();
-
+    this.setState({spinner:false})
+      console.log(JsonResponse)
     if(parseInt(Response.status) === 404) {
       alert(JsonResponse.message);
     }
     else if (parseInt(Response.status) === 200){
-      this.props.navigation.navigate('RecoveryCode');
+      this.props.navigation.navigate('RecoveryCode',{
+        email:this.state.email
+      });
+    }
+    else{
+      alert('something went wrong')
     }
 
     }    
@@ -125,7 +138,35 @@ class ForgetPassword extends React.Component {
 
               <View style={{marginBottom: 10}}>
                 {/* <ButtonSignInUp butt="Continue" /> */}
-                <View
+                {this.state.spinner ? (<View
+                      style={{
+                        height: 40,
+                        width: '50%',
+                        marginLeft: '25%',
+                        borderRadius: 10,
+                        marginTop: 40,
+                        justifyContent: 'center',
+                        backgroundColor: 'transparent',
+                        borderColor: 'white',
+                        borderWidth: 0.6,flexDirection:'row',justifyContent:'center',
+                        alignItems:'center'
+                      }}>
+                      <Text
+                        style={{
+                            fontSize: 16,
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                            color: 'white',
+                        }}>
+                        Loading{' '}
+                      </Text>
+                      <BarIndicator
+                        style={{flex: 0}}
+                        count={3}
+                        size={20}
+                        color={'white'}
+                      />
+                    </View>) : ( <View
                   style={{
                     height: 40,
                     width: '50%',
@@ -146,7 +187,8 @@ class ForgetPassword extends React.Component {
                     }}>
                     Continue
                   </Text>
-                </View>
+                </View>)}
+               
               </View>
             </TouchableOpacity>
           </View>

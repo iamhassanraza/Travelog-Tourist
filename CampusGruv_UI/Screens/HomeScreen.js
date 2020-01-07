@@ -13,6 +13,7 @@ import PostCard from '../Components/PostCard';
 import CrossIcon from 'react-native-vector-icons/MaterialIcons';
 import ContentLoader, {Rect} from 'react-content-loader/native';
 import RenderCards from '../Components/RenderCards';
+import NoPosts from '../Components/NoPost';
 
 export default class HomeScreen extends PureComponent {
   state = {
@@ -23,6 +24,7 @@ export default class HomeScreen extends PureComponent {
     CategoryPosts: undefined,
     Category: 'undefined',
     Category_Name: 'undefined',
+    total : undefined
   };
 
   onPageRefresh = () => {
@@ -32,6 +34,7 @@ export default class HomeScreen extends PureComponent {
   };
 
   fetchCategoryPosts = async () => {
+    this.setState({posts:[]})
     const Token = await AsyncStorage.getItem('TOKEN');
     const Response = await fetch(
       `https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_category&category_id=${this.props.navigation.getParam(
@@ -50,7 +53,7 @@ export default class HomeScreen extends PureComponent {
       console.log('none');
     } else if (parseInt(Response.status) === 200) {
       console.log('Category aagyi yayyyy');
-      this.setState({posts: JsonResponse.data});
+      this.setState({posts: JsonResponse.data, total: JsonResponse.total});
     }
   };
 
@@ -74,7 +77,7 @@ export default class HomeScreen extends PureComponent {
         console.log(responseJson)
         this.setState({
           posts: responseJson.data,
-          totalPosts: responseJson.total,
+          total: responseJson.total,
           refreshing: false,
           loading: false,
           Category: 'undefined'
@@ -138,7 +141,7 @@ export default class HomeScreen extends PureComponent {
  
 
 
-    if (this.state.totalPosts > 0 ) {
+    if (this.state.total > 0) {
       return (
         <ScrollView
           refreshControl={
@@ -152,9 +155,17 @@ export default class HomeScreen extends PureComponent {
 
         </ScrollView>
       );
-    } else if (this.state.totalPosts === 0) {
-      return <Text>hello jee no posts</Text> 
+    } 
+    
+    else if (this.state.total === 0) {
+      return(
+        <View style={{paddingTop: '45%', height: '100%'}}>
+       <NoPosts></NoPosts>
+       </View>
+      );
     }
+
+    
     else {
       return (
         <View>
