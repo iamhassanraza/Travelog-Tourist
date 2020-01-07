@@ -16,6 +16,8 @@ import Icon from 'react-native-vector-icons/FontAwesome';
 import RenderCards from '../Components/RenderCards';
 import NoPosts from '../Components/NoPost'
 import ContentLoader, {Rect} from 'react-content-loader/native';
+import { connect } from "react-redux";
+import { CreateUserDetails } from "../ReduxStore/Actions/index";
 
 
 class UserProfile extends React.Component {
@@ -161,14 +163,13 @@ renderLoading = () => {
         <View style={{flexDirection: 'row', marginLeft: 5, alignItems:"center"}}>
           <Image
             source={{
-              uri:
-                'https://img.freepik.com/free-photo/beautiful-girl-stands-near-walll-with-leaves_8353-5378.jpg',
+              uri: this.props.User.profile_pic_url
             }}
             style={{width: 80, height: 80, borderRadius: 50}}
           />
           <View style={{ marginLeft: 5}}>
             <Text style={{fontSize: 25, fontWeight: 'bold', color: '#727272'}}>
-              Jessica Z.
+            {this.props.User.first_name+' '+ this.props.User.last_name} 
             </Text>
             <Text style={{fontSize: 13, color: '#727272'}}>
               University of Pittsurgh
@@ -267,4 +268,14 @@ renderLoading = () => {
   }
 }
 
-export default UserProfile;
+
+mapStateToProps = (state)=>{ //this state will contain FULL redux store all the reducers data
+
+
+  //use your required reducer data in props i.e reducer1
+  
+  return { User : state.User}  //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+  
+  }
+
+export default connect(mapStateToProps,null)(UserProfile); 

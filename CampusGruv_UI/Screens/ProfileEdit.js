@@ -118,7 +118,7 @@ class ProfilePage extends React.Component {
     this.setState({name:this.props.User.first_name})
     this.setState({phone:this.props.User.contact_no})
     this.setState({gradutationYear:this.props.User.graduate_year})
-    this.setState({imageURL:this.props.User.profile_pic_url})
+   
 
     const Token = await AsyncStorage.getItem('TOKEN');
     const campusId = await AsyncStorage.getItem('CAMPUS_ID');
@@ -178,7 +178,8 @@ class ProfilePage extends React.Component {
     phone: '',
     gradutationYear: '',
     name: '',
-    focused:false
+    focused:false,
+  
   };
 
   uploadProfilePicture = () => {
@@ -398,6 +399,9 @@ class ProfilePage extends React.Component {
 
       console.log(this.props.User,'agayaaa userrr <3 ')
 
+      
+      
+
     // console.log(this.state.imageUri,'==================major============')
     //const { navigate } = this.props.navigation;
     return (
@@ -415,7 +419,7 @@ class ProfilePage extends React.Component {
                 uri:
                   this.state.imageUri !== ''
                     ? this.state.imageUri.uri
-                    : this.state.imageURL,
+                    : (this.props.User.profile_pic_url)
               }}
               style={{
                 width: 120,
