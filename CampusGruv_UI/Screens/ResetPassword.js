@@ -38,7 +38,7 @@ changePassword = async () => {
   this.setState({
     Spinner: true,
   });
-        const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/reset_password?otp=${this.props.navigation.getParam('OTP', '000')}&password=${this.state.confirmPassword}&email=m.h.raxa1@gmail.com`);
+        const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/reset_password?otp=${this.props.navigation.getParam('OTP', '000')}&password=${this.state.confirmPassword}&email=${this.props.navigation.getParam('email', 'no email')}`);
       const JsonResponse = await Response.json();
       if(parseInt(Response.status)=== 400) {
           alert(JsonResponse.message);

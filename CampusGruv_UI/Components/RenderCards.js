@@ -19,7 +19,6 @@ class RenderCards extends PureComponent {
     if (this.props.posts) {
       const column1Data = this.props.posts.filter((item, i) => i % 2 === 0);
       const column2Data = this.props.posts.filter((item, i) => i % 2 === 1);
-
       return (
         <View
           style={{
@@ -37,6 +36,8 @@ class RenderCards extends PureComponent {
                   <PostCard
                     categoryName={item.postCategory.description}
                     categoryColor={item.postCategory.rgba_colors}
+                    postId={item.id}
+                    comments={item.comments}
                     userdp = { item.users.profile_pic_url}
                     description={item.description}
                     style={{}}
@@ -65,6 +66,8 @@ class RenderCards extends PureComponent {
                     categoryName={item.postCategory.description}
                     categoryColor={item.postCategory.rgba_colors}
                     userdp = { item.users.profile_pic_url}
+                    postId={item.id}
+                    comments={item.comments}
                     description={item.description}
                     name={item.users.first_name + ' ' + item.users.last_name}
                     title={item.title}

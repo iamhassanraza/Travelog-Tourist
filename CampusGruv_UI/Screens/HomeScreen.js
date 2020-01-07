@@ -18,6 +18,7 @@ import NoPosts from '../Components/NoPost';
 export default class HomeScreen extends PureComponent {
   state = {
     posts: [],
+    totalPosts: null,
     refreshing: false,
     loading: false,
     CategoryPosts: undefined,
@@ -73,6 +74,7 @@ export default class HomeScreen extends PureComponent {
         return response.json();
       })
       .then(responseJson => {
+        //console.log(responseJson.data[0].id)
         this.setState({
           posts: responseJson.data,
           total: responseJson.total,
@@ -86,7 +88,7 @@ export default class HomeScreen extends PureComponent {
 
   componentDidMount() {
     const {navigation} = this.props;
-    this.focusListener = navigation.addListener('didFocus', () => {
+    this.focusListener = navigation.addListener('willFocus', () =>  {
       // The screen is focused
 
       if (this.state.Category === 'undefined') {

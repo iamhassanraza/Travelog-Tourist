@@ -32,6 +32,7 @@ class PostCard extends Component {
 
 
   render() {
+    //console.log('comments -----------',this.props.comments)
     return (
       <TouchableWithoutFeedback
         style={{
@@ -43,9 +44,11 @@ class PostCard extends Component {
             PostData: {
               uri: this.props.imageurl,
               title: this.props.title,
-              userAvatar: this.props.userdp ,
+              postId: this.props.postId,
+              userAvatar: this.props.userdp,
               username: this.props.name,
               description: this.props.description,
+              comments: this.props.comments
             },
           })
         }>

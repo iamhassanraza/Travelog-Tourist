@@ -53,6 +53,7 @@ class RecoverCode extends React.Component {
         } else if (parseInt(Response.status) === 200) {
           this.props.navigation.navigate('ResetPassword', {
             OTP: this.state.code,
+            email
           });
           this.setState({code: ''});
         } else {
