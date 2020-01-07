@@ -353,7 +353,7 @@ class PostDetail extends Component {
     const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/comment/create`, {
       method: 'POST',
       body: JSON.stringify({
-        post_id: this.state.post_id,
+        post_id: postId,
         user_id: userId,
         description: this.state.currentComment
       }),
