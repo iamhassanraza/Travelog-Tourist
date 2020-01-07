@@ -270,8 +270,8 @@ class ProfilePage extends React.Component {
           mode="date"
           placeholder={this.state.dob ? this.state.dob : 'Select Date'}
           format="YYYY-MM-DD"
-          minDate="2019-05-04"
-          maxDate="2030-05-04"
+          minDate="1950-01-01"
+          maxDate="2010-01-01"
           confirmBtnText="Confirm"
           cancelBtnText="Cancel"
           customStyles={{
