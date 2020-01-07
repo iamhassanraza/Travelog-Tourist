@@ -17,6 +17,7 @@ import RenderCards from '../Components/RenderCards';
 export default class HomeScreen extends PureComponent {
   state = {
     posts: [],
+    totalPosts: null,
     refreshing: false,
     loading: false,
     CategoryPosts: undefined,
@@ -70,8 +71,10 @@ export default class HomeScreen extends PureComponent {
         return response.json();
       })
       .then(responseJson => {
+        console.log(responseJson)
         this.setState({
           posts: responseJson.data,
+          totalPosts: responseJson.total,
           refreshing: false,
           loading: false,
           Category: 'undefined'
@@ -82,7 +85,7 @@ export default class HomeScreen extends PureComponent {
 
   componentDidMount() {
     const {navigation} = this.props;
-    this.focusListener = navigation.addListener('didFocus', () => {
+    this.focusListener = navigation.addListener('willFocus', () =>  {
       // The screen is focused
 
       if (this.state.Category === 'undefined') {
@@ -135,7 +138,7 @@ export default class HomeScreen extends PureComponent {
  
 
 
-    if (this.state.loading === false) {
+    if (this.state.totalPosts > 0 ) {
       return (
         <ScrollView
           refreshControl={
@@ -149,7 +152,10 @@ export default class HomeScreen extends PureComponent {
 
         </ScrollView>
       );
-    } else {
+    } else if (this.state.totalPosts === 0) {
+      return <Text>hello jee no posts</Text> 
+    }
+    else {
       return (
         <View>
           <ContentLoader

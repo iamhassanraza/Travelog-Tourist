@@ -7,6 +7,7 @@ import {
   StyleSheet, Dimensions, Platform,TextInput, AsyncStorage, KeyboardAvoidingView } from 'react-native';
 import InputView from '../Components/ProfileEdit/InputViews'
 import ImagePicker from 'react-native-image-picker'
+// var ImagePicker = require('react-native-image-picker');
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg'
 import SearchableDropdown from 'react-native-searchable-dropdown'
 import { TouchableHighlight } from 'react-native-gesture-handler';
@@ -140,7 +141,8 @@ class ProfilePage extends React.Component {
       };
 
     uploadProfilePicture = () => {
-      ImagePicker.showImagePicker((response) => {
+      ImagePicker.launchImageLibrary( (response) => {
+        console.log(response)
         if (response.didCancel) { console.log('cancelled')} 
         else if (response.error) { console.log('error is:', response.error) }
         else {
@@ -161,6 +163,27 @@ class ProfilePage extends React.Component {
         }
       });
     }
+
+    // ImagePicker.showImagePicker((response) => {
+    //   if (response.didCancel) { console.log('cancelled')} 
+    //   else if (response.error) { console.log('error is:', response.error) }
+    //   else {
+    //     const source = {uri: response.uri};
+    //     const fileTypes = /jpeg|jpg|png|gif/;
+    //     const allowedImgSize = 1024*1024*10;
+    //     if(!fileTypes.test(response.type)) {
+    //       alert('Uploaded file is not a valid image. \n(allowed file types: jpeg, jpg, png, gif)')
+    //     } 
+    //     else if (response.fileSize > allowedImgSize) {
+    //       alert('Uploaded file is too large \n(allowed file size is 10MB)')
+    //     } 
+    //     else {
+    //     this.setState({
+    //       imageUri : response.uri 
+    //     })
+    //     }
+    //   }
+    // });
 
 
     UpdateProfile = async ()=>{
