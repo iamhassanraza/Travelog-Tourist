@@ -21,8 +21,8 @@ import {TouchableHighlight} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DatePicker from 'react-native-datepicker';
 
-import { connect } from "react-redux";
-import { CreateUserDetails } from "../ReduxStore/Actions/index";
+import {connect} from 'react-redux';
+import {CreateUserDetails} from '../ReduxStore/Actions/index';
 
 //cam_id === 'nahi_hai'
 class ProfilePage extends React.Component {
@@ -111,14 +111,14 @@ class ProfilePage extends React.Component {
   };
 
   componentDidMount = async () => {
-
-    
-    this.setState({dob:this.props.User.dob === null ? '' : this.props.User.dob.split('T')[0]})
-    this.setState({major:this.props.User.major})
-    this.setState({name:this.props.User.first_name})
-    this.setState({phone:this.props.User.contact_no})
-    this.setState({gradutationYear:this.props.User.graduate_year})
-   
+    this.setState({
+      dob:
+        this.props.User.dob === null ? '' : this.props.User.dob.split('T')[0],
+    });
+    this.setState({major: this.props.User.major});
+    this.setState({name: this.props.User.first_name});
+    this.setState({phone: this.props.User.contact_no});
+    this.setState({gradutationYear: this.props.User.graduate_year});
 
     const Token = await AsyncStorage.getItem('TOKEN');
     const campusId = await AsyncStorage.getItem('CAMPUS_ID');
@@ -178,8 +178,7 @@ class ProfilePage extends React.Component {
     phone: '',
     gradutationYear: '',
     name: '',
-    focused:false,
-  
+    focused: false,
   };
 
   uploadProfilePicture = () => {
@@ -201,7 +200,7 @@ class ProfilePage extends React.Component {
         } else {
           this.setState({
             imageUri: response,
-            imageURL: response.uri
+            imageURL: response.uri,
           });
         }
       }
@@ -251,14 +250,9 @@ class ProfilePage extends React.Component {
       },
     );
 
-    
-    
-
-
-
-
-
     const postMasterResponse = await response.json();
+    this.props.CreateUserDetails(postMasterResponse)
+    this.setState({imageUri:''})
     await AsyncStorage.setItem('CAMPUS_ID', this.state.selectedId.toString());
     AsyncStorage.getItem('CAMPUS_ID') === 'nahi_hai'
       ? this.props.navigation.navigate('App')
@@ -308,7 +302,6 @@ class ProfilePage extends React.Component {
               borderTopWidth: 0,
               borderBottomColor: '#C4C4C4',
               borderBottomWidth: 0.5,
-             
             },
             // ... You can check the source to find the other keys.
           }}
@@ -329,8 +322,12 @@ class ProfilePage extends React.Component {
             Phone
           </Text>
           <TextInput
-            onFocus={()=>{this.setState({focused:true})}}
-            onBlur={()=>{this.setState({focused:false})}}
+            onFocus={() => {
+              this.setState({focused: true});
+            }}
+            onBlur={() => {
+              this.setState({focused: false});
+            }}
             keyboardType="numeric"
             style={{
               width: '60%',
@@ -354,41 +351,43 @@ class ProfilePage extends React.Component {
     );
   };
 
-
   renderGradYear = () => {
-    return(
+    return (
       <View>
-      <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
-        <Text
-          style={{fontSize: 20, marginTop: 15, marginLeft: 10, width: '25%'}}>
-          Grad Year
-        </Text>
-        <TextInput
-        
-          onFocus={()=>{this.setState({focused:true})}}
-          onBlur={()=>{this.setState({focused:false})}}
-          keyboardType="numeric"
-          style={{
-            width: '60%',
-            borderBottomColor: '#C4C4C4',
-            borderBottomWidth: 0.5,
-            fontSize: 20,
-            color: '#ACACAC',
-          }}
-          placeholder="2020"
-          value={this.state.gradutationYear}
-          onChangeText={text => this.setState({gradutationYear: text})}
-        />
-        <Icon
-          name="pencil"
-          color={this.state.focused ? '#1192d1' : '#C4C4C4'}
-          size={26}
-          style={{width: '10%', marginTop: 15}}
-        />
+        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+          <Text
+            style={{fontSize: 20, marginTop: 15, marginLeft: 10, width: '25%'}}>
+            Grad Year
+          </Text>
+          <TextInput
+            onFocus={() => {
+              this.setState({focused: true});
+            }}
+            onBlur={() => {
+              this.setState({focused: false});
+            }}
+            keyboardType="numeric"
+            style={{
+              width: '60%',
+              borderBottomColor: '#C4C4C4',
+              borderBottomWidth: 0.5,
+              fontSize: 20,
+              color: '#ACACAC',
+            }}
+            placeholder="2020"
+            value={this.state.gradutationYear}
+            onChangeText={text => this.setState({gradutationYear: text})}
+          />
+          <Icon
+            name="pencil"
+            color={this.state.focused ? '#1192d1' : '#C4C4C4'}
+            size={26}
+            style={{width: '10%', marginTop: 15}}
+          />
+        </View>
       </View>
-    </View>
-    )
-  }
+    );
+  };
 
   render() {
     let pickerItems = this.state.campuses[0]
@@ -397,10 +396,7 @@ class ProfilePage extends React.Component {
         })
       : null;
 
-      console.log(this.props.User,'agayaaa userrr <3 ')
-
-      
-      
+    console.log(this.props.User, 'agayaaa userrr <3 ');
 
     // console.log(this.state.imageUri,'==================major============')
     //const { navigate } = this.props.navigation;
@@ -419,7 +415,7 @@ class ProfilePage extends React.Component {
                 uri:
                   this.state.imageUri !== ''
                     ? this.state.imageUri.uri
-                    : (this.props.User.profile_pic_url)
+                    : this.props.User.profile_pic_url,
               }}
               style={{
                 width: 120,
@@ -520,15 +516,12 @@ class ProfilePage extends React.Component {
   }
 }
 
-mapStateToProps = (state)=>{ //this state will contain FULL redux store all the reducers data
-
+mapStateToProps = state => {
+  //this state will contain FULL redux store all the reducers data
 
   //use your required reducer data in props i.e reducer1
-  
-  return { User : state.User}  //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
-  
-  }
 
+  return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+};
 
-
-export default connect(mapStateToProps,{ CreateUserDetails })(ProfilePage);
+export default connect(mapStateToProps, {CreateUserDetails})(ProfilePage);
