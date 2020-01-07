@@ -15,6 +15,8 @@ import {
 import HeaderTitle from './Heading';
 import Colors from '../Assets/Colors';
 import {ScrollView} from 'react-native-gesture-handler';
+import { connect } from "react-redux";
+import { CreateUserDetails } from "../ReduxStore/Actions/index";
 const API_BASE_URL = 'https://campus-gruv-heroku.herokuapp.com/api/v1';
 import {
   BallIndicator,
@@ -170,6 +172,7 @@ class Signup extends React.Component {
                   if (status === 200) {
                     //good to go
                     // console.log(response,'============respines e =============')
+                    this.props.CreateUserDetails(response)
                      await AsyncStorage.setItem('TOKEN', response.token);
                      await AsyncStorage.setItem('email', response.email);
                      await AsyncStorage.setItem('USER_ID', response.id.toString());
@@ -460,4 +463,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default Signup;
+export default connect(null,{ CreateUserDetails })(Signup)

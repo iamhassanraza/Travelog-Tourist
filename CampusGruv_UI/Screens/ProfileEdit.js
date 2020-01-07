@@ -21,6 +21,9 @@ import {TouchableHighlight} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DatePicker from 'react-native-datepicker';
 
+import { connect } from "react-redux";
+import { CreateUserDetails } from "../ReduxStore/Actions/index";
+
 //cam_id === 'nahi_hai'
 class ProfilePage extends React.Component {
   static navigationOptions = props => {
@@ -108,6 +111,15 @@ class ProfilePage extends React.Component {
   };
 
   componentDidMount = async () => {
+
+    
+    this.setState({dob:this.props.User.dob === null ? '' : this.props.User.dob.split('T')[0]})
+    this.setState({major:this.props.User.major})
+    this.setState({name:this.props.User.first_name})
+    this.setState({phone:this.props.User.contact_no})
+    this.setState({gradutationYear:this.props.User.graduate_year})
+    this.setState({imageURL:this.props.User.profile_pic_url})
+
     const Token = await AsyncStorage.getItem('TOKEN');
     const campusId = await AsyncStorage.getItem('CAMPUS_ID');
     await this.setState({currentCampus: campusId});
@@ -188,6 +200,7 @@ class ProfilePage extends React.Component {
         } else {
           this.setState({
             imageUri: response,
+            imageURL: response.uri
           });
         }
       }
@@ -230,13 +243,20 @@ class ProfilePage extends React.Component {
           campus_id: this.state.selectedId,
           dob: this.state.dob,
           major: this.state.major,
-          first_name: this.state.name.split(' ')[0],
-          last_name: this.state.name.split(' ')[1],
-          contact_no: this.state.contact_no,
+          first_name: this.state.name,
+          contact_no: this.state.phone,
           graduate_year: this.state.gradutationYear,
         }),
       },
     );
+
+    
+    
+
+
+
+
+
     const postMasterResponse = await response.json();
     await AsyncStorage.setItem('CAMPUS_ID', this.state.selectedId.toString());
     AsyncStorage.getItem('CAMPUS_ID') === 'nahi_hai'
@@ -318,6 +338,7 @@ class ProfilePage extends React.Component {
               fontSize: 20,
               color: '#ACACAC',
             }}
+            value={this.state.phone}
             placeholder="XXX-XXX-XXXXX"
             onChangeText={text => this.setState({phone: text})}
           />
@@ -342,6 +363,7 @@ class ProfilePage extends React.Component {
           Grad Year
         </Text>
         <TextInput
+        
           onFocus={()=>{this.setState({focused:true})}}
           onBlur={()=>{this.setState({focused:false})}}
           keyboardType="numeric"
@@ -353,6 +375,7 @@ class ProfilePage extends React.Component {
             color: '#ACACAC',
           }}
           placeholder="2020"
+          value={this.state.gradutationYear}
           onChangeText={text => this.setState({gradutationYear: text})}
         />
         <Icon
@@ -373,6 +396,7 @@ class ProfilePage extends React.Component {
         })
       : null;
 
+      console.log(this.props.User,'agayaaa userrr <3 ')
 
     // console.log(this.state.imageUri,'==================major============')
     //const { navigate } = this.props.navigation;
@@ -391,7 +415,7 @@ class ProfilePage extends React.Component {
                 uri:
                   this.state.imageUri !== ''
                     ? this.state.imageUri.uri
-                    : 'https://www.bluefrosthvac.com/wp-content/uploads/2019/08/default-person.png',
+                    : this.state.imageURL,
               }}
               style={{
                 width: 120,
@@ -422,6 +446,7 @@ class ProfilePage extends React.Component {
             <InputView
               name="Name"
               ph="Enter name"
+              value={this.state.name}
               changestate={text => {
                 this.setState({name: text});
               }}
@@ -466,6 +491,7 @@ class ProfilePage extends React.Component {
             <InputView
               name="Major"
               ph="Major"
+              value={this.state.major}
               changestate={text => {
                 this.setState({major: text});
               }}
@@ -490,4 +516,15 @@ class ProfilePage extends React.Component {
   }
 }
 
-export default ProfilePage;
+mapStateToProps = (state)=>{ //this state will contain FULL redux store all the reducers data
+
+
+  //use your required reducer data in props i.e reducer1
+  
+  return { User : state.User}  //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+  
+  }
+
+
+
+export default connect(mapStateToProps,{ CreateUserDetails })(ProfilePage);

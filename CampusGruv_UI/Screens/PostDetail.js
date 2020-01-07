@@ -9,12 +9,13 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   StyleSheet,
+  AsyncStorage,
   PermissionsAndroid,
   Dimensions,
   AppState
 } from 'react-native';
 import {ThemeConsumer} from 'react-native-elements';
-
+import Comment from '../Components/Comment'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CrossIcon from 'react-native-vector-icons/MaterialIcons';
 import IconFeather from 'react-native-vector-icons/Feather';
@@ -23,14 +24,16 @@ import {ThemeBlue} from '../Assets/Colors';
 import Modal from 'react-native-modal';
 	
 import RNFetchBlob from 'rn-fetch-blob';
+import { FlatList, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 
 
 const IconGrey = '#b4b8bf';
 
 export default class PostDetail extends Component {
   state = {
-    Allcomments: [],
+    comments: this.props.navigation.getParam('PostData', 'no comments').comments,
     currentComment: '',
+    username: this.props.navigation.getParam('PostData', 'no username').username,
     followed: false,
     saved: false,
     isModalVisible: false,
@@ -251,7 +254,7 @@ export default class PostDetail extends Component {
     );
   };
 
-  renderAddComment = dp => {
+  renderAddComment = (dp, postId) => {
     return (
       <View
         style={{
@@ -295,10 +298,13 @@ export default class PostDetail extends Component {
           }}></TextInput>
           </View>
         <View>
-        <Text onPress={()=>{
-          //CALL API FOR COMMENT , USER ID ,POST ID , COMMENT DESCRIPTION 
-          this.postComment(postId)
-        }}
+        <TouchableOpacity 
+          onPress={()=>{
+            //CALL API FOR COMMENT , USER ID ,POST ID , COMMENT DESCRIPTION 
+            this.postComment(postId)
+          }}
+        >
+        <Text
           style={{
            //fontSize: 17,
             color: 'grey',
@@ -306,41 +312,29 @@ export default class PostDetail extends Component {
           }}>
           Post
         </Text>
+        </TouchableOpacity>
         </View>
       </View>
     );
   };
 
-  renderAllComments = dp => {
+  renderAllComments = (dp) => {
     return (
-      <View style={{paddingRight: '7%', marginTop: '1%', 
-      //marginBottom:'1%'
-    }}>
-        <View
-          style={{
-            width: '100%',
-            backgroundColor: '#e6e4e1',
-            marginLeft: '4%',
-            flexDirection: 'row',
-            paddingTop: '2%',
-            paddingLeft: '3%',
-            borderRadius: 9,
-            paddingBottom: '2%',
-          }}>
-          <Image
-            source={{uri: dp}}
-            style={{width: 30, height: 30, borderRadius: 50}}></Image>
-
-          <View style={{flexDirection: 'column', width: 270, marginLeft: '2%'}}>
-            <Text style={{fontSize: 14, fontWeight: 'bold', color: 'grey'}}>
-              Mansehra Boy
-            </Text>
-            <Text style={{fontSize: 11,marginTop: '-1%', color: 'grey'}}>
-              Mansehrian boy is not doing good
-            </Text>
-          </View>
-        </View>
-      </View>
+      <FlatList
+              data={this.state.comments}
+              scrollEnabled={false}
+              showsVerticalScrollIndicator={false}
+              renderItem={({item}) => {
+                return (
+                  <Comment 
+                    dp={dp}
+                    name={item.user.first_name}
+                    comment={item.description}
+                  />
+                );
+              }}
+              keyExtractor={item => item}
+            />
     );
   };
 
@@ -351,28 +345,37 @@ export default class PostDetail extends Component {
 
     const Token = await AsyncStorage.getItem('TOKEN');
     const userId = await AsyncStorage.getItem('USER_ID');
-
+    console.log('postid ------' ,postId)
     const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/comment/create`, {
       method: 'POST',
       body: JSON.stringify({
-    
-        post_id: this.state.postId,
+        post_id: this.state.post_id,
         user_id: userId,
-        description: this.state.currentComment,
-      
+        description: this.state.currentComment
       }),
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${Token}`,
       },
     });
-    const JsonResponse = await Response.json();
-    if(parseInt(Response.status)=== 400) {
-        alert(JsonResponse.message);
-    }
-    else if (parseInt(Response.status)=== 200){
-        alert(JsonResponse.message);
 
+    const JsonResponse = await Response.json();
+    console.log(JsonResponse[0])
+    if(parseInt(Response.status) === 400) {
+        alert(JsonResponse.message);
     }
+    else if (parseInt(Response.status) === 200){
+        alert(JsonResponse.id,'comment created');
+        const comments = this.state.comments
+        comments.push({...JsonResponse,user:{first_name: this.state.username}})
+        await this.setState({
+          comments: comments
+        })
+    }
+    else {
+      alert('something went wrong')
+    }
+    console.log('postcomment tw khtm horha hai')
   }
 
 
@@ -406,8 +409,8 @@ export default class PostDetail extends Component {
 
   render() {
     const data = this.props.navigation.getParam('PostData', 'nothing to render');
-    console.log(data.postId,'============================= post detail me received data ================== ')
-    this.setState({post_id : data.postId})
+    console.log(data.comments[0],'============================= post detail me received data ================== ')
+    
     return (
         <View style={{height: Dimensions.get('window').height-125}}>
             {this.renderHeader(data.userAvatar, data.username,data.uri)}
@@ -417,14 +420,7 @@ export default class PostDetail extends Component {
             {this.renderImage(data.uri)}
             {this.renderTitle(data.title)}
             {this.renderDescription(data.description)}
-            {this.renderAllComments(data.userAvatar)}
-            {this.renderAllComments(data.userAvatar)}
-            {/* {this.renderAllComments(data.userAvatar)}
-            {this.renderAllComments(data.userAvatar)}
-            {this.renderAllComments(data.userAvatar)}
-            {this.renderAllComments(data.userAvatar)}
-            {this.renderAllComments(data.userAvatar)}
-            {this.renderAllComments(data.userAvatar)} */}
+            {this.renderAllComments(data.userAvatar, data.comments)}
             </ScrollView> 
             </KeyboardAvoidingView>
                 {this.renderAddComment(data.userAvatar, data.postId)}
