@@ -25,8 +25,23 @@ class AuthLoading extends React.Component {
     // this.props.CreateUserDetails({name:'hassan',id:'asndas'})
   }
 
+
+  fetchUser = async () => {
+    let Token = await AsyncStorage.getItem('TOKEN')
+    let USER  = await AsyncStorage.getItem('USER_ID')
+    var response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/get/user?user_id=${USER}`,{
+      headers: {
+        Authorization: `Bearer ${Token}`,
+      },
+    })
+    let JsonResponse  =  await response.json()
+    console.log(JsonResponse,'=========USER==============')
+
+  }
+
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
+    await this.fetchUser()
     const userToken = await AsyncStorage.getItem('TOKEN');
     const campus_id = await AsyncStorage.getItem('CAMPUS_ID');
     const isverified = await AsyncStorage.getItem('isverified');

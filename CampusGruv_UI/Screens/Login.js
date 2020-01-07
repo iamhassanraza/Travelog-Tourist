@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React from 'react';
 import {AsyncStorage} from 'react-native';
 import {
   Text,
@@ -18,15 +18,8 @@ import HeaderTitle from './Heading';
 import Colors from '../Assets/Colors';
 const API_BASE_URL = 'https://campus-gruv-heroku.herokuapp.com/api/v1';
 import {
-  BallIndicator,
   BarIndicator,
-  DotIndicator,
-  MaterialIndicator,
-  PacmanIndicator,
-  PulseIndicator,
-  SkypeIndicator,
-  UIActivityIndicator,
-  WaveIndicator,
+
 } from 'react-native-indicators';
 
 const screenwidth = Dimensions.get('window').width;
