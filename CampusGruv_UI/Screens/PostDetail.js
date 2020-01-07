@@ -379,7 +379,7 @@ export default class PostDetail extends Component {
 
   render() {
     const data = this.props.navigation.getParam('PostData', 'nothing to render');
-    console.log(data.postId,'============================= post detail me received data ================== ')
+    console.log(data.comments,'============================= post detail me received data ================== ')
     
     return (
         <View style={{height: Dimensions.get('window').height-125}}>
@@ -390,7 +390,7 @@ export default class PostDetail extends Component {
             {this.renderImage(data.uri)}
             {this.renderTitle(data.title)}
             {this.renderDescription(data.description)}
-            {this.renderAllComments(data.userAvatar)}
+            {this.renderAllComments(data.userAvatar, data.comments)}
             {this.renderAllComments(data.userAvatar)}
             {/* {this.renderAllComments(data.userAvatar)}
             {this.renderAllComments(data.userAvatar)}
