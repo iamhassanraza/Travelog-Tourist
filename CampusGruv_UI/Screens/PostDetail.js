@@ -34,6 +34,7 @@ export default class PostDetail extends Component {
     followed: false,
     saved: false,
     isModalVisible: false,
+    post_id: undefined
   };
 
   changeCurrentCommentState = comment => {
@@ -355,7 +356,7 @@ export default class PostDetail extends Component {
       method: 'POST',
       body: JSON.stringify({
     
-        post_id: postId,
+        post_id: this.state.postId,
         user_id: userId,
         description: this.state.currentComment,
       
@@ -375,12 +376,38 @@ export default class PostDetail extends Component {
   }
 
 
+  likePost = async (postId) => {
 
+    const Token = await AsyncStorage.getItem('TOKEN');
+    const userId = await AsyncStorage.getItem('USER_ID');
+
+    const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/post/like`, {
+      method: 'POST',
+      body: JSON.stringify({
+    
+        post_id: this.state.post_id,
+        user_id: userId,
+        description: this.state.currentComment,
+      
+      }),
+      headers: {
+        Authorization: `Bearer ${Token}`,
+      },
+    });
+    const JsonResponse = await Response.json();
+    if(parseInt(Response.status)=== 400) {
+        alert(JsonResponse.message);
+    }
+    else if (parseInt(Response.status)=== 200){
+        alert(JsonResponse.message);
+
+    }
+  }
 
   render() {
     const data = this.props.navigation.getParam('PostData', 'nothing to render');
-    console.log(data.comments,'============================= post detail me received data ================== ')
-    
+    console.log(data.postId,'============================= post detail me received data ================== ')
+    this.setState({post_id : data.postId})
     return (
         <View style={{height: Dimensions.get('window').height-125}}>
             {this.renderHeader(data.userAvatar, data.username,data.uri)}
@@ -390,7 +417,7 @@ export default class PostDetail extends Component {
             {this.renderImage(data.uri)}
             {this.renderTitle(data.title)}
             {this.renderDescription(data.description)}
-            {this.renderAllComments(data.userAvatar, data.comments)}
+            {this.renderAllComments(data.userAvatar)}
             {this.renderAllComments(data.userAvatar)}
             {/* {this.renderAllComments(data.userAvatar)}
             {this.renderAllComments(data.userAvatar)}
