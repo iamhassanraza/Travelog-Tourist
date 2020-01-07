@@ -31,7 +31,7 @@ const IconGrey = '#b4b8bf';
 
 export default class PostDetail extends Component {
   state = {
-    Allcomments: [],
+    comments: this.props.navigation.getParam('PostData', 'nothing to render').comments,
     currentComment: '',
     followed: false,
     saved: false,
@@ -316,17 +316,17 @@ export default class PostDetail extends Component {
     );
   };
 
-  renderAllComments = (dp, comments) => {
+  renderAllComments = (dp) => {
     return (
       <FlatList
-              data={comments}
+              data={this.state.comments}
               scrollEnabled={false}
               showsVerticalScrollIndicator={false}
               renderItem={({item}) => {
                 return (
                   <Comment 
                     dp={dp}
-                    name={item.user.first_name + ' ' + item.user.last_name}
+                    name={item.user.first_name}
                     comment={item.description}
                   />
                 );
@@ -347,21 +347,28 @@ export default class PostDetail extends Component {
     const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/comment/create`, {
       method: 'POST',
       body: JSON.stringify({
-        post_id: 6981,
-        user_id: 476,
-        description: "hello jee comment by Faraz"
+        post_id: postId,
+        user_id: userId,
+        description: this.state.currentComment
       }),
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${Token}`,
       },
     });
+
     const JsonResponse = await Response.json();
-    console.log(JsonResponse)
+    console.log(JsonResponse[0])
     if(parseInt(Response.status) === 400) {
         alert(JsonResponse.message);
     }
     else if (parseInt(Response.status) === 200){
-        alert(JsonResponse.message);
+        alert(JsonResponse.id,'comment created');
+        const comments = this.state.comments
+        comments.push({...JsonResponse,user:{first_name:'hassan'}})
+        await this.setState({
+          comments: comments
+        })
     }
     else {
       alert('something went wrong')
