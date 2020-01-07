@@ -296,7 +296,7 @@ export default class PostDetail extends Component {
         <View>
         <Text onPress={()=>{
           //CALL API FOR COMMENT , USER ID ,POST ID , COMMENT DESCRIPTION 
-          alert('call api')
+          this.postComment(postId)
         }}
           style={{
            //fontSize: 17,
@@ -346,18 +346,18 @@ export default class PostDetail extends Component {
 
 
 
-  postComment = async () => {
+  postComment = async (postId) => {
 
     const Token = await AsyncStorage.getItem('TOKEN');
     const userId = await AsyncStorage.getItem('USER_ID');
 
-    const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/get/user?user_id=416`, {
+    const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/comment/create`, {
       method: 'POST',
       body: JSON.stringify({
     
-        post_id: 6976,
-        user_id: userId ,
-        description: this.state.currentComment ,
+        post_id: postId,
+        user_id: userId,
+        description: this.state.currentComment,
       
       }),
       headers: {
@@ -379,7 +379,7 @@ export default class PostDetail extends Component {
 
   render() {
     const data = this.props.navigation.getParam('PostData', 'nothing to render');
-    console.log(data,'============================= post detail me received data ================== ')
+    console.log(data.postId,'============================= post detail me received data ================== ')
     
     return (
         <View style={{height: Dimensions.get('window').height-125}}>
@@ -400,7 +400,7 @@ export default class PostDetail extends Component {
             {this.renderAllComments(data.userAvatar)} */}
             </ScrollView> 
             </KeyboardAvoidingView>
-                {this.renderAddComment(data.userAvatar)}
+                {this.renderAddComment(data.userAvatar, data.postId)}
         </View>
     );
   }

@@ -37,6 +37,7 @@ class RenderCards extends PureComponent {
                   <PostCard
                     categoryName={item.postCategory.description}
                     categoryColor={item.postCategory.rgba_colors}
+                    postId={item.id}
                     userdp = { item.users.profile_pic_url}
                     description={item.description}
                     style={{}}
@@ -65,6 +66,7 @@ class RenderCards extends PureComponent {
                     categoryName={item.postCategory.description}
                     categoryColor={item.postCategory.rgba_colors}
                     userdp = { item.users.profile_pic_url}
+                    postId={item.id}
                     description={item.description}
                     name={item.users.first_name + ' ' + item.users.last_name}
                     title={item.title}
