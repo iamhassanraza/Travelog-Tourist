@@ -22,6 +22,9 @@ import IconFeather from 'react-native-vector-icons/Feather';
 import BackIcon from 'react-native-vector-icons/Ionicons';
 import {ThemeBlue} from '../Assets/Colors';
 import Modal from 'react-native-modal';
+
+import { connect } from "react-redux";
+import { CreateUserDetails } from "../ReduxStore/Actions/index";
 	
 import RNFetchBlob from 'rn-fetch-blob';
 import { FlatList, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
@@ -29,10 +32,11 @@ import { FlatList, TouchableHighlight, TouchableOpacity } from 'react-native-ges
 
 const IconGrey = '#b4b8bf';
 
-export default class PostDetail extends Component {
+class PostDetail extends Component {
   state = {
     comments: this.props.navigation.getParam('PostData', 'no comments').comments,
     currentComment: '',
+    dp: this.props.navigation.getParam('PostData', 'no dp').dp,
     username: this.props.navigation.getParam('PostData', 'no username').username,
     followed: false,
     saved: false,
@@ -269,7 +273,7 @@ export default class PostDetail extends Component {
 
         <View style={{marginLeft:'2%', width: 40, height: 40}}>
           <Image
-            source={{uri: dp}}
+            source={{uri: this.props.User.profile_pic_url}}
             style={{width:'100%', borderRadius: 50, height: '100%'}}>
           </Image>
         </View>
@@ -326,7 +330,7 @@ export default class PostDetail extends Component {
               renderItem={({item}) => {
                 return (
                   <Comment 
-                    dp={dp}
+                    dp={item.user.dp}
                     name={item.user.first_name}
                     comment={item.description}
                   />
@@ -366,7 +370,7 @@ export default class PostDetail extends Component {
     else if (parseInt(Response.status) === 200){
         alert(JsonResponse.id,'comment created');
         const comments = this.state.comments
-        comments.push({...JsonResponse,user:{first_name: this.state.username}})
+        comments.push({...JsonResponse,user:{first_name: this.props.User.first_name, dp: this.props.User.profile_pic_url}})
         await this.setState({
           comments: comments
         })
@@ -423,3 +427,16 @@ const styles = StyleSheet.create({
   
   },
 });
+
+
+mapStateToProps = (state)=>{ //this state will contain FULL redux store all the reducers data
+
+
+  //use your required reducer data in props i.e reducer1
+  
+  return { User : state.User}  //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+  
+  }
+
+export default connect(mapStateToProps,null)(PostDetail);
+
