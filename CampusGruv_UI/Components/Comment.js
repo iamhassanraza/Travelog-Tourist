@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View} from 'react-native';
+import {Text, View, Image} from 'react-native';
 
 
 // Props dp,name,comment
@@ -25,10 +25,10 @@ export default class Comment extends Component {
 
           <View style={{flexDirection: 'column', width: 270, marginLeft: '2%'}}>
             <Text style={{fontSize: 14, fontWeight: 'bold', color: 'grey'}}>
-              Name : {this.props.name}
+              {this.props.name}
             </Text>
             <Text style={{fontSize: 11, marginTop: '-1%', color: 'grey'}}>
-             Comment : {this.props.comment}
+              {this.props.comment}
             </Text>
           </View>
         </View>

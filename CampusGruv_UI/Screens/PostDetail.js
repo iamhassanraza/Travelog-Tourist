@@ -9,12 +9,13 @@ import {
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
   StyleSheet,
+  AsyncStorage,
   PermissionsAndroid,
   Dimensions,
   AppState
 } from 'react-native';
 import {ThemeConsumer} from 'react-native-elements';
-
+import Comment from '../Components/Comment'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CrossIcon from 'react-native-vector-icons/MaterialIcons';
 import IconFeather from 'react-native-vector-icons/Feather';
@@ -23,6 +24,7 @@ import {ThemeBlue} from '../Assets/Colors';
 import Modal from 'react-native-modal';
 	
 import RNFetchBlob from 'rn-fetch-blob';
+import { FlatList, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 
 
 const IconGrey = '#b4b8bf';
@@ -250,7 +252,7 @@ export default class PostDetail extends Component {
     );
   };
 
-  renderAddComment = dp => {
+  renderAddComment = (dp, postId) => {
     return (
       <View
         style={{
@@ -294,10 +296,13 @@ export default class PostDetail extends Component {
           }}></TextInput>
           </View>
         <View>
-        <Text onPress={()=>{
-          //CALL API FOR COMMENT , USER ID ,POST ID , COMMENT DESCRIPTION 
-          this.postComment(postId)
-        }}
+        <TouchableOpacity 
+          onPress={()=>{
+            //CALL API FOR COMMENT , USER ID ,POST ID , COMMENT DESCRIPTION 
+            this.postComment(postId)
+          }}
+        >
+        <Text
           style={{
            //fontSize: 17,
             color: 'grey',
@@ -305,41 +310,29 @@ export default class PostDetail extends Component {
           }}>
           Post
         </Text>
+        </TouchableOpacity>
         </View>
       </View>
     );
   };
 
-  renderAllComments = dp => {
+  renderAllComments = (dp, comments) => {
     return (
-      <View style={{paddingRight: '7%', marginTop: '1%', 
-      //marginBottom:'1%'
-    }}>
-        <View
-          style={{
-            width: '100%',
-            backgroundColor: '#e6e4e1',
-            marginLeft: '4%',
-            flexDirection: 'row',
-            paddingTop: '2%',
-            paddingLeft: '3%',
-            borderRadius: 9,
-            paddingBottom: '2%',
-          }}>
-          <Image
-            source={{uri: dp}}
-            style={{width: 30, height: 30, borderRadius: 50}}></Image>
-
-          <View style={{flexDirection: 'column', width: 270, marginLeft: '2%'}}>
-            <Text style={{fontSize: 14, fontWeight: 'bold', color: 'grey'}}>
-              Mansehra Boy
-            </Text>
-            <Text style={{fontSize: 11,marginTop: '-1%', color: 'grey'}}>
-              Mansehrian boy is not doing good
-            </Text>
-          </View>
-        </View>
-      </View>
+      <FlatList
+              data={comments}
+              scrollEnabled={false}
+              showsVerticalScrollIndicator={false}
+              renderItem={({item}) => {
+                return (
+                  <Comment 
+                    dp={dp}
+                    name={item.user.first_name + ' ' + item.user.last_name}
+                    comment={item.description}
+                  />
+                );
+              }}
+              keyExtractor={item => item}
+            />
     );
   };
 
@@ -350,28 +343,30 @@ export default class PostDetail extends Component {
 
     const Token = await AsyncStorage.getItem('TOKEN');
     const userId = await AsyncStorage.getItem('USER_ID');
-
+    console.log('postid ------' ,postId)
     const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/comment/create`, {
       method: 'POST',
       body: JSON.stringify({
-    
-        post_id: postId,
-        user_id: userId,
-        description: this.state.currentComment,
-      
+        post_id: 6981,
+        user_id: 476,
+        description: "hello jee comment by Faraz"
       }),
       headers: {
         Authorization: `Bearer ${Token}`,
       },
     });
     const JsonResponse = await Response.json();
-    if(parseInt(Response.status)=== 400) {
+    console.log(JsonResponse)
+    if(parseInt(Response.status) === 400) {
         alert(JsonResponse.message);
     }
-    else if (parseInt(Response.status)=== 200){
+    else if (parseInt(Response.status) === 200){
         alert(JsonResponse.message);
-
     }
+    else {
+      alert('something went wrong')
+    }
+    console.log('postcomment tw khtm horha hai')
   }
 
 
@@ -379,7 +374,7 @@ export default class PostDetail extends Component {
 
   render() {
     const data = this.props.navigation.getParam('PostData', 'nothing to render');
-    console.log(data.comments,'============================= post detail me received data ================== ')
+    console.log(data.comments[0],'============================= post detail me received data ================== ')
     
     return (
         <View style={{height: Dimensions.get('window').height-125}}>
@@ -391,13 +386,6 @@ export default class PostDetail extends Component {
             {this.renderTitle(data.title)}
             {this.renderDescription(data.description)}
             {this.renderAllComments(data.userAvatar, data.comments)}
-            {this.renderAllComments(data.userAvatar)}
-            {/* {this.renderAllComments(data.userAvatar)}
-            {this.renderAllComments(data.userAvatar)}
-            {this.renderAllComments(data.userAvatar)}
-            {this.renderAllComments(data.userAvatar)}
-            {this.renderAllComments(data.userAvatar)}
-            {this.renderAllComments(data.userAvatar)} */}
             </ScrollView> 
             </KeyboardAvoidingView>
                 {this.renderAddComment(data.userAvatar, data.postId)}
