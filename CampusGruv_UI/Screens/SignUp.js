@@ -119,11 +119,12 @@ class Signup extends React.Component {
 
     var status = undefined
 
-    this.setState({spinner:true})
+
     if (!this.validateForm()) {
       console.log('sendng req .....');
     } else {
       // /////////////////////FETCH
+      this.setState({spinner:true})
       fetch(`${API_BASE_URL}/user/signup`, {
         method: 'POST',
         body: JSON.stringify({
