@@ -330,10 +330,10 @@ if(text) {
   };
 
 
-  renderNoPost = () => {
+  renderNoPost = (text) => {
     return(
       <View style={{paddingTop:"35%"}}>
-        <NoPost></NoPost>
+        <NoPost name={text}></NoPost>
       </View>
     )
   }
@@ -428,8 +428,8 @@ if(text) {
 
         <ScrollView>
           {this.state.selection === 'Feed' ? this.state.totalFeed === 0 ? this.renderNoPost() : this.renderFeed() : null }
-          {this.state.selection === 'Users' ? this.state.totalUsers === 0 ? this.renderNoPost() : this.renderUsers() : null}
-          {this.state.selection === 'Campuses' ? this.state.totalCampuses === 0 ? this.renderNoPost() : this.renderCampuses() : null}
+          {this.state.selection === 'Users' ? this.state.totalUsers === 0 ? this.renderNoPost("No Users Availiable") : this.renderUsers() : null}
+          {this.state.selection === 'Campuses' ? this.state.totalCampuses === 0 ? this.renderNoPost("No Campuses Availiable") : this.renderCampuses() : null}
         </ScrollView>
       </View>
     );
