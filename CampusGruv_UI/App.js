@@ -177,7 +177,12 @@ const ProfileStack = createStackNavigator({
 
 const HomeStack = createStackNavigator({
     HomeScreen,
-    PostDetail,
+    PostDetail: {
+        screen: PostDetail,
+        navigationOptions: {
+            header: null
+        }
+    },
     CategoryList,
     Searching: {
         screen : Searching,

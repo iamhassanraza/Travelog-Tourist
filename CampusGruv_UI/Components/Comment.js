@@ -12,7 +12,6 @@ export default class Comment extends Component {
           style={{
             width: '100%',
             backgroundColor: '#e6e4e1',
-            marginLeft: '4%',
             flexDirection: 'row',
             paddingTop: '2%',
             paddingLeft: '3%',

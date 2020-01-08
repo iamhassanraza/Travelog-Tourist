@@ -19,7 +19,8 @@ export default class NoPost extends Component {
             fontWeight: 'bold',
             marginTop:-20
           }}>
-          No Post Availiable
+            {this.props.name ? this.props.name : "No Post Availiable"}
+         
         </Text>
       </View>
     );
