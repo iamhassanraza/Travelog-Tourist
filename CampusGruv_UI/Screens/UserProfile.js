@@ -72,7 +72,7 @@ class UserProfile extends React.Component {
         },
       );
       const jsonresponse = await response.json();
-      console.log(jsonresponse);
+      console.log('profile -------------------------',jsonresponse.data[0]);
       this.setState({
         spinner:false,
         posts: jsonresponse.data,
