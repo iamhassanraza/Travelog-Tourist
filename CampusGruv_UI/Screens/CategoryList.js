@@ -13,21 +13,23 @@ export default class CategoryList extends Component {
 
 
   selectCategory = (cat) => {
-    this.setState({Category_id: cat})
-  }
-
-  move = (cat_id,cat_name) =>{
-    this.props.navigation.navigate("HomeScreen", {
-      CategoryID : cat_id ,
-      CategoryName: cat_name
+    this.setState({Category_id: cat},()=>{
+      this.props.navigation.navigate("HomeScreen", {
+        CategoryID : this.state.Category_id ,
+        CategoryName: this.state.CategoryName
+      })
     })
   }
+
+  // move = (cat_id,cat_name) =>{
+ 
+  // }
   
 
 
 
   componentDidMount = async() =>{
-         const Token = await AsyncStorage.getItem('TOKEN')
+   const Token = await AsyncStorage.getItem('TOKEN')
     fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/post/categories', {
       headers: {
         Authorization:
@@ -36,7 +38,7 @@ export default class CategoryList extends Component {
     })
       .then(response => response.json())
       .then(responseJson => {
-        console.log('response==========>', responseJson);
+        // console.log('response==========>', responseJson);
         this.setState({Data: responseJson});
       })
       .catch(error => {
@@ -54,8 +56,10 @@ export default class CategoryList extends Component {
           data={this.state.Data}
           keyExtractor={item => item.id}
           showsHorizontalScrollIndicator={false}
-          renderItem={({item}) => (
-            
+          renderItem={({item}) => {
+            console.log(item.id)
+            return (
+             
              
    
                   <Category
@@ -64,11 +68,11 @@ export default class CategoryList extends Component {
               image={item.category_image}
               cat_id={item.id}
               onSelect1={this.selectCategory}
-              onSelect2={this.move}
+              // onSelect2={this.move}
             />
              
            
-          )}
+          )} }
         />
       </View>
     );

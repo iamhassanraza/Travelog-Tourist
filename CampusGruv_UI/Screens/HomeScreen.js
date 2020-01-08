@@ -18,13 +18,12 @@ import NoPosts from '../Components/NoPost';
 export default class HomeScreen extends PureComponent {
   state = {
     posts: [],
-    totalPosts: null,
     refreshing: false,
     loading: false,
     CategoryPosts: undefined,
     Category: 'undefined',
     Category_Name: 'undefined',
-    total : undefined
+    total: undefined,
   };
 
   onPageRefresh = () => {
@@ -34,7 +33,7 @@ export default class HomeScreen extends PureComponent {
   };
 
   fetchCategoryPosts = async () => {
-    this.setState({posts:[]})
+    this.setState({posts: []});
     const Token = await AsyncStorage.getItem('TOKEN');
     const Response = await fetch(
       `https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_category&category_id=${this.props.navigation.getParam(
@@ -74,13 +73,12 @@ export default class HomeScreen extends PureComponent {
         return response.json();
       })
       .then(responseJson => {
-        //console.log(responseJson.data[0].id)
         this.setState({
           posts: responseJson.data,
           total: responseJson.total,
           refreshing: false,
           loading: false,
-          Category: 'undefined'
+          Category: 'undefined',
         });
       })
       .catch(err => console.log(err));
@@ -88,7 +86,7 @@ export default class HomeScreen extends PureComponent {
 
   componentDidMount() {
     const {navigation} = this.props;
-    this.focusListener = navigation.addListener('willFocus', () =>  {
+    this.focusListener = navigation.addListener('didFocus', () => {
       // The screen is focused
 
       if (this.state.Category === 'undefined') {
@@ -101,12 +99,12 @@ export default class HomeScreen extends PureComponent {
 
   componentWillUnmount() {
     // Remove the event listener
+    this.setState({})
     this.focusListener.remove();
+  
   }
 
-
-                   // For Cancelling the category and rerender Home
-
+  // For Cancelling the category and rerender Home
 
   // renderCancelCategory = () => {
   //   return (
@@ -127,7 +125,7 @@ export default class HomeScreen extends PureComponent {
   //         name="cancel"
   //         style={{fontSize: 25, color: '#1192d1'}}
   //         onPress={() => {
-           
+
   //           this.fetchdata();
   //         }}></CrossIcon>
   //     </View>
@@ -136,10 +134,9 @@ export default class HomeScreen extends PureComponent {
 
   render() {
     const catid = this.props.navigation.getParam('CategoryID', 'undefined');
-    const catname = this.props.navigation.getParam('CategoryName', 'undefi');
-    this.setState({Category: catid, Category_Name: catname});
- 
-
+    // const catname = this.props.navigation.getParam('CategoryName', 'undefi');
+    console.log(catid,'============== categoryyy idddd =========')
+    // this.setState({Category: catid});
 
     if (this.state.total > 0) {
       return (
@@ -150,23 +147,16 @@ export default class HomeScreen extends PureComponent {
               onRefresh={this.onPageRefresh}
             />
           }>
-             
           <RenderCards posts={this.state.posts}></RenderCards>
-
         </ScrollView>
       );
-    } 
-    
-    else if (this.state.total === 0) {
-      return(
+    } else if (this.state.total === 0) {
+      return (
         <View style={{paddingTop: '45%', height: '100%'}}>
-       <NoPosts></NoPosts>
-       </View>
+          <NoPosts></NoPosts>
+        </View>
       );
-    }
-
-    
-    else {
+    } else {
       return (
         <View>
           <ContentLoader

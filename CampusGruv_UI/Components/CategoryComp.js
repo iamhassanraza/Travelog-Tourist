@@ -19,7 +19,7 @@ export default class Category extends Component {
           <TouchableWithoutFeedback 
           onPress={()=> {
               this.props.onSelect1(this.props.cat_id);
-              this.props.onSelect2(this.props.cat_id, this.props.description);
+              // this.props.onSelect2(this.props.cat_id, this.props.description);
           }}
           >
           <View style={{backgroundColor: `rgba(${this.props.color},0.6)`}}>
