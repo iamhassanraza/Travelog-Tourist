@@ -324,21 +324,24 @@ class PostDetail extends Component {
 
   renderAllComments = (dp) => {
     return (
-      <FlatList
-              data={this.state.comments}
-              scrollEnabled={false}
-              showsVerticalScrollIndicator={false}
-              renderItem={({item}) => {
-                return (
-                  <Comment 
-                    dp={item.user.dp}
-                    name={item.user.first_name}
-                    comment={item.description}
-                  />
-                );
-              }}
-              keyExtractor={item => item}
-            />
+      <View style={{marginLeft: '4%'}}>
+        <Text style={{color: 'grey', fontSize: 12}}>View all comments</Text>
+        <FlatList
+                data={this.state.comments}
+                scrollEnabled={false}
+                showsVerticalScrollIndicator={false}
+                renderItem={({item}) => {
+                  return (
+                    <Comment 
+                      dp={item.user.profile_pic_url}
+                      name={item.user.first_name}
+                      comment={item.description}
+                    />
+                  );
+                }}
+                keyExtractor={item => item}
+        />
+      </View>
     );
   };
 
@@ -346,40 +349,45 @@ class PostDetail extends Component {
 
 
   postComment = async (postId) => {
+    console.log(this.state.currentComment)
+    if(this.state.currentComment !== null || this.state.currentComment !=='')
+    {
+      const Token = await AsyncStorage.getItem('TOKEN');
+      const userId = await AsyncStorage.getItem('USER_ID');
+      console.log('postid ------' ,postId)
+      const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/comment/create`, {
+        method: 'POST',
+        body: JSON.stringify({
+          post_id: postId,
+          user_id: userId,
+          description: this.state.currentComment
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Token}`,
+        },
+      });
 
-    const Token = await AsyncStorage.getItem('TOKEN');
-    const userId = await AsyncStorage.getItem('USER_ID');
-    console.log('postid ------' ,postId)
-    const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/comment/create`, {
-      method: 'POST',
-      body: JSON.stringify({
-        post_id: postId,
-        user_id: userId,
-        description: this.state.currentComment
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${Token}`,
-      },
-    });
-
-    const JsonResponse = await Response.json();
-    console.log(JsonResponse[0])
-    if(parseInt(Response.status) === 400) {
-        alert(JsonResponse.message);
+      const JsonResponse = await Response.json();
+      // console.log(JsonResponse[0])
+      if(parseInt(Response.status) === 400) {
+          alert(JsonResponse.message);
+      }
+      else if (parseInt(Response.status) === 200){
+          alert('comment created');
+          const comments = this.state.comments
+          comments.push({...JsonResponse,user:{first_name: this.props.User.first_name, dp: this.props.User.profile_pic_url}})
+          await this.setState({
+            comments: comments
+          })
+      }
+      else {
+        alert('something went wrong')
+      }
     }
-    else if (parseInt(Response.status) === 200){
-        alert(JsonResponse.id,'comment created');
-        const comments = this.state.comments
-        comments.push({...JsonResponse,user:{first_name: this.props.User.first_name, dp: this.props.User.profile_pic_url}})
-        await this.setState({
-          comments: comments
-        })
+    else{
+      alert("comment can't be empty")
     }
-    else {
-      alert('something went wrong')
-    }
-    console.log('postcomment tw khtm horha hai')
   }
 
 
@@ -413,10 +421,10 @@ class PostDetail extends Component {
 
   render() {
     const data = this.props.navigation.getParam('PostData', 'nothing to render');
-    console.log(data.comments[0],'============================= post detail me received data ================== ')
+    console.log(data.comments,'============================= post detail me received data ================== ')
     
     return (
-        <View style={{height: Dimensions.get('window').height-125}}>
+        <View style={{height: Dimensions.get('window').height-75}}>
             {this.renderHeader(data.userAvatar, data.username,data.uri)}
            
           <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={-110} style={{flex: 1}}>  
@@ -424,7 +432,14 @@ class PostDetail extends Component {
             {this.renderImage(data.uri)}
             {this.renderTitle(data.title)}
             {this.renderDescription(data.description)}
-            {this.renderAllComments(data.userAvatar, data.comments)}
+            { this.state.comments[0] ? 
+              this.renderAllComments(data.userAvatar, data.comments) : 
+              <View style={{height: 130, justifyContent: 'center'}}>
+                <Text style={{color: 'grey',fontSize:25, opacity:0.5, alignSelf: 'center'}}>
+                  No comments yet!
+                </Text>
+              </View>
+            }
             </ScrollView> 
             </KeyboardAvoidingView>
                 {this.renderAddComment(data.userAvatar, data.postId)}
