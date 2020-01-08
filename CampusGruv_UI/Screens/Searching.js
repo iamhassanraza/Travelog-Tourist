@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, TouchableOpacity, ScrollView, FlatList,RefreshControl,TextInput, AsyncStorage} from 'react-native';
+import {Text, View, TouchableOpacity, ScrollView, FlatList,RefreshControl,TextInput, AsyncStorage, Dimensions} from 'react-native';
 import {ThemeBlue} from '../Assets/Colors';
 import AvatarUserStatus from '../Components/AvatarUserStatus';
 import AvatarCampusStatus from '../Components/AvatarCampusStatus';
@@ -13,6 +13,7 @@ import i5 from '../Assets/Images/samandarkatha.jpg'
 import RenderCards from '../Components/RenderCards';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ContentLoader, {Rect} from 'react-content-loader/native';
+import NoPost from '../Components/NoPost'
 
 
 
@@ -23,15 +24,21 @@ export default class Searching extends React.PureComponent {
     refreshing: false,
     loading:false,
     error: false,
-    total: undefined,
+    totalFeed: undefined,
+    totalUsers: undefined,
+    totalCampuses: undefined,
     Users : [],
     Campuses : [],
-    search: ""
+    search: "",
+    loadingFeed : undefined,
+    loadingUsers : undefined,
+    loadingCampuses : undefined
   };
 
 
   fetchFeed = async (text) => {
 
+        this.setState({loadingFeed: true});
         const Token = await AsyncStorage.getItem('TOKEN');
         const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_search&description=${text}&page=1`,{
           headers: {
@@ -44,16 +51,16 @@ export default class Searching extends React.PureComponent {
 
         if(parseInt(Response.status)=== 400) {
            
-            this.setState({error : true})
+            this.setState({error : true, totalFeed: 0})
         }
         else if (parseInt(Response.status)=== 200){
            
             if(JsonResponse.total > 0) {
-              this.setState({posts : JsonResponse.data})
+              this.setState({posts : JsonResponse.data, totalFeed: JsonResponse.total, loadingFeed: false})
             }
 
             else if (JsonResponse.total === 0) {
-              this.setState({total: 0})
+              this.setState({totalFeed: 0})
             }  
         }
   }
@@ -62,6 +69,7 @@ export default class Searching extends React.PureComponent {
 
   fetchUsers = async (text) => {
 
+    this.setState({loadingUsers: true});
     const Token = await AsyncStorage.getItem('TOKEN');
     const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/search/user?type=user&description=${text}&page=1`,{
       headers: {
@@ -72,16 +80,16 @@ export default class Searching extends React.PureComponent {
     
     if(parseInt(Response.status)=== 400) {
        
-        this.setState({error : true})
+        this.setState({error : true, totalUsers: 0})
     }
     else if (parseInt(Response.status)=== 200){
       
         if(JsonResponse.total > 0) {
-          this.setState({Users : JsonResponse.data})
+          this.setState({Users : JsonResponse.data, totalUsers: JsonResponse.total, loadingUsers: false })
         }
 
         else if (JsonResponse.total === 0) {
-          this.setState({total: 0})
+          this.setState({totalUsers: 0})
         }  
     }
 }
@@ -90,6 +98,7 @@ export default class Searching extends React.PureComponent {
 
 fetchCampuses = async (text) => {
 
+  this.setState({loadingCampuses: true});
   const Token = await AsyncStorage.getItem('TOKEN');
   const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/search/campus?description=${text}&page=1`,{
     headers: {
@@ -99,16 +108,16 @@ fetchCampuses = async (text) => {
   const JsonResponse = await Response.json();
   if(parseInt(Response.status)=== 400) {
     
-      this.setState({error : true})
+      this.setState({error : true, totalCampuses: 0})
   }
   else if (parseInt(Response.status)=== 200){
       
       if(JsonResponse.total > 0) {
-        this.setState({Campuses : JsonResponse.data})
+        this.setState({Campuses : JsonResponse.data, totalCampuses: JsonResponse.total, loadingCampuses: false})
       }
 
       else if (JsonResponse.total === 0) {
-        this.setState({total: 0})
+        this.setState({totalCampuses: 0})
       }  
   }
 }
@@ -116,21 +125,28 @@ fetchCampuses = async (text) => {
 
 
 SearchItems = (text) => {
-  if(this.state.selection === "Feed") {
-    this.fetchFeed(text);
-    console.log("feedddddddddddddddd");
-  }
+  // if(this.state.selection === "Feed") {
+  //   this.fetchFeed(text);
+  //   console.log("feedddddddddddddddd");
+  // }
 
-  else if(this.state.selection === 'Users'){
-    this.fetchUsers(text);
-    console.log("userrrrrrrrrrrrrrrrrrr");
-  }
+  // else if(this.state.selection === 'Users'){
+  //   this.fetchUsers(text);
+  //   console.log("userrrrrrrrrrrrrrrrrrr");
+  // }
 
-  else if(this.state.selection === 'Campuses') {
-    this.fetchCampuses(text);
-    console.log("camppppppppppppp");
-  }
+  // else if(this.state.selection === 'Campuses') {
+  //   this.fetchCampuses(text);
+  //   console.log("camppppppppppppp");
+  // }
   
+if(text) {
+  this.fetchFeed(text);
+  this.fetchUsers(text);
+  this.fetchCampuses(text);
+  console.log("ye chalaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa")
+}
+
   else{
 
     console.log("teeno nahi chalay");
@@ -203,10 +219,11 @@ SearchItems = (text) => {
 
 
   renderFeed = () => {
-
-    if (this.state.loading===false) {
+ 
+    if (this.state.loadingFeed===false) {
       return (
         <ScrollView
+        style={{paddingBottom:"25%"}}
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}
@@ -216,7 +233,7 @@ SearchItems = (text) => {
           <RenderCards posts={this.state.posts}></RenderCards>
         </ScrollView>
       );
-    } else {
+    } else if(this.state.loadingFeed===true) {
       return (
         <View>
           <ContentLoader
@@ -237,9 +254,11 @@ SearchItems = (text) => {
   };
 
   renderUsers = () => {
-    return (
-      <View>
+
+    if (this.state.loadingUsers===false) {
+      return (
         <FlatList
+        style={{paddingBottom:"25%"}}
           vertical
           data={this.state.Users}
           keyExtractor={item => item.id}
@@ -248,14 +267,36 @@ SearchItems = (text) => {
             <AvatarUserStatus name={item.first_name} status={true} pic={item.profile_pic_url}></AvatarUserStatus>
           )}
         />
-      </View>
-    );
+      );
+    } else if(this.state.loadingUsers===true) {
+      return (
+        <View>
+          <ContentLoader
+            height={450}
+            speed={0.2}
+            height={Dimensions.get('window').height * 1}>
+            <Rect x="10" y="10" rx="5" ry="5" width="85%" height="45" />
+            <Rect x="10" y="60" rx="5" ry="5" width="85%" height="45" />
+            <Rect x="10" y="110" rx="5" ry="5" width="85%" height="45" />
+            <Rect x="10" y="160" rx="5" ry="5" width="85%" height="45" />
+            <Rect x="10" y="210" rx="5" ry="5" width="85%" height="45" />
+            <Rect x="10" y="260" rx="5" ry="5" width="85%" height="45" />
+            <Rect x="10" y="310" rx="5" ry="5" width="85%" height="45" />
+            <Rect x="10" y="360" rx="5" ry="5" width="85%" height="45" />
+            {/* <Rect x="280" y="300" rx="5" ry="5" width="260" height="140" />
+                    <Rect x="550" y="160" rx="5" ry="5" width="260" height="280" /> */}
+          </ContentLoader>
+        </View>
+      );
+    }   
   };
 
   renderCampuses = () => {
-    return (
-      <View>
+
+    if (this.state.loadingCampuses===false) {
+      return (
         <FlatList
+        style={{paddingBottom:"25%"}}
           vertical
           data={this.state.Campuses}
           keyExtractor={item => item.id}
@@ -264,9 +305,39 @@ SearchItems = (text) => {
             <AvatarCampusStatus name={item.description} status={false} pic={i4}></AvatarCampusStatus>
           )}
         />
-      </View>
-    );
+      );
+    } else if(this.state.loadingCampuses===true) {
+      return (
+        <View>
+          <ContentLoader
+            height={450}
+            speed={0.2}
+            height={Dimensions.get('window').height * 1}>
+            <Rect x="10" y="10" rx="5" ry="5" width="85%" height="45" />
+            <Rect x="10" y="60" rx="5" ry="5" width="85%" height="45" />
+            <Rect x="10" y="110" rx="5" ry="5" width="85%" height="45" />
+            <Rect x="10" y="160" rx="5" ry="5" width="85%" height="45" />
+            <Rect x="10" y="210" rx="5" ry="5" width="85%" height="45" />
+            <Rect x="10" y="260" rx="5" ry="5" width="85%" height="45" />
+            <Rect x="10" y="310" rx="5" ry="5" width="85%" height="45" />
+            <Rect x="10" y="360" rx="5" ry="5" width="85%" height="45" />
+            {/* <Rect x="280" y="300" rx="5" ry="5" width="260" height="140" />
+                    <Rect x="550" y="160" rx="5" ry="5" width="260" height="280" /> */}
+          </ContentLoader>
+        </View>
+      );
+    }
   };
+
+
+  renderNoPost = () => {
+    return(
+      <View style={{paddingTop:"35%"}}>
+        <NoPost></NoPost>
+      </View>
+    )
+  }
+
 
   render() {
     console.log(this.state);
@@ -356,9 +427,9 @@ SearchItems = (text) => {
         </View>
 
         <ScrollView>
-          {this.state.selection === 'Feed' ? this.renderFeed() : null}
-          {this.state.selection === 'Users' ? this.renderUsers() : null}
-          {this.state.selection === 'Campuses' ? this.renderCampuses() : null}
+          {this.state.selection === 'Feed' ? this.state.totalFeed === 0 ? this.renderNoPost() : this.renderFeed() : null }
+          {this.state.selection === 'Users' ? this.state.totalUsers === 0 ? this.renderNoPost() : this.renderUsers() : null}
+          {this.state.selection === 'Campuses' ? this.state.totalCampuses === 0 ? this.renderNoPost() : this.renderCampuses() : null}
         </ScrollView>
       </View>
     );
