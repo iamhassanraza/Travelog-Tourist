@@ -375,14 +375,7 @@ class CreateNewPost extends Component {
 
       this.setState({spinner: false, Description: ''});
 
-      const RefreshFunc = () => this.props.navigation.getParam(
-        'refereshFunction',
-        'nothing to render',
-      );
-      RefreshFunc();
-
-      this.props.navigation.navigate('App');
-      console.log('navigation has run')
+      this.props.navigation.navigate('HomeScreen', null)
       //  this.props.navigation.push('PostDetail', {
       //     PostData: {
       //       uri: imageResponse.image_url,
@@ -407,7 +400,7 @@ class CreateNewPost extends Component {
         onPress={() => {
           this.uploadPost();
           PicAndTitle();
-          // this.props.navigation.navigate('HomeScreen', null)
+          
         }}>
         <View
           style={{
