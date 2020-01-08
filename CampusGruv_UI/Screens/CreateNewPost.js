@@ -74,7 +74,7 @@ class CreateNewPost extends Component {
     this.getCategories();
     this.setState({
       Images: this.props.navigation.getParam('Images', 'nothing to render'),
-      Title: this.props.navigation.getParam('title', 'nothing to render'),
+      Title: this.props.navigation.getParam('title', 'nothing to render')
     });
   };
 
@@ -375,14 +375,7 @@ class CreateNewPost extends Component {
 
       this.setState({spinner: false, Description: ''});
 
-      const RefreshFunc = () => this.props.navigation.getParam(
-        'refereshFunction',
-        'nothing to render',
-      );
-      RefreshFunc();
-
-      this.props.navigation.navigate('App');
-      console.log('navigation has run')
+      this.props.navigation.navigate('HomeScreen', null)
       //  this.props.navigation.push('PostDetail', {
       //     PostData: {
       //       uri: imageResponse.image_url,
@@ -398,11 +391,16 @@ class CreateNewPost extends Component {
   };
 
   renderShareButton = () => {
+
+    const PicAndTitle =  this.props.navigation.getParam('deleteItems', 'nothing to render');
+
     return (
       <TouchableOpacity
         style={{alignItems: 'center', marginTop: '3%'}}
         onPress={() => {
           this.uploadPost();
+          PicAndTitle();
+          
         }}>
         <View
           style={{
@@ -437,7 +435,10 @@ class CreateNewPost extends Component {
     return data;
   };
 
+
+
   render() {
+   
     return (
       <TouchableWithoutFeedback>
         <KeyboardAvoidingView

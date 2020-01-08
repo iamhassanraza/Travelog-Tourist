@@ -63,7 +63,7 @@ export default class HomeScreen extends PureComponent {
       loading: false,
     });
     fetch(
-      'https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_all&page=1',
+      'https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_all&page=2',
       {
         headers: {
           Authorization: `Bearer ${Token}`,

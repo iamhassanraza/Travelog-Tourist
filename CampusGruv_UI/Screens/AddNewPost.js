@@ -54,13 +54,6 @@ selectPhoto = () => {
 }
 
 
-
-
-
- 
-
-
-
   openCamera =()=>
   {
       const options = {
@@ -100,6 +93,9 @@ renderDeleteIcon = () =>{
 };
  
 
+deleteItems = () => {
+  this.setState({Images:undefined, title: ''})
+}
 
 
 
@@ -146,7 +142,8 @@ renderDeleteIcon = () =>{
         if(this.state.Images && this.state.title !== ''){
           this.props.navigation.navigate('CreatePost',{
             Images: this.state.Images,
-            title: this.state.title
+            title: this.state.title,
+            deleteItems: this.deleteItems
           })
         } 
       }}
