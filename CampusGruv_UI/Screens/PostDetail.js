@@ -294,6 +294,7 @@ class PostDetail extends Component {
           }} */}
           <View style={{width:'73%', marginLeft:'2%'}}>
           <TextInput 
+            ref= {input => { this.commentInput = input }}
             multiline={true}
             placeholder="Add a comment"
             style={{ borderRadius: 7, borderWidth:0.2, borderColor:'grey'}}
@@ -376,10 +377,12 @@ class PostDetail extends Component {
       else if (parseInt(Response.status) === 200){
           alert('comment created');
           const comments = this.state.comments
-          comments.push({...JsonResponse,user:{first_name: this.props.User.first_name, dp: this.props.User.profile_pic_url}})
+          comments.push({...JsonResponse,user:{first_name: this.props.User.first_name, profile_pic_url: this.props.User.profile_pic_url}})
           await this.setState({
-            comments: comments
+            comments: comments,
+            currentComment: ''
           })
+          this.commentInput.clear()
       }
       else {
         alert('something went wrong')
@@ -427,7 +430,7 @@ class PostDetail extends Component {
         <View style={{height: Dimensions.get('window').height-75}}>
             {this.renderHeader(data.userAvatar, data.username,data.uri)}
            
-          <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={-110} style={{flex: 1}}>  
+          <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={-200} style={{ flex: 1}}>  
           <ScrollView style={{flex: 1}}>
             {this.renderImage(data.uri)}
             {this.renderTitle(data.title)}
