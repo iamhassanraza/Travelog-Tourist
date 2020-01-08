@@ -24,6 +24,7 @@ export default class HomeScreen extends PureComponent {
     Category: 'undefined',
     Category_Name: 'undefined',
     total: undefined,
+  
   };
 
   onPageRefresh = () => {
@@ -33,7 +34,7 @@ export default class HomeScreen extends PureComponent {
   };
 
   fetchCategoryPosts = async () => {
-    this.setState({posts: []});
+    this.setState({posts: [],loading:true});
     const Token = await AsyncStorage.getItem('TOKEN');
     const Response = await fetch(
       `https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_category&category_id=${this.props.navigation.getParam(
@@ -52,14 +53,16 @@ export default class HomeScreen extends PureComponent {
       console.log('none');
     } else if (parseInt(Response.status) === 200) {
       console.log('Category aagyi yayyyy');
-      this.setState({posts: JsonResponse.data, total: JsonResponse.total});
+      this.setState({posts: JsonResponse.data, total: JsonResponse.total,loading:false});
     }
   };
 
   fetchdata = async () => {
+      if(this.props.navigation.getParam('CategoryID', 'undefined') === 'undefined'){
+        
     const Token = await AsyncStorage.getItem('TOKEN');
     this.setState({
-      loading: false,
+      loading: true,
     });
     fetch(
       'https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_all&page=1',
@@ -73,6 +76,8 @@ export default class HomeScreen extends PureComponent {
         return response.json();
       })
       .then(responseJson => {
+        console.log(responseJson,'asdasdasdasdasdas')
+
         this.setState({
           posts: responseJson.data,
           total: responseJson.total,
@@ -82,55 +87,34 @@ export default class HomeScreen extends PureComponent {
         });
       })
       .catch(err => console.log(err));
+      }
+      else{
+   this.fetchCategoryPosts();
+      }
+
+
+  
   };
 
   componentDidMount() {
     const {navigation} = this.props;
-    this.focusListener = navigation.addListener('didFocus', () => {
+    this.focusListener = navigation.addListener('willFocus', () => {
       // The screen is focused
-
-      if (this.state.Category === 'undefined') {
-        this.fetchdata();
-      } else {
-        this.fetchCategoryPosts();
-      }
+      this.fetchdata();
+     
     });
   }
 
   componentWillUnmount() {
     // Remove the event listener
-    this.setState({})
+
     this.focusListener.remove();
+    this.setState({total:undefined,
+    posts:[]})
   
   }
 
-  // For Cancelling the category and rerender Home
 
-  // renderCancelCategory = () => {
-  //   return (
-  //     <View style={{flexDirection: 'row', alignItems: 'center', height: 32}}>
-  //       <Text
-  //         style={{
-  //           backgroundColor: '#1192d1',
-  //           paddingLeft: '2%',
-  //           paddingRight: '2%',
-  //           borderRadius: 10,
-  //           color: 'white',
-  //           paddingTop: '0.2%',
-  //           height: 25,
-  //         }}>
-  //         {this.state.Category_Name}
-  //       </Text>
-  //       <CrossIcon
-  //         name="cancel"
-  //         style={{fontSize: 25, color: '#1192d1'}}
-  //         onPress={() => {
-
-  //           this.fetchdata();
-  //         }}></CrossIcon>
-  //     </View>
-  //   );
-  // };
 
   render() {
     const catid = this.props.navigation.getParam('CategoryID', 'undefined');

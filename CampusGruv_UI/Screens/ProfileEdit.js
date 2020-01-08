@@ -20,9 +20,22 @@ import SearchableDropdown from 'react-native-searchable-dropdown';
 import {TouchableHighlight} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DatePicker from 'react-native-datepicker';
+import Spinner from 'react-native-loading-spinner-overlay';
 
 import {connect} from 'react-redux';
 import {CreateUserDetails} from '../ReduxStore/Actions/index';
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from 'react-native-indicators';
+
 
 //cam_id === 'nahi_hai'
 class ProfilePage extends React.Component {
@@ -179,6 +192,7 @@ class ProfilePage extends React.Component {
     gradutationYear: '',
     name: '',
     focused: false,
+    Spinner:false
   };
 
   uploadProfilePicture = () => {
@@ -228,6 +242,8 @@ class ProfilePage extends React.Component {
   };
 
   UpdateProfile = async () => {
+
+    this.setState({Spinner:true})
     const Token = await AsyncStorage.getItem('TOKEN');
     //const Campusid = await AsyncStorage.getItem('CAMPUS_ID');
 
@@ -251,6 +267,7 @@ class ProfilePage extends React.Component {
     );
 
     const postMasterResponse = await response.json();
+      this.setState({Spinner:false})
     this.props.CreateUserDetails(postMasterResponse)
     this.setState({imageUri:''})
     await AsyncStorage.setItem('CAMPUS_ID', this.state.selectedId.toString());
@@ -402,6 +419,12 @@ class ProfilePage extends React.Component {
     //const { navigate } = this.props.navigation;
     return (
       <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100}>
+             <Spinner
+              visible={this.state.Spinner}
+              textContent={'Uploading...'}
+              textStyle={{color: 'black'}}
+              customIndicator={<BarIndicator count={5} />}
+            />
         <ScrollView>
           {/* EDIT PROFILE IMAGE */}
           <View
