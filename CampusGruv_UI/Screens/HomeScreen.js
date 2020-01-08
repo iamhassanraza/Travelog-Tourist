@@ -74,7 +74,7 @@ export default class HomeScreen extends PureComponent {
         return response.json();
       })
       .then(responseJson => {
-        //console.log(responseJson.data[0].id)
+        //console.log('home --------------------',responseJson.data[0])
         this.setState({
           posts: responseJson.data,
           total: responseJson.total,
