@@ -29,7 +29,7 @@ export default class Searching extends React.PureComponent {
     totalCampuses: undefined,
     Users : [],
     Campuses : [],
-    search: "",
+    search: undefined,
     loadingFeed : undefined,
     loadingUsers : undefined,
     loadingCampuses : undefined
