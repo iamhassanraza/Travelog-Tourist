@@ -142,6 +142,7 @@ class UserProfile extends React.Component {
 
   render() {
     // const { navigate } = this.props.navigation;
+    
     return (
       <ScrollView>
         {/* EDIT PROFILE BUTTON */}

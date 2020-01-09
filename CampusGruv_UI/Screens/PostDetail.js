@@ -23,12 +23,11 @@ import BackIcon from 'react-native-vector-icons/Ionicons';
 import {ThemeBlue} from '../Assets/Colors';
 import Modal from 'react-native-modal';
 import ViewsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
-
 import { connect } from "react-redux";
 import { CreateUserDetails } from "../ReduxStore/Actions/index";
-	
 import RNFetchBlob from 'rn-fetch-blob';
 import { FlatList, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
+
 
 
 const IconGrey = '#b4b8bf';
@@ -48,6 +47,7 @@ class PostDetail extends Component {
 componentDidMount(){
 
 this.incrementView();
+
 }
 
 incrementView = async () => {
