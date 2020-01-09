@@ -22,6 +22,7 @@ import IconFeather from 'react-native-vector-icons/Feather';
 import BackIcon from 'react-native-vector-icons/Ionicons';
 import {ThemeBlue} from '../Assets/Colors';
 import Modal from 'react-native-modal';
+import ViewsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import { connect } from "react-redux";
 import { CreateUserDetails } from "../ReduxStore/Actions/index";
@@ -259,20 +260,30 @@ incrementView = async () => {
     );
   };
 
-  renderTitle = title => {
+  renderTitle = (title,views) => {
     return (
-      <View style={{alignItems: 'center'}}>
-        <Text style={{fontSize: 18}}>
+      <View style={{marginLeft:"3%",flexDirection:"row", justifyContent:"space-between"}}>
+       <View>
+       <Text style={{fontSize: 20}}>
        {title}
         </Text>
+       </View>
+
+        <View style={{marginRight:"3%",}}>
+        <ViewsIcon color="grey" name="eye" style={{fontSize:17}}/>
+              <Text style={{fontSize: 9, color: 'grey', marginTop: -2,alignSelf:"center"}}>
+                {views}
+              </Text>
+        </View>
+
       </View>
     );
   };
 
   renderDescription = description => {
     return (
-      <View style={{alignItems: 'center', marginLeft: '5%', marginRight: '5%'}}>
-        <Text style={{fontSize: 14, marginTop:'2%', color:'grey',marginBottom:10}}>
+      <View style={{ marginLeft: '3%', marginRight: '5%'}}>
+        <Text style={{fontSize: 14, marginTop:'1%', color:'grey',marginBottom:10}}>
           {description}
         </Text>
       </View>
@@ -454,7 +465,7 @@ incrementView = async () => {
   render() {
     const data = this.props.navigation.getParam('PostData', 'nothing to render');
     console.log(data.postId,'============================= post detail me received data ================== ')
-    
+    console.log("Views:" + data.view_count);
     return (
         <View style={{height: Dimensions.get('window').height-75}}>
             {this.renderHeader(data.userAvatar, data.postId, data.username, data.uri)}
@@ -462,7 +473,7 @@ incrementView = async () => {
           <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={-200} style={{ flex: 1}}>  
           <ScrollView style={{flex: 1}}>
             {this.renderImage(data.uri)}
-            {this.renderTitle(data.title)}
+            {this.renderTitle(data.title, data.views)}
             {this.renderDescription(data.description)}
             { this.state.comments[0] ? 
               this.renderAllComments(data.userAvatar, data.comments) : 

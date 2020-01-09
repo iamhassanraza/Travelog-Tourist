@@ -48,7 +48,8 @@ class PostCard extends Component {
               userAvatar: this.props.userdp,
               username: this.props.name,
               description: this.props.description,
-              comments: this.props.comments
+              comments: this.props.comments,
+              views: this.props.views
             },
           })
         }>
@@ -116,7 +117,7 @@ class PostCard extends Component {
             </View>
             <View style={{flex: 1}}>
               <ViewsIcon color="grey" name="eye" />
-              <Text style={{fontSize: 7, color: 'grey', marginTop: -2, paddingLeft:4}}>
+              <Text style={{fontSize: 7, color: 'grey', marginTop: -2, paddingLeft:2}}>
                 {this.props.views}
               </Text>
             </View>
