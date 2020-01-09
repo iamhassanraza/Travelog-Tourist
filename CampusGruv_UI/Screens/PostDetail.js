@@ -163,9 +163,10 @@ incrementView = async () => {
               color: this.state.saved ? ThemeBlue : IconGrey,
             }}
             onPress={() => {
-              this.setState(prevState => ({
-                saved: !prevState.saved,
-              }));
+              // this.setState(prevState => ({
+              //   saved: !prevState.saved,
+              // }));
+              this.savePost(postId)
             }}></Icon>
 
           <IconFeather
@@ -454,6 +455,38 @@ incrementView = async () => {
       alert(JsonResponse.message);
     }
     else if (parseInt(Response.status) === 201){
+      console.log('200')
+      alert(JsonResponse.message);
+    }
+    else {
+      alert('something is wrong')
+    }
+  }
+
+  savePost = async (postId) => {
+
+    this.setState(prevState => ({
+      saved: !prevState.saved,
+    }));
+
+    const Token = await AsyncStorage.getItem('TOKEN');
+    const userId = await AsyncStorage.getItem('USER_ID');
+    console.log('hello jeeeeeee user id', userId)
+    console.log('post id is -----',postId)
+    const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/save/post?post_id=${postId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Token}`,
+      },
+    });
+    const JsonResponse = await Response.json();
+    console.log(JsonResponse)
+    if(parseInt(Response.status) === 400) {
+      console.log('400')
+      alert(JsonResponse.message);
+    }
+    else if (parseInt(Response.status) === 200){
       console.log('200')
       alert(JsonResponse.message);
     }
