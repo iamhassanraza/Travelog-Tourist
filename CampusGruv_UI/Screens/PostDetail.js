@@ -44,6 +44,26 @@ class PostDetail extends Component {
     post_id: undefined
   };
 
+componentDidMount(){
+
+this.incrementView();
+}
+
+incrementView = async () => {
+
+  const DATA = this.props.navigation.getParam('PostData', 'nothing to render');
+  const Token = await AsyncStorage.getItem('TOKEN');
+  const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/view/count?post_id=${DATA.postId}`,{
+    headers: {
+      Authorization: `Bearer ${Token}`,
+    },
+  });
+
+}
+
+
+
+
   changeCurrentCommentState = comment => {
     this.setState({
       currentComment: comment,

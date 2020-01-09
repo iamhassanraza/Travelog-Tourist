@@ -116,8 +116,8 @@ class PostCard extends Component {
             </View>
             <View style={{flex: 1}}>
               <ViewsIcon color="grey" name="eye" />
-              <Text style={{fontSize: 7, color: 'grey', marginTop: -2}}>
-                2.4k
+              <Text style={{fontSize: 7, color: 'grey', marginTop: -2, paddingLeft:4}}>
+                {this.props.views}
               </Text>
             </View>
           </View>

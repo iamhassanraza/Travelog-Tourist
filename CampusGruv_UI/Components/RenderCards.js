@@ -43,6 +43,7 @@ class RenderCards extends PureComponent {
                     style={{}}
                     name={item.users.first_name + ' ' + item.users.last_name}
                     title={item.title}
+                    views={item.view_count}
                     imageurl={
                       item.postDetail.length > 0
                         ? item.postDetail[0].image_url
@@ -71,6 +72,7 @@ class RenderCards extends PureComponent {
                     description={item.description}
                     name={item.users.first_name + ' ' + item.users.last_name}
                     title={item.title}
+                    views={item.view_count}
                     imageurl={
                       item.postDetail.length > 0
                         ? item.postDetail[0].image_url
