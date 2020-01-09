@@ -65,7 +65,7 @@ export default class HomeScreen extends PureComponent {
       loading: true,
     });
     fetch(
-      'https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_all&page=1',
+      'https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_all&page=2',
       {
         headers: {
           Authorization: `Bearer ${Token}`,
@@ -76,8 +76,7 @@ export default class HomeScreen extends PureComponent {
         return response.json();
       })
       .then(responseJson => {
-        console.log(responseJson,'asdasdasdasdasdas')
-
+        //console.log('home --------------------',responseJson.data[0])
         this.setState({
           posts: responseJson.data,
           total: responseJson.total,

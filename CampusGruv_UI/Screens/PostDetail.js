@@ -35,10 +35,10 @@ const IconGrey = '#b4b8bf';
 class PostDetail extends Component {
   state = {
     comments: this.props.navigation.getParam('PostData', 'no comments').comments,
-    currentComment: '',
+    currentComment: null,
     dp: this.props.navigation.getParam('PostData', 'no dp').dp,
     username: this.props.navigation.getParam('PostData', 'no username').username,
-    followed: false,
+    liked: false,
     saved: false,
     isModalVisible: false,
     post_id: undefined
@@ -85,7 +85,7 @@ class PostDetail extends Component {
 
 
 
-  renderHeader = (userdp, username,image_URL) => {
+  renderHeader = (userdp, postId, username, image_URL) => {
     return (
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <View
@@ -121,16 +121,17 @@ class PostDetail extends Component {
           </Text> */}
 
           <Icon
-            name={this.state.followed ? 'star' : 'star-outline'}
+            name={this.state.liked ? 'star' : 'star-outline'}
             style={{
               fontSize: 28,
-              color: this.state.followed ? ThemeBlue : IconGrey,
+              color: this.state.liked ? ThemeBlue : IconGrey,
               paddingRight: 3,
             }}
             onPress={() => {
-              this.setState(prevState => ({
-                followed: !prevState.followed,
-              }));
+              // this.setState(prevState => ({
+              //   liked: !prevState.liked,
+              // }));
+              this.likePost(postId)
             }}></Icon>
 
           <Icon
@@ -141,9 +142,10 @@ class PostDetail extends Component {
               color: this.state.saved ? ThemeBlue : IconGrey,
             }}
             onPress={() => {
-              this.setState(prevState => ({
-                saved: !prevState.saved,
-              }));
+              // this.setState(prevState => ({
+              //   saved: !prevState.saved,
+              // }));
+              this.savePost(postId)
             }}></Icon>
 
           <IconFeather
@@ -350,8 +352,8 @@ class PostDetail extends Component {
 
 
   postComment = async (postId) => {
-    console.log(this.state.currentComment)
-    if(this.state.currentComment !== null || this.state.currentComment !=='')
+    console.log('hello jee',this.state.currentComment)
+    if(this.state.currentComment !== null || this.state.currentComment != '')
     {
       const Token = await AsyncStorage.getItem('TOKEN');
       const userId = await AsyncStorage.getItem('USER_ID');
@@ -388,7 +390,7 @@ class PostDetail extends Component {
         alert('something went wrong')
       }
     }
-    else{
+    else {
       alert("comment can't be empty")
     }
   }
@@ -396,39 +398,79 @@ class PostDetail extends Component {
 
   likePost = async (postId) => {
 
+    this.setState(prevState => ({
+      liked: !prevState.liked,
+    }));
+
     const Token = await AsyncStorage.getItem('TOKEN');
     const userId = await AsyncStorage.getItem('USER_ID');
-
+    console.log('hello jeeeeeee user id', userId)
+    console.log('post id is -----',postId)
     const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/post/like`, {
       method: 'POST',
       body: JSON.stringify({
-    
-        post_id: this.state.post_id,
         user_id: userId,
-        description: this.state.currentComment,
-      
+        post_id: postId
       }),
       headers: {
+        'Content-Type': 'application/json',
         Authorization: `Bearer ${Token}`,
       },
     });
     const JsonResponse = await Response.json();
-    if(parseInt(Response.status)=== 400) {
-        alert(JsonResponse.message);
+    console.log(JsonResponse)
+    if(parseInt(Response.status) === 400) {
+      console.log('400')
+      alert(JsonResponse.message);
     }
-    else if (parseInt(Response.status)=== 200){
-        alert(JsonResponse.message);
+    else if (parseInt(Response.status) === 201){
+      console.log('200')
+      alert(JsonResponse.message);
+    }
+    else {
+      alert('something is wrong')
+    }
+  }
 
+  savePost = async (postId) => {
+
+    this.setState(prevState => ({
+      saved: !prevState.saved,
+    }));
+
+    const Token = await AsyncStorage.getItem('TOKEN');
+    const userId = await AsyncStorage.getItem('USER_ID');
+    console.log('hello jeeeeeee user id', userId)
+    console.log('post id is -----',postId)
+    const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/save/post?post_id=${postId}`, {
+      method: 'GET',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Token}`,
+      },
+    });
+    const JsonResponse = await Response.json();
+    console.log(JsonResponse)
+    if(parseInt(Response.status) === 400) {
+      console.log('400')
+      alert(JsonResponse.message);
+    }
+    else if (parseInt(Response.status) === 200){
+      console.log('200')
+      alert(JsonResponse.message);
+    }
+    else {
+      alert('something is wrong')
     }
   }
 
   render() {
     const data = this.props.navigation.getParam('PostData', 'nothing to render');
-    console.log(data.comments,'============================= post detail me received data ================== ')
+    console.log(data.postId,'============================= post detail me received data ================== ')
     
     return (
         <View style={{height: Dimensions.get('window').height-75}}>
-            {this.renderHeader(data.userAvatar, data.username,data.uri)}
+            {this.renderHeader(data.userAvatar, data.postId, data.username, data.uri)}
            
           <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={-200} style={{ flex: 1}}>  
           <ScrollView style={{flex: 1}}>
