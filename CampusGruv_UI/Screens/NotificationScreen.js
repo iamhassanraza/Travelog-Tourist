@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView } from 'react-native'
+import { Text, View, ScrollView, Alert } from 'react-native'
 import NoticationComponent from '../Components/NoticationComponent'
+
 
 
 export default class NotificationScreen extends Component {
@@ -16,7 +17,7 @@ export default class NotificationScreen extends Component {
             <NoticationComponent  uri='https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' title="Faraz" time="20 minutes" activity="followed you"/>
             <NoticationComponent  uri='https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' title="Umair" time="10 minutes" activity="Liked your post"/>
             <NoticationComponent  uri='https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' title="Ammar" time="4 minutes" activity="Shared your post"/>
-         
+            
             </ScrollView>
               </View>
         )

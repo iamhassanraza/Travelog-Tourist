@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, ScrollView, FlatList, AsyncStorage} from 'react-native';
+import {Text, View, ScrollView, FlatList, AsyncStorage,ActivityIndicator} from 'react-native';
 import Category from '../Components/CategoryComp';
 import { withNavigation } from 'react-navigation';
 
@@ -7,7 +7,8 @@ export default class CategoryList extends Component {
   state = {
     Data: undefined,
     Category_id: undefined,
-    CategoryName: ""
+    CategoryName: "",
+    loading:false
   };
 
 
@@ -29,6 +30,7 @@ export default class CategoryList extends Component {
 
 
   componentDidMount = async() =>{
+  this.setState({loading:true})
    const Token = await AsyncStorage.getItem('TOKEN')
     fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/post/categories', {
       headers: {
@@ -39,7 +41,7 @@ export default class CategoryList extends Component {
       .then(response => response.json())
       .then(responseJson => {
         // console.log('response==========>', responseJson);
-        this.setState({Data: responseJson});
+        this.setState({Data: responseJson,loading:false});
       })
       .catch(error => {
         console.error(error);
@@ -50,7 +52,10 @@ export default class CategoryList extends Component {
     // console.log(this.state.Category_id);
     return (
       <View style={{flex: 1}}>
-        <FlatList
+        {this.state.loading ? <View style={{flex:1,justifyContent:'center',alignItems:'center'}}>
+          <ActivityIndicator color='#1192d1' size={50} style={{marginBottom:'5%'}}></ActivityIndicator>
+          <Text>Loading Categories</Text>
+        </View> : (     <FlatList
           style={{margin: 10}}
           numColumns={2}
           data={this.state.Data}
@@ -73,7 +78,8 @@ export default class CategoryList extends Component {
              
            
           )} }
-        />
+        />) }
+   
       </View>
     );
   }
