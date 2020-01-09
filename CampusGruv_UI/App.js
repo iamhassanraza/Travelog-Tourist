@@ -39,6 +39,7 @@ import NoPost from './Components/NoPost'
 import EmailVerification from './Screens/EmailVerification'
 
 
+
 const AuthNavigator = createStackNavigator({
     Login: {
         screen: Login,
@@ -523,9 +524,9 @@ export default class App extends Component {
   render() {
     return (
     
-        <AppContainer/>
+         <AppContainer/>
         //<UserSettings></UserSettings>
-      
+
 
 )
   }

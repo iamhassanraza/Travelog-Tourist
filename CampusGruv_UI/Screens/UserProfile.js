@@ -167,6 +167,7 @@ class UserProfile extends React.Component {
     console.log(this.state.otherUser, 'user ------')
     postUser = this.state.otherUser ? this.state.otherUser : this.props.User.id
     console.log(postUser, 'postuser ------')
+    
     return (
       <ScrollView>
         {/* EDIT PROFILE BUTTON */}
