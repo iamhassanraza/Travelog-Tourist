@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import {Text, View, Image} from 'react-native';
 import {ThemeBlue} from '../Assets/Colors';
-import {TouchableOpacity} from 'react-native-gesture-handler';
+import {withNavigation} from 'react-navigation'
+import {TouchableOpacity, TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
-export default class AvatarUserStatus extends Component {
+class AvatarUserStatus extends Component {
   state = {
     follow: this.props.status,
   };
@@ -11,20 +12,28 @@ export default class AvatarUserStatus extends Component {
   render() {
    
     return (
-      <View
-        style={{
-          flexDirection: 'row',
-          alignItems: 'center',
-          paddingBottom: '2%',
-          paddingTop: '2%',
-          paddingLeft: '2%',
-          paddingRight: '2%',
-        }}>
-        <View style={{flexDirection: 'row', flex: 4, alignItems: 'center'}}>
+      <TouchableWithoutFeedback
+        onPress={() => this.props.navigation.push('UserProfile', {
+            id: this.props.id
+        })}  
+      >
+        <View
+          style={{
+            flexDirection: 'row',
+            alignItems: 'center',
+            marginTop: '1%'
+            // paddingBottom: '2%',
+            // paddingTop: '2%',
+            // paddingLeft: '2%',
+            // paddingRight: '2%',
+          }}
+        >
+        <View style={{flexDirection: 'row', padding: '1%', flex: 4}}>
           <Image
             source={{uri : this.props.pic}}
-            style={{height: 40, width: 40, borderRadius: 50}}></Image>
-          <Text style={{fontSize: 18, fontWeight: 'bold', color: 'grey', paddingLeft:"2%"}}>
+            style={{height: 40, width: 40, borderRadius: 50}}>
+          </Image>
+          <Text style={{fontSize: 18,alignSelf: 'center', fontWeight: 'bold', color: 'grey', paddingLeft:"2%"}}>
           {this.props.name}
           </Text>
         </View>
@@ -55,6 +64,9 @@ export default class AvatarUserStatus extends Component {
           </View>
         </TouchableOpacity>
       </View>
+      </TouchableWithoutFeedback>
     );
   }
 }
+
+export default withNavigation(AvatarUserStatus)
