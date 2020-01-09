@@ -256,6 +256,7 @@ if(text) {
   renderUsers = () => {
 
     if (this.state.loadingUsers===false) {
+      console.log(this.state.Users)
       return (
         <FlatList
         style={{paddingBottom:"25%"}}
@@ -264,7 +265,7 @@ if(text) {
           keyExtractor={item => item.id}
           showsHorizontalScrollIndicator={false}
           renderItem={({item}) => (
-            <AvatarUserStatus name={item.first_name} status={true} pic={item.profile_pic_url}></AvatarUserStatus>
+            <AvatarUserStatus id={item.id} name={item.first_name} status={true} pic={item.profile_pic_url}></AvatarUserStatus>
           )}
         />
       );
@@ -340,7 +341,7 @@ if(text) {
 
 
   render() {
-    console.log(this.state);
+    //console.log(this.state);
     return (
       <View>
 

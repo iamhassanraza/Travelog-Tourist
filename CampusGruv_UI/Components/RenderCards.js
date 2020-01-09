@@ -20,75 +20,73 @@ class RenderCards extends PureComponent {
       const column1Data = this.props.posts.filter((item, i) => i % 2 === 0);
       const column2Data = this.props.posts.filter((item, i) => i % 2 === 1);
       return (
-      
-          <View
-            style={{
-              height: '100%',
-              flexDirection: 'row',
-              backgroundColor: '#F0F0F0',
-              
-              flex:10
-            }}>
-            <SafeAreaView style={{flex: 1}}>
-              <FlatList
-                data={column1Data}
-                scrollEnabled={false}
-                showsVerticalScrollIndicator={false}
-                renderItem={({item}) => {
-                  return (
-                    <PostCard
-                      categoryName={item.postCategory.description}
-                      categoryColor={item.postCategory.rgba_colors}
-                      postId={item.id}
-                      comments={item.comments}
-                      userdp={item.users.profile_pic_url}
-                      description={item.description}
-                      style={{}}
-                      name={item.users.first_name + ' ' + item.users.last_name}
-                      title={item.title}
-                      imageurl={
-                        item.postDetail.length > 0
-                          ? item.postDetail[0].image_url
-                          : 'https://travelog-pk.herokuapp.com/images/default.png'
-                      }>
-                      {' '}
-                    </PostCard>
-                  );
-                }}
-                keyExtractor={item => item.title}
-              />
-            </SafeAreaView>
-            <SafeAreaView style={{flex: 1}}>
-              <FlatList
-                data={column2Data}
-                scrollEnabled={false}
-                showsVerticalScrollIndicator={false}
-                renderItem={({item}) => {
-                  return (
-                    <PostCard
-                      categoryName={item.postCategory.description}
-                      categoryColor={item.postCategory.rgba_colors}
-                      userdp={item.users.profile_pic_url}
-                      postId={item.id}
-                      comments={item.comments}
-                      description={item.description}
-                      name={item.users.first_name + ' ' + item.users.last_name}
-                      title={item.title}
-                      imageurl={
-                        item.postDetail.length > 0
-                          ? item.postDetail[0].image_url
-                          : 'https://travelog-pk.herokuapp.com/images/default.png'
-                      }>
-                      {' '}
-                    </PostCard>
-                  );
-                }}
-                keyExtractor={item => item.title}
-              />
-            </SafeAreaView>
-          </View>
-         
-       
+        <View
+          style={{
+            height: '100%',
+            flexDirection: 'row',
+            backgroundColor: '#F0F0F0',
+            flex:1
+          }}>
+          <SafeAreaView style={{flex: 1}}>
+            <FlatList
+              data={column1Data}
+              scrollEnabled={false}
+              showsVerticalScrollIndicator={false}
+              renderItem={({item}) => {
+                return (
+                  <PostCard
+                    categoryName={item.postCategory.description}
+                    categoryColor={item.postCategory.rgba_colors}
+                    postId={item.id}
+                    comments={item.comments}
+                    userdp = { item.users.profile_pic_url}
+                    description={item.description}
+                    style={{}}
+                    name={item.users.first_name + ' ' + item.users.last_name}
+                    title={item.title}
+                    views={item.view_count}
+                    imageurl={
+                      item.postDetail.length > 0
+                        ? item.postDetail[0].image_url
+                        : 'https://travelog-pk.herokuapp.com/images/default.png'
+                    }>
+                    {' '}
+                  </PostCard>
+                );
+              }}
+              keyExtractor={item => item.title}
+            />
+          </SafeAreaView>
+          <SafeAreaView style={{flex: 1}}>
+            <FlatList
+              data={column2Data}
+              scrollEnabled={false}
+              showsVerticalScrollIndicator={false}
+              renderItem={({item}) => {
+                return (
+                  <PostCard
+                    categoryName={item.postCategory.description}
+                    categoryColor={item.postCategory.rgba_colors}
+                    userdp = { item.users.profile_pic_url}
+                    postId={item.id}
+                    comments={item.comments}
+                    description={item.description}
+                    name={item.users.first_name + ' ' + item.users.last_name}
+                    title={item.title}
+                    views={item.view_count}
+                    imageurl={
+                      item.postDetail.length > 0
+                        ? item.postDetail[0].image_url
+                        : 'https://travelog-pk.herokuapp.com/images/default.png'
+                    }>
+                    {' '}
+                  </PostCard>
+                );
+              }}
+              keyExtractor={item => item.title}
+            />
+          </SafeAreaView>
+        </View>
       );
     } else {
       return (

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import {
   ScrollView,
   Text,
@@ -15,9 +15,9 @@ import {
 import Icon from 'react-native-vector-icons/FontAwesome';
 import RenderCards from '../Components/RenderCards';
 import NoPosts from '../Components/NoPost';
-import ContentLoader, {Rect} from 'react-content-loader/native';
-import {connect} from 'react-redux';
-import {CreateUserDetails} from '../ReduxStore/Actions/index';
+import ContentLoader, { Rect } from 'react-content-loader/native';
+import { connect } from 'react-redux';
+import { CreateUserDetails } from '../ReduxStore/Actions/index';
 import {
   BallIndicator,
   BarIndicator,
@@ -29,37 +29,56 @@ import {
   UIActivityIndicator,
   WaveIndicator,
 } from 'react-native-indicators';
+import { TouchableWithoutFeedback } from 'react-native-gesture-handler';
 
 class UserProfile extends React.Component {
   static navigationOptions = {
     header: null,
   };
+
   constructor(props) {
     super(props);
     this.state = {
       posts: [],
       total: undefined,
+      otherUser: null,
       active: 'posts',
-      spinner:false
+      spinner: false
     };
   }
 
   componentDidMount() {
-    const {navigation} = this.props;
-    this.focusListener = navigation.addListener('didFocus', () => {
+    const { navigation } = this.props;
+
+    this.focusListener = navigation.addListener('willFocus', () => {
       // The screen is focused
+      navId = this.props.navigation.getParam('id', null)
+      this.setState({
+        otherUser: navId
+      })
       this.fetchdata();
     });
+
+    // this.anotherFocusListener = navigation.addListener('didBlur', () => {
+    //   this.setState({
+    //     otherUser: null
+    //   })
+    // });
   }
+
 
   componentWillUnmount() {
     // Remove the event listener
+    this.setState({
+      otherUser: null
+    })
     this.focusListener.remove();
+    //this.anotherFocusListener.remove();
   }
 
   fetchdata = async () => {
     console.log('calling');
-    this.setState({spinner:true})
+    this.setState({ spinner: true })
     if (this.state.active === 'posts') {
       const userId = await AsyncStorage.getItem('USER_ID');
       const Token = await AsyncStorage.getItem('TOKEN');
@@ -72,9 +91,9 @@ class UserProfile extends React.Component {
         },
       );
       const jsonresponse = await response.json();
-      console.log('profile -------------------------',jsonresponse.data[0]);
+      console.log('profile -------------------------', jsonresponse.data[0]);
       this.setState({
-        spinner:false,
+        spinner: false,
         posts: jsonresponse.data,
         total: jsonresponse.total,
       });
@@ -91,7 +110,7 @@ class UserProfile extends React.Component {
       const jsonresponse = await response.json();
       console.log(jsonresponse);
       this.setState({
-        spinner:false,
+        spinner: false,
         posts: jsonresponse.data,
         total: jsonresponse.total,
       });
@@ -106,7 +125,7 @@ class UserProfile extends React.Component {
   renderPost = () => {
     console.log('renderpost');
     return (
-      <View style={{paddingTop: 10}}>
+      <View style={{ paddingTop: 10 }}>
         <RenderCards posts={this.state.posts}></RenderCards>
       </View>
     );
@@ -115,7 +134,7 @@ class UserProfile extends React.Component {
   renderNoPost = () => {
     console.log('nopost');
     return (
-      <View style={{paddingTop: 30, height: '100%'}}>
+      <View style={{ paddingTop: 30, height: '100%' }}>
         <NoPosts></NoPosts>
       </View>
     );
@@ -142,90 +161,97 @@ class UserProfile extends React.Component {
 
   render() {
     // const { navigate } = this.props.navigation;
+    navId = this.props.navigation.getParam('id', null)
+    console.log(navId,'nav ID -----------')
+    console.log(this.props.User.id, 'user id ------------')
+    console.log(this.state.otherUser, 'user ------')
+    postUser = this.state.otherUser ? this.state.otherUser : this.props.User.id
+    console.log(postUser, 'postuser ------')
+    
     return (
       <ScrollView>
         {/* EDIT PROFILE BUTTON */}
-        <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
-          <TouchableOpacity
-            style={{
-              marginTop: 5,
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-            }}
-            onPress={() => {
-              this.props.navigation.navigate('EditProfile');
-            }}>
-            <Text
+        { postUser === this.props.User.id ?
+          <View style={{ flexDirection: 'row', justifyContent: 'flex-end' }}>
+            <TouchableOpacity
               style={{
-                color: '#ACACAC',
-                borderWidth: 0.5,
-                padding: 5,
-                borderColor: '#ACACAC',
-                borderRadius: 10,
+                marginTop: 5,
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+              }}
+              onPress={() => {
+                this.props.navigation.navigate('EditProfile');
               }}>
-              Edit Profile
+              <Text
+                style={{
+                  color: '#ACACAC',
+                  borderWidth: 0.5,
+                  padding: 5,
+                  borderColor: '#ACACAC',
+                  borderRadius: 10,
+                }}>
+                Edit Profile
             </Text>
-          </TouchableOpacity>
-
-          <TouchableHighlight
-            style={{
-              marginLeft: 5,
-              marginTop: 5,
-              flexDirection: 'row',
-              justifyContent: 'flex-end',
-            }}
-            onPress={this._signOutAsync}>
-            <Text
+            </TouchableOpacity>
+            <TouchableHighlight
               style={{
-                color: '#ACACAC',
-                borderWidth: 0.5,
-                padding: 5,
-                borderColor: '#ACACAC',
-                borderRadius: 10,
-              }}>
-              Logout
+                marginLeft: 5,
+                marginTop: 5,
+                flexDirection: 'row',
+                justifyContent: 'flex-end',
+              }}
+              onPress={this._signOutAsync}>
+              <Text
+                style={{
+                  color: '#ACACAC',
+                  borderWidth: 0.5,
+                  padding: 5,
+                  borderColor: '#ACACAC',
+                  borderRadius: 10,
+                }}>
+                Logout
             </Text>
-          </TouchableHighlight>
-        </View>
-
+            </TouchableHighlight>
+          </View> : <View style={{height: 50}}></View>
+        }
         {/* IMAGE and NAME  */}
         <View
-          style={{flexDirection: 'row', marginLeft: 5, alignItems: 'center'}}>
+          style={{ flexDirection: 'row', marginLeft: 5, alignItems: 'center' }}>
           <Image
             source={{
               uri: this.props.User.profile_pic_url,
             }}
-            style={{width: 80, height: 80, borderRadius: 50}}
+            style={{ width: 80, height: 80, borderRadius: 50 }}
           />
-          <View style={{marginLeft: 5}}>
-            <Text style={{fontSize: 25, fontWeight: 'bold', color: '#727272'}}>
+          <View style={{ marginLeft: 5 }}>
+            <Text style={{ fontSize: 25, fontWeight: 'bold', color: '#727272' }}>
               {this.props.User.first_name + ' ' + this.props.User.last_name}
             </Text>
-            <Text style={{fontSize: 13, color: '#727272'}}>
-             {/* {this.props.User.campuses.description} */}
-             {console.log(this.props.User)}
+            <Text style={{ fontSize: 13, color: '#727272' }}>
+              {/* {this.props.User.campuses.description} */}
+              {console.log(this.props.User)}
             </Text>
           </View>
         </View>
 
         {/* FOLLORWERS */}
-        <View style={{flexDirection: 'row', marginLeft: 10, marginTop: 5}}>
-          <Text style={{color: '#727272', fontSize: 13, fontWeight: 'bold'}}>
+        <View style={{ flexDirection: 'row', marginLeft: 10, marginTop: 5 }}>
+          <Text style={{ color: '#727272', fontSize: 13, fontWeight: 'bold' }}>
             75{' '}
           </Text>
-          <Text style={{color: '#B4B8BA', fontSize: 13, fontWeight: 'bold'}}>
+          <Text style={{ color: '#B4B8BA', fontSize: 13, fontWeight: 'bold' }}>
             Posts{' '}
           </Text>
-          <Text style={{color: '#727272', fontSize: 13, fontWeight: 'bold'}}>
+          <Text style={{ color: '#727272', fontSize: 13, fontWeight: 'bold' }}>
             1204{' '}
           </Text>
-          <Text style={{color: '#B4B8BA', fontSize: 13, fontWeight: 'bold'}}>
+          <Text style={{ color: '#B4B8BA', fontSize: 13, fontWeight: 'bold' }}>
             Followers{' '}
           </Text>
-          <Text style={{color: '#727272', fontSize: 13, fontWeight: 'bold'}}>
+          <Text style={{ color: '#727272', fontSize: 13, fontWeight: 'bold' }}>
             1204{' '}
           </Text>
-          <Text style={{color: '#B4B8BA', fontSize: 13, fontWeight: 'bold'}}>
+          <Text style={{ color: '#B4B8BA', fontSize: 13, fontWeight: 'bold' }}>
             Following{' '}
           </Text>
         </View>
@@ -259,8 +285,8 @@ class UserProfile extends React.Component {
                 paddingTop: 0,
               }}
               placeholder="Search"
-              // value={this.state.password}
-              // onChangeText={password => this.setState({ password })}
+            // value={this.state.password}
+            // onChangeText={password => this.setState({ password })}
             />
           </View>
 
@@ -276,10 +302,10 @@ class UserProfile extends React.Component {
             }}>
             <Text
               onPress={() => {
-                this.setState({active: 'posts'},()=>{
+                this.setState({ active: 'posts' }, () => {
                   this.fetchdata()
                 });
-                
+
               }}
               style={{
                 fontSize: 17,
@@ -299,7 +325,7 @@ class UserProfile extends React.Component {
             />
             <Text
               onPress={() => {
-                this.setState({active: 'saves'},()=>{
+                this.setState({ active: 'saves' }, () => {
                   this.fetchdata()
                 });
               }}
@@ -318,7 +344,7 @@ class UserProfile extends React.Component {
 {this.state.total > 0 ? <View style={{paddingTop: 10}}>
           <RenderCards posts={this.state.posts}></RenderCards>
         </View> : <Text>Loader>>></Text>} */}
-           {this.state.spinner ? this.renderLoading() : (this.state.total === 0 ? this.renderNoPost() : this.renderPost())}
+        {this.state.spinner ? this.renderLoading() : (this.state.total === 0 ? this.renderNoPost() : this.renderPost())}
 
 
       </ScrollView>
@@ -331,7 +357,7 @@ mapStateToProps = state => {
 
   //use your required reducer data in props i.e reducer1
 
-  return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+  return { User: state.User }; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
 };
 
 export default connect(mapStateToProps, null)(UserProfile);

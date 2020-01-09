@@ -93,6 +93,7 @@ export default class HomeScreen extends PureComponent {
           );
   
           const JsonResponse = await Response.json();
+          console.log(JsonResponse)
   
           if (parseInt(Response.status) === 401) {
             alert(JsonResponse.message);
