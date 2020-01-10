@@ -73,61 +73,41 @@ const AuthNavigator = createStackNavigator({
 
 const CreatePostStack = createStackNavigator({
     AddPost: {
-        screen: AddPost,
-        navigationOptions: {
-            header: (props) => (
-                <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
-                    <View style={{alignSelf: 'center'}}>
-                        <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>New post</Text>
-                    </View>
-                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
-                        <TouchableOpacity 
-                            onPress = {() => {
-                                props.navigation.navigate('HomeScreen')
-                            }}
-                        >
-                            <Text style={{color: 'white', padding: 2}}>
-                                close
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            )
-        },
+        screen: AddPost
     },
     PostDetail,
     CreatePost: {
         screen: CreatePost,
-        navigationOptions: {
-            header: (props) => (
-                <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
-                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
-                        <TouchableOpacity 
-                            onPress = {() => {
-                                props.navigation.navigate("AddPost");
-                            }}
-                        >
-                            <Icon name="arrow-back" color="white" size={25} />
-                        </TouchableOpacity>
-                    </View>
-                    <View style={{alignSelf: 'center'}}>
-                        <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>New post</Text>
-                    </View>
-                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
-                        <TouchableOpacity 
-                            onPress = {() => {
-                                props.navigation.dispatch(StackActions.popToTop());
-                                props.navigation.navigate('HomeScreen')
-                            }}
-                        >
-                            <Text style={{color: 'white', padding: 2}}>
-                                close
-                            </Text>
-                        </TouchableOpacity>
-                    </View>
-                </View> 
-            )
-        },
+        // navigationOptions: {
+        //     header: (props) => (
+        //         <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+        //             <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
+        //                 <TouchableOpacity 
+        //                     onPress = {() => {
+        //                         props.navigation.navigate("AddPost");
+        //                     }}
+        //                 >
+        //                     <Icon name="arrow-back" color="white" size={25} />
+        //                 </TouchableOpacity>
+        //             </View>
+        //             <View style={{alignSelf: 'center'}}>
+        //                 <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>New post</Text>
+        //             </View>
+        //             <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
+        //                 <TouchableOpacity 
+        //                     onPress = {() => {
+        //                         props.navigation.dispatch(StackActions.popToTop());
+        //                         props.navigation.navigate('HomeScreen')
+        //                     }}
+        //                 >
+        //                     <Text style={{color: 'white', padding: 2}}>
+        //                         Close
+        //                     </Text>
+        //                 </TouchableOpacity>
+        //             </View>
+        //         </View> 
+        //     )
+        // },
     }
 },
     {
