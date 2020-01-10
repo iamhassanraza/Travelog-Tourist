@@ -10,11 +10,13 @@ class AvatarUserStatus extends Component {
   };
 
   render() {
-   
     return (
       <TouchableWithoutFeedback
         onPress={() => this.props.navigation.push('UserProfile', {
-            id: this.props.id
+            userNavId: this.props.id,
+            userNavDp: this.props.pic,
+            userNavFirstName: this.props.first_name,
+            userNavLastName: this.props.last_name
         })}  
       >
         <View
@@ -34,7 +36,7 @@ class AvatarUserStatus extends Component {
             style={{height: 40, width: 40, borderRadius: 50}}>
           </Image>
           <Text style={{fontSize: 18,alignSelf: 'center', fontWeight: 'bold', color: 'grey', paddingLeft:"2%"}}>
-          {this.props.name}
+            {this.props.first_name + ' ' + this.props.last_name}
           </Text>
         </View>
 
