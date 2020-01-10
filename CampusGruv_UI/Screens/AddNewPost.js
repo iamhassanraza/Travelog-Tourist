@@ -120,7 +120,7 @@ deleteItems = () => {
 
 
 <Text style={{alignSelf:'center',marginTop:10,color:'grey'}}>Title</Text>
-          <TextInput style={{marginTop:10,marginLeft:'5%',width:'90%',height:35,borderRadius: 7,borderWidth:1,borderColor:'#B4B8BA'}}
+          <TextInput style={{marginTop:10,marginLeft:'5%',width:'90%',height:45,borderRadius: 7,borderWidth:1,borderColor:'#B4B8BA'}}
           placeholder="Enter value" value={this.state.title} onChangeText={(text)=>{this.setState({title:text})}}></TextInput>
 
 
