@@ -16,6 +16,7 @@ import CrossIcon from 'react-native-vector-icons/Entypo';
 import ContentLoader, {Rect} from 'react-content-loader/native';
 import RenderCards from '../Components/RenderCards';
 import NoPosts from '../Components/NoPost';
+import {ThemeBlue} from '../Assets/Colors'
 
 export default class HomeScreen extends PureComponent {
   state = {
@@ -242,16 +243,18 @@ export default class HomeScreen extends PureComponent {
                 padding: 2,
                 paddingLeft: 5,
                 borderWidth: 1,
+                borderColor:ThemeBlue,
                 borderRadius: 6,
                 fontWeight: 'bold',
                 alignSelf: 'flex-end',
                 fontSize: 15,
+                color:ThemeBlue
               }}>
               Clear Filter{' '}
               <CrossIcon
                 name="circle-with-cross"
                 size={15}
-                style={{borderWidth: 1, alignSelf: 'center'}}></CrossIcon>
+                style={{borderWidth: 1, alignSelf: 'center',color:ThemeBlue}}></CrossIcon>
             </Text>
             </View>
           )}
