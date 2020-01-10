@@ -7,6 +7,7 @@ import 'react-native-gesture-handler'
 import Screen3 from './Components/Post'
 import PostIcon from 'react-native-vector-icons/Foundation'
 import Icon from 'react-native-vector-icons/MaterialIcons'
+import OptionsIcon from 'react-native-vector-icons/SimpleLineIcons'
 import PeopleIcon from 'react-native-vector-icons/FontAwesome5'
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons'
 import AddIcon from 'react-native-vector-icons/Entypo'
@@ -196,11 +197,11 @@ const HomeStack = createStackNavigator({
                                 //props.navigation.push('inbox')
                             }}
                         >
-                            <PostIcon name="menu" color="white" size={25}/>
+                            <OptionsIcon name="options-vertical" color="white" size={20}/>
                         </TouchableOpacity>
                     </View>
                 </View>
-            )
+            ),
         }
     },
     PostDetail: {
@@ -218,6 +219,11 @@ const HomeStack = createStackNavigator({
     }
 },
     {
+        navigationOptions: (props) => {
+            return {
+                tabBarVisible: props.navigation.state.index===1 ? true : false
+            }
+        },
         defaultNavigationOptions: {
         header: props =>
         <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', backgroundColor: '#1192d1' }}>
