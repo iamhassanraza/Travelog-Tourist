@@ -4,6 +4,7 @@ import {
   View,
   RefreshControl,
   SafeAreaView,
+  ActivityIndicator,
   ScrollView,
   FlatList,
   Dimensions,
@@ -20,6 +21,7 @@ class RenderCards extends PureComponent {
       const column1Data = this.props.posts.filter((item, i) => i % 2 === 0);
       const column2Data = this.props.posts.filter((item, i) => i % 2 === 1);
       return (
+        <>
         <View
           style={{
             height: '100%',
@@ -90,6 +92,56 @@ class RenderCards extends PureComponent {
             />
           </SafeAreaView>
         </View>
+        {
+          this.props.posts.length < this.props.totalPosts ? 
+          <View
+                style={{
+                  backgroundColor: '#F0F0F0',
+                  paddingTop: 10,
+                  paddingBottom: 10,
+                }}>
+                {this.props.loadstate? (
+                  <ActivityIndicator
+                    size={40}
+                    color="#1192d1"></ActivityIndicator>
+                ) : (
+                  <Text
+                    style={{
+                      alignSelf: 'center',
+                      color: '#1192d1',
+                      backgroundColor: 'white',
+                      padding: '2%',
+                      borderColor: '#1192d1',
+                      borderWidth: 0.6,
+                      borderRadius: 4,
+                    }}
+                    onPress={() => {
+                      this.props.loadMore();
+                    }}>
+                    Load More Posts
+                  </Text>
+                )}
+              </View> : null
+        }
+        {/* <View style={{backgroundColor: '#F0F0F0', paddingTop: 10, paddingBottom: 10}}>
+        <Text
+          style={{
+            alignSelf: 'center',
+            color: '#1192d1',
+            backgroundColor: 'white',
+            padding: '2%',
+            borderColor: '#1192d1',
+            borderWidth: 0.6,
+            borderRadius: 4,
+          }}
+          onPress={() => {
+            this.props.loadMore()
+          }}
+        >
+          Load More Posts
+        </Text>
+        </View> */}
+      </>
       );
     } else {
       return (

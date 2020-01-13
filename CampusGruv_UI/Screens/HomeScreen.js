@@ -63,7 +63,7 @@ export default class HomeScreen extends PureComponent {
             this.setState(previousState => {
               return {
                 posts: [...previousState.posts, ...JsonResponse.data],
-                totl: JsonResponse.total,
+                total: JsonResponse.total,
                 loading: false,
                 loadmore: false,
               };
@@ -181,7 +181,7 @@ export default class HomeScreen extends PureComponent {
           return response.json();
         })
         .then(responseJson => {
-          //console.log('home --------------------',responseJson.data[0])
+          console.log('home --------------------',responseJson.total)
 
           this.setState({
             posts: responseJson.data,
@@ -267,8 +267,13 @@ export default class HomeScreen extends PureComponent {
               />
             }>
             <View style={{flex: 1}}>
-              <RenderCards posts={this.state.posts}></RenderCards>
-              <View
+              <RenderCards 
+                posts= {this.state.posts}
+                totalPosts = {this.state.total}
+                loadMore = {this.loadmore}
+                loadstate = {this.state.loadmore}
+              ></RenderCards>
+              {/* <View
                 style={{
                   backgroundColor: '#F0F0F0',
                   paddingTop: 10,
@@ -279,23 +284,24 @@ export default class HomeScreen extends PureComponent {
                     size={40}
                     color="#1192d1"></ActivityIndicator>
                 ) : (
-                  <Text
-                    style={{
-                      alignSelf: 'center',
-                      color: '#1192d1',
-                      backgroundColor: 'white',
-                      padding: '2%',
-                      borderColor: '#1192d1',
-                      borderWidth: 0.6,
-                      borderRadius: 4,
-                    }}
-                    onPress={() => {
-                      this.loadmore();
-                    }}>
-                    Load More Post
-                  </Text>
+                  null
+                  // <Text
+                  //   style={{
+                  //     alignSelf: 'center',
+                  //     color: '#1192d1',
+                  //     backgroundColor: 'white',
+                  //     padding: '2%',
+                  //     borderColor: '#1192d1',
+                  //     borderWidth: 0.6,
+                  //     borderRadius: 4,
+                  //   }}
+                  //   onPress={() => {
+                  //     this.loadmore();
+                  //   }}>
+                  //   Load More Post
+                  // </Text>
                 )}
-              </View>
+              </View> */}
             </View>
           </ScrollView>
         </React.Fragment>

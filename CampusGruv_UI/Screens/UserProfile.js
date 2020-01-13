@@ -46,7 +46,9 @@ class UserProfile extends React.Component {
       otherUserLastName: null,
       otherUserDp: null,
       active: 'posts',
-      spinner: false
+      spinner: false,
+      loadmore: false,
+      pageNo: 1
     };
   }
 
@@ -80,6 +82,48 @@ class UserProfile extends React.Component {
     //this.anotherFocusListener.remove();
   }
 
+
+  loadmore = () => {
+      userId = this.state.otherUserId ? this.state.otherUserId : this.props.User.id
+      console.log('load more user id --------',userId)
+      this.setState(
+        previousState => {
+          return {pageNo: previousState.pageNo + 1, loadmore: true};
+        },
+        async () => {
+          console.log('calling load more api');
+          console.log('user Id inside asyc ---------------',userId)
+          const Token = await AsyncStorage.getItem('TOKEN');
+          const Response = await fetch(
+            `https://campus-gruv-heroku.herokuapp.com/api/v1/search/user?type=post&user_id=${userId}&page=${this.state.pageNo}`,
+            {
+              headers: {
+                Authorization: `Bearer ${Token}`,
+              },
+            },
+          );
+  
+          const JsonResponse = await Response.json();
+          console.log(JsonResponse, 'responseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-----')
+  
+          if (parseInt(Response.status) === 401) {
+            alert(JsonResponse.message);
+          } 
+          else if (parseInt(Response.status) === 200) {
+            this.setState(previousState => {
+              return {
+                posts: [...previousState.posts, ...JsonResponse.data],
+                total: JsonResponse.total,
+                spinner: false,
+                loadmore: false,
+              }
+            });
+          }
+        },
+      );
+  }
+
+
   fetchdata = async (userId) => {
     console.log('calling');
     this.setState({ spinner: true })
@@ -87,7 +131,7 @@ class UserProfile extends React.Component {
       // const userId = await AsyncStorage.getItem('USER_ID');
       const Token = await AsyncStorage.getItem('TOKEN');
       const response = await fetch(
-        `https://campus-gruv-heroku.herokuapp.com/api/v1/search/user?type=post&user_id=${userId}&page=1`,
+        `https://campus-gruv-heroku.herokuapp.com/api/v1/search/user?type=post&user_id=${userId}&page=${this.state.pageNo}`,
         {
           headers: {
             Authorization: `Bearer ${Token}`,
@@ -130,7 +174,11 @@ class UserProfile extends React.Component {
     console.log('renderpost');
     return (
       <View style={{ paddingTop: 10 }}>
-        <RenderCards posts={this.state.posts}></RenderCards>
+        <RenderCards 
+          posts={this.state.posts}
+          loadMore = {this.loadmore}
+          loadstate = {this.state.loadmore}
+        ></RenderCards>
       </View>
     );
   };
