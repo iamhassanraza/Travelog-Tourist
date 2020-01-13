@@ -13,6 +13,7 @@ import HeaderTitle from './Heading';
 
 import { connect } from "react-redux";
 import { CreateUserDetails } from "../ReduxStore/Actions/index";
+import NetInfo from "@react-native-community/netinfo";
 
 const screenwidth = Dimensions.get('window').width;
 const screenheight = Dimensions.get('window').height;
@@ -21,7 +22,20 @@ const screenheight = Dimensions.get('window').height;
 
 class AuthLoading extends React.Component {
   componentDidMount() {
-    this._bootstrapAsync();
+
+   // Subscribe
+   const unsubscribe = NetInfo.addEventListener(state => {
+    console.log("Connection type", state.type);
+    console.log("Is connected?", state.isConnected);
+    {state.isConnected ? this._bootstrapAsync() : alert("No Internet Connection! Restart the App")}
+  });
+
+  
+   // Unsubscribe
+   unsubscribe();
+
+
+    // this._bootstrapAsync();
     // this.props.CreateUserDetails({name:'hassan',id:'asndas'})
   }
 
@@ -42,8 +56,9 @@ class AuthLoading extends React.Component {
 
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-    await this.fetchUser()
-    const userToken = await AsyncStorage.getItem('TOKEN');
+    await this.fetchUser();
+    if(this.fetchUser()){
+      const userToken = await AsyncStorage.getItem('TOKEN');
     const campus_id = await AsyncStorage.getItem('CAMPUS_ID');
     const isverified = await AsyncStorage.getItem('isverified');
     const email = await AsyncStorage.getItem('email');
@@ -74,6 +89,12 @@ class AuthLoading extends React.Component {
           this.props.navigation.navigate('Auth')
         }
 
+    }
+
+    else{
+      alert('An error Occurred');
+    }
+    
 
 
 
