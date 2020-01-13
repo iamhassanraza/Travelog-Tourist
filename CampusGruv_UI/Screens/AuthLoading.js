@@ -23,14 +23,14 @@ const screenheight = Dimensions.get('window').height;
 class AuthLoading extends React.Component {
   componentDidMount() {
 
-   // Subscribe
+    // Subscribe
    const unsubscribe = NetInfo.addEventListener(state => {
     console.log("Connection type", state.type);
     console.log("Is connected?", state.isConnected);
     {state.isConnected ? this._bootstrapAsync() : alert("No Internet Connection! Restart the App")}
   });
 
-  
+
    // Unsubscribe
    unsubscribe();
 
@@ -56,9 +56,8 @@ class AuthLoading extends React.Component {
 
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-    await this.fetchUser();
-    if(this.fetchUser()){
-      const userToken = await AsyncStorage.getItem('TOKEN');
+    await this.fetchUser()
+    const userToken = await AsyncStorage.getItem('TOKEN');
     const campus_id = await AsyncStorage.getItem('CAMPUS_ID');
     const isverified = await AsyncStorage.getItem('isverified');
     const email = await AsyncStorage.getItem('email');
@@ -89,12 +88,6 @@ class AuthLoading extends React.Component {
           this.props.navigation.navigate('Auth')
         }
 
-    }
-
-    else{
-      alert('An error Occurred');
-    }
-    
 
 
 
