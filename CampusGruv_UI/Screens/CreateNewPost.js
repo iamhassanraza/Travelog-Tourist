@@ -377,7 +377,14 @@ class CreateNewPost extends Component {
       alert('Select Category');
     } else if (this.state.Description === '') {
       alert('Enter Description First ');
-    } else {
+    } 
+    else if (this.state.Category === 5 && this.state.CategoryEventDate === '' ) {
+      alert('Enter Date First ');
+    }
+    else if (this.state.Category === 7 && this.state.Price === '' ) {
+      alert('Enter Price First ');
+    }
+    else {
       this.setState({spinner: true});
       const Token = await AsyncStorage.getItem('TOKEN');
       const user_id = await AsyncStorage.getItem('USER_ID');
