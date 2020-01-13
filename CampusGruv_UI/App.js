@@ -134,9 +134,9 @@ const ProfileStack = createStackNavigator({
                         </View>
                     <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
                         <TouchableOpacity 
-                            // onPress = {() => {
-                            //     props.navigation.navigate('HomeScreen')
-                            // }}
+                            onPress = {() => {
+                                props.navigation.navigate('UserSettings')
+                            }}
                         >
                             <Icon name="menu" color="white" size={25}/>
                         </TouchableOpacity>
@@ -149,10 +149,35 @@ const ProfileStack = createStackNavigator({
         screen: EditProfile,
     },
     UserSettings : {
-        screen: UserSettings
+        screen: UserSettings,
+        navigationOptions: {
+            header: (props) => (
+                <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+                    <View style={{alignSelf: 'center'}}>
+                        <Text style={{color: 'white', fontSize: 25, fontWeight:'bold'}}>
+                            Settings
+                        </Text>
+                        </View>
+                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
+                        <TouchableOpacity 
+                            onPress = {() => {
+                                props.navigation.navigate('UserProfile')
+                            }}
+                        >
+                            <Icon name="arrow-back" color="white" size={25}/>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            )
+        }
     }
 }, 
 {
+    navigationOptions: (props) => {
+        return {
+            tabBarVisible: props.navigation.state.index < 1 ? true : false
+        }
+    },
     initialRouteName: 'UserProfile'
 }
 )

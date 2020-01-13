@@ -445,35 +445,50 @@ incrementView = async () => {
     this.setState(prevState => ({
       liked: !prevState.liked,
     }));
-
     const Token = await AsyncStorage.getItem('TOKEN');
     const userId = await AsyncStorage.getItem('USER_ID');
     console.log('hello jeeeeeee user id', userId)
     console.log('post id is -----',postId)
-    const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/post/like`, {
-      method: 'POST',
-      body: JSON.stringify({
-        user_id: userId,
-        post_id: postId
-      }),
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${Token}`,
-      },
-    });
-    const JsonResponse = await Response.json();
-    console.log(JsonResponse)
-    if(parseInt(Response.status) === 400) {
-      console.log('400')
-      alert(JsonResponse.message);
-    }
-    else if (parseInt(Response.status) === 201){
-      console.log('200')
-      alert(JsonResponse.message);
+    var Response = null
+    if(this.state.liked) {
+      Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/post/like`, {
+        method: 'POST',
+        body: JSON.stringify({
+          user_id: userId,
+          post_id: postId
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Token}`,
+        },
+      });
     }
     else {
-      alert('something is wrong')
+      Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/post/unlike`, {
+        method: 'POST',
+        body: JSON.stringify({
+          user_id: userId,
+          post_id: postId
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Token}`,
+        },
+      });
     }
+      const JsonResponse = await Response.json();
+      console.log(JsonResponse)
+      if(parseInt(Response.status) === 400) {
+        console.log('400')
+        alert(JsonResponse.message);
+      }
+      else if (parseInt(Response.status) === 201){
+        console.log('200')
+        alert(JsonResponse.message);
+      }
+      else {
+        alert('something is wrong')
+      }
   }
 
   savePost = async (postId) => {
