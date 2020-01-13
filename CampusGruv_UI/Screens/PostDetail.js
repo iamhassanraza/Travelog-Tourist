@@ -106,7 +106,7 @@ incrementView = async () => {
 
 
 
-  renderHeader = (userdp, postId, username, image_URL) => {
+  renderHeader = (userdp, postId, first_name, last_name, image_URL, userId) => {
     return (
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <View
@@ -130,10 +130,23 @@ incrementView = async () => {
               }}></BackIcon>
           </View>
 
-          <Image
-            source={{uri: userdp}}
-            style={{width: 40, height: 40, borderRadius: 50}}></Image>
-          <Text style={{marginLeft: '7%', color: IconGrey}}>{username}</Text>
+          <TouchableOpacity 
+            style={{flexDirection: 'row', alignItems: 'center'}}
+            onPress={() => this.props.navigation.push('UserProfile', {
+              userNavId: userId,
+              userNavDp: userdp,
+              userNavFirstName: first_name,
+              userNavLastName: last_name
+            })}
+          >
+            <Image
+              source={{uri: userdp}}
+              style={{width: 40, height: 40, borderRadius: 50}}>
+            </Image>
+            <Text style={{marginLeft: '7%', color: IconGrey}}>
+              {first_name + ' ' + last_name}
+            </Text>
+          </TouchableOpacity>
         </View>
 
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -497,11 +510,11 @@ incrementView = async () => {
 
   render() {
     const data = this.props.navigation.getParam('PostData', 'nothing to render');
-    console.log(data.postId,'============================= post detail me received data ================== ')
+    console.log(data,'============================= post detail me received data ================== ')
     console.log("Views:" + data.view_count);
     return (
         <View style={{height: Dimensions.get('window').height-75}}>
-            {this.renderHeader(data.userAvatar, data.postId, data.username, data.uri)}
+            {this.renderHeader(data.userAvatar, data.postId, data.first_name, data.last_name, data.uri, data.userId)}
            
           <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={-200} style={{ flex: 1}}>  
           <ScrollView style={{flex: 1}}>

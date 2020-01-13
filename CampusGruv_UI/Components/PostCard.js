@@ -46,7 +46,9 @@ class PostCard extends Component {
               title: this.props.title,
               postId: this.props.postId,
               userAvatar: this.props.userdp,
-              username: this.props.name,
+              userId: this.props.userId,
+              first_name: this.props.first_name,
+              last_name: this.props.last_name,
               description: this.props.description,
               comments: this.props.comments,
               views: this.props.views
@@ -113,7 +115,7 @@ class PostCard extends Component {
                 }}></Image>
             </View>
             <View style={{flex: 6, alignSelf: 'center'}}>
-              <Text style={{color: 'grey'}}>{this.props.name}</Text>
+              <Text style={{color: 'grey'}}>{this.props.first_name + ' ' + this.props.last_name}</Text>
             </View>
             <View style={{flex: 1}}>
               <ViewsIcon color="grey" name="eye" />

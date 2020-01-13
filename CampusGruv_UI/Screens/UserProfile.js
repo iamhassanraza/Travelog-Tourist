@@ -164,11 +164,11 @@ class UserProfile extends React.Component {
   };
 
   render() {
-    // const { navigate } = this.props.navigation;
-    //navId = this.props.navigation.getParam('id', null)
-    // console.log(navId,'nav ID -----------')
-    // console.log(this.props.User.id, 'user id ------------')
-    // console.log(this.state.otherUserId, 'other user id ---------')
+    const { navigate } = this.props.navigation;
+    navId = this.props.navigation.getParam('id', null)
+    console.log(navId,'nav ID -----------')
+    console.log(this.props.User.id, 'user id ------------')
+    console.log(this.state.otherUserId, 'other user id ---------')
     const postUserId = this.state.otherUserId ? this.state.otherUserId : this.props.User.id
     const postUserFirstName = this.state.otherUserFirstName ? this.state.otherUserFirstName : this.props.User.first_name
     const postUserLastName = this.state.otherUserLastName ? this.state.otherUserLastName : this.props.User.last_name

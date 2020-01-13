@@ -41,8 +41,9 @@ class RenderCards extends PureComponent {
                     comments={item.comments}
                     userdp = { item.users.profile_pic_url}
                     description={item.description}
-                    style={{}}
-                    name={item.users.first_name + ' ' + item.users.last_name}
+                    first_name={item.users.first_name}
+                    last_name = {item.users.last_name}
+                    userId = {item.users.id}
                     title={item.title}
                     views={item.view_count}
                     imageurl={
@@ -71,7 +72,9 @@ class RenderCards extends PureComponent {
                     postId={item.id}
                     comments={item.comments}
                     description={item.description}
-                    name={item.users.first_name + ' ' + item.users.last_name}
+                    first_name={item.users.first_name}
+                    last_name = {item.users.last_name}
+                    userId = {item.users.id}
                     title={item.title}
                     views={item.view_count}
                     imageurl={

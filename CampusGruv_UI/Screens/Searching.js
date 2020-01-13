@@ -347,7 +347,7 @@ if(text) {
 
       <View style={{backgroundColor:ThemeBlue, height:50, flexDirection:"row"}}>
        <View style={{flexDirection:"row", width:"65%",backgroundColor:"white",margin:5,borderRadius:8}}>
-       <Icon name = "search" style={{alignSelf:"center", fontSize:20,paddingLeft:"3%",color:"grey"}}></Icon>
+       <Icon name="search" style={{alignSelf:"center", fontSize:20,paddingLeft:"3%",color:"grey"}}></Icon>
         <TextInput 
         placeholder="Search" 
         style={{height:"90%" ,margin:4,width:"100%"}}
