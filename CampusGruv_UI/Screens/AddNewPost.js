@@ -14,6 +14,34 @@ const options = {
 };
 
 export default class AddNewPost extends Component {
+
+  static navigationOptions = (props) => {
+    const {params = {}} = props.navigation.state;
+    return  {
+        header: 
+            <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+                <View style={{alignSelf: 'center'}}>
+                    <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>New post</Text>
+                </View>
+                <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
+                    <TouchableOpacity 
+                        onPress = {() => {
+                            props.navigation.navigate('HomeScreen')
+                            params.handleThis()
+                        }}
+                    >
+                        <Text style={{color: 'white', padding: 2}}>
+                            close
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+            </View>
+    }
+  }
+
+
+
+
   state = {
     imageSource: null,
     data: null ,
@@ -21,8 +49,16 @@ export default class AddNewPost extends Component {
     file:'',
     Images:undefined,
     imgCount:0,
-    
   };
+
+
+  componentDidMount() {
+    this.props.navigation.setParams({
+      handleThis: () => {
+        this.deleteItems()
+      }
+    });
+  }
 
 
 
@@ -54,7 +90,7 @@ selectPhoto = () => {
 }
 
 
-  openCamera =()=>
+  openCamera = () =>
   {
       const options = {
           noData: true,

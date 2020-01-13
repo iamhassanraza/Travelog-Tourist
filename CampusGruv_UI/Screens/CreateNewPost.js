@@ -12,9 +12,10 @@ import {
   FlatList,
   Dimensions,
 } from 'react-native';
-import {withNavigation} from 'react-navigation';
+import {withNavigation, StackActions} from 'react-navigation';
 import CategoryButton from '../Components/CategoryButton';
 import DatePicker from 'react-native-datepicker';
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import Spinner from 'react-native-loading-spinner-overlay';
 import RNFetchBlob from 'rn-fetch-blob';
 
@@ -35,6 +36,45 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 const screenHeight = Dimensions.get('window').height;
 
 class CreateNewPost extends Component {
+
+
+  static navigationOptions = props => {
+    const {params = {}} = props.navigation.state;
+    return {
+      header:
+        <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+            <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
+                <TouchableOpacity 
+                    onPress = {() => {
+                        props.navigation.navigate("AddPost");
+                    }}
+                >
+                    <Icon name="arrow-back" color="white" size={25} />
+                </TouchableOpacity>
+            </View>
+            <View style={{alignSelf: 'center'}}>
+                <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>New post</Text>
+            </View>
+            <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
+                <TouchableOpacity 
+                    onPress = {() => {
+                        props.navigation.dispatch(StackActions.popToTop());
+                        props.navigation.navigate('HomeScreen')
+                        params.handleThis()
+                    }}
+                >
+                    <Text style={{color: 'white', padding: 2}}>
+                        Close
+                    </Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    }
+  }
+
+
+
+
   state = {
     Category: '',
     CategoryEventDate: '',
@@ -42,6 +82,7 @@ class CreateNewPost extends Component {
     Description: '',
     Price: '',
     spinner: false,
+    PicAndTitle: this.props.navigation.getParam('deleteItems', 'nothing to render'),
     Images: '',
     DATA: undefined,
     loadingCategory: false,
@@ -75,6 +116,12 @@ class CreateNewPost extends Component {
     this.setState({
       Images: this.props.navigation.getParam('Images', 'nothing to render'),
       Title: this.props.navigation.getParam('title', 'nothing to render')
+    });
+  //set navigation params
+    this.props.navigation.setParams({
+      handleThis: () => {
+        this.state.PicAndTitle()
+      }
     });
   };
 
