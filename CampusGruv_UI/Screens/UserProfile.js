@@ -12,7 +12,7 @@ import {
   AsyncStorage,
   TouchableOpacity,
 } from 'react-native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import RenderCards from '../Components/RenderCards';
 import NoPosts from '../Components/NoPost';
 import ContentLoader, { Rect } from 'react-content-loader/native';
@@ -249,7 +249,31 @@ class UserProfile extends React.Component {
                 Edit Profile
             </Text>
             </TouchableOpacity>
-          </View> : <View style={{height: 50}}></View>
+          </View> : 
+          <View>
+            <TouchableOpacity
+              style={{
+                marginTop: 5,
+                marginRight: 0,
+                width: 60,
+                alignSelf: 'flex-end',
+                flexDirection: 'row'
+              }}
+              onPress={() => {
+                //this.props.navigation.navigate('EditProfile');
+              }}>
+              <Text
+                style={{
+                  color: '#ACACAC',
+                  borderWidth: 0.5,
+                  padding: 5,
+                  borderColor: '#ACACAC',
+                  borderRadius: 10
+                }}>
+                Follow
+              </Text>
+            </TouchableOpacity>
+          </View>
         }
         {/* IMAGE and NAME  */}
         <View
@@ -299,7 +323,8 @@ class UserProfile extends React.Component {
           style={{
             flexDirection: 'row',
             marginTop: 10,
-            justifyContent: 'space-around',
+            marginLeft: 5,
+            justifyContent: 'space-between',
             alignItems: 'center',
           }}>
           <View
@@ -328,7 +353,8 @@ class UserProfile extends React.Component {
             />
           </View>
 
-          <View
+          { postUserId === this.props.User.id ?
+            <View
             style={{
               flexDirection: 'row',
               marginTop: 0,
@@ -373,9 +399,10 @@ class UserProfile extends React.Component {
                 color: this.state.active === 'saves' ? '#0C91CF' : '#B4B8BA',
               }}>
               {' '}
-              Saves
+              Saved
             </Text>
-          </View>
+          </View> : null
+          }
         </View>
 
         {/* {this.state.total === 0 ? <View style={{height:"70%"}}><NoPosts></NoPosts></View> : <Text>Loader</Text>}

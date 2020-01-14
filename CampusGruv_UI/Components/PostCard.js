@@ -32,7 +32,7 @@ class PostCard extends Component {
 
 
   render() {
-    //console.log('comments -----------',this.props.comments)
+    //console.log('comments -----------',this.props.user)
     return (
       <TouchableWithoutFeedback
         style={{
@@ -40,11 +40,13 @@ class PostCard extends Component {
           borderColor: 'red',
         }}
         onPress={() =>
-          this.props.navigation.push('PostDetail', {
+          this.props.navigation.navigate('PostDetail', {
             PostData: {
               uri: this.props.imageurl,
               title: this.props.title,
               postId: this.props.postId,
+              likeStatus: this.props.userWiseLike[0] ? true : false,
+              saveStatus: this.props.userSavedPost[0] ? true : false,
               userAvatar: this.props.userdp,
               userId: this.props.userId,
               first_name: this.props.first_name,

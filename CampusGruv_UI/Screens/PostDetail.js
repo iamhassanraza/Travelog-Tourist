@@ -38,8 +38,8 @@ class PostDetail extends Component {
     currentComment: null,
     dp: this.props.navigation.getParam('PostData', 'no dp').dp,
     username: this.props.navigation.getParam('PostData', 'no username').username,
-    liked: false,
-    saved: false,
+    liked: this.props.navigation.getParam('PostData', 'no like status').likeStatus,
+    saved: this.props.navigation.getParam('PostData', 'no save status').saveStatus,
     isModalVisible: false,
     post_id: undefined
   };
@@ -496,18 +496,29 @@ incrementView = async () => {
     this.setState(prevState => ({
       saved: !prevState.saved,
     }));
-
     const Token = await AsyncStorage.getItem('TOKEN');
     const userId = await AsyncStorage.getItem('USER_ID');
     console.log('hello jeeeeeee user id', userId)
     console.log('post id is -----',postId)
-    const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/save/post?post_id=${postId}`, {
-      method: 'GET',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${Token}`,
-      },
-    });
+    var Response = null
+    if(this.state.saved) {
+      Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/save/post?post_id=${postId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Token}`,
+        },
+      });
+    }
+    else {
+      Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/unsave/post?post_id=${postId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Token}`,
+        },
+      });
+    }
     const JsonResponse = await Response.json();
     console.log(JsonResponse)
     if(parseInt(Response.status) === 400) {
