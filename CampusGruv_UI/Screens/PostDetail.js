@@ -27,6 +27,7 @@ import { connect } from "react-redux";
 import { CreateUserDetails } from "../ReduxStore/Actions/index";
 import RNFetchBlob from 'rn-fetch-blob';
 import { FlatList, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
+import RNHTMLtoPDF from 'react-native-html-to-pdf';
 
 
 
@@ -88,7 +89,7 @@ incrementView = async () => {
     ext = "." + ext[0];
     const { config, fs } = RNFetchBlob;
     let PictureDir = fs.dirs.PictureDir
-    let options = {
+    const options = {
       fileCache: true,
       addAndroidDownloads: {
         useDownloadManager: true,
@@ -104,9 +105,28 @@ incrementView = async () => {
     });
   }
 
+  createPDF = async (first_name, last_name, image_URL, userAvatar , postTitle) => {
+    this.setState({isModalVisible: false})
+
+    const pdfOptions = {
+      html: 
+        `<img src="${userAvatar}"></img>
+         <h1>post by ${first_name} ${last_name}</h1>
+         <img src="${image_URL}" alt="post image"></img>
+        `,
+      fileName: postTitle,
+      directory: 'Documents',
+    };
+ 
+    let file = await RNHTMLtoPDF.convert(pdfOptions)
+    alert('downloaded on location:' + '\n' + file.filePath);
+
+    //alert(file.filePath);
+  }
 
 
-  renderHeader = (userdp, postId, first_name, last_name, image_URL, userId) => {
+
+  renderHeader = (userdp, postId, first_name, last_name, image_URL, userId, postTitle) => {
     return (
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
         <View
@@ -240,9 +260,22 @@ incrementView = async () => {
                       name="download"
                       style={styles.optionIcon}></IconFeather>
                     <Text
+                      onPress={() => 
+                        this.createPDF(first_name, last_name, image_URL, userdp, postTitle)
+                      }
+                      style={styles.TextWithNavigation}>
+                      Download post
+                    </Text>
+                  </View>
+
+                  <View style={styles.modalOptions}>
+                    <IconFeather
+                      name="download"
+                      style={styles.optionIcon}></IconFeather>
+                    <Text
                       onPress={() => this.downloadImage(image_URL)}
                       style={styles.TextWithNavigation}>
-                      Download Post
+                      Download post image
                     </Text>
                   </View>
 
@@ -540,7 +573,7 @@ incrementView = async () => {
     console.log("Views:" + data.view_count);
     return (
         <View style={{height: Dimensions.get('window').height-75}}>
-            {this.renderHeader(data.userAvatar, data.postId, data.first_name, data.last_name, data.uri, data.userId)}
+            {this.renderHeader(data.userAvatar, data.postId, data.first_name, data.last_name, data.uri, data.userId, data.title)}
            
           <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={-200} style={{ flex: 1}}>  
           <ScrollView style={{flex: 1}}>
