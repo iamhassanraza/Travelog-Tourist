@@ -28,6 +28,7 @@ import { CreateUserDetails } from "../ReduxStore/Actions/index";
 import RNFetchBlob from 'rn-fetch-blob';
 import { FlatList, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
+import Share from 'react-native-share'
 
 
 
@@ -125,6 +126,25 @@ incrementView = async () => {
   }
 
 
+  sharePost = (first_name, postTitle) => {
+
+    let  text = `Checkout this post by ${first_name}: \n`
+        if(Platform.OS === 'android')
+            text = text.concat('https://campus-gruv-heroku.herokuapp.com/Android')
+        else
+            text = text.concat('http://itunes.apple.com/app/id1453977874')
+
+
+    const options = {
+      title: 'share via',
+      message: text,
+      //url: `app://`,
+    }
+    Share.open(options)
+    .then((res) => { console.log(res) })
+    .catch((err) => { err && console.log(err); });
+  }
+
 
   renderHeader = (userdp, postId, first_name, last_name, image_URL, userId, postTitle) => {
     return (
@@ -205,7 +225,10 @@ incrementView = async () => {
           <IconFeather
             name="send"
             style={{fontSize: 25, color: IconGrey, paddingRight: 3}}
-            onPress={() => alert('Share')}></IconFeather>
+            onPress={() => 
+              this.sharePost(first_name, postTitle)
+            }
+          ></IconFeather>
 
           <View>
             <Icon
