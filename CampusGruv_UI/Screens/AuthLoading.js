@@ -6,7 +6,8 @@ import {
   StatusBar,
   StyleSheet,
   View,
-  ImageBackground
+  ImageBackground,
+  Text
 } from 'react-native';
 import Colors from '../Assets/Colors'
 import HeaderTitle from './Heading';
@@ -14,6 +15,17 @@ import HeaderTitle from './Heading';
 import { connect } from "react-redux";
 import { CreateUserDetails } from "../ReduxStore/Actions/index";
 import NetInfo from "@react-native-community/netinfo";
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from 'react-native-indicators';
 
 const screenwidth = Dimensions.get('window').width;
 const screenheight = Dimensions.get('window').height;
@@ -32,7 +44,7 @@ class AuthLoading extends React.Component {
 
 
    // Unsubscribe
-   unsubscribe();
+  //  unsubscribe();
 
 
     // this._bootstrapAsync();
@@ -48,7 +60,10 @@ class AuthLoading extends React.Component {
         Authorization: `Bearer ${Token}`,
       },
     })
+    console.log(response.status+ "hahahaha");
     let JsonResponse  =  await response.json()
+
+    console.log(JsonResponse+ "POPOP");
     this.props.CreateUserDetails(JsonResponse)
 
 
@@ -56,39 +71,47 @@ class AuthLoading extends React.Component {
 
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-    await this.fetchUser()
-    const userToken = await AsyncStorage.getItem('TOKEN');
-    const campus_id = await AsyncStorage.getItem('CAMPUS_ID');
-    const isverified = await AsyncStorage.getItem('isverified');
-    const email = await AsyncStorage.getItem('email');
+    try{
+      await this.fetchUser()
+      const userToken = await AsyncStorage.getItem('TOKEN');
+      const campus_id = await AsyncStorage.getItem('CAMPUS_ID');
+      const isverified = await AsyncStorage.getItem('isverified');
+      const email = await AsyncStorage.getItem('email');
+     
+      console.log(userToken,'===========token id')
+      console.log(isverified,'===========verified?')
+      console.log(campus_id,'===========campus id')
+      console.log(email,'===================email')
+  
+          if(userToken)   //means logged in hai
+          { 
+            if(isverified !== '1')
+            {
+              this.props.navigation.navigate('EmailVerification',{
+                email:email
+              })
+            }
+            else if(isverified === '1' && campus_id === 'nahi_hai'){
+              this.props.navigation.navigate('EditProfile')
+            }
+            else if(isverified === '1' && campus_id !== 'nahi_hai'){
+              this.props.navigation.navigate('App')
+            }
+  
+          }
+          else
+          {  
+            this.props.navigation.navigate('Auth')
+          }
+  
+  
+
+    }
+    catch(e){
+      alert(e + ". Check connectivity")
+      
+    }
    
-    console.log(userToken,'===========token id')
-    console.log(isverified,'===========verified?')
-    console.log(campus_id,'===========campus id')
-    console.log(email,'===================email')
-
-        if(userToken)   //means logged in hai
-        { 
-          if(isverified !== '1')
-          {
-            this.props.navigation.navigate('EmailVerification',{
-              email:email
-            })
-          }
-          else if(isverified === '1' && campus_id === 'nahi_hai'){
-            this.props.navigation.navigate('EditProfile')
-          }
-          else if(isverified === '1' && campus_id !== 'nahi_hai'){
-            this.props.navigation.navigate('App')
-          }
-
-        }
-        else
-        {  
-          this.props.navigation.navigate('Auth')
-        }
-
-
 
 
     // This will switch to the App screen or Auth screen and this loading
@@ -121,6 +144,9 @@ class AuthLoading extends React.Component {
         resizeMode="cover">
         <View style={{marginTop: '55%'}}>
           <HeaderTitle></HeaderTitle>
+        </View>
+        <View style={{justifyContent:"center"}}>
+        <DotIndicator count={3} color={"white"}/>
         </View>
       </ImageBackground>
    
