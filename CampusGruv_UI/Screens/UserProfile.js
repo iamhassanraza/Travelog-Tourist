@@ -178,6 +178,7 @@ class UserProfile extends React.Component {
           posts={this.state.posts}
           loadMore = {this.loadmore}
           loadstate = {this.state.loadmore}
+          totalPosts= {this.state.total}
         ></RenderCards>
       </View>
     );
@@ -277,7 +278,7 @@ class UserProfile extends React.Component {
         }
         {/* IMAGE and NAME  */}
         <View
-          style={{ flexDirection: 'row', marginLeft: 5, alignItems: 'center' }}>
+          style={{ flexDirection: 'row', marginLeft: 10, alignItems: 'center' }}>
           <Image
             source={{
               // uri: this.props.User.profile_pic_url,
@@ -290,8 +291,7 @@ class UserProfile extends React.Component {
               {postUserFirstName + ' ' + postUserLastName}
             </Text>
             <Text style={{ fontSize: 13, color: '#727272' }}>
-              {/* {this.props.User.campuses.description} */}
-              {/* {console.log(this.props.User)} */}
+              {this.props.User.last_name}
             </Text>
           </View>
         </View>

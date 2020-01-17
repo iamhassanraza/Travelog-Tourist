@@ -23,16 +23,19 @@ export default class Searching extends React.PureComponent {
     posts: [],
     refreshing: false,
     loading:false,
+    loadmore: false,
     error: false,
     totalFeed: undefined,
     totalUsers: undefined,
     totalCampuses: undefined,
     Users : [],
+    //text: undefined,
     Campuses : [],
     search: undefined,
     loadingFeed : undefined,
     loadingUsers : undefined,
-    loadingCampuses : undefined
+    loadingCampuses : undefined,
+    pageNo: 1
   };
 
 
@@ -40,7 +43,7 @@ export default class Searching extends React.PureComponent {
 
         this.setState({loadingFeed: true});
         const Token = await AsyncStorage.getItem('TOKEN');
-        const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_search&description=${text}&page=1`,{
+        const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_search&description=${text}&page=${this.state.pageNo}`,{
           headers: {
             Authorization: `Bearer ${Token}`,
           },
@@ -230,7 +233,12 @@ if(text) {
               onRefresh={this.onPageRefresh}
             />
           }>
-          <RenderCards posts={this.state.posts}></RenderCards>
+          <RenderCards 
+            posts={this.state.posts}
+            loadMore = {this.loadmore}
+            loadstate = {this.state.loadmore}
+            totalPosts = {this.state.totalFeed}
+          ></RenderCards>
         </ScrollView>
       );
     } else if(this.state.loadingFeed===true) {
@@ -256,7 +264,7 @@ if(text) {
   renderUsers = () => {
 
     if (this.state.loadingUsers===false) {
-      console.log(this.state.Users)
+      // console.log('usersss ===================>',this.state.Users)
       return (
         <FlatList
         style={{paddingBottom:"25%"}}
@@ -337,6 +345,51 @@ if(text) {
         <NoPost name={text}></NoPost>
       </View>
     )
+  }
+
+  loadmore = () => {
+    console.log('load more running --------')
+    
+      this.setState(
+        previousState => {
+          return {pageNo: previousState.pageNo + 1, loadmore: true};
+        },
+        async () => {
+          console.log('calling loadmore api.')
+        const Token = await AsyncStorage.getItem('TOKEN');
+        console.log('searchhhhhhhhhhhh==========',this.state.search)
+        const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_search&description=${this.state.search}&page=${this.state.pageNo}`,{
+          headers: {
+            Authorization: `Bearer ${Token}`,
+          },
+        });
+
+        const JsonResponse = await Response.json();
+        console.log(JsonResponse.message);
+
+        if(parseInt(Response.status)=== 400) {
+           
+            this.setState({error : true, totalFeed: 0})
+        }
+        else if (parseInt(Response.status)=== 200){
+           
+            if(JsonResponse.total > 0) {
+              this.setState(previousState => {
+                return {
+                posts: [...previousState.posts, ...JsonResponse.data], 
+                totalFeed: JsonResponse.total,
+                loadingFeed: false,
+                loadmore: false
+              }
+              })
+            }
+
+            else if (JsonResponse.total === 0) {
+              this.setState({totalFeed: 0})
+            }  
+        }
+        }
+      )
   }
 
 
