@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {Text, View, Image, FlatList} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconFeather from 'react-native-vector-icons/Feather';
-import IconFA from 'react-native-vector-icons/FontAwesome5';
+import IconFA from 'react-native-vector-icons/SimpleLineIcons';
 import i1 from '../Assets/Images/lahore.jpg';
 import i2 from '../Assets/Images/book.jpg';
 import i3 from '../Assets/Images/ema.jpg';
@@ -125,12 +125,12 @@ export default class UserSettings extends Component {
           <View
             style={{flexDirection: 'row', marginLeft: '2%', marginTop: '3%'}}>
             <IconFA
-              name="users"
+              name="organization"
               style={{
                 flex: 1,
                 alignSelf: 'center',
                 paddingLeft: '2%',
-                fontSize: 25,
+                fontSize: 30,
               }}></IconFA>
             <Text
               style={{
