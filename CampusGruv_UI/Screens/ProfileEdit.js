@@ -288,7 +288,7 @@ class ProfilePage extends React.Component {
             width: '25%',
             marginRight: '0.5%',
           }}>
-          Birth Date
+          Birthday
         </Text>
 
         <DatePicker

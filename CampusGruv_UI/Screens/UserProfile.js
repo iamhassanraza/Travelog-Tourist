@@ -15,6 +15,7 @@ import {
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import RenderCards from '../Components/RenderCards';
 import NoPosts from '../Components/NoPost';
+import {ThemeBlue} from '../Assets/Colors';
 import ContentLoader, { Rect } from 'react-content-loader/native';
 import { connect } from 'react-redux';
 import { CreateUserDetails } from '../ReduxStore/Actions/index';
@@ -48,7 +49,8 @@ class UserProfile extends React.Component {
       active: 'posts',
       spinner: false,
       loadmore: false,
-      pageNo: 1
+      pageNo: 1,
+      followed: true
     };
   }
 
@@ -56,7 +58,7 @@ class UserProfile extends React.Component {
     const { navigation } = this.props;
 
     this.focusListener = navigation.addListener('willFocus', () => {
-      // The screen is focused
+      // before the screen is focused
       userNavId = this.props.navigation.getParam('userNavId', null)
       userNavFirstName = this.props.navigation.getParam('userNavFirstName', null)
       userNavLastName = this.props.navigation.getParam('userNavLastName', null)
@@ -185,7 +187,7 @@ class UserProfile extends React.Component {
   };
 
   renderNoPost = () => {
-    console.log('nopost');
+    console.log('no post');
     return (
       <View style={{ paddingTop: 30, height: '100%' }}>
         <NoPosts></NoPosts>
@@ -212,6 +214,46 @@ class UserProfile extends React.Component {
     );
   };
 
+
+  followButton = async (id) => {
+    this.setState(prevState => ({
+      followed: !prevState.followed,
+    }));
+    const Token = await AsyncStorage.getItem('TOKEN');
+    var Response = null
+    console.log('followed ==========> ',this.state.followed)
+    if(this.state.followed) {
+      Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/follow?user_id=${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Token}`,
+        },
+      });
+    }
+    else {
+      Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/unfollow?user_id=${id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Token}`,
+        },
+      });
+    }
+    const JsonResponse = await Response.json();
+    if(parseInt(Response.status) === 400) {
+      console.log('400')
+      alert(JsonResponse.message);
+    }
+    else if (parseInt(Response.status) === 200){
+      console.log('200')
+      alert(JsonResponse.message);
+    }
+    else {
+      alert('something is wrong')
+    }
+  }
+
   render() {
     const { navigate } = this.props.navigation;
     navId = this.props.navigation.getParam('id', null)
@@ -223,6 +265,7 @@ class UserProfile extends React.Component {
     const postUserLastName = this.state.otherUserLastName ? this.state.otherUserLastName : this.props.User.last_name
     const postUserDp = this.state.otherUserDp ? this.state.otherUserDp : this.props.User.profile_pic_url
     console.log(postUserId,postUserFirstName,postUserLastName,postUserDp, 'postuser ------')
+    console.log('user data========================>',this.props.User)
     
     return (
       <ScrollView>
@@ -256,22 +299,24 @@ class UserProfile extends React.Component {
               style={{
                 marginTop: 5,
                 marginRight: 0,
-                width: 60,
+                width: 70,
+                //borderWidth: 1,
+                justifyContent: 'center',
                 alignSelf: 'flex-end',
                 flexDirection: 'row'
               }}
               onPress={() => {
-                //this.props.navigation.navigate('EditProfile');
+                this.followButton(postUserId)
               }}>
               <Text
                 style={{
-                  color: '#ACACAC',
+                  color: this.state.followed ? ThemeBlue : 'grey',
                   borderWidth: 0.5,
                   padding: 5,
-                  borderColor: '#ACACAC',
+                  borderColor: this.state.followed ? ThemeBlue : 'grey',
                   borderRadius: 10
                 }}>
-                Follow
+                {this.state.followed ? "Unfollow" : "Follow"}
               </Text>
             </TouchableOpacity>
           </View>

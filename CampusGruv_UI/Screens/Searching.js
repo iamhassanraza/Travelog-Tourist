@@ -357,7 +357,6 @@ if(text) {
         async () => {
           console.log('calling loadmore api.')
         const Token = await AsyncStorage.getItem('TOKEN');
-        console.log('searchhhhhhhhhhhh==========',this.state.search)
         const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_search&description=${this.state.search}&page=${this.state.pageNo}`,{
           headers: {
             Authorization: `Bearer ${Token}`,
@@ -365,7 +364,7 @@ if(text) {
         });
 
         const JsonResponse = await Response.json();
-        console.log(JsonResponse.message);
+        console.log(JsonResponse.message,'hello jeeeeeeeeeeeeee');
 
         if(parseInt(Response.status)=== 400) {
            

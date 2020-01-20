@@ -138,7 +138,7 @@ const ProfileStack = createStackNavigator({
                                 props.navigation.navigate('UserSettings')
                             }}
                         >
-                            <Icon name="menu" color="white" size={25}/>
+                            <Icon name="settings" color="white" size={23}/>
                         </TouchableOpacity>
                     </View>
                 </View>
