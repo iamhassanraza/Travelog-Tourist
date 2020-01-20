@@ -9,6 +9,8 @@ import i3 from '../Assets/Images/ema.jpg';
 import AccPic from '../Components/MultipleAccountsPic';
 import Modal from 'react-native-modal';
 import CrossIcon from 'react-native-vector-icons/MaterialIcons';
+import LogoutButton from '../Components/LogoutButton';
+import { TouchableOpacity } from 'react-native-gesture-handler';
 
 
 
@@ -188,23 +190,13 @@ export default class UserSettings extends Component {
 
         <View
           style={{
-            flexDirection: 'row',
-            marginLeft: '2%',
             position: 'absolute',
-            height: 60,
+            height: 50,
             left: 10,
             bottom: 0,
+            justifyContent: 'center'
           }}>
-          <IconFeather
-            name="log-out"
-            style={{
-              alignSelf: 'center',
-              paddingLeft: '2%',
-              fontSize: 30,
-            }}></IconFeather>
-          <Text style={{alignSelf: 'center', fontSize: 19, paddingLeft: '2%'}}>
-            Logout
-          </Text>
+            <LogoutButton style={{fontSize: 19, paddingLeft: 5, paddingRight: 5}}/>
         </View>
       </View>
     );
