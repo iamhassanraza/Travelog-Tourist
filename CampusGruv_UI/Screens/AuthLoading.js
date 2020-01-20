@@ -60,10 +60,10 @@ class AuthLoading extends React.Component {
         Authorization: `Bearer ${Token}`,
       },
     })
-    console.log(response.status+ "hahahaha");
+    console.log(response.status, "hahahaha");
     let JsonResponse  =  await response.json()
 
-    console.log(JsonResponse+ "POPOP");
+    console.log(JsonResponse, "POPOP");
     this.props.CreateUserDetails(JsonResponse)
 
 

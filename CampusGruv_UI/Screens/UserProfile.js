@@ -41,7 +41,7 @@ class UserProfile extends React.Component {
     super(props);
     this.state = {
       posts: [],
-      total: undefined,
+      total: '  ',
       otherUserId: null,
       otherUserFirstName: null,
       otherUserLastName: null,
@@ -336,7 +336,7 @@ class UserProfile extends React.Component {
               {postUserFirstName + ' ' + postUserLastName}
             </Text>
             <Text style={{ fontSize: 13, color: '#727272' }}>
-              {this.props.User.last_name}
+              {/* {this.props.User.last_name} */} *campus name*
             </Text>
           </View>
         </View>
@@ -344,7 +344,7 @@ class UserProfile extends React.Component {
         {/* FOLLORWERS */}
         <View style={{ flexDirection: 'row', marginLeft: 10, marginTop: 5 }}>
           <Text style={{ color: '#727272', fontSize: 13, fontWeight: 'bold' }}>
-            75{' '}
+            {this.state.total + ' '}
           </Text>
           <Text style={{ color: '#B4B8BA', fontSize: 13, fontWeight: 'bold' }}>
             Posts{' '}
