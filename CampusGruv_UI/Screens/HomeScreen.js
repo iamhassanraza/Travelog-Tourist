@@ -7,18 +7,76 @@ import {
   ScrollView,
   FlatList,
   Dimensions,
+  TouchableOpacity,
   AsyncStorage,
+  Image,
   ActivityIndicator,
   Button,
 } from 'react-native';
+import Logo from '../Assets/Images/logo.png'
 import PostCard from '../Components/PostCard';
 import CrossIcon from 'react-native-vector-icons/Entypo';
 import ContentLoader, {Rect} from 'react-content-loader/native';
+import Icon from 'react-native-vector-icons/MaterialIcons'
+import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons'
+import PeopleIcon from 'react-native-vector-icons/FontAwesome5'
 import RenderCards from '../Components/RenderCards';
 import NoPosts from '../Components/NoPost';
 import {ThemeBlue} from '../Assets/Colors'
 
 export default class HomeScreen extends PureComponent {
+
+  static navigationOptions = (props) => {
+    const {params = {}} = props.navigation.state;
+    return {
+      header: (
+        <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', backgroundColor: '#1192d1' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', flex: 10 }}>
+                <View style={{ marginLeft: '2%', flexDirection: 'row', alignSelf: 'center' }}>
+                    <TouchableOpacity
+                        onPress={()=> props.navigation.navigate('Searching')}
+                    >
+                        <View style={{ height: 30, padding: 0, flexDirection: 'row', alignItems: 'center', width: 250, backgroundColor: '#F0F0F0', borderRadius: 10 }}>
+                            <View style={{ marginLeft: '2%' }}>
+                                <Icon
+                                    name="search"
+                                    color="#1192d1"
+                                    size={20}
+                                />
+                            </View>
+                            <View style={{ height: 20 }}>
+                                <Image
+                                    source={Logo}
+                                    style={{ width: 150, alignSelf: 'flex-start', height: '100%' }}
+                                    resizeMode="contain"
+                                />
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+                <View style={{ marginLeft: '2%' }}>
+                    <TouchableOpacity onPress={() => props.navigation.navigate('CategoryList')}>
+                        <Icon2
+                            name="view-grid"
+                            color="white"
+                            size={25}
+                        />
+                    </TouchableOpacity>
+                </View>
+            </View>
+            <View style={{ flex: 1 }}>
+                <TouchableOpacity onPress={() => params.handleThis()}>
+                    <PeopleIcon name="users" color="white" size={20} />
+                </TouchableOpacity>
+            </View>
+        </View>
+      )
+    }
+  }
+//   props.navigation.push('TabContainer', {
+//     categorySelected: true
+// })
+
   state = {
     posts: [],
     refreshing: false,
@@ -29,10 +87,12 @@ export default class HomeScreen extends PureComponent {
     total: undefined,
     pageNo: 1,
     loadmore: false,
+    FollowersPosts: false,
+
   };
 
   onPageRefresh = () => {
-    this.setState({posts: [], loading: true, total: undefined}, () => {
+    this.setState({posts: [], loading: true, total: undefined, FollowersPosts:false}, () => {
       this.fetchdata();
     });
   };
@@ -73,6 +133,10 @@ export default class HomeScreen extends PureComponent {
       );
 
     }
+
+
+    
+
     else{
       this.setState(
         previousState => {
@@ -162,13 +226,44 @@ export default class HomeScreen extends PureComponent {
 
 
   fetchdata = async () => {
+    
     if (
       this.props.navigation.getParam('CategoryID', 'undefined') === 'undefined'
     ) {
+      console.log('fetch data is running now1111',this.state.FollowersPosts)
       const Token = await AsyncStorage.getItem('TOKEN');
       this.setState({
         loading: true,
       });
+
+      if(this.state.FollowersPosts){
+        console.log("Poooooooooooooooooonnnnnnnnnnnnnn");
+        fetch(
+          `https://campus-gruv-heroku.herokuapp.com/api/v1/follower/posts`,
+          {
+            headers: {
+              Authorization: `Bearer ${Token}`,
+            },
+          },
+        )
+          .then(response => {
+            return response.json();
+          })
+          .then(responseJson => {
+            //console.log('home --------------------',responseJson.data[0])
+  
+            this.setState({
+              posts: responseJson.data,
+              total: responseJson.total,
+              refreshing: false,
+              loading: false,
+              Category: 'undefined',
+            });
+          })
+          .catch(err => console.log(err));
+      }
+
+  else {
       fetch(
         `https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_all&page=${this.state.pageNo}`,
         {
@@ -192,8 +287,13 @@ export default class HomeScreen extends PureComponent {
           });
         })
         .catch(err => console.log(err));
-    } else {
-
+    }}
+    // else if (this.state.FollowersPosts){
+    //   console.log("Followers ki posten dikhaao bhaeeeeeeeeeeeeeeee");
+    // }
+    
+    else {
+      console.log('fetch data is running now333333',this.state.FollowersPosts)
         this.fetchCategoryPosts();
     
      
@@ -206,6 +306,20 @@ export default class HomeScreen extends PureComponent {
       // The screen is focused
       this.fetchdata();
     });
+
+    this.props.navigation.setParams({
+      handleThis: async () => {
+        console.log('users icon clicked',this.state.FollowersPosts)
+        await this.setState(prevState => {
+          return {
+            FollowersPosts: !prevState.FollowersPosts
+          } 
+        })
+        this.fetchdata();
+        console.log('fetch data ran')
+      }
+  });
+
   }
 
   componentWillUnmount() {

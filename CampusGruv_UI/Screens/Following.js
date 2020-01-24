@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, FlatList, TextInput} from 'react-native';
+import {Text, View, FlatList, TextInput, TouchableOpacity} from 'react-native';
 import {withNavigation} from 'react-navigation'
 import AvatarUserStatus from '../Components/AvatarUserStatus';
 import Icon from 'react-native-vector-icons/Octicons';
@@ -8,6 +8,9 @@ import i2 from '../Assets/Images/book.jpg'
 import i3 from '../Assets/Images/ema.jpg'
 import i4 from '../Assets/Images/mansehra.jpg'
 import i5 from '../Assets/Images/samandarkatha.jpg'
+import SearchInput, { createFilter } from 'react-native-search-filter';
+
+const KEYS_TO_FILTERS = ['name', 'subject'];
 
 class Following extends Component {
 

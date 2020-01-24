@@ -227,7 +227,7 @@ const ProfileStack = createStackNavigator({
             tabBarVisible: props.navigation.state.index < 1 ? true : false
         }
     },
-    initialRouteName: 'Following'
+    initialRouteName: 'UserProfile'
 }
 )
 
