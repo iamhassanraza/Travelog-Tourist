@@ -413,8 +413,6 @@ class ProfilePage extends React.Component {
         })
       : null;
 
-    console.log(this.props.User, 'agayaaa userrr <3 ');
-
     // console.log(this.state.imageUri,'==================major============')
     //const { navigate } = this.props.navigation;
     return (

@@ -42,10 +42,13 @@ class UserProfile extends React.Component {
     this.state = {
       posts: [],
       total: '  ',
+      followers: '  ',
+      following: '  ',
       otherUserId: null,
       otherUserFirstName: null,
       otherUserLastName: null,
       otherUserDp: null,
+      otherUserCampus: null,
       active: 'posts',
       spinner: false,
       loadmore: false,
@@ -63,15 +66,35 @@ class UserProfile extends React.Component {
       userNavFirstName = this.props.navigation.getParam('userNavFirstName', null)
       userNavLastName = this.props.navigation.getParam('userNavLastName', null)
       userNavDp = this.props.navigation.getParam('userNavDp', null)
+      userCampus = this.props.navigation.getParam('userCampus', null)
       this.setState({
         otherUserId: userNavId,
         otherUserDp: userNavDp,
         otherUserFirstName: userNavFirstName,
-        otherUserLastName: userNavLastName
+        otherUserLastName: userNavLastName,
+        otherUserCampus: userCampus
       })
       this.fetchdata(userNavId ? userNavId : this.props.User.id);
+      console.log("will focus")
+      this.fetchFollowData(userNavId ? userNavId : this.props.User.id);
       // this.fetchdata(this.state.otherUserId)
     });
+  }
+
+  fetchFollowData = async (id) => {
+    const Token = await AsyncStorage.getItem('TOKEN');
+    const response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/follow/details?user_id=${id}`, 
+    {
+      headers: {
+        Authorization: `Bearer ${Token}`,
+      }
+    });
+    const jsonresponse = await response.json();
+    console.log(jsonresponse,'json json json ------------------------')
+    this.setState({
+      followers: jsonresponse[0].followerCount,
+      following: jsonresponse[0].followingCount
+    })
   }
 
 
@@ -257,15 +280,16 @@ class UserProfile extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     navId = this.props.navigation.getParam('id', null)
-    console.log(navId,'nav ID -----------')
+    // console.log(navId,'nav ID -----------')
     console.log(this.props.User.id, 'user id ------------')
     console.log(this.state.otherUserId, 'other user id ---------')
     const postUserId = this.state.otherUserId ? this.state.otherUserId : this.props.User.id
     const postUserFirstName = this.state.otherUserFirstName ? this.state.otherUserFirstName : this.props.User.first_name
     const postUserLastName = this.state.otherUserLastName ? this.state.otherUserLastName : this.props.User.last_name
     const postUserDp = this.state.otherUserDp ? this.state.otherUserDp : this.props.User.profile_pic_url
-    console.log(postUserId,postUserFirstName,postUserLastName,postUserDp, 'postuser ------')
-    console.log('user data========================>',this.props.User)
+    const postUserCampus = this.state.otherUserCampus ? this.state.otherUserCampus : this.props.User.campus.description
+    // console.log(postUserId,postUserFirstName,postUserLastName,postUserDp, 'postuser ------')
+    // console.log('user data========================>',this.props.User)
     
     return (
       <ScrollView>
@@ -336,7 +360,7 @@ class UserProfile extends React.Component {
               {postUserFirstName + ' ' + postUserLastName}
             </Text>
             <Text style={{ fontSize: 13, color: '#727272' }}>
-              {/* {this.props.User.last_name} */} *campus name*
+              {postUserCampus} 
             </Text>
           </View>
         </View>
@@ -344,22 +368,22 @@ class UserProfile extends React.Component {
         {/* FOLLORWERS */}
         <View style={{ flexDirection: 'row', marginLeft: 10, marginTop: 5 }}>
           <Text style={{ color: '#727272', fontSize: 13, fontWeight: 'bold' }}>
-            {this.state.total + ' '}
+            {this.state.total + '  '}
           </Text>
           <Text style={{ color: '#B4B8BA', fontSize: 13, fontWeight: 'bold' }}>
-            Posts{' '}
+            Posts{'  '}
           </Text>
           <Text style={{ color: '#727272', fontSize: 13, fontWeight: 'bold' }}>
-            1204{' '}
+            {this.state.followers + '  '}
           </Text>
           <Text style={{ color: '#B4B8BA', fontSize: 13, fontWeight: 'bold' }}>
-            Followers{' '}
+            Followers{'  '}
           </Text>
           <Text style={{ color: '#727272', fontSize: 13, fontWeight: 'bold' }}>
-            1204{' '}
+            {this.state.following + '  '}
           </Text>
           <Text style={{ color: '#B4B8BA', fontSize: 13, fontWeight: 'bold' }}>
-            Following{' '}
+            Following
           </Text>
         </View>
 
