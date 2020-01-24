@@ -342,7 +342,35 @@ export default class HomeScreen extends PureComponent {
             <Button title={'Cencel filter'} onPress={()=>{ this.props.navigation.setParams({CategoryID:'undefined'})}}></Button>
           </View> */}
           {this.props.navigation.getParam('CategoryID', 'undefined') ===
-          'undefined' ? null : (
+          'undefined' ? this.state.FollowersPosts ? (
+            <View style={{  backgroundColor: '#F0F0F0'}}>
+
+           
+            <Text
+              onPress={ async () => {
+                await this.setState({posts:[],total:undefined,FollowersPosts:false});
+                this.fetchdata();
+              }}
+              style={{
+                margin: 6,
+                padding: 2,
+                paddingLeft: 5,
+                borderWidth: 1,
+                borderColor:ThemeBlue,
+                borderRadius: 6,
+                fontWeight: 'bold',
+                alignSelf: 'flex-end',
+                fontSize: 15,
+                color:ThemeBlue
+              }}>
+              Clear Followers Post{' '}
+              <CrossIcon
+                name="circle-with-cross"
+                size={15}
+                style={{borderWidth: 1, alignSelf: 'center',color:ThemeBlue}}></CrossIcon>
+            </Text>
+            </View>
+          ) : null : (
             <View style={{  backgroundColor: '#F0F0F0'}}>
 
            
