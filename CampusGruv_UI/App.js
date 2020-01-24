@@ -38,6 +38,8 @@ import UserSettings from './Screens/UserSettings'
 import { TouchableHighlight } from 'react-native-gesture-handler'
 import NoPost from './Components/NoPost'
 import EmailVerification from './Screens/EmailVerification'
+import Followers from './Screens/Followers'
+import Following from './Screens/Following'
 
 
 
@@ -148,6 +150,53 @@ const ProfileStack = createStackNavigator({
     EditProfile: {
         screen: EditProfile,
     },
+    Followers :{
+        screen : Followers,
+        navigationOptions: {
+            header: (props) => (
+                <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+                    <View style={{alignSelf: 'center'}}>
+                        <Text style={{color: 'white', fontSize: 25, fontWeight:'bold'}}>
+                            Followers
+                        </Text>
+                        </View>
+                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
+                        <TouchableOpacity 
+                            onPress = {() => {
+                                props.navigation.navigate('UserProfile')
+                            }}
+                        >
+                            <Icon name="arrow-back" color="white" size={25}/>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            )
+        }
+    },
+    Following :{
+        screen : Following,
+        navigationOptions: {
+            header: (props) => (
+                <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+                    <View style={{alignSelf: 'center'}}>
+                        <Text style={{color: 'white', fontSize: 25, fontWeight:'bold'}}>
+                            Following
+                        </Text>
+                        </View>
+                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
+                        <TouchableOpacity 
+                            onPress = {() => {
+                                props.navigation.navigate('UserProfile')
+                            }}
+                        >
+                            <Icon name="arrow-back" color="white" size={25}/>
+                        </TouchableOpacity>
+                    </View>
+                </View>
+            )
+        }
+    }
+    ,
     UserSettings : {
         screen: UserSettings,
         navigationOptions: {
@@ -178,7 +227,7 @@ const ProfileStack = createStackNavigator({
             tabBarVisible: props.navigation.state.index < 1 ? true : false
         }
     },
-    initialRouteName: 'UserProfile'
+    initialRouteName: 'Following'
 }
 )
 
@@ -535,9 +584,7 @@ export default class App extends Component {
   render() {
     return (
     
-         <AppContainer/>
-        //<UserSettings></UserSettings>
-
+<AppContainer></AppContainer>
 
 )
   }
