@@ -50,9 +50,19 @@ class UserProfile extends React.Component {
       spinner: false,
       loadmore: false,
       pageNo: 1,
-      followed: true
+      followed: true,
+      searchbox:''
     };
   }
+
+
+  componentDidUpdate(){
+
+    
+
+  }
+
+
 
   componentDidMount() {
     const { navigation } = this.props;
@@ -125,6 +135,34 @@ class UserProfile extends React.Component {
       );
   }
 
+  async searchPost(text,userId)
+  {  
+    console.log(text)
+    const Token = await AsyncStorage.getItem('TOKEN');
+    this.setState({spinner:true})
+    const response = await fetch(
+      `https://campus-gruv-heroku.herokuapp.com/api/v1/search/user?type=post&user_id=${userId}&page=${this.state.pageNo}&description=${text}` ,
+      {
+        headers: {
+          Authorization: `Bearer ${Token}`,
+        },
+      },
+    );
+    const jsonresponse = await response.json();
+    // console.log('profile -------------------------', jsonresponse.data[0]);
+    this.setState({
+      spinner: false,
+      posts: jsonresponse.data,
+      total: jsonresponse.total,
+    });
+
+  }
+
+  componentWillUnmount(){
+    this.setState({searchbox:''})
+  }
+
+
 
   fetchdata = async (userId) => {
     console.log('calling');
@@ -132,8 +170,9 @@ class UserProfile extends React.Component {
     if (this.state.active === 'posts') {
       // const userId = await AsyncStorage.getItem('USER_ID');
       const Token = await AsyncStorage.getItem('TOKEN');
+    
       const response = await fetch(
-        `https://campus-gruv-heroku.herokuapp.com/api/v1/search/user?type=post&user_id=${userId}&page=${this.state.pageNo}`,
+        `https://campus-gruv-heroku.herokuapp.com/api/v1/search/user?type=post&user_id=${userId}&page=${this.state.pageNo}` ,
         {
           headers: {
             Authorization: `Bearer ${Token}`,
@@ -257,15 +296,15 @@ class UserProfile extends React.Component {
   render() {
     const { navigate } = this.props.navigation;
     navId = this.props.navigation.getParam('id', null)
-    console.log(navId,'nav ID -----------')
-    console.log(this.props.User.id, 'user id ------------')
-    console.log(this.state.otherUserId, 'other user id ---------')
+    // console.log(navId,'nav ID -----------')
+    // console.log(this.props.User.id, 'user id ------------')
+    // console.log(this.state.otherUserId, 'other user id ---------')
     const postUserId = this.state.otherUserId ? this.state.otherUserId : this.props.User.id
     const postUserFirstName = this.state.otherUserFirstName ? this.state.otherUserFirstName : this.props.User.first_name
     const postUserLastName = this.state.otherUserLastName ? this.state.otherUserLastName : this.props.User.last_name
     const postUserDp = this.state.otherUserDp ? this.state.otherUserDp : this.props.User.profile_pic_url
-    console.log(postUserId,postUserFirstName,postUserLastName,postUserDp, 'postuser ------')
-    console.log('user data========================>',this.props.User)
+    // console.log(postUserId,postUserFirstName,postUserLastName,postUserDp, 'postuser ------')
+    // console.log('user data========================>',this.props.User)
     
     return (
       <ScrollView>
@@ -386,6 +425,7 @@ class UserProfile extends React.Component {
             }}>
             <Icon name="search" color="#C4C4C4" size={20} style={{}} />
             <TextInput
+              
               style={{
                 width: '100%',
                 fontSize: 15,
@@ -393,8 +433,11 @@ class UserProfile extends React.Component {
                 paddingTop: 0,
               }}
               placeholder="Search"
-            // value={this.state.password}
-            // onChangeText={password => this.setState({ password })}
+            value={this.state.searchbox}
+            onChangeText={searchbox => {
+              this.setState({searchbox})
+              this.searchPost(searchbox,postUserId)}
+            }
             />
           </View>
 
