@@ -1,5 +1,6 @@
 import React, {Component} from 'react';
 import {Text, View, FlatList, TextInput} from 'react-native';
+import {withNavigation} from 'react-navigation'
 import AvatarUserStatus from '../Components/AvatarUserStatus';
 import Icon from 'react-native-vector-icons/Octicons';
 import i1 from '../Assets/Images/lahore.jpg';
@@ -8,7 +9,7 @@ import i3 from '../Assets/Images/ema.jpg';
 import i4 from '../Assets/Images/mansehra.jpg';
 import i5 from '../Assets/Images/samandarkatha.jpg';
 
-export default class Followers extends Component {
+ class Followers extends Component {
   state = {
     search: '',
   };
@@ -43,7 +44,7 @@ export default class Followers extends Component {
             borderRadius: 12,
             borderColor: 'grey',
             marginRight: '20%',
-            height: 30,
+            height: 35,
           }}>
           <Icon
             name="search"
@@ -75,9 +76,9 @@ export default class Followers extends Component {
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => (
               <AvatarUserStatus
-                name={item.name}
+              first_name={item.name}
                 status={item.follow}
-                pic={item.pic}></AvatarUserStatus>
+                pic={'../Assets/Images/samandarkatha.jpg'}></AvatarUserStatus>
             )}
           />
         </View>
@@ -85,3 +86,6 @@ export default class Followers extends Component {
     );
   }
 }
+
+
+export default withNavigation(Followers);
