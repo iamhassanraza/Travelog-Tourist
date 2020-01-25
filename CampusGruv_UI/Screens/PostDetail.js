@@ -205,7 +205,7 @@ incrementView = async () => {
               // this.setState(prevState => ({
               //   liked: !prevState.liked,
               // }));
-              this.likePost(postId)
+              this.likePost(postId, userId)
             }}></Icon>
 
           <Icon
@@ -360,7 +360,7 @@ incrementView = async () => {
     );
   };
 
-  renderAddComment = (dp, postId) => {
+  renderAddComment = (dp, postId, userId) => {
     return (
       <View
         style={{
@@ -408,7 +408,7 @@ incrementView = async () => {
         <TouchableOpacity 
           onPress={()=>{
             //CALL API FOR COMMENT , USER ID ,POST ID , COMMENT DESCRIPTION 
-            this.postComment(postId)
+            this.postComment(postId, userId)
           }}
         >
         <Text
@@ -451,7 +451,7 @@ incrementView = async () => {
 
 
 
-  postComment = async (postId) => {
+  postComment = async (postId, postUserId) => {
     console.log('hello jee',this.state.currentComment)
     if(this.state.currentComment !== null || this.state.currentComment != '')
     {
@@ -463,6 +463,7 @@ incrementView = async () => {
         body: JSON.stringify({
           post_id: postId,
           user_id: userId,
+          post_created_by: postUserId,
           description: this.state.currentComment
         }),
         headers: {
@@ -496,7 +497,7 @@ incrementView = async () => {
   }
 
 
-  likePost = async (postId) => {
+  likePost = async (postId, postUserId) => {
 
     this.setState(prevState => ({
       liked: !prevState.liked,
@@ -511,7 +512,8 @@ incrementView = async () => {
         method: 'POST',
         body: JSON.stringify({
           user_id: userId,
-          post_id: postId
+          post_id: postId,
+          post_created_by: postUserId
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -524,7 +526,8 @@ incrementView = async () => {
         method: 'POST',
         body: JSON.stringify({
           user_id: userId,
-          post_id: postId
+          post_id: postId,
+          post_created_by: postUserId
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -592,8 +595,6 @@ incrementView = async () => {
 
   render() {
     const data = this.props.navigation.getParam('PostData', 'nothing to render');
-    console.log(data,'============================= post detail me received data ================== ')
-    console.log("Views:" + data.view_count);
     return (
         <View style={{height: Dimensions.get('window').height-75}}>
             {this.renderHeader(data.userAvatar, data.postId, data.first_name, data.last_name, data.uri, data.userId, data.title)}
@@ -613,7 +614,7 @@ incrementView = async () => {
             }
             </ScrollView> 
             </KeyboardAvoidingView>
-                {this.renderAddComment(data.userAvatar, data.postId)}
+                {this.renderAddComment(data.userAvatar, data.postId, data.userId)}
         </View>
     );
   }
