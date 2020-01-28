@@ -42,10 +42,13 @@ class UserProfile extends React.Component {
     this.state = {
       posts: [],
       total: '  ',
+      followers: '  ',
+      following: '  ',
       otherUserId: null,
       otherUserFirstName: null,
       otherUserLastName: null,
       otherUserDp: null,
+      otherUserCampus: null,
       active: 'posts',
       spinner: false,
       loadmore: false,
@@ -73,15 +76,35 @@ class UserProfile extends React.Component {
       userNavFirstName = this.props.navigation.getParam('userNavFirstName', null)
       userNavLastName = this.props.navigation.getParam('userNavLastName', null)
       userNavDp = this.props.navigation.getParam('userNavDp', null)
+      userCampus = this.props.navigation.getParam('userCampus', null)
       this.setState({
         otherUserId: userNavId,
         otherUserDp: userNavDp,
         otherUserFirstName: userNavFirstName,
-        otherUserLastName: userNavLastName
+        otherUserLastName: userNavLastName,
+        otherUserCampus: userCampus
       })
       this.fetchdata(userNavId ? userNavId : this.props.User.id);
+      console.log("will focus")
+      this.fetchFollowData(userNavId ? userNavId : this.props.User.id);
       // this.fetchdata(this.state.otherUserId)
     });
+  }
+
+  fetchFollowData = async (id) => {
+    const Token = await AsyncStorage.getItem('TOKEN');
+    const response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/follow/details?user_id=${id}`, 
+    {
+      headers: {
+        Authorization: `Bearer ${Token}`,
+      }
+    });
+    const jsonresponse = await response.json();
+    console.log(jsonresponse,'json json json ------------------------')
+    this.setState({
+      followers: jsonresponse[0].followerCount,
+      following: jsonresponse[0].followingCount
+    })
   }
 
 
@@ -153,7 +176,7 @@ class UserProfile extends React.Component {
     this.setState({
       spinner: false,
       posts: jsonresponse.data,
-      total: jsonresponse.total,
+     
     });
 
   }
@@ -303,6 +326,7 @@ class UserProfile extends React.Component {
     const postUserFirstName = this.state.otherUserFirstName ? this.state.otherUserFirstName : this.props.User.first_name
     const postUserLastName = this.state.otherUserLastName ? this.state.otherUserLastName : this.props.User.last_name
     const postUserDp = this.state.otherUserDp ? this.state.otherUserDp : this.props.User.profile_pic_url
+    const postUserCampus = this.state.otherUserCampus ? this.state.otherUserCampus : this.props.User.campus.description
     // console.log(postUserId,postUserFirstName,postUserLastName,postUserDp, 'postuser ------')
     // console.log('user data========================>',this.props.User)
     
@@ -315,7 +339,7 @@ class UserProfile extends React.Component {
               style={{
                 marginTop: 5,
                 marginRight: 8, 
-                width: 80,
+                width: 90,
                 alignSelf: 'flex-end'
               }}
               onPress={() => {
@@ -338,7 +362,7 @@ class UserProfile extends React.Component {
               style={{
                 marginTop: 5,
                 marginRight: 0,
-                width: 70,
+                width: 80,
                 //borderWidth: 1,
                 justifyContent: 'center',
                 alignSelf: 'flex-end',
@@ -375,7 +399,7 @@ class UserProfile extends React.Component {
               {postUserFirstName + ' ' + postUserLastName}
             </Text>
             <Text style={{ fontSize: 13, color: '#727272' }}>
-              {/* {this.props.User.last_name} */} *campus name*
+              {postUserCampus} 
             </Text>
           </View>
         </View>
@@ -383,22 +407,22 @@ class UserProfile extends React.Component {
         {/* FOLLORWERS */}
         <View style={{ flexDirection: 'row', marginLeft: 10, marginTop: 5 }}>
           <Text style={{ color: '#727272', fontSize: 13, fontWeight: 'bold' }}>
-            {this.state.total + ' '}
+            {this.state.total + '  '}
           </Text>
           <Text style={{ color: '#B4B8BA', fontSize: 13, fontWeight: 'bold' }}>
-            Posts{' '}
+            Posts{'  '}
           </Text>
           <Text style={{ color: '#727272', fontSize: 13, fontWeight: 'bold' }}>
-            1204{' '}
+            {this.state.followers + '  '}
           </Text>
           <Text style={{ color: '#B4B8BA', fontSize: 13, fontWeight: 'bold' }}>
-            Followers{' '}
+            Followers{'  '}
           </Text>
           <Text style={{ color: '#727272', fontSize: 13, fontWeight: 'bold' }}>
-            1204{' '}
+            {this.state.following + '  '}
           </Text>
           <Text style={{ color: '#B4B8BA', fontSize: 13, fontWeight: 'bold' }}>
-            Following{' '}
+            Following
           </Text>
         </View>
 

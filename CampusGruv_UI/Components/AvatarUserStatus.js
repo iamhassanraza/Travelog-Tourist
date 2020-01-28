@@ -71,7 +71,8 @@ class AvatarUserStatus extends Component {
                 userNavId: this.props.id,
                 userNavDp: this.props.pic,
                 userNavFirstName: this.props.first_name,
-                userNavLastName: this.props.last_name
+                userNavLastName: this.props.last_name,
+                userCampus: this.props.campus
             })}>
             <View style={{flexDirection: 'row', padding: '1%'}}>
               <Image

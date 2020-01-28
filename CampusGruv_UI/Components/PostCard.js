@@ -32,7 +32,7 @@ class PostCard extends Component {
 
 
   render() {
-    //console.log('comments -----------',this.props.imageurl)
+    // console.log('props o user card -----------',this.props)
     return (
       <TouchableWithoutFeedback
         style={{

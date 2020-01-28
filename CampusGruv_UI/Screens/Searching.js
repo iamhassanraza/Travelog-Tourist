@@ -80,6 +80,7 @@ export default class Searching extends React.PureComponent {
       },
     });
     const JsonResponse = await Response.json();
+    console.log('follow data arha ya nhi ----------------> ',JsonResponse)
     
     if(parseInt(Response.status)=== 400) {
        
@@ -273,7 +274,7 @@ if(text) {
           keyExtractor={item => item.id}
           showsHorizontalScrollIndicator={false}
           renderItem={({item}) => (
-            <AvatarUserStatus id={item.id} first_name={item.first_name} last_name={item.last_name} status={true} pic={item.profile_pic_url}></AvatarUserStatus>
+            <AvatarUserStatus id={item.id} first_name={item.first_name} last_name={item.last_name} campus={item.campus.description} status={true} pic={item.profile_pic_url}></AvatarUserStatus>
           )}
         />
       );
