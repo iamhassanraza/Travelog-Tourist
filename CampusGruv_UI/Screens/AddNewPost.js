@@ -1,10 +1,11 @@
 import React, {Component} from 'react';
-import {Text, KeyboardAvoidingView, View, ImageBackground, TouchableOpacity,TextInput,Button, Dimensions} from 'react-native';
+import {Text, KeyboardAvoidingView, View, ImageBackground, TouchableOpacity,TextInput,Button, Dimensions, Platform, StatusBar} from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 // import RNFetchBlob from 'react-native-fetch-blob';
 import { ScrollView, TouchableWithoutFeedback } from 'react-native-gesture-handler';
 import  Icon  from 'react-native-vector-icons/AntDesign';
 import { StackActions, NavigationActions } from 'react-navigation';
+import { Header } from 'react-native-elements';
 
 const options = {
   title: 'Select Photo',
@@ -16,26 +17,32 @@ const options = {
 export default class AddNewPost extends Component {
 
   static navigationOptions = (props) => {
-    const {params = {}} = props.navigation.state;
+    // const {params = {}} = props.navigation.state;
     return  {
-        header: 
-            <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
-                <View style={{alignSelf: 'center'}}>
-                    <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>New post</Text>
-                </View>
-                <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
-                    <TouchableOpacity 
-                        onPress = {() => {
-                            props.navigation.navigate('HomeScreen')
-                            params.handleThis()
-                        }}
-                    >
-                        <Text style={{color: 'white', padding: 2}}>
-                            close
-                        </Text>
-                    </TouchableOpacity>
-                </View>
-            </View>
+        header: (
+          <Header centerComponent={{text:"New Post",style:{fontWeight:"bold",color:"#FFF"}}} rightComponent={(
+            <TouchableOpacity onPress={() => props.navigation.navigate('HomeScreen')} >
+              <Text style={{color:"#FFF"}} >Close</Text>
+            </TouchableOpacity>
+          )} />
+        )
+            // (<View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center',marginTop:Platform.OS == "ios" ? 30 : 0}}>
+            //     <View style={{alignSelf: 'center'}}>
+            //         <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>New post</Text>
+            //     </View>
+            //     <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
+            //         <TouchableOpacity 
+            //             onPress = {() => {
+            //                 props.navigation.navigate('HomeScreen')
+            //                 params.handleThis()
+            //             }}
+            //         >
+            //             <Text style={{color: 'white', padding: 2}}>
+            //                 close
+            //             </Text>
+            //         </TouchableOpacity>
+            //     </View>
+            // </View>)
     }
   }
 
@@ -182,6 +189,7 @@ deleteItems = () => {
             deleteItems: this.deleteItems
           })
         } 
+      
       }}
       >
       <View style={{width: '90%', borderRadius: 5, height: 30, justifyContent: 'center', backgroundColor: '#1192d1', alignSelf: 'center'}}>

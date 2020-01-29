@@ -396,7 +396,8 @@ if(text) {
   render() {
     //console.log(this.state);
     return (
-      <View>
+<View style={{backgroundColor:"#1192d1"}}> 
+      <View style={{backgroundColor:ThemeBlue,marginTop:Platform.OS == 'ios' ? 38:0,}}>
 
       <View style={{backgroundColor:ThemeBlue, height:50, flexDirection:"row"}}>
        <View style={{flexDirection:"row", width:"65%",backgroundColor:"white",margin:5,borderRadius:8}}>
@@ -485,6 +486,7 @@ if(text) {
           {this.state.selection === 'Users' ? this.state.totalUsers === 0 ? this.renderNoPost("No Users Availiable") : this.renderUsers() : null}
           {this.state.selection === 'Campuses' ? this.state.totalCampuses === 0 ? this.renderNoPost("No Campuses Availiable") : this.renderCampuses() : null}
         </ScrollView>
+      </View>
       </View>
     );
   }
