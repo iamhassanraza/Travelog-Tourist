@@ -12,6 +12,8 @@ import {
   Image,
   ActivityIndicator,
   Button,
+  Platform,
+  StatusBar,
 } from 'react-native';
 import Logo from '../Assets/Images/logo.png'
 import PostCard from '../Components/PostCard';
@@ -23,6 +25,8 @@ import PeopleIcon from 'react-native-vector-icons/FontAwesome5'
 import RenderCards from '../Components/RenderCards';
 import NoPosts from '../Components/NoPost';
 import {ThemeBlue} from '../Assets/Colors'
+import { Header } from 'react-native-elements';
+import MyHeader from '../Components/MyHeader';
 
 export default class HomeScreen extends PureComponent {
 
@@ -30,46 +34,47 @@ export default class HomeScreen extends PureComponent {
     const {params = {}} = props.navigation.state;
     return {
       header: (
-        <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', backgroundColor: '#1192d1' }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', flex: 10 }}>
-                <View style={{ marginLeft: '2%', flexDirection: 'row', alignSelf: 'center' }}>
-                    <TouchableOpacity
-                        onPress={()=> props.navigation.navigate('Searching')}
-                    >
-                        <View style={{ height: 30, padding: 0, flexDirection: 'row', alignItems: 'center', width: 250, backgroundColor: '#F0F0F0', borderRadius: 10 }}>
-                            <View style={{ marginLeft: '2%' }}>
-                                <Icon
-                                    name="search"
-                                    color="#1192d1"
-                                    size={20}
-                                />
-                            </View>
-                            <View style={{ height: 20 }}>
-                                <Image
-                                    source={Logo}
-                                    style={{ width: 150, alignSelf: 'flex-start', height: '100%' }}
-                                    resizeMode="contain"
-                                />
-                            </View>
-                        </View>
-                    </TouchableOpacity>
-                </View>
-                <View style={{ marginLeft: '2%' }}>
-                    <TouchableOpacity onPress={() => props.navigation.navigate('CategoryList')}>
-                        <Icon2
-                            name="view-grid"
-                            color="white"
-                            size={25}
-                        />
-                    </TouchableOpacity>
-                </View>
-            </View>
-            <View style={{ flex: 1 }}>
-                <TouchableOpacity onPress={() => params.handleThis()}>
-                    <PeopleIcon name="users" color="white" size={20} />
-                </TouchableOpacity>
-            </View>
-        </View>
+        <MyHeader params={params} navigation={props.navigation} />
+        // <Header style={{  backgroundColor: '#1192d1',justifyContent:'space-between' }}>
+        //     <View style={{ flexDirection: 'row', alignItems: 'center', flex: 10 }}>
+        //         <View style={{ marginLeft: '2%', flexDirection: 'row', alignSelf: 'center' }}>
+        //             <TouchableOpacity
+        //                 onPress={()=> props.navigation.navigate('Searching')}
+        //             >
+        //                 <View style={{ height: 30, padding: 0, flexDirection: 'row', alignItems: 'center', width: 250, backgroundColor: '#F0F0F0', borderRadius: 10 }}>
+        //                     <View style={{ marginLeft: '2%' }}>
+        //                         <Icon
+        //                             name="search"
+        //                             color="#1192d1"
+        //                             size={20}
+        //                         />
+        //                     </View>
+        //                     <View style={{ height: 20 }}>
+        //                         <Image
+        //                             source={Logo}
+        //                             style={{ width: 150, alignSelf: 'flex-start', height: '100%' }}
+        //                             resizeMode="contain"
+        //                         />
+        //                     </View>
+        //                 </View>
+        //             </TouchableOpacity>
+        //         </View>
+        //     </View>
+        //     <View style={{ justifyContent:"space-between",flexDirection:'row'}}>
+        //         {/* <View style={{ marginLeft: '2%' }}> */}
+        //             <TouchableOpacity onPress={() => props.navigation.navigate('CategoryList')}>
+        //                 <Icon2
+        //                     name="view-grid"
+        //                     color="white"
+        //                     size={25}
+        //                 />
+        //             </TouchableOpacity>
+        //         {/* </View> */}
+        //         <TouchableOpacity onPress={() => params.handleThis()}>
+        //             <PeopleIcon name="users" color="white" size={20} />
+        //         </TouchableOpacity>
+        //     </View>
+        // </Header>
       )
     }
   }

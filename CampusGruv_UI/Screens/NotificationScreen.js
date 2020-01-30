@@ -1,13 +1,16 @@
 import React, { Component } from 'react'
 import { Text, View, ScrollView, Alert } from 'react-native'
 import NoticationComponent from '../Components/NoticationComponent'
+import { Header } from 'react-native-elements'
 
 
 
 export default class NotificationScreen extends Component {
+
     render() {
         return (
             <View style={{flex:1}}>
+                <Header centerComponent={{text:"Notifications",style:{color:"#FFF",fontWeight:"bold"}}}  />
                 <ScrollView>
                     <NoticationComponent uri='https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg' title="Saifullah" time="1 hour" activity="followed You" />
                     <NoticationComponent  uri='https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' title="Jawad" time="50 minutes" activity="commented On your post"/>

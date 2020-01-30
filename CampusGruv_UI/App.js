@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, TextInput, Image, TouchableOpacity } from 'react-native'
+import { Text, View, TextInput, Image, TouchableOpacity,Platform } from 'react-native'
 // import HomeScreen from './Screens/HomeScreen'
 import 'react-native-gesture-handler'
 // import Screen1 from './Screens/CreatePost'
@@ -40,6 +40,7 @@ import NoPost from './Components/NoPost'
 import EmailVerification from './Screens/EmailVerification'
 import Followers from './Screens/Followers'
 import Following from './Screens/Following'
+import { Header } from 'react-native-elements'
 
 
 
@@ -126,24 +127,32 @@ const ProfileStack = createStackNavigator({
         screen: UserProfile,
         navigationOptions: {
             header: (props) => (
-                <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
-                    <View style={{alignSelf: 'center'}}>
-                        <Image
-                            source={Logo}
-                            style={{ width: 150, alignSelf: 'flex-start', height: '90%' }}
-                            resizeMode="contain"
-                        />
-                        </View>
-                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
-                        <TouchableOpacity 
-                            onPress = {() => {
-                                props.navigation.navigate('UserSettings')
-                            }}
-                        >
-                            <Icon name="settings" color="white" size={23}/>
-                        </TouchableOpacity>
-                    </View>
-                </View>
+                <Header 
+                centerComponent={{text:"CAMPUS GRUV",style:{color:"#FFF",fontWeight:'bold'}}}
+                rightComponent={(
+                    <TouchableOpacity onPress={() => props.navigation.navigate('UserSettings')} >
+                        <Icon name="settings" color="white" size={23} />
+                    </TouchableOpacity>
+                )}
+                />
+                // <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+                //     <View style={{alignSelf: 'center'}}>
+                //         <Image
+                //             source={Logo}
+                //             style={{ width: 150, alignSelf: 'flex-start', height: '90%' }}
+                //             resizeMode="contain"
+                //         />
+                //         </View>
+                //     <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
+                //         <TouchableOpacity 
+                //             onPress = {() => {
+                //                 props.navigation.navigate('UserSettings')
+                //             }}
+                //         >
+                //             <Icon name="settings" color="white" size={23}/>
+                //         </TouchableOpacity>
+                //     </View>
+                // </View>
             )
         },
     },
@@ -201,7 +210,8 @@ const ProfileStack = createStackNavigator({
         screen: UserSettings,
         navigationOptions: {
             header: (props) => (
-                <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+                <View style={{backgroundColor: '#1192d1',}}>
+                <View style={{marginTop:Platform.OS=='ios'?38:0,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
                     <View style={{alignSelf: 'center'}}>
                         <Text style={{color: 'white', fontSize: 25, fontWeight:'bold'}}>
                             Settings
@@ -212,10 +222,11 @@ const ProfileStack = createStackNavigator({
                             onPress = {() => {
                                 props.navigation.navigate('UserProfile')
                             }}
-                        >
+                            >
                             <Icon name="arrow-back" color="white" size={25}/>
                         </TouchableOpacity>
                     </View>
+                            </View>
                 </View>
             )
         }
@@ -280,7 +291,10 @@ const HomeStack = createStackNavigator({
         },
         defaultNavigationOptions: {
         header: props =>
-        <View style={{ height: 50, flexDirection: 'row', alignItems: 'center', backgroundColor: '#1192d1' }}>
+        <View style={{backgroundColor: '#1192d1'}}>
+
+    
+        <View style={{ marginTop:Platform.OS == 'ios' ? 38:0,height: 50, flexDirection: 'row', alignItems: 'center', backgroundColor: '#1192d1' }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', flex: 10 }}>
                 <View style={{ marginLeft: '2%', flexDirection: 'row', alignSelf: 'center' }}>
                     <TouchableOpacity
@@ -304,7 +318,8 @@ const HomeStack = createStackNavigator({
                         </View>
                     </TouchableOpacity>
                 </View>
-                <View style={{ marginLeft: '2%' }}>
+            </View>
+                <View style={{ marginRight: '2%' }}>
                     <TouchableOpacity onPress={() => props.navigation.navigate('CategoryList')}>
                         <Icon2
                             name="view-grid"
@@ -313,7 +328,6 @@ const HomeStack = createStackNavigator({
                         />
                     </TouchableOpacity>
                 </View>
-            </View>
             <View style={{ flex: 1 }}>
                 <TouchableOpacity onPress={() => props.navigation.push('TabContainer', {
                     categorySelected: true
@@ -322,6 +336,8 @@ const HomeStack = createStackNavigator({
                 </TouchableOpacity>
             </View>
         </View>
+        </View>
+        
         }
     }
 )
@@ -331,7 +347,8 @@ const MessageStack = createStackNavigator({
         screen: inbox,
         navigationOptions: {
             header: (props) => (
-                <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+                <View style={{backgroundColor: '#1192d1'}}>
+                <View style={{marginTop:Platform.OS == 'ios' ? 38:0,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
                     <View style={{alignSelf: 'center'}}>
                         <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>Messages</Text>
                     </View>
@@ -345,6 +362,7 @@ const MessageStack = createStackNavigator({
                         </TouchableOpacity>
                     </View>
                 </View>
+                </View>
             )
         },
     },
@@ -357,7 +375,7 @@ const MessageStack = createStackNavigator({
 },
     {
         initialRouteName: 'inbox'
-    }
+    },
 
 
 )
@@ -375,12 +393,12 @@ const TabNavigator = createMaterialTopTabNavigator(
         Notifications: {
             screen: NotificationScreen,
             navigationOptions: {
-                //header: null,
+                header: null,
                 tabBarIcon: ({ tintColor }) => (
                     <Icon2 name="bell-ring" color={tintColor} style={{ fontSize: 22 }} />
                 ),
                 tabBarLabel: "Notifications"
-            }
+            },
         },
         AddPost: {
             screen: CreatePostStack,
