@@ -19,7 +19,7 @@ class AvatarUserStatus extends Component {
     const userId = await AsyncStorage.getItem('USER_ID');
     const id = this.props.id
     var Response = null
-    console.log('followed ==========> ',this.state.followed)
+    console.log('followed ==========> ',this.state.followed,id)
     if(this.state.followed.length > 0) {
       Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/follow?user_id=${id}`, {
         method: 'GET',
@@ -44,16 +44,14 @@ class AvatarUserStatus extends Component {
       alert(JsonResponse.message);
     }
     else if (parseInt(Response.status) === 200){
-      console.log('200')
+      console.log('200',JsonResponse)
       alert(JsonResponse.message);
     }
     else {
       alert('something is wrong')
     }
   }
-  componentDidMount(){
-    console.log(this.props.userFollowing,'this.componentDidMount')
-  }
+
 
   render() {
     console.log(this.props.userFollowing,'this.props')
