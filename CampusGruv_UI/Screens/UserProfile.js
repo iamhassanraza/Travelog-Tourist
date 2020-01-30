@@ -54,7 +54,8 @@ class UserProfile extends React.Component {
       loadmore: false,
       pageNo: 1,
       followed: true,
-      searchbox:''
+      searchbox:'',
+      userFollowing:null,
     };
   }
 
@@ -77,12 +78,14 @@ class UserProfile extends React.Component {
       userNavLastName = this.props.navigation.getParam('userNavLastName', null)
       userNavDp = this.props.navigation.getParam('userNavDp', null)
       userCampus = this.props.navigation.getParam('userCampus', null)
+      userFollowing = this.props.navigation.getParam('userFollowing', null)
       this.setState({
         otherUserId: userNavId,
         otherUserDp: userNavDp,
         otherUserFirstName: userNavFirstName,
         otherUserLastName: userNavLastName,
-        otherUserCampus: userCampus
+        otherUserCampus: userCampus,
+        userFollowing:userFollowing
       })
       this.fetchdata(userNavId ? userNavId : this.props.User.id);
       console.log("will focus")
@@ -328,7 +331,7 @@ class UserProfile extends React.Component {
     const postUserDp = this.state.otherUserDp ? this.state.otherUserDp : this.props.User.profile_pic_url
     const postUserCampus = this.state.otherUserCampus ? this.state.otherUserCampus : this.props.User.campus.description
     // console.log(postUserId,postUserFirstName,postUserLastName,postUserDp, 'postuser ------')
-    // console.log('user data========================>',this.props.User)
+    console.log('user data========================>',this.state.userFollowing)
     
     return (
       <ScrollView>
@@ -373,13 +376,13 @@ class UserProfile extends React.Component {
               }}>
               <Text
                 style={{
-                  color: this.state.followed ? ThemeBlue : 'grey',
+                  color: this.state.userFollowing.length > 0 ? ThemeBlue : 'grey',
                   borderWidth: 0.5,
                   padding: 5,
-                  borderColor: this.state.followed ? ThemeBlue : 'grey',
+                  borderColor: this.state.userFollowing.length > 0 ? ThemeBlue : 'grey',
                   borderRadius: 10
                 }}>
-                {this.state.followed ? "Unfollow" : "Follow"}
+                {this.state.userFollowing.length > 0 ? "Unfollow" : "Follow"}
               </Text>
             </TouchableOpacity>
           </View>
