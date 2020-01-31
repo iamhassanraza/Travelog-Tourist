@@ -325,7 +325,21 @@ const HomeStack = createStackNavigator({
                     </TouchableOpacity>
                 </View>
             </View>
-                <View style={{ marginRight: '2%' }}>
+            <View style={{ justifyContent:"space-between", alignItems: 'center', flex: 4, flexDirection:'row'}}>
+                <View style={{marginLeft: 5}}>
+                    <TouchableOpacity onPress={() => props.navigation.navigate('CategoryList')}>
+                        <Icon2
+                            name="view-grid"
+                            color="white"
+                            size={28}
+                        />
+                    </TouchableOpacity>
+                </View>
+                <TouchableOpacity style={{paddingRight:5}} onPress={() => params.handleThis()}>
+                    <PeopleIcon name="users" color="white" size={20} />
+                </TouchableOpacity>
+            </View>
+                {/* <View style={{ marginRight: '2%' }}>
                     <TouchableOpacity onPress={() => props.navigation.navigate('CategoryList')}>
                         <Icon2
                             name="view-grid"
@@ -340,7 +354,7 @@ const HomeStack = createStackNavigator({
                 })}>
                     <PeopleIcon name="users" color="white" size={20} />
                 </TouchableOpacity>
-            </View>
+            </View> */}
         </View>
         </View>
         
