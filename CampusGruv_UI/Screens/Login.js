@@ -151,7 +151,7 @@ class Login extends React.Component {
               height: screenheight,
               justifyContent: 'space-between',
             }}>
-            <KeyboardAvoidingView style={{flex: 1}} behavior="padding" enabled>
+            <KeyboardAvoidingView  behavior="padding" enabled>
               {/* MAIN TITLE */}
               <View>
                 <HeaderTitle />
@@ -172,6 +172,7 @@ class Login extends React.Component {
                   <TextInput
                     style={{
                       width: '90%',
+                      height:Platform.OS=='ios'? 40:50,
                       marginLeft: 10,
                       fontSize: 20,
                       color: '#ACACAC',
@@ -203,6 +204,7 @@ class Login extends React.Component {
                   <TextInput
                     style={{
                       width: '90%',
+                      height:Platform.OS=='ios'? 40:50,
                       marginLeft: 10,
                       fontSize: 20,
                       color: '#ACACAC',

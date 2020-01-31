@@ -127,32 +127,35 @@ const ProfileStack = createStackNavigator({
         screen: UserProfile,
         navigationOptions: {
             header: (props) => (
-                <Header 
-                centerComponent={{text:"CAMPUS GRUV",style:{color:"#FFF",fontWeight:'bold'}}}
-                rightComponent={(
-                    <TouchableOpacity onPress={() => props.navigation.navigate('UserSettings')} >
-                        <Icon name="settings" color="white" size={23} />
-                    </TouchableOpacity>
-                )}
-                />
-                // <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
-                //     <View style={{alignSelf: 'center'}}>
-                //         <Image
-                //             source={Logo}
-                //             style={{ width: 150, alignSelf: 'flex-start', height: '90%' }}
-                //             resizeMode="contain"
-                //         />
-                //         </View>
-                //     <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
-                //         <TouchableOpacity 
-                //             onPress = {() => {
-                //                 props.navigation.navigate('UserSettings')
-                //             }}
-                //         >
-                //             <Icon name="settings" color="white" size={23}/>
-                //         </TouchableOpacity>
-                //     </View>
-                // </View>
+                // <Header 
+                // centerComponent={{text:"CAMPUS GRUV",style:{color:"#FFF",fontWeight:'bold'}}}
+                // rightComponent={(
+                //     <TouchableOpacity onPress={() => props.navigation.navigate('UserSettings')} >
+                //         <Icon name="settings" color="white" size={23} />
+                //     </TouchableOpacity>
+                // )}
+                // />
+                <View style={{backgroundColor: '#1192d1',}}>
+
+                <View style={{marginTop:Platform.OS=='ios'? 38:0,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+                    <View style={{alignSelf: 'center'}}>
+                        <Image
+                            source={Logo}
+                            style={{ width: 150, alignSelf: 'flex-start', height: '90%' }}
+                            resizeMode="contain"
+                            />
+                        </View>
+                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
+                        <TouchableOpacity 
+                            onPress = {() => {
+                                props.navigation.navigate('UserSettings')
+                            }}
+                            >
+                            <Icon name="settings" color="white" size={23}/>
+                        </TouchableOpacity>
+                            </View>
+                    </View>
+                </View>
             )
         },
     },
@@ -248,24 +251,27 @@ const HomeStack = createStackNavigator({
         screen: UserProfile,
         navigationOptions: {
             header: (props) => (
-                <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+                <View style={{ backgroundColor: '#1192d1',}}>
+
+                <View style={{marginTop:Platform.OS=='ios'? 38:0,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
                     <View style={{alignSelf: 'center'}}>
                     <Image
                                     source={Logo}
                                     style={{ width: 150, alignSelf: 'flex-start', height: '100%' }}
                                     resizeMode="contain"
-                                />
+                                    />
                     </View>
                     <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
                         <TouchableOpacity 
                             onPress = {() => {
                                 //props.navigation.push('inbox')
                             }}
-                        >
+                            >
                             <OptionsIcon name="options-vertical" color="white" size={20}/>
                         </TouchableOpacity>
                     </View>
                 </View>
+                            </View>
             ),
         }
     },
