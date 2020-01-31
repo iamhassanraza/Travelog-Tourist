@@ -50,7 +50,7 @@ export default class Searching extends React.PureComponent {
         });
 
         const JsonResponse = await Response.json();
-        console.log(JsonResponse.message);
+        console.log(JsonResponse.message,'gjgjgj');
 
         if(parseInt(Response.status)=== 400) {
            
@@ -110,6 +110,7 @@ fetchCampuses = async (text) => {
     },
   });
   const JsonResponse = await Response.json();
+  console.log(JsonResponse,'JsonResponse',Response,'Response')
   if(parseInt(Response.status)=== 400) {
     
       this.setState({error : true, totalCampuses: 0})
@@ -274,7 +275,7 @@ if(text) {
           keyExtractor={item => item.id}
           showsHorizontalScrollIndicator={false}
           renderItem={({item}) => (
-            <AvatarUserStatus id={item.id} first_name={item.first_name} last_name={item.last_name} campus={item.campus.description} status={true} pic={item.profile_pic_url}></AvatarUserStatus>
+            <AvatarUserStatus id={item.id} first_name={item.first_name} last_name={item.last_name} userFollowing={item.userFollowing} item={item} campus={item.campus.description} status={true} pic={item.profile_pic_url}></AvatarUserStatus>
           )}
         />
       );

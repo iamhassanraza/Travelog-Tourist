@@ -6,7 +6,7 @@ import {TouchableOpacity, TouchableWithoutFeedback} from 'react-native-gesture-h
 
 class AvatarUserStatus extends Component {
   state = {
-    followed: false,
+    followed: this.props.item.userFollowing,
 
   };
 
@@ -19,8 +19,8 @@ class AvatarUserStatus extends Component {
     const userId = await AsyncStorage.getItem('USER_ID');
     const id = this.props.id
     var Response = null
-    console.log('followed ==========> ',this.state.followed)
-    if(this.state.followed) {
+    console.log('followed ==========> ',this.state.followed,id)
+    if(this.state.followed.length > 0) {
       Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/follow?user_id=${id}`, {
         method: 'GET',
         headers: {
@@ -44,7 +44,7 @@ class AvatarUserStatus extends Component {
       alert(JsonResponse.message);
     }
     else if (parseInt(Response.status) === 200){
-      console.log('200')
+      console.log('200',JsonResponse)
       alert(JsonResponse.message);
     }
     else {
@@ -52,7 +52,9 @@ class AvatarUserStatus extends Component {
     }
   }
 
+
   render() {
+    console.log(this.props.userFollowing,'this.props')
     return (
       <View
         style={{
@@ -72,7 +74,8 @@ class AvatarUserStatus extends Component {
                 userNavDp: this.props.pic,
                 userNavFirstName: this.props.first_name,
                 userNavLastName: this.props.last_name,
-                userCampus: this.props.campus
+                userCampus: this.props.campus,
+                userFollowing:this.props.userFollowing
             })}>
             <View style={{flexDirection: 'row', padding: '1%'}}>
               <Image
@@ -101,14 +104,14 @@ class AvatarUserStatus extends Component {
               justifyContent: 'center',
               alignItems: 'center',
               borderRadius: 5,
-              borderColor: this.state.followed ? ThemeBlue : 'grey',
+              borderColor: this.state.followed.length > 0 ? 'black' : 'grey',
             }}>
             <Text
               style={{
-                color: this.state.followed ? ThemeBlue : 'grey',
+                color: this.state.followed.length > 0 ? 'black' : 'grey',
                 fontSize: 12,
               }}>
-              {this.state.followed ? 'Following' : 'Follow'}
+              {this.state.followed.length > 0 ? 'Following' : 'Follow'}
             </Text>
           </View>
         </TouchableOpacity>
