@@ -17,32 +17,35 @@ const options = {
 export default class AddNewPost extends Component {
 
   static navigationOptions = (props) => {
-    // const {params = {}} = props.navigation.state;
+    const {params = {}} = props.navigation.state;
     return  {
         header: (
-          <Header centerComponent={{text:"New Post",style:{fontWeight:"bold",color:"#FFF"}}} rightComponent={(
-            <TouchableOpacity onPress={() => props.navigation.navigate('HomeScreen')} >
-              <Text style={{color:"#FFF"}} >Close</Text>
-            </TouchableOpacity>
-          )} />
-        )
-            // (<View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center',marginTop:Platform.OS == "ios" ? 30 : 0}}>
-            //     <View style={{alignSelf: 'center'}}>
-            //         <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>New post</Text>
-            //     </View>
-            //     <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
-            //         <TouchableOpacity 
-            //             onPress = {() => {
-            //                 props.navigation.navigate('HomeScreen')
-            //                 params.handleThis()
-            //             }}
-            //         >
-            //             <Text style={{color: 'white', padding: 2}}>
-            //                 close
-            //             </Text>
-            //         </TouchableOpacity>
-            //     </View>
-            // </View>)
+        //   <Header style={{height:30}} centerComponent={{text:"New Post",style:{fontWeight:"bold",color:"#FFF"}}} rightComponent={(
+        //     <TouchableOpacity onPress={() => props.navigation.navigate('HomeScreen')} >
+        //       <Text style={{color:"#FFF"}} >Close</Text>
+        //     </TouchableOpacity>
+        //   )} />
+        // )
+            // (
+              <View style={{ backgroundColor: '#1192d1'}}>
+            <View style={{marginTop:Platform.OS=='ios'?38:0,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center',marginTop:Platform.OS == "ios" ? 30 : 0}}>
+                <View style={{alignSelf: 'center'}}>
+                    <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>New post</Text>
+                </View>
+                <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
+                    <TouchableOpacity 
+                        onPress = {() => {
+                          props.navigation.navigate('HomeScreen')
+                            params.handleThis()
+                          }}
+                          >
+                        <Text style={{color: 'white', padding: 2}}>
+                            close
+                        </Text>
+                    </TouchableOpacity>
+                </View>
+                          </View>
+            </View>)
     }
   }
 
@@ -189,7 +192,6 @@ deleteItems = () => {
             deleteItems: this.deleteItems
           })
         } 
-      
       }}
       >
       <View style={{width: '90%', borderRadius: 5, height: 30, justifyContent: 'center', backgroundColor: '#1192d1', alignSelf: 'center'}}>

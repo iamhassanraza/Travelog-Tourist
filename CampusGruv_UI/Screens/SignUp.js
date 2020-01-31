@@ -320,6 +320,7 @@ class Signup extends React.Component {
                   <TextInput
                     style={{
                       width: '90%',
+                      height:Platform.OS=='ios'?40:50,
                       marginLeft: 10,
                       fontSize: 20,
                       color: '#ACACAC',

@@ -398,7 +398,7 @@ if(text) {
     //console.log(this.state);
     return (
 <View style={{backgroundColor:"#1192d1"}}> 
-      <View style={{backgroundColor:ThemeBlue,marginTop:Platform.OS == 'ios' ? 38:0,}}>
+      <View style={{backgroundColor:ThemeBlue,marginTop:Platform.OS == 'ios' ? 38:5,}}>
 
       <View style={{backgroundColor:ThemeBlue, height:50, flexDirection:"row"}}>
        <View style={{flexDirection:"row", width:"65%",backgroundColor:"white",margin:5,borderRadius:8}}>
@@ -416,6 +416,7 @@ if(text) {
 
         <View
           style={{
+            backgroundColor:'white',
             borderBottomWidth: 1,
             flexDirection: 'row',
             justifyContent: 'space-around',
@@ -482,7 +483,7 @@ if(text) {
           </TouchableOpacity>
         </View>
 
-        <ScrollView>
+        <ScrollView style={{backgroundColor:'white',}}>
           {this.state.selection === 'Feed' ? this.state.totalFeed === 0 ? this.renderNoPost() : this.renderFeed() : null }
           {this.state.selection === 'Users' ? this.state.totalUsers === 0 ? this.renderNoPost("No Users Availiable") : this.renderUsers() : null}
           {this.state.selection === 'Campuses' ? this.state.totalCampuses === 0 ? this.renderNoPost("No Campuses Availiable") : this.renderCampuses() : null}
