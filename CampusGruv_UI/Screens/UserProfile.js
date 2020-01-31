@@ -341,7 +341,7 @@ class UserProfile extends React.Component {
             <TouchableOpacity
               style={{
                 marginTop: 5,
-                marginRight: 8, 
+                marginRight: 5, 
                 width: 90,
                 alignSelf: 'flex-end'
               }}
@@ -353,6 +353,7 @@ class UserProfile extends React.Component {
                   color: '#ACACAC',
                   borderWidth: 0.5,
                   padding: 5,
+                  alignSelf: 'center',
                   borderColor: '#ACACAC',
                   borderRadius: 10,
                 }}>
@@ -364,7 +365,7 @@ class UserProfile extends React.Component {
             <TouchableOpacity
               style={{
                 marginTop: 5,
-                marginRight: 0,
+                //marginRight: 1,
                 width: 80,
                 //borderWidth: 1,
                 justifyContent: 'center',
@@ -376,13 +377,13 @@ class UserProfile extends React.Component {
               }}>
               <Text
                 style={{
-                  color: this.state.userFollowing.length > 0 ? ThemeBlue : 'grey',
+                  color: this.state.userFollowing ? ThemeBlue : 'grey',
                   borderWidth: 0.5,
                   padding: 5,
-                  borderColor: this.state.userFollowing.length > 0 ? ThemeBlue : 'grey',
+                  borderColor: this.state.userFollowing ? ThemeBlue : 'grey',
                   borderRadius: 10
                 }}>
-                {this.state.userFollowing.length > 0 ? "Unfollow" : "Follow"}
+                {this.state.userFollowing ? "Unfollow" : "Follow"}
               </Text>
             </TouchableOpacity>
           </View>
