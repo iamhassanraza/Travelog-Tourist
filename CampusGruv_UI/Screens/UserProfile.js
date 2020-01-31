@@ -53,9 +53,20 @@ class UserProfile extends React.Component {
       spinner: false,
       loadmore: false,
       pageNo: 1,
-      followed: true
+      followed: true,
+      searchbox:'',
+      userFollowing:null,
     };
   }
+
+
+  componentDidUpdate(){
+
+    
+
+  }
+
+
 
   componentDidMount() {
     const { navigation } = this.props;
@@ -67,12 +78,14 @@ class UserProfile extends React.Component {
       userNavLastName = this.props.navigation.getParam('userNavLastName', null)
       userNavDp = this.props.navigation.getParam('userNavDp', null)
       userCampus = this.props.navigation.getParam('userCampus', null)
+      userFollowing = this.props.navigation.getParam('userFollowing', null)
       this.setState({
         otherUserId: userNavId,
         otherUserDp: userNavDp,
         otherUserFirstName: userNavFirstName,
         otherUserLastName: userNavLastName,
-        otherUserCampus: userCampus
+        otherUserCampus: userCampus,
+        userFollowing:userFollowing
       })
       this.fetchdata(userNavId ? userNavId : this.props.User.id);
       console.log("will focus")
@@ -148,6 +161,34 @@ class UserProfile extends React.Component {
       );
   }
 
+  async searchPost(text,userId)
+  {  
+    console.log(text)
+    const Token = await AsyncStorage.getItem('TOKEN');
+    this.setState({spinner:true})
+    const response = await fetch(
+      `https://campus-gruv-heroku.herokuapp.com/api/v1/search/user?type=post&user_id=${userId}&page=${this.state.pageNo}&description=${text}` ,
+      {
+        headers: {
+          Authorization: `Bearer ${Token}`,
+        },
+      },
+    );
+    const jsonresponse = await response.json();
+    // console.log('profile -------------------------', jsonresponse.data[0]);
+    this.setState({
+      spinner: false,
+      posts: jsonresponse.data,
+     
+    });
+
+  }
+
+  componentWillUnmount(){
+    this.setState({searchbox:''})
+  }
+
+
 
   fetchdata = async (userId) => {
     console.log('calling');
@@ -155,8 +196,9 @@ class UserProfile extends React.Component {
     if (this.state.active === 'posts') {
       // const userId = await AsyncStorage.getItem('USER_ID');
       const Token = await AsyncStorage.getItem('TOKEN');
+    
       const response = await fetch(
-        `https://campus-gruv-heroku.herokuapp.com/api/v1/search/user?type=post&user_id=${userId}&page=${this.state.pageNo}`,
+        `https://campus-gruv-heroku.herokuapp.com/api/v1/search/user?type=post&user_id=${userId}&page=${this.state.pageNo}` ,
         {
           headers: {
             Authorization: `Bearer ${Token}`,
@@ -281,15 +323,15 @@ class UserProfile extends React.Component {
     const { navigate } = this.props.navigation;
     navId = this.props.navigation.getParam('id', null)
     // console.log(navId,'nav ID -----------')
-    console.log(this.props.User.id, 'user id ------------')
-    console.log(this.state.otherUserId, 'other user id ---------')
+    // console.log(this.props.User.id, 'user id ------------')
+    // console.log(this.state.otherUserId, 'other user id ---------')
     const postUserId = this.state.otherUserId ? this.state.otherUserId : this.props.User.id
     const postUserFirstName = this.state.otherUserFirstName ? this.state.otherUserFirstName : this.props.User.first_name
     const postUserLastName = this.state.otherUserLastName ? this.state.otherUserLastName : this.props.User.last_name
     const postUserDp = this.state.otherUserDp ? this.state.otherUserDp : this.props.User.profile_pic_url
     const postUserCampus = this.state.otherUserCampus ? this.state.otherUserCampus : this.props.User.campus.description
     // console.log(postUserId,postUserFirstName,postUserLastName,postUserDp, 'postuser ------')
-    // console.log('user data========================>',this.props.User)
+    console.log('user data========================>',this.state.userFollowing)
     
     return (
       <ScrollView>
@@ -300,7 +342,7 @@ class UserProfile extends React.Component {
               style={{
                 marginTop: 5,
                 marginRight: 8, 
-                width: 80,
+                width: 90,
                 alignSelf: 'flex-end'
               }}
               onPress={() => {
@@ -323,7 +365,7 @@ class UserProfile extends React.Component {
               style={{
                 marginTop: 5,
                 marginRight: 0,
-                width: 70,
+                width: 80,
                 //borderWidth: 1,
                 justifyContent: 'center',
                 alignSelf: 'flex-end',
@@ -334,13 +376,13 @@ class UserProfile extends React.Component {
               }}>
               <Text
                 style={{
-                  color: this.state.followed ? ThemeBlue : 'grey',
+                  color: this.state.userFollowing.length > 0 ? ThemeBlue : 'grey',
                   borderWidth: 0.5,
                   padding: 5,
-                  borderColor: this.state.followed ? ThemeBlue : 'grey',
+                  borderColor: this.state.userFollowing.length > 0 ? ThemeBlue : 'grey',
                   borderRadius: 10
                 }}>
-                {this.state.followed ? "Unfollow" : "Follow"}
+                {this.state.userFollowing.length > 0 ? "Unfollow" : "Follow"}
               </Text>
             </TouchableOpacity>
           </View>
@@ -410,6 +452,7 @@ class UserProfile extends React.Component {
             }}>
             <Icon name="search" color="#C4C4C4" size={20} style={{}} />
             <TextInput
+              
               style={{
                 width: '100%',
                 fontSize: 15,
@@ -417,8 +460,11 @@ class UserProfile extends React.Component {
                 paddingTop: 0,
               }}
               placeholder="Search"
-            // value={this.state.password}
-            // onChangeText={password => this.setState({ password })}
+            value={this.state.searchbox}
+            onChangeText={searchbox => {
+              this.setState({searchbox})
+              this.searchPost(searchbox,postUserId)}
+            }
             />
           </View>
 

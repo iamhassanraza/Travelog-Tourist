@@ -76,14 +76,16 @@ class ProfilePage extends React.Component {
                 right: 8,
               }}>
               <TouchableOpacity onPress={() => params.handleThis()}>
-                <Text style={{color: 'white', padding: 2}}>done</Text>
+                <Text style={{color: 'red', padding: 2}}>done</Text>
               </TouchableOpacity>
             </View>
           </View>
-        ) : (
+        ) : 
+        (
+          
           <View
             style={{
-              height: 50,
+              height: Platform.OS =='ios'?80:50,
               backgroundColor: '#1192d1',
               flexDirection: 'row',
               justifyContent: 'center',
@@ -99,11 +101,11 @@ class ProfilePage extends React.Component {
                 onPress={() => {
                   props.navigation.navigate('UserProfile');
                 }}>
-                <Text style={{color: 'white', padding: 2}}>back</Text>
+                <Text style={{color: 'white', padding: 2,marginTop:Platform.OS =='ios'?25:0}}>back</Text>
               </TouchableOpacity>
             </View>
             <View style={{alignSelf: 'center'}}>
-              <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
+              <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold',marginTop:Platform.OS =='ios'?25:0}}>
                 Edit profile
               </Text>
             </View>
@@ -115,11 +117,12 @@ class ProfilePage extends React.Component {
                 right: 8,
               }}>
               <TouchableOpacity onPress={() => params.handleThis()}>
-                <Text style={{color: 'white', padding: 2}}>done</Text>
+                <Text style={{color: 'white', padding: 2,marginTop:Platform.OS =='ios'?25:0}}>done</Text>
               </TouchableOpacity>
             </View>
           </View>
         ),
+        
     };
   };
 
@@ -533,6 +536,7 @@ class ProfilePage extends React.Component {
           </View>
         </ScrollView>
       </KeyboardAvoidingView>
+     
     );
   }
 }

@@ -11,6 +11,8 @@ import {
   PermissionsAndroid,
   FlatList,
   Dimensions,
+  Platform,
+  StatusBar,
 } from 'react-native';
 import {withNavigation, StackActions} from 'react-navigation';
 import CategoryButton from '../Components/CategoryButton';
@@ -42,33 +44,37 @@ class CreateNewPost extends Component {
     const {params = {}} = props.navigation.state;
     return {
       header:
-        <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
-            <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
-                <TouchableOpacity 
-                    onPress = {() => {
-                        props.navigation.navigate("AddPost");
-                    }}
-                >
-                    <Icon name="arrow-back" color="white" size={25} />
-                </TouchableOpacity>
-            </View>
-            <View style={{alignSelf: 'center'}}>
-                <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>New post</Text>
-            </View>
-            <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
-                <TouchableOpacity 
-                    onPress = {() => {
-                        props.navigation.dispatch(StackActions.popToTop());
-                        props.navigation.navigate('HomeScreen')
-                        params.handleThis()
-                    }}
-                >
-                    <Text style={{color: 'white', padding: 2}}>
-                        Close
-                    </Text>
-                </TouchableOpacity>
-            </View>
-        </View>
+     
+      <View style={{ backgroundColor: '#1192d1',}}>
+      <View style={{marginTop:Platform.OS=='ios'?38:0,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center',}}>
+          <View style={{position: 'absolute',bottom:Platform.OS=='ios'?5:5 , padding:2, alignSelf: 'center', left: 8,marginTop:Platform.OS=='ios'? 40:0}}>
+              <TouchableOpacity 
+                  onPress = {() => {
+                    props.navigation.navigate("AddPost");
+                  }}
+                  >
+                  <Icon name="arrow-back" color="white" size={25} />
+              </TouchableOpacity>
+          </View>
+          <View style={{alignSelf: 'center',marginTop:Platform.OS=='ios'? 10:0}}>
+              <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>New post</Text>
+          </View>
+          <View style={{position: 'absolute', padding:2,bottom:Platform.OS=='ios'?5:5 , alignSelf: 'center', right: 8,marginTop:Platform.OS=='ios'? 40:0}}>
+              <TouchableOpacity 
+                  onPress = {() => {
+                    props.navigation.dispatch(StackActions.popToTop());
+                    props.navigation.navigate('HomeScreen')
+                    params.handleThis()
+                  }}
+                  >
+                  <Text style={{color: 'white', padding: 2,fontSize:20}}>
+                      Close
+                  </Text>
+              </TouchableOpacity>
+          </View>
+                  </View>
+      </View>
+       
     }
   }
 

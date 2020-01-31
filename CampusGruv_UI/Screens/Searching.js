@@ -50,7 +50,7 @@ export default class Searching extends React.PureComponent {
         });
 
         const JsonResponse = await Response.json();
-        console.log(JsonResponse.message);
+        console.log(JsonResponse.message,'gjgjgj');
 
         if(parseInt(Response.status)=== 400) {
            
@@ -110,6 +110,7 @@ fetchCampuses = async (text) => {
     },
   });
   const JsonResponse = await Response.json();
+  console.log(JsonResponse,'JsonResponse',Response,'Response')
   if(parseInt(Response.status)=== 400) {
     
       this.setState({error : true, totalCampuses: 0})
@@ -274,7 +275,7 @@ if(text) {
           keyExtractor={item => item.id}
           showsHorizontalScrollIndicator={false}
           renderItem={({item}) => (
-            <AvatarUserStatus id={item.id} first_name={item.first_name} last_name={item.last_name} campus={item.campus.description} status={true} pic={item.profile_pic_url}></AvatarUserStatus>
+            <AvatarUserStatus id={item.id} first_name={item.first_name} last_name={item.last_name} userFollowing={item.userFollowing} item={item} campus={item.campus.description} status={true} pic={item.profile_pic_url}></AvatarUserStatus>
           )}
         />
       );
@@ -396,7 +397,8 @@ if(text) {
   render() {
     //console.log(this.state);
     return (
-      <View>
+<View style={{backgroundColor:"#1192d1"}}> 
+      <View style={{backgroundColor:ThemeBlue,marginTop:Platform.OS == 'ios' ? 38:0,}}>
 
       <View style={{backgroundColor:ThemeBlue, height:50, flexDirection:"row"}}>
        <View style={{flexDirection:"row", width:"65%",backgroundColor:"white",margin:5,borderRadius:8}}>
@@ -414,6 +416,7 @@ if(text) {
 
         <View
           style={{
+            backgroundColor:'white',
             borderBottomWidth: 1,
             flexDirection: 'row',
             justifyContent: 'space-around',
@@ -480,11 +483,12 @@ if(text) {
           </TouchableOpacity>
         </View>
 
-        <ScrollView>
+        <ScrollView style={{backgroundColor:'white'}}>
           {this.state.selection === 'Feed' ? this.state.totalFeed === 0 ? this.renderNoPost() : this.renderFeed() : null }
           {this.state.selection === 'Users' ? this.state.totalUsers === 0 ? this.renderNoPost("No Users Availiable") : this.renderUsers() : null}
           {this.state.selection === 'Campuses' ? this.state.totalCampuses === 0 ? this.renderNoPost("No Campuses Availiable") : this.renderCampuses() : null}
         </ScrollView>
+      </View>
       </View>
     );
   }

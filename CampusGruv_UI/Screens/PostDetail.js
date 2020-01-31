@@ -12,9 +12,10 @@ import {
   AsyncStorage,
   PermissionsAndroid,
   Dimensions,
-  AppState
+  AppState,
+  Platform
 } from 'react-native';
-import {ThemeConsumer} from 'react-native-elements';
+import {ThemeConsumer, Header} from 'react-native-elements';
 import Comment from '../Components/Comment'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CrossIcon from 'react-native-vector-icons/MaterialIcons';
@@ -35,6 +36,19 @@ import Share from 'react-native-share'
 const IconGrey = '#b4b8bf';
 
 class PostDetail extends Component {
+
+  static navigationOptions = props => {
+    return {
+      header: (
+        <Header centerComponent={{text:"POST",style:{color:"#FFF",fontWeight:"bold"}}} leftComponent={(
+          <TouchableOpacity onPress={() => props.navigation.goBack()} >
+            <Icon name="arrow-back" />
+          </TouchableOpacity>
+        )} />
+      )
+    }
+  }
+
   state = {
     comments: this.props.navigation.getParam('PostData', 'no comments').comments,
     currentComment: null,
@@ -148,7 +162,7 @@ incrementView = async () => {
 
   renderHeader = (userdp, postId, first_name, last_name, image_URL, userId, postTitle) => {
     return (
-      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between',marginTop:Platform.OS == 'ios' ? 38:0,}}>
         <View
           style={{
             alignItems: 'center',
