@@ -56,6 +56,7 @@ class PostDetail extends Component {
     username: this.props.navigation.getParam('PostData', 'no username').username,
     liked: this.props.navigation.getParam('PostData', 'no like status').likeStatus,
     saved: this.props.navigation.getParam('PostData', 'no save status').saveStatus,
+    userFollowing: this.props.navigation.getParam('PostData', 'no follow status').userFollowing,
     isModalVisible: false,
     post_id: undefined
   };
@@ -190,7 +191,8 @@ incrementView = async () => {
               userNavId: userId,
               userNavDp: userdp,
               userNavFirstName: first_name,
-              userNavLastName: last_name
+              userNavLastName: last_name,
+              userFollowing: this.state.userFollowing
             })}
           >
             <Image

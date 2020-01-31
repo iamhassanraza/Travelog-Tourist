@@ -47,6 +47,7 @@ class PostCard extends Component {
               postId: this.props.postId,
               likeStatus: this.props.userWiseLike[0] ? true : false,
               saveStatus: this.props.userSavedPost[0] ? true : false,
+              userFollowing: this.props.userFollowing,
               userAvatar: this.props.userdp,
               userId: this.props.userId,
               first_name: this.props.first_name,
