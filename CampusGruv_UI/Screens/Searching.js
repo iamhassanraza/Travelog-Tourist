@@ -80,7 +80,7 @@ export default class Searching extends React.PureComponent {
       },
     });
     const JsonResponse = await Response.json();
-    console.log('follow data arha ya nhi ----------------> ',JsonResponse)
+    console.log('follow data arha ya nhi ----------------> ',JsonResponse.data)
     
     if(parseInt(Response.status)=== 400) {
        
