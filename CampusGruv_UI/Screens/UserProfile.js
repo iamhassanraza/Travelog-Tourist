@@ -53,7 +53,7 @@ class UserProfile extends React.Component {
       spinner: false,
       loadmore: false,
       pageNo: 1,
-      followed: true,
+      //followed: true,
       searchbox:'',
       userFollowing:null,
     };
@@ -85,7 +85,7 @@ class UserProfile extends React.Component {
         otherUserFirstName: userNavFirstName,
         otherUserLastName: userNavLastName,
         otherUserCampus: userCampus,
-        userFollowing:userFollowing
+        userFollowing: userFollowing
       })
       this.fetchdata(userNavId ? userNavId : this.props.User.id);
       console.log("will focus")
@@ -282,12 +282,12 @@ class UserProfile extends React.Component {
 
   followButton = async (id) => {
     this.setState(prevState => ({
-      followed: !prevState.followed,
+      userFollowing: !prevState.userFollowing,
     }));
     const Token = await AsyncStorage.getItem('TOKEN');
     var Response = null
     console.log('followed ==========> ',this.state.followed)
-    if(this.state.followed) {
+    if(this.state.userFollowing) {
       Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/follow?user_id=${id}`, {
         method: 'GET',
         headers: {

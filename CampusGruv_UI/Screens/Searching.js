@@ -38,6 +38,18 @@ export default class Searching extends React.PureComponent {
     pageNo: 1
   };
 
+  componentDidMount() {
+    this.focusListener = this.props.navigation.addListener('willFocus', () => {
+      console.log('searching is gong tpo be focused')
+      this.setState({
+        posts: [],
+        Users: [],
+        campuses: [],
+        search: undefined
+      })
+
+    })
+  }
 
   fetchFeed = async (text) => {
 
@@ -406,6 +418,7 @@ if(text) {
         <TextInput 
         placeholder="Search" 
         style={{height:"90%" ,margin:4,width:"100%"}}
+        value={this.state.search}
         onChangeText={(text) => {
           this.setState({search : text});
           this.SearchItems(text);
