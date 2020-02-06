@@ -61,7 +61,7 @@ changePassword = async () => {
         source={require('../Assets/Images/background.png')}
         resizeMode="cover">
         <Text
-          style={{color: 'white', fontSize: 16, margin: 10, marginTop: 20}}
+          style={{color: 'white', fontSize: 16, margin: 10, marginTop:Platform.OS=='ios'? 40:20,}}
           onPress={() => {
             this.props.navigation.goBack();
           }}>
@@ -102,6 +102,7 @@ changePassword = async () => {
                     fontSize: 20,
                     color: '#ACACAC',
                     paddingLeft: '3%',
+                    height:Platform.OS=='ios'? 40:50,
                   }}
                   onChangeText={text => this.setState({newPassword: text})}
                   value={this.state.newPassword}
@@ -136,6 +137,7 @@ changePassword = async () => {
                     fontSize: 20,
                     color: '#ACACAC',
                     paddingLeft: '3%',
+                    height:Platform.OS=='ios'? 40:50,
                   }}
                   onChangeText={text => this.setState({confirmPassword: text})}
                   value={this.state.confirmPassword}

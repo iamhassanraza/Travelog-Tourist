@@ -32,7 +32,7 @@ class PostCard extends Component {
 
 
   render() {
-    // console.log('props o user card -----------',this.props)
+     console.log('props o user card -----------',this.state.height)
     return (
       <TouchableWithoutFeedback
         style={{
@@ -58,14 +58,14 @@ class PostCard extends Component {
             },
           })
         }>
-        <View style={{}}>
+        <View style={{ }}>
           <Image
             source={{uri: this.props.imageurl}}
             style={{
               width: '100%',
               borderTopLeftRadius: 15,
               borderTopRightRadius: 15,
-              height: this.state.height < 300 ? this.state.height : 200,
+              height:this.state.height < 300 ? this.state.height : 200,
             }}
             resizeMode="cover"></Image>
          

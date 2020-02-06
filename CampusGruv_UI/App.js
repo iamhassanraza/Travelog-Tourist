@@ -300,8 +300,8 @@ const HomeStack = createStackNavigator({
         <View style={{backgroundColor: '#1192d1'}}>
 
     
-        <View style={{ marginTop:Platform.OS == 'ios' ? 38:0,height: 50, flexDirection: 'row', alignItems: 'center', backgroundColor: '#1192d1' }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', flex: 10 }}>
+        <View style={{ flex:1,marginTop:Platform.OS == 'ios' ? 38:0,height: 50, flexDirection: 'row', alignItems: 'center', backgroundColor: '#1192d1' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', flex:10 }}>
                 <View style={{ marginLeft: '2%', flexDirection: 'row', alignSelf: 'center' }}>
                     <TouchableOpacity
                         onPress={()=> props.navigation.navigate('Searching')}
@@ -324,8 +324,6 @@ const HomeStack = createStackNavigator({
                         </View>
                     </TouchableOpacity>
                 </View>
-            </View>
-            <View style={{ justifyContent:"space-between", alignItems: 'center', flex: 4, flexDirection:'row'}}>
                 <View style={{marginLeft: 5}}>
                     <TouchableOpacity onPress={() => props.navigation.navigate('CategoryList')}>
                         <Icon2
@@ -335,6 +333,8 @@ const HomeStack = createStackNavigator({
                         />
                     </TouchableOpacity>
                 </View>
+            </View>
+            <View style={{ flex:1}}>
                 <TouchableOpacity style={{paddingRight:5}} onPress={() => params.handleThis()}>
                     <PeopleIcon name="users" color="white" size={20} />
                 </TouchableOpacity>

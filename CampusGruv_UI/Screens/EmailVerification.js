@@ -118,6 +118,7 @@ class EmailVerification extends React.Component {
                     fontSize: 20,
                     color: '#ACACAC',
                     paddingLeft: '30%',
+                    height:Platform.OS=='ios'? 40:50,
                   }}
                   onChangeText={text => this.setState({code: text})}
                   value={this.state.code}

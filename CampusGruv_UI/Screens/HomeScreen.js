@@ -35,26 +35,70 @@ export default class HomeScreen extends PureComponent {
     return {
       header: (
         //<MyHeader params={params} navigation={props.navigation} />
-        <View style={{height:50, flexDirection: 'row', backgroundColor: '#1192d1', alignItems: 'center' }}>
-            <View style={{ flexDirection: 'row', alignItems: 'center', flex: 10 }}>
+        Platform.OS=='ios'?
+        <View style={{backgroundColor:'#1192d1'}}>
+        <View style={{height:50, marginTop:Platform.OS=='ios'? 32:0,flexDirection: 'row', backgroundColor: '#1192d1', alignItems: 'center' }}>
+            <View style={{ flexDirection: 'row',  flex: 10 }}>
                 <View style={{ marginLeft: '2%', flexDirection: 'row', alignSelf: 'center' }}>
                     <TouchableOpacity
                         onPress={()=> props.navigation.navigate('Searching')}
-                    >
+                        >
                         <View style={{ height: 30, padding: 0, flexDirection: 'row', alignItems: 'center', width: 250, backgroundColor: '#F0F0F0', borderRadius: 10 }}>
                             <View style={{ marginLeft: '2%' }}>
                                 <Icon
                                     name="search"
                                     color="#1192d1"
                                     size={20}
-                                />
+                                    />
                             </View>
                             <View style={{ height: 20 }}>
                                 <Image
                                     source={Logo}
                                     style={{ width: 150, alignSelf: 'flex-start', height: '100%' }}
                                     resizeMode="contain"
-                                />
+                                    />
+                            </View>
+                        </View>
+                    </TouchableOpacity>
+                </View>
+                <View style={{marginLeft: 5}}>
+                    <TouchableOpacity onPress={() => props.navigation.navigate('CategoryList')}>
+                        <Icon2
+                            name="view-grid"
+                            color="white"
+                            size={28}
+                            />
+                    </TouchableOpacity>
+                </View>
+            </View>
+            <View style={{  flex: 1, }}>
+                <TouchableOpacity style={{paddingRight:5}} onPress={() => params.handleThis()}>
+                    <PeopleIcon name="users" color="white" size={20} />
+                </TouchableOpacity>
+            </View>
+       </View>
+  </View>
+        :
+        <View style={{height:50,flexDirection: 'row', backgroundColor: '#1192d1', alignItems: 'center' }}>
+            <View style={{ flexDirection: 'row', alignItems: 'center', flex: 10 }}>
+                <View style={{ marginLeft: '2%', flexDirection: 'row', alignSelf: 'center' }}>
+                    <TouchableOpacity
+                        onPress={()=> props.navigation.navigate('Searching')}
+                        >
+                        <View style={{ height: 30, padding: 0, flexDirection: 'row', alignItems: 'center', width: 250, backgroundColor: '#F0F0F0', borderRadius: 10 }}>
+                            <View style={{ marginLeft: '2%' }}>
+                                <Icon
+                                    name="search"
+                                    color="#1192d1"
+                                    size={20}
+                                    />
+                            </View>
+                            <View style={{ height: 20 }}>
+                                <Image
+                                    source={Logo}
+                                    style={{ width: 150, alignSelf: 'flex-start', height: '100%' }}
+                                    resizeMode="contain"
+                                    />
                             </View>
                         </View>
                     </TouchableOpacity>
@@ -67,7 +111,7 @@ export default class HomeScreen extends PureComponent {
                             name="view-grid"
                             color="white"
                             size={28}
-                        />
+                            />
                     </TouchableOpacity>
                 </View>
                 <TouchableOpacity style={{paddingRight:5}} onPress={() => params.handleThis()}>
