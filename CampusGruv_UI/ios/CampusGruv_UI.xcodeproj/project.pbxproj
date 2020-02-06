@@ -61,7 +61,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* CampusGruv_UITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CampusGruv_UITests.m; sourceTree = "<group>"; };
 		0CD447A03F1C4F4CB85481CB /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
-		13B07F961A680F5B00A75B9A /* CampusGruv_UI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = CampusGruv_UI.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		13B07F961A680F5B00A75B9A /* CampusGruv_UI.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; name = CampusGruv_UI.app; path = "CampusGrüv.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = CampusGruv_UI/AppDelegate.h; sourceTree = "<group>"; };
 		13B07FB01A68108700A75B9A /* AppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = AppDelegate.m; path = CampusGruv_UI/AppDelegate.m; sourceTree = "<group>"; };
 		13B07FB21A68108700A75B9A /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -760,8 +760,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.campusgruv.allentown;
-				PRODUCT_NAME = CampusGruv_UI;
+				PRODUCT_BUNDLE_IDENTIFIER = com.campusgruv;
+				PRODUCT_NAME = "CampusGrüv";
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};
@@ -781,8 +781,8 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.campusgruv.allentown;
-				PRODUCT_NAME = CampusGruv_UI;
+				PRODUCT_BUNDLE_IDENTIFIER = com.campusgruv;
+				PRODUCT_NAME = "CampusGrüv";
 				TARGETED_DEVICE_FAMILY = 1;
 				VERSIONING_SYSTEM = "apple-generic";
 			};

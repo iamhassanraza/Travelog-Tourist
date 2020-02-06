@@ -20,14 +20,14 @@ export default class AddNewPost extends Component {
     const {params = {}} = props.navigation.state;
     return  {
         header: (
-        //   <Header style={{height:30}} centerComponent={{text:"New Post",style:{fontWeight:"bold",color:"#FFF"}}} rightComponent={(
+        //   <Header centerComponent={{text:"New Post",style:{fontWeight:"bold",color:"#FFF"}}} rightComponent={(
         //     <TouchableOpacity onPress={() => props.navigation.navigate('HomeScreen')} >
         //       <Text style={{color:"#FFF"}} >Close</Text>
         //     </TouchableOpacity>
         //   )} />
         // )
-            // (
-              <View style={{ backgroundColor: '#1192d1'}}>
+        //     (
+          <View style={{backgroundColor: '#1192d1',}}>
             <View style={{marginTop:Platform.OS=='ios'?38:0,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center',marginTop:Platform.OS == "ios" ? 30 : 0}}>
                 <View style={{alignSelf: 'center'}}>
                     <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>New post</Text>
@@ -36,15 +36,15 @@ export default class AddNewPost extends Component {
                     <TouchableOpacity 
                         onPress = {() => {
                           props.navigation.navigate('HomeScreen')
-                            params.handleThis()
-                          }}
-                          >
+                          params.handleThis()
+                        }}
+                        >
                         <Text style={{color: 'white', padding: 2}}>
                             close
                         </Text>
                     </TouchableOpacity>
                 </View>
-                          </View>
+                        </View>
             </View>)
     }
   }

@@ -225,7 +225,7 @@ class Signup extends React.Component {
         source={require('../Assets/Images/background.png')}
         resizeMode="cover">
         <Text
-          style={{color: 'white', fontSize: 16, margin: 10, marginTop: 20}}
+          style={{color: 'white', fontSize: 16, margin: 10, marginTop:Platform.OS=='ios'? 40:20,}}
           onPress={() => {
             this.props.navigation.goBack();
           }}>
@@ -261,6 +261,7 @@ class Signup extends React.Component {
                   <TextInput
                     style={{
                       width: '90%',
+                      height:Platform.OS=='ios'? 40:50,
                       marginLeft: 10,
                       fontSize: 20,
                       color: '#ACACAC',
@@ -291,6 +292,7 @@ class Signup extends React.Component {
                   <TextInput
                     style={{
                       width: '90%',
+                      height:Platform.OS=='ios'? 40:50,
                       marginLeft: 10,
                       fontSize: 20,
                       color: '#ACACAC',
@@ -320,7 +322,7 @@ class Signup extends React.Component {
                   <TextInput
                     style={{
                       width: '90%',
-                      height:Platform.OS=='ios'?40:50,
+                      height:Platform.OS=='ios'? 40:50,
                       marginLeft: 10,
                       fontSize: 20,
                       color: '#ACACAC',
@@ -351,6 +353,7 @@ class Signup extends React.Component {
                   <TextInput
                     style={{
                       width: '90%',
+                      height:Platform.OS=='ios'? 40:50,
                       marginLeft: 10,
                       fontSize: 20,
                       color: '#ACACAC',

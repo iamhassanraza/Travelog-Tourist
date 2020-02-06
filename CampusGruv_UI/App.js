@@ -135,8 +135,9 @@ const ProfileStack = createStackNavigator({
                 //     </TouchableOpacity>
                 // )}
                 // />
-                <View style={{backgroundColor:'#1192d1'}}>
-                <View style={{marginTop:Platform.OS=='ios'?38:0, height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+                <View style={{backgroundColor: '#1192d1',}}>
+
+                <View style={{marginTop:Platform.OS=='ios'? 38:0,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
                     <View style={{alignSelf: 'center'}}>
                         <Image
                             source={Logo}
@@ -250,7 +251,8 @@ const HomeStack = createStackNavigator({
         screen: UserProfile,
         navigationOptions: {
             header: (props) => (
-                <View style={{ backgroundColor: '#1192d1'}}>
+                <View style={{ backgroundColor: '#1192d1',}}>
+
                 <View style={{marginTop:Platform.OS=='ios'? 38:0,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
                     <View style={{alignSelf: 'center'}}>
                     <Image
