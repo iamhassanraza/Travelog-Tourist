@@ -103,8 +103,6 @@ export default class HomeScreen extends PureComponent {
                         </View>
                     </TouchableOpacity>
                 </View>
-            </View>
-            <View style={{ justifyContent:"space-between", alignItems: 'center', flex: 4, flexDirection:'row'}}>
                 <View style={{marginLeft: 5}}>
                     <TouchableOpacity onPress={() => props.navigation.navigate('CategoryList')}>
                         <Icon2
@@ -114,6 +112,8 @@ export default class HomeScreen extends PureComponent {
                             />
                     </TouchableOpacity>
                 </View>
+            </View>
+            <View style={{ flex:1}}>
                 <TouchableOpacity style={{paddingRight:5}} onPress={() => params.handleThis()}>
                     <PeopleIcon name="users" color="white" size={20} />
                 </TouchableOpacity>

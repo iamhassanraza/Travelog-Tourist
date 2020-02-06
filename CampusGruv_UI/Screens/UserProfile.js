@@ -459,7 +459,7 @@ class UserProfile extends React.Component {
                 fontSize: 15,
                 color: '#ACACAC',
                 paddingTop: 0,
-                paddingBottom:Platform.OS=='ios'?10:0,
+                paddingBottom:Platform.OS=='ios'?10:10,
                 height:Platform.OS=='ios'? 30:30,
               }}
               placeholder="Search"

@@ -300,7 +300,7 @@ const HomeStack = createStackNavigator({
         <View style={{backgroundColor: '#1192d1'}}>
 
     
-        <View style={{ flex:1,marginTop:Platform.OS == 'ios' ? 38:0,height: 50, flexDirection: 'row', alignItems: 'center', backgroundColor: '#1192d1' }}>
+        <View style={{ marginTop:Platform.OS == 'ios' ? 38:0,height: 50, flexDirection: 'row', alignItems: 'center', backgroundColor: '#1192d1' }}>
             <View style={{ flexDirection: 'row', alignItems: 'center', flex:10 }}>
                 <View style={{ marginLeft: '2%', flexDirection: 'row', alignSelf: 'center' }}>
                     <TouchableOpacity
