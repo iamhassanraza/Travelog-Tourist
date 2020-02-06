@@ -1,0 +1,85 @@
+
+App Thinning Size Report for All Variants of CampusGruv_UI
+
+Variant: CampusGruv_UI-20C92BFB-95D0-4365-9FD4-B7EC6CE8B899.ipa
+Supported variant descriptors: [device: iPhone11,8, os-version: 12.0] and [device: iPhone11,8, os-version: 12.2]
+App + On Demand Resources size: 7.7 MB compressed, 12.3 MB uncompressed
+App size: 7.7 MB compressed, 12.3 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: CampusGruv_UI-2E4519A2-08B1-421E-A198-B35C518E7A7A.ipa
+Supported variant descriptors: [device: iPhone11,2, os-version: 12.0], [device: iPhone10,3, os-version: 12.2], [device: iPhone9,2, os-version: 12.2], [device: iPhone8,2, os-version: 12.0], [device: iPhone7,1, os-version: 12.2], [device: iPhone11,6, os-version: 12.0], [device: iPhone10,5, os-version: 12.0], [device: iPhone10,2, os-version: 12.2], [device: iPhone9,2, os-version: 12.0], [device: iPhone9,4, os-version: 12.2], [device: iPhone9,2, os-version: 10.0], [device: iPhone11,6, os-version: 12.2], [device: iPhone11,4, os-version: 12.2], [device: iPhone10,3, os-version: 11.0], [device: iPhone10,2, os-version: 12.0], [device: iPhone7,1, os-version: 9.0], [device: iPhone10,5, os-version: 11.0], [device: iPhone8,2, os-version: 12.2], [device: iPhone10,3, os-version: 12.0], [device: iPhone10,6, os-version: 12.0], [device: iPhone11,4, os-version: 12.0], [device: iPhone11,2, os-version: 12.2], [device: iPhone10,6, os-version: 11.0], [device: iPhone7,1, os-version: 12.0], [device: iPhone8,2, os-version: 9.0], [device: iPhone10,6, os-version: 12.2], [device: iPhone10,5, os-version: 12.2], [device: iPhone9,4, os-version: 10.0], [device: iPhone9,4, os-version: 12.0], and [device: iPhone10,2, os-version: 11.0]
+App + On Demand Resources size: 7.7 MB compressed, 12.3 MB uncompressed
+App size: 7.7 MB compressed, 12.3 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: CampusGruv_UI-4FEEA85B-948B-4252-A5FC-A880B70FC606.ipa
+Supported variant descriptors: [device: iPad2,4, os-version: 9.0], [device: iPad2,1, os-version: 9.0], [device: iPad2,3, os-version: 9.0], [device: iPad2,2, os-version: 9.0], [device: iPad2,6, os-version: 9.0], [device: iPad2,7, os-version: 9.0], and [device: iPad2,5, os-version: 9.0]
+App + On Demand Resources size: 7.8 MB compressed, 12.1 MB uncompressed
+App size: 7.8 MB compressed, 12.1 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: CampusGruv_UI-6F5B51EB-3A29-48F6-AB3C-3F24F8A1EE3C.ipa
+Supported variant descriptors: [device: iPhone12,1, os-version: 13.0] and [device: iPhone11,8, os-version: 13.0]
+App + On Demand Resources size: 7.7 MB compressed, 12.3 MB uncompressed
+App size: 7.7 MB compressed, 12.3 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: CampusGruv_UI-734A5012-C33E-4F9F-B266-8139422C7971.ipa
+Supported variant descriptors: [device: iPhone12,3, os-version: 13.0], [device: iPhone11,4, os-version: 13.0], [device: iPhone9,2, os-version: 13.0], [device: iPhone10,3, os-version: 13.0], [device: iPhone11,6, os-version: 13.0], [device: iPhone10,6, os-version: 13.0], [device: iPhone10,5, os-version: 13.0], [device: iPhone10,2, os-version: 13.0], [device: iPhone8,2, os-version: 13.0], [device: iPhone11,2, os-version: 13.0], [device: iPhone9,4, os-version: 13.0], and [device: iPhone12,5, os-version: 13.0]
+App + On Demand Resources size: 7.7 MB compressed, 12.3 MB uncompressed
+App size: 7.7 MB compressed, 12.3 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: CampusGruv_UI-78106E75-0243-4FF6-8298-C36CEE83E0DD.ipa
+Supported variant descriptors: [device: iPhone5,2, os-version: 9.0], [device: iPhone5,3, os-version: 9.0], [device: iPod5,1, os-version: 9.0], [device: iPhone5,4, os-version: 9.0], [device: iPhone4,1, os-version: 9.0], and [device: iPhone5,1, os-version: 9.0]
+App + On Demand Resources size: 7.8 MB compressed, 12.1 MB uncompressed
+App size: 7.8 MB compressed, 12.1 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: CampusGruv_UI-81AF989F-91BB-4036-833F-2B64399431D5.ipa
+Supported variant descriptors: [device: iPad5,2, os-version: 13.0], [device: iPad7,1, os-version: 13.0], [device: iPad8,7, os-version: 13.0], [device: iPad7,11, os-version: 13.0], [device: iPad7,3, os-version: 13.0], [device: iPad8,3, os-version: 13.0], [device: iPad5,3, os-version: 13.0], [device: iPad5,4, os-version: 13.0], [device: iPad5,1, os-version: 13.0], [device: iPad6,12, os-version: 13.0], [device: iPad11,4, os-version: 13.0], [device: iPad8,8, os-version: 13.0], [device: iPad6,11, os-version: 13.0], [device: iPad8,1, os-version: 13.0], [device: iPad11,2, os-version: 13.0], [device: iPad7,6, os-version: 13.0], [device: iPad6,7, os-version: 13.0], [device: iPad8,2, os-version: 13.0], [device: iPad8,6, os-version: 13.0], [device: iPad7,5, os-version: 13.0], [device: iPad7,4, os-version: 13.0], [device: iPad11,3, os-version: 13.0], [device: iPad8,4, os-version: 13.0], [device: iPad7,12, os-version: 13.0], [device: iPad6,8, os-version: 13.0], [device: iPad7,2, os-version: 13.0], [device: iPad11,1, os-version: 13.0], [device: iPad6,3, os-version: 13.0], [device: iPad8,5, os-version: 13.0], and [device: iPad6,4, os-version: 13.0]
+App + On Demand Resources size: 7.7 MB compressed, 12.3 MB uncompressed
+App size: 7.7 MB compressed, 12.3 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: CampusGruv_UI-93A8F4A1-CCF1-425F-B41F-405DFD49E9FE.ipa
+Supported variant descriptors: [device: iPhone9,3, os-version: 10.0], [device: iPhone10,4, os-version: 12.0], [device: iPhone8,1, os-version: 12.0], [device: iPhone6,1, os-version: 9.0], [device: iPhone8,1, os-version: 9.0], [device: iPhone6,2, os-version: 9.0], [device: iPhone9,3, os-version: 12.0], [device: iPhone8,4, os-version: 12.2], [device: iPhone8,4, os-version: 9.0], [device: iPhone6,2, os-version: 12.2], [device: iPhone7,2, os-version: 9.0], [device: iPod7,1, os-version: 9.0], [device: iPhone6,2, os-version: 12.0], [device: iPhone7,2, os-version: 12.0], [device: iPhone6,1, os-version: 12.2], [device: iPhone6,1, os-version: 12.0], [device: iPhone9,1, os-version: 12.0], [device: iPod7,1, os-version: 12.0], [device: iPhone10,4, os-version: 11.0], [device: iPod7,1, os-version: 12.2], [device: iPhone9,3, os-version: 12.2], [device: iPod9,1, os-version: 12.2], [device: iPhone7,2, os-version: 12.2], [device: iPhone10,1, os-version: 11.0], [device: iPhone10,1, os-version: 12.0], [device: iPhone9,1, os-version: 12.2], [device: iPhone8,4, os-version: 12.0], [device: iPhone10,1, os-version: 12.2], [device: iPhone8,1, os-version: 12.2], [device: iPhone10,4, os-version: 12.2], and [device: iPhone9,1, os-version: 10.0]
+App + On Demand Resources size: 7.7 MB compressed, 12.3 MB uncompressed
+App size: 7.7 MB compressed, 12.3 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: CampusGruv_UI-CFE407A5-A6A2-4002-995E-1B1054F69D79.ipa
+Supported variant descriptors: [device: iPhone10,4, os-version: 13.0], [device: iPhone9,1, os-version: 13.0], [device: iPhone10,1, os-version: 13.0], [device: iPod9,1, os-version: 13.0], [device: iPhone8,1, os-version: 13.0], [device: iPhone8,4, os-version: 13.0], and [device: iPhone9,3, os-version: 13.0]
+App + On Demand Resources size: 7.7 MB compressed, 12.3 MB uncompressed
+App size: 7.7 MB compressed, 12.3 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: CampusGruv_UI-E06527B0-0727-4F9C-AA30-9DBDCD97C166.ipa
+Supported variant descriptors: [device: iPad3,1, os-version: 9.0], [device: iPad3,3, os-version: 9.0], [device: iPad3,6, os-version: 9.0], [device: iPad3,2, os-version: 9.0], [device: iPad3,4, os-version: 9.0], and [device: iPad3,5, os-version: 9.0]
+App + On Demand Resources size: 7.8 MB compressed, 12.1 MB uncompressed
+App size: 7.8 MB compressed, 12.1 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: CampusGruv_UI-E60B590E-F247-4DAA-B190-37F9054253AE.ipa
+Supported variant descriptors: [device: iPad6,7, os-version: 12.0], [device: iPad4,8, os-version: 12.0], [device: iPad8,3, os-version: 12.0], [device: iPad4,3, os-version: 9.0], [device: iPad6,8, os-version: 12.0], [device: iPad5,1, os-version: 12.0], [device: iPad8,8, os-version: 12.2], [device: iPad4,5, os-version: 12.2], [device: iPad4,9, os-version: 12.0], [device: iPad11,4, os-version: 12.2], [device: iPad8,5, os-version: 12.0], [device: iPad4,3, os-version: 12.2], [device: iPad8,3, os-version: 12.2], [device: iPad7,1, os-version: 12.0], [device: iPad7,4, os-version: 12.2], [device: iPad5,4, os-version: 12.2], [device: iPad7,5, os-version: 12.2], [device: iPad8,7, os-version: 12.0], [device: iPad6,3, os-version: 12.2], [device: iPad8,6, os-version: 12.0], [device: iPad4,2, os-version: 12.0], [device: iPad7,2, os-version: 12.0], [device: iPad4,4, os-version: 12.0], [device: iPad7,5, os-version: 11.0], [device: iPad7,6, os-version: 12.0], [device: iPad5,4, os-version: 12.0], [device: iPad8,2, os-version: 12.2], [device: iPad8,5, os-version: 12.2], [device: iPad5,1, os-version: 12.2], [device: iPad8,2, os-version: 12.0], [device: iPad4,7, os-version: 12.2], [device: iPad7,2, os-version: 10.0], [device: iPad7,3, os-version: 10.0], [device: iPad4,7, os-version: 9.0], [device: iPad7,1, os-version: 10.0], [device: iPad6,7, os-version: 9.0], [device: iPad8,4, os-version: 12.0], [device: iPad4,1, os-version: 12.0], [device: iPad4,2, os-version: 9.0], [device: iPad6,4, os-version: 12.2], [device: iPad7,4, os-version: 10.0], [device: iPad7,1, os-version: 12.2], [device: iPad5,3, os-version: 12.0], [device: iPad4,5, os-version: 12.0], [device: iPad8,7, os-version: 12.2], [device: iPad6,4, os-version: 12.0], [device: iPad4,1, os-version: 12.2], [device: iPad4,9, os-version: 12.2], [device: iPad11,2, os-version: 12.2], [device: iPad6,4, os-version: 9.0], [device: iPad11,3, os-version: 12.2], [device: iPad6,7, os-version: 12.2], [device: iPad4,6, os-version: 12.2], [device: iPad8,6, os-version: 12.2], [device: iPad4,6, os-version: 9.0], [device: iPad6,3, os-version: 9.0], [device: iPad4,2, os-version: 12.2], [device: iPad11,1, os-version: 12.2], [device: iPad4,4, os-version: 12.2], [device: iPad7,4, os-version: 12.0], [device: iPad6,11, os-version: 12.0], [device: iPad7,5, os-version: 12.0], [device: iPad7,3, os-version: 12.0], [device: iPad6,8, os-version: 9.0], [device: iPad7,2, os-version: 12.2], [device: iPad7,6, os-version: 11.0], [device: iPad6,8, os-version: 12.2], [device: iPad7,6, os-version: 12.2], [device: iPad7,3, os-version: 12.2], [device: iPad5,2, os-version: 9.0], [device: iPad6,12, os-version: 10.0], [device: iPad4,6, os-version: 12.0], [device: iPad4,1, os-version: 9.0], [device: iPad5,1, os-version: 9.0], [device: iPad6,11, os-version: 12.2], [device: iPad4,8, os-version: 12.2], [device: iPad6,12, os-version: 12.2], [device: iPad4,9, os-version: 9.0], [device: iPad5,3, os-version: 9.0], [device: iPad5,2, os-version: 12.2], [device: iPad4,8, os-version: 9.0], [device: iPad4,7, os-version: 12.0], [device: iPad5,2, os-version: 12.0], [device: iPad5,4, os-version: 9.0], [device: iPad8,8, os-version: 12.0], [device: iPad4,3, os-version: 12.0], [device: iPad6,11, os-version: 10.0], [device: iPad8,4, os-version: 12.2], [device: iPad8,1, os-version: 12.2], [device: iPad5,3, os-version: 12.2], [device: iPad4,4, os-version: 9.0], [device: iPad6,12, os-version: 12.0], [device: iPad6,3, os-version: 12.0], [device: iPad8,1, os-version: 12.0], and [device: iPad4,5, os-version: 9.0]
+App + On Demand Resources size: 7.7 MB compressed, 12.3 MB uncompressed
+App size: 7.7 MB compressed, 12.3 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed
+
+
+Variant: CampusGruv_UI.ipa
+Supported variant descriptors: Universal
+App + On Demand Resources size: 8.8 MB compressed, 14.8 MB uncompressed
+App size: 8.8 MB compressed, 14.8 MB uncompressed
+On Demand Resources size: Zero KB compressed, Zero KB uncompressed

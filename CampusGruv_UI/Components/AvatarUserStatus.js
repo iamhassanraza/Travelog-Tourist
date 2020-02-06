@@ -6,7 +6,7 @@ import {TouchableOpacity, TouchableWithoutFeedback} from 'react-native-gesture-h
 
 class AvatarUserStatus extends Component {
   state = {
-    followed: this.props.item.userFollowing,
+    followed: this.props.userFollowing,
 
   };
 
@@ -20,7 +20,7 @@ class AvatarUserStatus extends Component {
     const id = this.props.id
     var Response = null
     console.log('followed ==========> ',this.state.followed,id)
-    if(this.state.followed.length > 0) {
+    if(this.state.followed) {
       Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/follow?user_id=${id}`, {
         method: 'GET',
         headers: {
@@ -75,7 +75,7 @@ class AvatarUserStatus extends Component {
                 userNavFirstName: this.props.first_name,
                 userNavLastName: this.props.last_name,
                 userCampus: this.props.campus,
-                userFollowing:this.props.userFollowing
+                userFollowing:this.state.followed
             })}>
             <View style={{flexDirection: 'row', padding: '1%'}}>
               <Image
@@ -104,14 +104,14 @@ class AvatarUserStatus extends Component {
               justifyContent: 'center',
               alignItems: 'center',
               borderRadius: 5,
-              borderColor: this.state.followed.length > 0 ? 'black' : 'grey',
+              borderColor: this.state.followed ? 'black' : 'grey',
             }}>
             <Text
               style={{
-                color: this.state.followed.length > 0 ? 'black' : 'grey',
+                color: this.state.followed ? 'black' : 'grey',
                 fontSize: 12,
               }}>
-              {this.state.followed.length > 0 ? 'Following' : 'Follow'}
+              {this.state.followed ? 'Following' : 'Follow'}
             </Text>
           </View>
         </TouchableOpacity>

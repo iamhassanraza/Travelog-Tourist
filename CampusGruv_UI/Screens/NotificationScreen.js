@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView, Alert, Platform } from 'react-native'
+import { Text, View, ScrollView, Alert, Platform,AsyncStorage, TouchableHighlightBase } from 'react-native'
 import NoticationComponent from '../Components/NoticationComponent'
 import { Header } from 'react-native-elements'
 
 
 
 export default class NotificationScreen extends Component {
+    state = {
+        notificate:null,
+    }
     // static navigationOptions = (props) => {
     //     // const {params = {}} = props.navigation.state;
     //     return  {
@@ -19,21 +22,43 @@ export default class NotificationScreen extends Component {
     //             </View>)
     //     }
     //   }
-    
-    
+    componentDidMount(){
+this.getNoti()
+console.log('asdasdsa')
+    }
+
+    getNoti= async ()=>{
+        const Token = await AsyncStorage.getItem('TOKEN');
+        const user_id = await AsyncStorage.getItem('USER_ID')
+        const Response = await fetch(
+            `https://campus-gruv-heroku.herokuapp.com/api/v1/user/notifications?user_id=491&page=1`,
+            {
+              headers: {
+                Authorization: `Bearer ${Token}`,
+              },
+            },
+          );
+          const JsonResponse = await Response.json();
+        //   console.log('response',JsonResponse,'JsonResponse',Response,'JsonResponse',Response.json())
+        this.setState({
+            notificate:JsonResponse.data
+        })
+
+      
+}    
     render() {
+        console.log(this.state.notificate,'this.state.notificate')
         return (
             <View style={{flex:1}}>
-                <Header containerStyle={{height:Platform.OS=='ios'? 80:50}} centerComponent={{text:"Notifications",style:{color:"#FFF",fontWeight:"bold"}}}  />
+                <Header containerStyle={{height:Platform.OS=='ios'? 80:50,backgroundColor:'#1192d1'}} centerComponent={{text:"Notifications",style:{color:"#FFF",fontSize:20, fontWeight:'bold'}}}  />
                 <ScrollView>
-                    <NoticationComponent uri='https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg' title="Saifullah" time="1 hour" activity="followed You" />
-                    <NoticationComponent  uri='https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' title="Jawad" time="50 minutes" activity="commented On your post"/>
-                    <NoticationComponent  uri='https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' title="ALi" time="40 minutes" activity="Liked Your post"/>
-                    <NoticationComponent  uri='https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' title="Hassan" time="30 minutes" activity="shared your post"/>
-                    <NoticationComponent  uri='https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' title="Faraz" time="20 minutes" activity="followed you"/>
-                    <NoticationComponent  uri='https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' title="Umair" time="10 minutes" activity="Liked your post"/>
-                    <NoticationComponent  uri='https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg' title="Ammar" time="4 minutes" activity="Shared your post"/>
-                </ScrollView>
+                    {
+                        this.state.notificate && this.state.notificate.map((data)=>{
+                           return <NoticationComponent uri={data.userNotification.profile_pic_url} title={data.userNotification.first_name+' '+data.userNotification.last_name} time="1 hour" activity={data.notification_message} />
+                            
+                        })
+                    }
+                    </ScrollView>
             </View>
         )
     }

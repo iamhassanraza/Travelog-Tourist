@@ -38,6 +38,18 @@ export default class Searching extends React.PureComponent {
     pageNo: 1
   };
 
+  componentDidMount() {
+    this.focusListener = this.props.navigation.addListener('willFocus', () => {
+      console.log('searching is gong tpo be focused')
+      this.setState({
+        posts: [],
+        Users: [],
+        campuses: [],
+        search: undefined
+      })
+
+    })
+  }
 
   fetchFeed = async (text) => {
 
@@ -80,7 +92,7 @@ export default class Searching extends React.PureComponent {
       },
     });
     const JsonResponse = await Response.json();
-    console.log('follow data arha ya nhi ----------------> ',JsonResponse)
+    console.log('follow data arha ya nhi ----------------> ',JsonResponse.data)
     
     if(parseInt(Response.status)=== 400) {
        
@@ -228,7 +240,7 @@ if(text) {
     if (this.state.loadingFeed===false) {
       return (
         <ScrollView
-        style={{paddingBottom:"25%"}}
+        style={{paddingBottom:"35%"}}
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}
@@ -269,13 +281,13 @@ if(text) {
       // console.log('usersss ===================>',this.state.Users)
       return (
         <FlatList
-        style={{paddingBottom:"25%"}}
+        style={{paddingBottom:"35%"}}
           vertical
           data={this.state.Users}
           keyExtractor={item => item.id}
           showsHorizontalScrollIndicator={false}
           renderItem={({item}) => (
-            <AvatarUserStatus id={item.id} first_name={item.first_name} last_name={item.last_name} userFollowing={item.userFollowing} item={item} campus={item.campus.description} status={true} pic={item.profile_pic_url}></AvatarUserStatus>
+            <AvatarUserStatus id={item.id} first_name={item.first_name} last_name={item.last_name} userFollowing={item.userFollowing.length>0 ? true : false} item={item} campus={item.campus.description} status={true} pic={item.profile_pic_url}></AvatarUserStatus>
           )}
         />
       );
@@ -307,7 +319,7 @@ if(text) {
     if (this.state.loadingCampuses===false) {
       return (
         <FlatList
-        style={{paddingBottom:"25%"}}
+        style={{paddingBottom:"35%"}}
           vertical
           data={this.state.Campuses}
           keyExtractor={item => item.id}
@@ -406,6 +418,7 @@ if(text) {
         <TextInput 
         placeholder="Search" 
         style={{height:"90%" ,margin:4,width:"100%"}}
+        value={this.state.search}
         onChangeText={(text) => {
           this.setState({search : text});
           this.SearchItems(text);

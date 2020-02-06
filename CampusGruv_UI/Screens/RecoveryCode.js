@@ -72,7 +72,7 @@ class RecoverCode extends React.Component {
         source={require('../Assets/Images/background.png')}
         resizeMode="cover">
         <Text
-          style={{color: 'white', fontSize: 16, margin: 10, marginTop: 20}}
+          style={{color: 'white', fontSize: 16, margin: 10, marginTop:Platform.OS=='ios'? 40:20,}}
           onPress={() => {
             this.props.navigation.goBack();
           }}>
@@ -114,6 +114,7 @@ class RecoverCode extends React.Component {
                     fontSize: 20,
                     color: '#ACACAC',
                     paddingLeft: '30%',
+                    height:Platform.OS=='ios'? 40:50,
                   }}
                   onChangeText={text => this.setState({code: text})}
                   value={this.state.code}

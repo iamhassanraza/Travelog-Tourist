@@ -32,7 +32,7 @@ class PostCard extends Component {
 
 
   render() {
-    // console.log('props o user card -----------',this.props)
+     console.log('props o user card -----------',this.state.height)
     return (
       <TouchableWithoutFeedback
         style={{
@@ -47,6 +47,7 @@ class PostCard extends Component {
               postId: this.props.postId,
               likeStatus: this.props.userWiseLike[0] ? true : false,
               saveStatus: this.props.userSavedPost[0] ? true : false,
+              userFollowing: this.props.userFollowing,
               userAvatar: this.props.userdp,
               userId: this.props.userId,
               first_name: this.props.first_name,
@@ -57,14 +58,14 @@ class PostCard extends Component {
             },
           })
         }>
-        <View style={{}}>
+        <View style={{ }}>
           <Image
             source={{uri: this.props.imageurl}}
             style={{
               width: '100%',
               borderTopLeftRadius: 15,
               borderTopRightRadius: 15,
-              height: this.state.height < 300 ? this.state.height : 200,
+              height:this.state.height < 300 ? this.state.height : 200,
             }}
             resizeMode="cover"></Image>
          

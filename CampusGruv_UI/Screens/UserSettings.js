@@ -193,7 +193,7 @@ export default class UserSettings extends Component {
             position: 'absolute',
             height: 50,
             left: 10,
-            bottom: 0,
+            bottom: 10,
             justifyContent: 'center'
           }}>
             <LogoutButton style={{fontSize: 19, paddingLeft: 5, paddingRight: 5}}/>

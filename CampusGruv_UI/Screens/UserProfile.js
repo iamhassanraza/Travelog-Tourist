@@ -53,7 +53,7 @@ class UserProfile extends React.Component {
       spinner: false,
       loadmore: false,
       pageNo: 1,
-      followed: true,
+      //followed: true,
       searchbox:'',
       userFollowing:null,
     };
@@ -85,7 +85,7 @@ class UserProfile extends React.Component {
         otherUserFirstName: userNavFirstName,
         otherUserLastName: userNavLastName,
         otherUserCampus: userCampus,
-        userFollowing:userFollowing
+        userFollowing: userFollowing
       })
       this.fetchdata(userNavId ? userNavId : this.props.User.id);
       console.log("will focus")
@@ -282,12 +282,12 @@ class UserProfile extends React.Component {
 
   followButton = async (id) => {
     this.setState(prevState => ({
-      followed: !prevState.followed,
+      userFollowing: !prevState.userFollowing,
     }));
     const Token = await AsyncStorage.getItem('TOKEN');
     var Response = null
     console.log('followed ==========> ',this.state.followed)
-    if(this.state.followed) {
+    if(this.state.userFollowing) {
       Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/follow?user_id=${id}`, {
         method: 'GET',
         headers: {
@@ -341,7 +341,7 @@ class UserProfile extends React.Component {
             <TouchableOpacity
               style={{
                 marginTop: 5,
-                marginRight: 8, 
+                marginRight: 5, 
                 width: 90,
                 alignSelf: 'flex-end'
               }}
@@ -353,6 +353,7 @@ class UserProfile extends React.Component {
                   color: '#ACACAC',
                   borderWidth: 0.5,
                   padding: 5,
+                  alignSelf: 'center',
                   borderColor: '#ACACAC',
                   borderRadius: 10,
                 }}>
@@ -364,7 +365,7 @@ class UserProfile extends React.Component {
             <TouchableOpacity
               style={{
                 marginTop: 5,
-                marginRight: 0,
+                //marginRight: 1,
                 width: 80,
                 //borderWidth: 1,
                 justifyContent: 'center',
@@ -376,13 +377,13 @@ class UserProfile extends React.Component {
               }}>
               <Text
                 style={{
-                  color: this.state.userFollowing.length > 0 ? ThemeBlue : 'grey',
+                  color: this.state.userFollowing ? ThemeBlue : 'grey',
                   borderWidth: 0.5,
                   padding: 5,
-                  borderColor: this.state.userFollowing.length > 0 ? ThemeBlue : 'grey',
+                  borderColor: this.state.userFollowing ? ThemeBlue : 'grey',
                   borderRadius: 10
                 }}>
-                {this.state.userFollowing.length > 0 ? "Unfollow" : "Follow"}
+                {this.state.userFollowing ? "Unfollow" : "Follow"}
               </Text>
             </TouchableOpacity>
           </View>
@@ -458,6 +459,8 @@ class UserProfile extends React.Component {
                 fontSize: 15,
                 color: '#ACACAC',
                 paddingTop: 0,
+                paddingBottom:Platform.OS=='ios'?10:0,
+                height:Platform.OS=='ios'? 30:30,
               }}
               placeholder="Search"
             value={this.state.searchbox}
