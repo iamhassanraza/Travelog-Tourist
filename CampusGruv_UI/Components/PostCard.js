@@ -32,7 +32,6 @@ class PostCard extends Component {
 
 
   render() {
-     console.log('props o user card -----------',this.state.height)
     return (
       <TouchableWithoutFeedback
         style={{

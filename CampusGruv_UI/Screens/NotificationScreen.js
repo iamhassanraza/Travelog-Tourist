@@ -6,25 +6,26 @@ import { Header } from 'react-native-elements'
 
 
 export default class NotificationScreen extends Component {
+    
     state = {
         notificate:null,
     }
-    // static navigationOptions = (props) => {
-    //     // const {params = {}} = props.navigation.state;
-    //     return  {
-    //         header: (
-    //           <View style={{backgroundColor: '#1192d1',}}>
-    //             <View style={{marginTop:Platform.OS=='ios'?38:0,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center',marginTop:Platform.OS == "ios" ? 30 : 0}}>
-    //                 <View style={{alignSelf: 'center'}}>
-    //                     <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>Notifications</Text>
-    //                 </View>
-    //                         </View>
-    //             </View>)
-    //     }
-    //   }
-    componentDidMount(){
-this.getNoti()
-console.log('asdasdsa')
+    
+    static navigationOptions = (props) => {
+        const {params = {}} = props.navigation.state;
+        return  {   
+            header:        
+                <View style={{marginTop:Platform.OS=='ios'?38:0,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center',marginTop:Platform.OS == "ios" ? 30 : 0}}>
+                    <View style={{alignSelf: 'center'}}>
+                        <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>Notifications</Text>
+                    </View>
+                </View>   
+        }
+    }
+
+    componentDidMount() {
+        this.getNoti()
+        console.log('asdasdsa')
     }
 
     getNoti= async ()=>{
@@ -49,8 +50,13 @@ console.log('asdasdsa')
     render() {
         console.log(this.state.notificate,'this.state.notificate')
         return (
-            <View style={{flex:1}}>
-                <Header containerStyle={{height:Platform.OS=='ios'? 80:50,backgroundColor:'#1192d1'}} centerComponent={{text:"Notifications",style:{color:"#FFF",fontSize:20, fontWeight:'bold'}}}  />
+            <View >
+                {/* <Header containerStyle={{height:Platform.OS=='ios'? 80:50,backgroundColor:'#1192d1'}} centerComponent={{text:"Notifications",style:{color:"#FFF",fontSize:20, fontWeight:'bold'}}}  /> */}
+                <View style={{marginTop:Platform.OS=='ios'?38:0,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center',marginTop:Platform.OS == "ios" ? 30 : 0}}>
+                    <View style={{alignSelf: 'center'}}>
+                        <Text style={{color: 'white', fontSize:24, fontWeight:'bold'}}>Notifications</Text>
+                    </View>
+                </View> 
                 <ScrollView>
                     {
                         this.state.notificate && this.state.notificate.map((data)=>{

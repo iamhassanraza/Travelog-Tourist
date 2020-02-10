@@ -368,7 +368,7 @@ const MessageStack = createStackNavigator({
         navigationOptions: {
             header: (props) => (
                 <View style={{backgroundColor: '#1192d1'}}>
-                <View style={{marginTop:Platform.OS == 'ios' ? 38:0,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+                <View style={{marginTop:Platform.OS == 'ios' ? 38:0, height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
                     <View style={{alignSelf: 'center'}}>
                         <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>Messages</Text>
                     </View>
@@ -413,7 +413,6 @@ const TabNavigator = createMaterialTopTabNavigator(
         Notifications: {
             screen: NotificationScreen,
             navigationOptions: {
-                header: null,
                 tabBarIcon: ({ tintColor }) => (
                     <Icon2 name="bell-ring" color={tintColor} style={{ fontSize: 22 }} />
                 ),
