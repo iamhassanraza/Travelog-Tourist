@@ -54,7 +54,8 @@ class PostCard extends Component {
               last_name: this.props.last_name,
               description: this.props.description,
               comments: this.props.comments,
-              views: this.props.views
+              views: this.props.views,
+              height:this.state.height,
             },
           })
         }>
