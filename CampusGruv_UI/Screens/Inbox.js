@@ -10,7 +10,7 @@ export default class Inbox extends Component {
             Text:'',
         }
     }
-    updateSearch =(e)=>{
+    updateSearch = (e) => {
         this.setState({Text:e})
     }
 
