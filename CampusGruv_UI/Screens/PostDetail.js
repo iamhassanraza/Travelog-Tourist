@@ -336,12 +336,13 @@ incrementView = async () => {
   };
 
   renderImage = image => {
+    console.log(image,'image',this.props.height)
     return (
       <View style={{}}>
         <Image
           source={{uri:image}}
-          resizeMode='contain'
-          style={{width: '100%', height:250}}></Image>
+          // resizeMode='contain'
+          style={{width: '100%', height:400}}></Image>
       </View>
     );
   };

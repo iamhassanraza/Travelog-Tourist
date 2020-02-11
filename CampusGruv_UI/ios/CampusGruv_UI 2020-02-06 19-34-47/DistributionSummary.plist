@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CampusGruv_UI.ipa</key>
+	<array>
+		<dict>
+			<key>architectures</key>
+			<array>
+				<string>arm64</string>
+			</array>
+			<key>certificate</key>
+			<dict>
+				<key>SHA1</key>
+				<string>8212A9C9FF1E9A67015D7A434973D1A8174EDC10</string>
+				<key>dateExpires</key>
+				<string>26/01/2021</string>
+				<key>type</key>
+				<string>Apple Development</string>
+			</dict>
+			<key>entitlements</key>
+			<dict>
+				<key>application-identifier</key>
+				<string>8DBSTH96YC.com.campusgruv</string>
+				<key>com.apple.developer.team-identifier</key>
+				<string>8DBSTH96YC</string>
+				<key>get-task-allow</key>
+				<true/>
+				<key>keychain-access-groups</key>
+				<array>
+					<string>8DBSTH96YC.com.campusgruv</string>
+				</array>
+			</dict>
+			<key>name</key>
+			<string>CampusGrüv.app</string>
+			<key>profile</key>
+			<dict>
+				<key>UUID</key>
+				<string>a017c389-c95e-4e6d-ab64-124754b525ca</string>
+				<key>name</key>
+				<string>iOS Team Provisioning Profile: *</string>
+			</dict>
+			<key>team</key>
+			<dict>
+				<key>id</key>
+				<string>8DBSTH96YC</string>
+				<key>name</key>
+				<string>ron idoko</string>
+			</dict>
+		</dict>
+	</array>
+</dict>
+</plist>
