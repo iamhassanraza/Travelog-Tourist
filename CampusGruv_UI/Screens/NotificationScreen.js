@@ -48,7 +48,7 @@ export default class NotificationScreen extends Component {
       
 }    
     render() {
-        console.log(this.state.notificate,'this.state.notificate')
+        // console.log(this.state.notificate,'this.state.notificate')
         return (
 
             <View >
