@@ -55,7 +55,7 @@ export default class NotificationScreen extends Component {
     // console.log(this.state.notification, 'this.state.notificate');
     return (
       <View style={{flex: 1}}>
-        <Header
+        {/* <Header
           containerStyle={{
             height: Platform.OS == 'ios' ? 80 : 50,
             backgroundColor: '#1192d1',
@@ -69,7 +69,23 @@ export default class NotificationScreen extends Component {
               alignSelf: 'center',
             },
           }}
-        />
+        /> */}
+        {
+Platform.OS =='ios'?
+<View style={{backgroundColor: '#1192d1', }}>
+                   <View style={{marginTop:Platform.OS === 'ios'? 80:0, height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center',marginTop:Platform.OS == "ios" ? 30 : 0}}>
+                    <View style={{alignSelf: 'center'}}>
+                        <Text style={{color: 'white', fontSize:24, fontWeight:'bold'}}>Notifications</Text>
+                    </View>
+                </View>
+                </View>
+                :
+                <View style={{marginTop:0, height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center',marginTop:Platform.OS == "ios" ? 30 : 0}}>
+                <View style={{alignSelf: 'center'}}>
+                    <Text style={{color: 'white', fontSize:24, fontWeight:'bold'}}>Notifications</Text>
+                </View>
+            </View>  
+               }
 
         <FlatList
           vertical
