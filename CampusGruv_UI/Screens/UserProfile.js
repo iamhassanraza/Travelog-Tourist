@@ -417,13 +417,13 @@ class UserProfile extends React.Component {
             Posts{'  '}
           </Text>
           <Text style={{ color: '#727272', fontSize: 13, fontWeight: 'bold' }}>
-            {this.state.followers + '  '}
+            {this.state.following + '  '}
           </Text>
           <Text style={{ color: '#B4B8BA', fontSize: 13, fontWeight: 'bold' }}>
             Followers{'  '}
           </Text>
           <Text style={{ color: '#727272', fontSize: 13, fontWeight: 'bold' }}>
-            {this.state.following + '  '}
+            {this.state.followers + '  '}
           </Text>
           <Text style={{ color: '#B4B8BA', fontSize: 13, fontWeight: 'bold' }}>
             Following

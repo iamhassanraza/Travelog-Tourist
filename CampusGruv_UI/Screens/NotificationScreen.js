@@ -52,7 +52,7 @@ export default class NotificationScreen extends Component {
     });
   };
   render() {
-    console.log(this.state.notification, 'this.state.notificate');
+    // console.log(this.state.notification, 'this.state.notificate');
     return (
       <View style={{flex: 1}}>
         <Header
