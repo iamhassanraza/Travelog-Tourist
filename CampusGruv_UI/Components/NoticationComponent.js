@@ -20,20 +20,20 @@ export default class NoticationComponent extends Component {
 
           <View style={{width: '86%', flexDirection: 'row', flexWrap: 'wrap'}}>
             <Text>
-              <Text
+              {/* <Text
                 style={{
                   marginLeft: '3%',
-                  color: 'grey',
-                  fontWeight: 'bold',
+                  //color: 'grey',
+                  fontWeight: '500',
                   fontSize: 16,
                 }}>
                 {this.props.title}{' '}
-              </Text>
-              <Text style={{marginRight: '3%', fontSize: 13}}>
+              </Text> */}
+              <Text style={{marginRight: '3%', fontSize: 16}}>
                 {' '}
                 {this.props.activity}{' '}
               </Text>
-              <Text style={{fontSize: 8, color: 'grey'}}>
+              <Text style={{fontSize: 9, color: 'grey'}}>
                 {' '}
                 {this.props.time}
               </Text>
