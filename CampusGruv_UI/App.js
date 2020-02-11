@@ -41,6 +41,7 @@ import EmailVerification from './Screens/EmailVerification'
 import Followers from './Screens/Followers'
 import Following from './Screens/Following'
 import { Header } from 'react-native-elements'
+import FollowersPosts from './Screens/FollowersPosts'
 
 
 
@@ -247,6 +248,7 @@ const ProfileStack = createStackNavigator({
 
 const HomeStack = createStackNavigator({
     HomeScreen,
+    FollowersPosts,
     UserProfile: {
         screen: UserProfile,
         navigationOptions: {

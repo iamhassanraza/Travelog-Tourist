@@ -114,7 +114,7 @@ export default class HomeScreen extends PureComponent {
                 </View>
             </View>
             <View style={{ flex:1}}>
-                <TouchableOpacity style={{paddingRight:5}} onPress={() => params.handleThis()}>
+                <TouchableOpacity style={{paddingRight:5}} onPress={() => props.navigation.navigate('FollowersPosts')}>
                     <PeopleIcon name="users" color="white" size={20} />
                 </TouchableOpacity>
             </View>
