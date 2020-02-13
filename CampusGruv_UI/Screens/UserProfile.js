@@ -78,14 +78,14 @@ class UserProfile extends React.Component {
       userNavLastName = this.props.navigation.getParam('userNavLastName', null)
       userNavDp = this.props.navigation.getParam('userNavDp', null)
       userCampus = this.props.navigation.getParam('userCampus', null)
-      userFollowing = this.props.navigation.getParam('userFollowing', null)
+      //userFollowing = this.props.navigation.getParam('userFollowing', null)
       this.setState({
         otherUserId: userNavId,
         otherUserDp: userNavDp,
         otherUserFirstName: userNavFirstName,
         otherUserLastName: userNavLastName,
         otherUserCampus: userCampus,
-        userFollowing: userFollowing
+        //userFollowing: userFollowing
       })
       this.fetchdata(userNavId ? userNavId : this.props.User.id);
       console.log("will focus")
@@ -206,11 +206,12 @@ class UserProfile extends React.Component {
         },
       );
       const jsonresponse = await response.json();
-      // console.log('profile -------------------------', jsonresponse.data[0]);
+      console.log('profile -------------------------', jsonresponse.data[0]);
       this.setState({
         spinner: false,
         posts: jsonresponse.data,
         total: jsonresponse.total,
+        userFollowing: jsonresponse.data[0].userFollowing[0] ? true : false
       });
     } else {
       const Token = await AsyncStorage.getItem('TOKEN');
@@ -361,6 +362,7 @@ class UserProfile extends React.Component {
             </Text>
             </TouchableOpacity>
           </View> : 
+          this.state.userFollowing !== null ?
           <View>
             <TouchableOpacity
               style={{
@@ -379,6 +381,7 @@ class UserProfile extends React.Component {
                 style={{
                   color: this.state.userFollowing ? ThemeBlue : 'grey',
                   borderWidth: 0.5,
+                  //width: '100%',
                   padding: 5,
                   borderColor: this.state.userFollowing ? ThemeBlue : 'grey',
                   borderRadius: 10
@@ -386,7 +389,7 @@ class UserProfile extends React.Component {
                 {this.state.userFollowing ? "Unfollow" : "Follow"}
               </Text>
             </TouchableOpacity>
-          </View>
+          </View> : <View style={{height: 40}}></View>
         }
         {/* IMAGE and NAME  */}
         <View
