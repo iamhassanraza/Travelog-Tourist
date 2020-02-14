@@ -1,5 +1,7 @@
 import React, {Component} from 'react';
-import {Text, View, FlatList, TextInput} from 'react-native';
+import {Text, View, FlatList, TextInput,Platform,
+  AsyncStorage,
+  TouchableHighlightBase,} from 'react-native';
 import {withNavigation} from 'react-navigation'
 import AvatarUserStatus from '../Components/AvatarUserStatus';
 import Icon from 'react-native-vector-icons/Octicons';
@@ -11,7 +13,7 @@ import i5 from '../Assets/Images/samandarkatha.jpg';
 
  class Followers extends Component {
   state = {
-    search: '',
+    search: null,
   };
 
   DATA = [
@@ -29,8 +31,32 @@ import i5 from '../Assets/Images/samandarkatha.jpg';
     {name: 'Steven Gerrad', follow: false, pic: i4},
   ];
 
+  componentDidMount() {
+    navId = this.props.navigation.getParam('postUserId', null)
+    this.getFollower();
+    console.log('asdasdsa');
+  }
+
+  getFollower = async () => {
+    const Token = await AsyncStorage.getItem('TOKEN');
+    const user_id = await AsyncStorage.getItem('USER_ID');
+    const Response = await fetch(
+      `https://campus-gruv-heroku.herokuapp.com/api/v1/getfollowers?user_id=${navId}&page=1`,
+      {
+        headers: {
+          Authorization: `Bearer ${Token}`,
+        },
+      },
+    );
+    const JsonResponse = await Response.json();
+    //   console.log('response',JsonResponse,'JsonResponse',Response,'JsonResponse',Response.json())
+    this.setState({
+      search: JsonResponse.data,
+    });
+  };
+
   render() {
-    console.log(this.state.search);
+    console.log(this.state.search,"this.props.postUserId",navId);
 
     return (
       <View>
@@ -71,14 +97,14 @@ import i5 from '../Assets/Images/samandarkatha.jpg';
         <View>
           <FlatList
             vertical
-            data={this.DATA}
+            data={this.state.search}
             keyExtractor={item => item.name}
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => (
               <AvatarUserStatus
-              first_name={item.name}
-                status={item.follow}
-                pic={'../Assets/Images/samandarkatha.jpg'}></AvatarUserStatus>
+              first_name={item.first_name+ " " + item.last_name}
+              userFollowing={item.userFollower[0] ? true : false}
+                pic={item.profile_pic_url}></AvatarUserStatus>
             )}
           />
         </View>

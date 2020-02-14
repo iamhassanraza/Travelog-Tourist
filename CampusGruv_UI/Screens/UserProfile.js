@@ -422,15 +422,23 @@ class UserProfile extends React.Component {
           <Text style={{ color: '#727272', fontSize: 13, fontWeight: 'bold' }}>
             {this.state.following + '  '}
           </Text>
+          <TouchableOpacity  onPress={() => {
+                this.props.navigation.navigate('Followers',{postUserId:postUserId});
+              }}>
           <Text style={{ color: '#B4B8BA', fontSize: 13, fontWeight: 'bold' }}>
             Followers{'  '}
           </Text>
+          </TouchableOpacity>
           <Text style={{ color: '#727272', fontSize: 13, fontWeight: 'bold' }}>
             {this.state.followers + '  '}
           </Text>
+          <TouchableOpacity  onPress={() => {
+                this.props.navigation.navigate('Following',{postUserId:postUserId});
+              }}>
           <Text style={{ color: '#B4B8BA', fontSize: 13, fontWeight: 'bold' }}>
             Following
           </Text>
+          </TouchableOpacity>
         </View>
 
         {/* SEARCH AND POST */}

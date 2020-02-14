@@ -83,7 +83,7 @@ class AvatarUserStatus extends Component {
                 style={{height: 40, width: 40, borderRadius: 50}}>
               </Image>
               <Text style={{ fontSize: 18,alignSelf: 'center', fontWeight: 'bold', color: 'grey', paddingLeft:"2%"}}>
-                {this.props.first_name + ' ' + this.props.last_name}
+                {this.props.first_name }
               </Text>
             </View>
           </TouchableWithoutFeedback>
