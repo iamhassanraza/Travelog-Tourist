@@ -419,18 +419,22 @@ class UserProfile extends React.Component {
           <Text style={{ color: '#B4B8BA', fontSize: 13, fontWeight: 'bold' }}>
             Posts{'  '}
           </Text>
-          <Text style={{ color: '#727272', fontSize: 13, fontWeight: 'bold' }}>
-            {this.state.following + '  '}
-          </Text>
-          <Text style={{ color: '#B4B8BA', fontSize: 13, fontWeight: 'bold' }}>
-            Followers{'  '}
-          </Text>
-          <Text style={{ color: '#727272', fontSize: 13, fontWeight: 'bold' }}>
-            {this.state.followers + '  '}
-          </Text>
-          <Text style={{ color: '#B4B8BA', fontSize: 13, fontWeight: 'bold' }}>
-            Following
-          </Text>
+          <TouchableOpacity >
+            <Text style={{ color: '#727272', fontSize: 13, fontWeight: 'bold' }}>
+              {this.state.following + '  '}
+            </Text>
+            <Text style={{ color: '#B4B8BA', fontSize: 13, fontWeight: 'bold' }}>
+              Followers{'  '}
+            </Text>
+          </TouchableOpacity>
+          <TouchableOpacity >
+            <Text style={{ color: '#727272', fontSize: 13, fontWeight: 'bold' }}>
+              {this.state.followers + '  '}
+            </Text>
+            <Text style={{ color: '#B4B8BA', fontSize: 13, fontWeight: 'bold' }}>
+              Following
+            </Text>
+          </TouchableOpacity>
         </View>
 
         {/* SEARCH AND POST */}

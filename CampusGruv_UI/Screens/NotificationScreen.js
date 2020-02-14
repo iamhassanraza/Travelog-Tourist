@@ -31,7 +31,6 @@ export default class NotificationScreen extends Component {
   //   }
   componentDidMount() {
     this.getNoti();
-    console.log('asdasdsa');
   }
 
   getNoti = async () => {

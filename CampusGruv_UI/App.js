@@ -515,7 +515,31 @@ const TabNavigator = createMaterialTopTabNavigator(
 
     
 
-        tabBarOptions: Platform.OS=='ios'? iosTabBarOptions : androidTabBarOptions
+        tabBarOptions: {
+            style: {
+                backgroundColor: "white",
+                height: 50,
+            },
+            iconStyle: {               
+               //marginBottom: 7,
+            },
+            labelStyle: {
+                fontSize: 8,
+                width: '100%',
+                alignSelf: 'center',
+                marginTop: -2,
+            },
+            indicatorStyle: {
+                backgroundColor: '#1192d1',
+                height: 2,
+            },
+            upperCaseLabel: false,
+            inactiveTintColor: 'grey',
+            activeTintColor: '#1192d1',
+            showIcon: true,
+            showLabel: false
+        } 
+        // Platform.OS=='ios'? iosTabBarOptions : androidTabBarOptions
     }
 );
 const TabContainer = createAppContainer(TabNavigator);

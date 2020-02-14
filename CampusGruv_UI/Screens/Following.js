@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, FlatList, TextInput, TouchableOpacity} from 'react-native';
+import {Text, View, FlatList, TextInput, TouchableOpacity, AsyncStorage} from 'react-native';
 import {withNavigation} from 'react-navigation'
 import AvatarUserStatus from '../Components/AvatarUserStatus';
 import Icon from 'react-native-vector-icons/Octicons';
@@ -14,8 +14,27 @@ const KEYS_TO_FILTERS = ['name', 'subject'];
 
 class Following extends Component {
 
-    state ={
-        search :""
+    state = {
+        search : "",
+        following: []
+    }
+
+    componentDidMount = async () => {
+      const Token = await AsyncStorage.getItem('TOKEN');
+      Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/getfollowings?user_id`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Token}`,
+        },
+      });
+      const JsonResponse = await Response.json();
+      if (parseInt(Response.status) === 200) {
+        console.log('following data arrived, ===============')
+        this.setState({
+          following: JsonResponse
+        })
+      }
     }
 
 
@@ -77,7 +96,7 @@ console.log(this.state.search);
         <View>
           <FlatList
             vertical
-            data={this.DATA}
+            data={this.state.following}
             keyExtractor={item => item.name}
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => (

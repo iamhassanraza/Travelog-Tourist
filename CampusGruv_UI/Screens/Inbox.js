@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Text, View, ScrollView } from 'react-native'
+import { Text, View, ScrollView, AsyncStorage } from 'react-native'
 import {SearchBar} from 'react-native-elements'
 import InboxComponent from '../Components/InboxComponent'
 import { FlatList } from 'react-native-gesture-handler';
@@ -17,13 +17,27 @@ export default class Inbox extends Component {
         this.state= {
             Text:'',
         }
+        
     }
+
+
+
     updateSearch = (e) => {
         this.setState({Text:e})
     }
 
     componentDidMount() {
-        
+        const Token = AsyncStorage.getItem('TOKEN');
+        this.socket = new WebSocket('ws://campus-gruv-heroku.herokuapp.com', '', {Authorization: `Bearer ${Token}`});
+        this.socket.onopen = () => {
+            console.log('haaalllooo worldddd')
+        }
+        this.socket.onmessage = (message) => {
+            console.log('on messageeee',message)
+        }
+        this.socket.onerror = (error) => {
+            console.log('error is here my friends',error)
+        }
     }
 
     data = [
@@ -38,9 +52,9 @@ export default class Inbox extends Component {
     render() {
         return (
             <>
-                <WS
+                {/* <WS
                     ref={ref => {this.ws = ref}}
-                    url="ws://campus-gruv-heroku.herokuapp.com"
+                    url="ws://192.168.100.46/adnois-ws"
                     onOpen={() => {
                         console.log('Open!')
                         this.ws.send('Hello')
@@ -49,7 +63,7 @@ export default class Inbox extends Component {
                     onError= {error => {console.log('this is the error',error)}}
                     onClose={console.log('connection closed')}
                     reconnect // Will try to reconnect onClose
-                />
+                /> */}
                 <View style={{flex:1}}> 
                     <ScrollView>
                         <SearchBar 
