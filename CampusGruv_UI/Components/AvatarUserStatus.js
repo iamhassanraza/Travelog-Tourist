@@ -54,7 +54,7 @@ class AvatarUserStatus extends Component {
 
 
   render() {
-    console.log(this.props.userFollowing,'this.props')
+    //console.log(this.props.userFollowing,'this.props')
     return (
       <View
         style={{

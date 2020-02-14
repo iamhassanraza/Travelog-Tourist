@@ -62,7 +62,7 @@ export default class Searching extends React.PureComponent {
         });
 
         const JsonResponse = await Response.json();
-        console.log(JsonResponse.message,'gjgjgj');
+        console.log(JsonResponse.data.length,'response =============== >');
 
         if(parseInt(Response.status)=== 400) {
            
@@ -92,7 +92,7 @@ export default class Searching extends React.PureComponent {
       },
     });
     const JsonResponse = await Response.json();
-    console.log('follow data arha ya nhi ----------------> ',JsonResponse.data)
+    // console.log('follow data arha ya nhi ----------------> ',JsonResponse.data)
     
     if(parseInt(Response.status)=== 400) {
        
@@ -240,7 +240,7 @@ if(text) {
     if (this.state.loadingFeed===false) {
       return (
         <ScrollView
-        style={{paddingBottom:"35%"}}
+        style={{}}
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}
@@ -280,8 +280,9 @@ if(text) {
     if (this.state.loadingUsers===false) {
       // console.log('usersss ===================>',this.state.Users)
       return (
-        <FlatList
-        style={{paddingBottom:"35%"}}
+        <ScrollView style={{}}>
+          <FlatList
+          style={{}}
           vertical
           data={this.state.Users}
           keyExtractor={item => item.id}
@@ -289,7 +290,8 @@ if(text) {
           renderItem={({item}) => (
             <AvatarUserStatus id={item.id} first_name={item.first_name} last_name={item.last_name} userFollowing={item.userFollowing.length>0 ? true : false} item={item} campus={item.campus.description} status={true} pic={item.profile_pic_url}></AvatarUserStatus>
           )}
-        />
+          />
+        </ScrollView>
       );
     } else if(this.state.loadingUsers===true) {
       return (
@@ -319,7 +321,7 @@ if(text) {
     if (this.state.loadingCampuses===false) {
       return (
         <FlatList
-        style={{paddingBottom:"35%"}}
+        style={{}}
           vertical
           data={this.state.Campuses}
           keyExtractor={item => item.id}
@@ -496,11 +498,11 @@ if(text) {
           </TouchableOpacity>
         </View>
 
-        <ScrollView style={{backgroundColor:'white'}}>
+        <View style={{backgroundColor:'white',height: Dimensions.get('window').height - 170}}>
           {this.state.selection === 'Feed' ? this.state.totalFeed === 0 ? this.renderNoPost() : this.renderFeed() : null }
           {this.state.selection === 'Users' ? this.state.totalUsers === 0 ? this.renderNoPost("No Users Availiable") : this.renderUsers() : null}
           {this.state.selection === 'Campuses' ? this.state.totalCampuses === 0 ? this.renderNoPost("No Campuses Availiable") : this.renderCampuses() : null}
-        </ScrollView>
+        </View>
       </View>
       </View>
     );
