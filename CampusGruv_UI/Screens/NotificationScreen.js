@@ -78,14 +78,14 @@ export default class NotificationScreen extends Component {
           showsHorizontalScrollIndicator={false}
           renderItem={({item}) => (
             <NoticationComponent
-              //uri={item.userNotification.profile_pic_url}
-              // title={
-              //   item.userNotification.first_name +
-              //   ' ' +
-              //   item.userNotification.last_name
-              // }
+              uri={item.userNotification.profile_pic_url}
+              title={
+                item.userNotification.first_name +
+                ' ' +
+                item.userNotification.last_name
+              }
               time="1 hour"
-              // activity={item.notification_message}
+              activity={item.notification_message}
               >
 
               </NoticationComponent>

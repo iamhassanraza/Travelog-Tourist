@@ -18,6 +18,7 @@ import NoPost from '../Components/NoPost'
 
 
 export default class Searching extends React.PureComponent {
+  
   state = {
     selection: 'Feed',
     posts: [],
