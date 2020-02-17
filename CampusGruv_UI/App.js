@@ -166,51 +166,10 @@ const ProfileStack = createStackNavigator({
     },
     Followers :{
         screen : Followers,
-        navigationOptions: {
-            header: (props) => (
-                <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
-                    <View style={{alignSelf: 'center'}}>
-                        <Text style={{color: 'white', fontSize: 25, fontWeight:'bold'}}>
-                            Followers
-                        </Text>
-                        </View>
-                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
-                        <TouchableOpacity 
-                            onPress = {() => {
-                                props.navigation.navigate('UserProfile')
-                            }}
-                        >
-                            <Icon name="arrow-back" color="white" size={25}/>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            )
-        }
     },
     Following :{
         screen : Following,
-        navigationOptions: {
-            header: (props) => (
-                <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
-                    <View style={{alignSelf: 'center'}}>
-                        <Text style={{color: 'white', fontSize: 25, fontWeight:'bold'}}>
-                            Following
-                        </Text>
-                        </View>
-                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
-                        <TouchableOpacity 
-                            onPress = {() => {
-                                props.navigation.navigate('UserProfile')
-                            }}
-                        >
-                            <Icon name="arrow-back" color="white" size={25}/>
-                        </TouchableOpacity>
-                    </View>
-                </View>
-            )
-        }
-    }
-    ,
+    },
     UserSettings : {
         screen: UserSettings,
         navigationOptions: {

@@ -18,7 +18,7 @@ import NoPost from '../Components/NoPost'
 
 
 export default class Searching extends React.PureComponent {
-  
+
   state = {
     selection: 'Feed',
     posts: [],
@@ -172,38 +172,6 @@ if(text) {
   }
 }
 
-
-  // dataUsers = [
-  //   {name: 'Jack Jones', follow: false, pic: i1},
-  //   {name: 'Frenkie De Jong', follow: true , pic : i2},
-  //   {name: 'Lucas Morra', follow: false , pic : i3},
-  //   {name: 'Arturo Vidal', follow: false, pic: i4},
-  //   {name: 'Lukas Modric', follow: true , pic : i5},
-  //   {name: 'De Ligt', follow: false , pic : i3},
-  //   {name: 'Sam Tadic', follow: false, pic: i4},
-  //   {name: 'Sergio Busquets', follow: true , pic : i2},
-  //   {name: 'Eden Hazzard', follow: false , pic : i5},
-  //   {name: 'Greame Smith', follow: false, pic: i3},
-  //   {name: 'Mark Boucher', follow: true , pic : i2},
-  //   {name: 'Steven Gerrad', follow: false , pic : i4}
-  // ];
-
-  // dataCampuses = [
-  //   {name: 'Jack Jones', current: false, pic: i1},
-  //   {name: 'Frenkie De Jong', current: true , pic : i2},
-  //   {name: 'Lucas Morra', current: false , pic : i3},
-  //   {name: 'Arturo Vidal', current: false, pic: i4},
-  //   {name: 'Lukas Modric', current: false , pic : i5},
-  //   {name: 'De Ligt', current: false , pic : i3},
-  //   {name: 'Sam Tadic', current: false, pic: i4},
-  //   {name: 'Sergio Busquets', current: false , pic : i2},
-  //   {name: 'Eden Hazzard', current: false , pic : i5},
-  //   {name: 'Greame Smith', current: false, pic: i3},
-  //   {name: 'Mark Boucher', current: false , pic : i2},
-  //   {name: 'Steven Gerrad', current: false , pic : i4}
-  // ];
-
-
   getToken = async ()=>{
     const Token = await AsyncStorage.getItem('TOKEN')
     return Token
@@ -279,7 +247,7 @@ if(text) {
   renderUsers = () => {
 
     if (this.state.loadingUsers===false) {
-      // console.log('usersss ===================>',this.state.Users)
+      console.log('usersss ===================>',this.state.Users)
       return (
         <ScrollView style={{}}>
           <FlatList

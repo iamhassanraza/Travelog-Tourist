@@ -1,37 +1,101 @@
 import React, {Component} from 'react';
-import {Text, View, FlatList, TextInput} from 'react-native';
+import {Text, View, FlatList, TextInput,Platform,
+  AsyncStorage,
+  TouchableOpacity,
+  TouchableHighlightBase,} from 'react-native';
 import {withNavigation} from 'react-navigation'
 import AvatarUserStatus from '../Components/AvatarUserStatus';
-import Icon from 'react-native-vector-icons/Octicons';
-import i1 from '../Assets/Images/lahore.jpg';
-import i2 from '../Assets/Images/book.jpg';
-import i3 from '../Assets/Images/ema.jpg';
-import i4 from '../Assets/Images/mansehra.jpg';
-import i5 from '../Assets/Images/samandarkatha.jpg';
+import Icon from 'react-native-vector-icons/MaterialIcons'
 
  class Followers extends Component {
+
+  static navigationOptions = props => {
+    const {params = {}} = props.navigation.state
+    return {
+    header: (
+        Platform.OS==='ios'?
+        <View style={{backgroundColor:'#1192d1'}}>
+        <View style={{marginTop:38,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+        <View style={{alignSelf: 'center'}}>
+            <Text style={{color: 'white', fontSize: 25, fontWeight:'bold'}}>
+                Followers
+            </Text>
+            </View>
+        <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
+            <TouchableOpacity 
+                onPress = {() => {
+                  params.handleThis()
+                }}
+                >
+                <Icon name="arrow-back" color="white" size={25}/>
+            </TouchableOpacity>
+        </View>
+    </View>
+                </View>
+        :
+        <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+            <View style={{alignSelf: 'center'}}>
+                <Text style={{color: 'white', fontSize: 25, fontWeight:'bold'}}>
+                    Followers
+                </Text>
+                </View>
+            <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
+                <TouchableOpacity 
+                    onPress = {() => {
+                        params.handleThis()
+                    }}
+                >
+                    <Icon name="arrow-back" color="white" size={25}/>
+                </TouchableOpacity>
+            </View>
+        </View>
+    )
+  }
+}
+
+
+
   state = {
-    search: '',
+    search: null,
   };
 
-  DATA = [
-    {name: 'Jack Jones', follow: false, pic: i1},
-    {name: 'Frenkie De Jong', follow: true, pic: i2},
-    {name: 'Lucas Morra', follow: false, pic: i3},
-    {name: 'Arturo Vidal', follow: false, pic: i4},
-    {name: 'Lukas Modric', follow: true, pic: i5},
-    {name: 'De Ligt', follow: false, pic: i3},
-    {name: 'Sam Tadic', follow: false, pic: i4},
-    {name: 'Sergio Busquets', follow: true, pic: i2},
-    {name: 'Eden Hazzard', follow: false, pic: i5},
-    {name: 'Greame Smith', follow: false, pic: i3},
-    {name: 'Mark Boucher', follow: true, pic: i2},
-    {name: 'Steven Gerrad', follow: false, pic: i4},
-  ];
+  componentDidMount() {
+    navId = this.props.navigation.getParam('postUserId', null)
+    this.getFollower();
+
+    this.props.navigation.setParams({
+      handleThis: () => {
+        this.props.navigation.push('UserProfile', {
+          userNavId: this.props.navigation.getParam('postUserId', null),
+          userNavDp: this.props.navigation.getParam('postUserDp', null),
+          userNavFirstName: this.props.navigation.getParam('postUserFirstName', null),
+          userNavLastName: this.props.navigation.getParam('postUserLastName', null),
+          userCampus: this.props.navigation.getParam('postUserCampus', null),
+          userFollowing: this.props.navigation.getParam('userFollowing', null)
+        })
+      }
+  });
+  }
+
+  getFollower = async () => {
+    const Token = await AsyncStorage.getItem('TOKEN');
+    const user_id = await AsyncStorage.getItem('USER_ID');
+    const Response = await fetch(
+      `https://campus-gruv-heroku.herokuapp.com/api/v1/getfollowers?user_id=${navId}&page=1`,
+      {
+        headers: {
+          Authorization: `Bearer ${Token}`,
+        },
+      },
+    );
+    const JsonResponse = await Response.json();
+      console.log('response =============> ',JsonResponse)
+    this.setState({
+      search: JsonResponse.data,
+    });
+  };
 
   render() {
-    console.log(this.state.search);
-
     return (
       <View>
         <View
@@ -71,14 +135,16 @@ import i5 from '../Assets/Images/samandarkatha.jpg';
         <View>
           <FlatList
             vertical
-            data={this.DATA}
+            data={this.state.search}
             keyExtractor={item => item.name}
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => (
               <AvatarUserStatus
-              first_name={item.name}
-                status={item.follow}
-                pic={'../Assets/Images/samandarkatha.jpg'}></AvatarUserStatus>
+              id={item.id}
+              first_name={item.first_name}
+              last_name={item.last_name}
+              userFollowing={item.userFollower[0] ? true : false}
+                pic={item.profile_pic_url}></AvatarUserStatus>
             )}
           />
         </View>

@@ -14,7 +14,7 @@ import {FlatList} from 'react-native-gesture-handler';
 
 export default class NotificationScreen extends Component {
   state = {
-    notification: null,
+    notification: [],
   };
   // static navigationOptions = (props) => {
   //     // const {params = {}} = props.navigation.state;
@@ -45,13 +45,11 @@ export default class NotificationScreen extends Component {
       },
     );
     const JsonResponse = await Response.json();
-    //   console.log('response',JsonResponse,'JsonResponse',Response,'JsonResponse',Response.json())
     this.setState({
       notification: JsonResponse.data,
     });
   };
   render() {
-    // console.log(this.state.notification, 'this.state.notificate');
     return (
       <View style={{flex: 1}}>
         
@@ -69,7 +67,7 @@ export default class NotificationScreen extends Component {
                 </View>
             </View>  
         }
-
+        {this.state.notification[0] ?
         <FlatList
           vertical
           data={this.state.notification}
@@ -77,19 +75,20 @@ export default class NotificationScreen extends Component {
           showsHorizontalScrollIndicator={false}
           renderItem={({item}) => (
             <NoticationComponent
-              uri={item.userNotification.profile_pic_url}
-              title={
-                item.userNotification.first_name +
-                ' ' +
-                item.userNotification.last_name
-              }
+              // uri={item.userNotification.profile_pic_url}
+              // title={
+              //   item.userNotification.first_name +
+              //   ' ' +
+              //   item.userNotification.last_name
+              // }
               time="1 hour"
               activity={item.notification_message}
               >
 
               </NoticationComponent>
           )}
-        />
+        /> : <></>
+        }
 
         {/* <ScrollView>
                     {

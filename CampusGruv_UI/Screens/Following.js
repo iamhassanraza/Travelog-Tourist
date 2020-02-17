@@ -1,61 +1,103 @@
 import React, {Component} from 'react';
-import {Text, View, FlatList, TextInput, TouchableOpacity, AsyncStorage} from 'react-native';
+import {Text, View, FlatList, TextInput, TouchableOpacity,Platform,
+  AsyncStorage,
+  TouchableHighlightBase,} from 'react-native';
 import {withNavigation} from 'react-navigation'
 import AvatarUserStatus from '../Components/AvatarUserStatus';
-import Icon from 'react-native-vector-icons/Octicons';
-import i1 from '../Assets/Images/lahore.jpg'
-import i2 from '../Assets/Images/book.jpg'
-import i3 from '../Assets/Images/ema.jpg'
-import i4 from '../Assets/Images/mansehra.jpg'
-import i5 from '../Assets/Images/samandarkatha.jpg'
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import SearchInput, { createFilter } from 'react-native-search-filter';
 
 const KEYS_TO_FILTERS = ['name', 'subject'];
 
 class Following extends Component {
 
-    state = {
-        search : "",
-        following: []
+  static navigationOptions = props => {
+    const {params = {}} = props.navigation.state;
+    return {
+      header: (
+          Platform.OS==='ios'?
+          <View style={{backgroundColor:'#1192d1'}}>
+          <View style={{marginTop:38,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+          <View style={{alignSelf: 'center'}}>
+              <Text style={{color: 'white', fontSize: 25, fontWeight:'bold'}}>
+                  Following
+              </Text>
+              </View>
+          <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
+              <TouchableOpacity 
+                  onPress = {() => {
+                    params.handleThis()
+                  }}
+              >
+                  <Icon name="arrow-back" color="white" size={25}/>
+              </TouchableOpacity>
+          </View>
+          </View>
+          </View>
+          :
+          <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+              <View style={{alignSelf: 'center'}}>
+                  <Text style={{color: 'white', fontSize: 25, fontWeight:'bold'}}>
+                      Following
+                  </Text>
+                  </View>
+              <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
+                  <TouchableOpacity 
+                      onPress = {() => {
+                        params.handleThis()
+                      }}
+                  >
+                      <Icon name="arrow-back" color="white" size={25}/>
+                  </TouchableOpacity>
+              </View>
+          </View>
+      )
+    }
+  }
+
+
+    state ={
+        search :null,
     }
 
-    componentDidMount = async () => {
-      const Token = await AsyncStorage.getItem('TOKEN');
-      Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/getfollowings?user_id`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${Token}`,
-        },
-      });
-      const JsonResponse = await Response.json();
-      if (parseInt(Response.status) === 200) {
-        console.log('following data arrived, ===============')
-        this.setState({
-          following: JsonResponse
+
+  componentDidMount() {
+    navId = this.props.navigation.getParam('postUserId', null)
+    this.getFollowing();
+
+    this.props.navigation.setParams({
+      handleThis: () => {
+        this.props.navigation.push('UserProfile', {
+          userNavId: this.props.navigation.getParam('postUserId', null),
+          userNavDp: this.props.navigation.getParam('postUserDp', null),
+          userNavFirstName: this.props.navigation.getParam('postUserFirstName', null),
+          userNavLastName: this.props.navigation.getParam('postUserLastName', null),
+          userCampus: this.props.navigation.getParam('postUserCampus', null),
+          userFollowing: this.props.navigation.getParam('userFollowing', null)
         })
       }
-    }
+  });
+  }
 
+  getFollowing = async () => {
+    const Token = await AsyncStorage.getItem('TOKEN');
+    const user_id = await AsyncStorage.getItem('USER_ID');
+    const Response = await fetch(
+      `https://campus-gruv-heroku.herokuapp.com/api/v1/getfollowings?user_id=${navId}&page=1`,
+      {
+        headers: {
+          Authorization: `Bearer ${Token}`,
+        },
+      },
+    );
+    const JsonResponse = await Response.json();
+    this.setState({
+      search: JsonResponse.data,
+    });
+  };
 
-  DATA = [
-    {name: 'Jack Jones', follow: true, pic: i1},
-    {name: 'Frenkie De Jong', follow: true , pic : i2},
-    {name: 'Lucas Morra', follow: true , pic : i3},
-    {name: 'Arturo Vidal', follow: true, pic: i4},
-    {name: 'Lukas Modric', follow: true , pic : i5},
-    {name: 'De Ligt', follow: true , pic : i3},
-    {name: 'Sam Tadic', follow: true, pic: i4},
-    {name: 'Sergio Busquets', follow: true , pic : i2},
-    {name: 'Eden Hazzard', follow: true , pic : i5},
-    {name: 'Greame Smith', follow: true, pic: i3},
-    {name: 'Mark Boucher', follow: true , pic : i2},
-    {name: 'Steven Gerrad', follow: true , pic : i4}
-  ];
 
   render() {
-
-console.log(this.state.search);
 
     return (
         <View>
@@ -96,15 +138,16 @@ console.log(this.state.search);
         <View>
           <FlatList
             vertical
-            data={this.state.following}
+            data={this.state.search}
             keyExtractor={item => item.name}
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => (
               <AvatarUserStatus
-              first_name={item.name}
-              status={item.follow}
-              pic={'../Assets/Images/samandarkatha.jpg'}
-                ></AvatarUserStatus>
+              id={item.id}
+              first_name={item.first_name}
+              last_name={item.last_name}
+              userFollowing={item.userFollowing[0] ? true : false}
+              pic={item.profile_pic_url}/>
             )}
           />
         </View>
