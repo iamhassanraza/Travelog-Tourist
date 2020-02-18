@@ -349,14 +349,14 @@ const MessageStack = createStackNavigator({
         },
     },
     chat: {
-        screen: chat,
-        navigationOptions:{
-            header: null
-        }
+        screen: chat
     },
 },
     {
-        initialRouteName: 'inbox'
+        initialRouteName: 'inbox',
+        navigationOptions: {
+            tabBarVisible: false
+        }
     },
 
 

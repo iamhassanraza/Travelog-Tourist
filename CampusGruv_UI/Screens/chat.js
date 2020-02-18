@@ -1,7 +1,33 @@
-import React,{Component} from 'react'
+import React, { Component } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
+import { View, Text, TouchableOpacity} from 'react-native'
+import PostIcon from 'react-native-vector-icons/MaterialIcons'
 
 export default class Chat extends React.Component {
+
+  static navigationOptions = props => {
+    return {
+      header: (
+        <View style={{ backgroundColor: '#1192d1' }}>
+          <View style={{ marginTop: Platform.OS == 'ios' ? 38 : 0, height: 50, backgroundColor: '#1192d1', flexDirection: 'row', justifyContent: 'center' }}>
+            <View style={{ alignSelf: 'center' }}>
+              <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>Messages</Text>
+            </View>
+            <View style={{ position: 'absolute', padding: 2, alignSelf: 'center', left: 8 }}>
+              <TouchableOpacity
+                onPress={() => {
+                  props.navigation.push('inbox')
+                }}
+              >
+                <PostIcon name="arrow-back" color="white" size={25} />
+              </TouchableOpacity>
+            </View>
+          </View>
+        </View>
+      )
+    }
+  }
+
   state = {
     messages: [],
   }
@@ -30,7 +56,7 @@ export default class Chat extends React.Component {
   }
 
   render() {
-   
+
     return (
       <GiftedChat
         messages={this.state.messages}
@@ -38,7 +64,7 @@ export default class Chat extends React.Component {
         user={{
           _id: 1,
         }}
-       
+
       />
     )
   }

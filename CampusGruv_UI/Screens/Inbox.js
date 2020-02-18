@@ -27,17 +27,7 @@ export default class Inbox extends Component {
     }
 
     componentDidMount() {
-        const Token = AsyncStorage.getItem('TOKEN');
-        this.socket = new WebSocket('ws://campus-gruv-heroku.herokuapp.com', '', {Authorization: `Bearer ${Token}`});
-        this.socket.onopen = () => {
-            console.log('haaalllooo worldddd')
-        }
-        this.socket.onmessage = (message) => {
-            console.log('on messageeee',message)
-        }
-        this.socket.onerror = (error) => {
-            console.log('error is here my friends',error)
-        }
+        
     }
 
     data = [
