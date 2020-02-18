@@ -4,7 +4,6 @@ import {SearchBar} from 'react-native-elements'
 import InboxComponent from '../Components/InboxComponent'
 import { FlatList } from 'react-native-gesture-handler';
 // import Ws from '@adonisjs/websocket-client'
-import WS from 'react-native-websocket'
 
 
 

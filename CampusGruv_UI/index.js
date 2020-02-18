@@ -9,7 +9,6 @@ import React from 'react';
 import {Provider} from 'react-redux';
 import {createStore, compose} from 'redux';
 import CombinedReducers from './ReduxStore/Reducers';
-import "@babel/polyfill";
 
 
 let composeEnhancer = compose;

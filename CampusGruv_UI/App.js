@@ -42,7 +42,6 @@ import Followers from './Screens/Followers'
 import Following from './Screens/Following'
 import { Header } from 'react-native-elements'
 import FollowersPosts from './Screens/FollowersPosts'
-import "@babel/polyfill";
 
 
 
