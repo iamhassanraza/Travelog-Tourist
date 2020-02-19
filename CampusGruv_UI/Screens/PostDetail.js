@@ -16,6 +16,8 @@ import {
   Platform
 } from 'react-native';
 import {ThemeConsumer, Header} from 'react-native-elements';
+import {Container, Content, Item, Input} from 'native-base';
+
 import Comment from '../Components/Comment'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CrossIcon from 'react-native-vector-icons/MaterialIcons';
@@ -342,7 +344,7 @@ incrementView = async () => {
         <Image
           source={{uri:image}}
           // resizeMode='contain'
-          style={{width: '100%', height:400}}></Image>
+          style={{width: '100%', height:300}}></Image>
       </View>
     );
   };
@@ -379,66 +381,43 @@ incrementView = async () => {
 
   renderAddComment = (dp, postId, userId) => {
     return (
-      <View
-        style={{
-          flexDirection: 'row',
-          backgroundColor: 'white',
-          alignItems: 'center',
-          //height: 60,
-          //paddingLeft: '2%',
-          //paddingTop:'1%',
-          //paddingBottom:'1%',
-          marginTop:'2%'
-        }}>
-
-        <View style={{marginLeft:'2%', width: 40, height: 40}}>
-          <Image
-            source={{uri: this.props.User.profile_pic_url}}
-            style={{width:'100%', borderRadius: 50, height: '100%'}}>
-          </Image>
-        </View>
-
-        {/* <TextInput
-          placeholder="Add your comment"
-          multiline={true}
-          style={{
-            padding: 1,
-            alignSelf: 'center',
-            paddingLeft:'2%',
-            marginLeft: '3%',
-            width: '73%',
-            borderRadius: 9,
-            //borderWidth: 0.2,
-            borderColor: 'grey',
-          }} */}
-          <View style={{width:'73%', marginLeft:'2%'}}>
-          <TextInput 
-            ref= {input => { this.commentInput = input }}
-            multiline={true}
-            placeholder="Add a comment"
-            style={{ borderRadius: 7, borderWidth:0.2, borderColor:'grey'}}
-            onChangeText={text => {
-            this.changeCurrentCommentState(text);
-          }}></TextInput>
-          </View>
-        <View>
-        <TouchableOpacity 
-          onPress={()=>{
-            //CALL API FOR COMMENT , USER ID ,POST ID , COMMENT DESCRIPTION 
-            this.postComment(postId, userId)
-          }}
-        >
-        <Text
-          style={{
-           //fontSize: 17,
-            color: 'grey',
-            paddingLeft: '2%',
-          }}>
-          Post
-        </Text>
-        </TouchableOpacity>
-        </View>
-      </View>
+      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+              <View style={{marginLeft:'2%', width: 40, height: 40}}>
+                <Image
+                  source={{uri: this.props.User.profile_pic_url}}
+                  style={{width:'100%', borderRadius: 50, height: '100%'}}>
+                </Image>
+              </View>
+              <Item style={{width: Dimensions.get('window').width - 90}}>
+                <Input
+                  value={this.state.currentComment} 
+                  getRef= {input => { this.commentInput = input }}
+                  multiline={true}
+                  placeholder="Add a comment"
+                  //style={{ borderRadius: 7, borderColor:'grey'}}
+                  onChangeText={text => {
+                    this.changeCurrentCommentState(text);
+                  }}
+                />
+              </Item>
+              <View style={{width: 50}}>
+                <TouchableOpacity 
+                  onPress={()=>{
+                    //CALL API FOR COMMENT , USER ID ,POST ID , COMMENT DESCRIPTION 
+                    this.postComment(postId, userId)
+                  }}
+                >
+                  <Text
+                    style={{
+                    //fontSize: 17,
+                      color: 'grey',
+                      paddingLeft: '2%',
+                    }}>
+                    Post
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
     );
   };
 
@@ -502,7 +481,6 @@ incrementView = async () => {
             comments: comments,
             currentComment: ''
           })
-          this.commentInput.clear()
       }
       else {
         alert('something went wrong')
@@ -613,26 +591,25 @@ incrementView = async () => {
   render() {
     const data = this.props.navigation.getParam('PostData', 'nothing to render');
     return (
-        <View style={{height: Dimensions.get('window').height-75}}>
-            {this.renderHeader(data.userAvatar, data.postId, data.first_name, data.last_name, data.uri, data.userId, data.title)}
-           
-          <KeyboardAvoidingView behavior='padding' keyboardVerticalOffset={-200} style={{ flex: 1}}>  
-          <ScrollView style={{flex: 1}}>
-            {this.renderImage(data.uri)}
-            {this.renderTitle(data.title, data.views)}
-            {this.renderDescription(data.description)}
-            { this.state.comments[0] ? 
+      <ScrollView>
+        <Content style={{height: Dimensions.get('window').height-125}}>
+          {this.renderHeader(data.userAvatar, data.postId, data.first_name, data.last_name, data.uri, data.userId, data.title)}
+          {this.renderImage(data.uri)}
+          {this.renderTitle(data.title, data.views)}
+          {this.renderDescription(data.description)}
+          { this.state.comments[0] ? 
               this.renderAllComments(data.userAvatar, data.comments) : 
               <View style={{height: 130, justifyContent: 'center'}}>
                 <Text style={{color: 'grey',fontSize:25, opacity:0.5, alignSelf: 'center'}}>
                   No comments yet!
                 </Text>
               </View>
-            }
-            </ScrollView> 
-            </KeyboardAvoidingView>
-                {this.renderAddComment(data.userAvatar, data.postId, data.userId)}
-        </View>
+          }
+        </Content>
+        <Content>
+          {this.renderAddComment(data.userAvatar, data.postId, data.userId)}
+        </Content>
+      </ScrollView>
     );
   }
 }
