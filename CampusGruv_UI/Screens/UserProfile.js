@@ -313,7 +313,7 @@ class UserProfile extends React.Component {
     }
     else if (parseInt(Response.status) === 200){
       console.log('200')
-      alert(JsonResponse.message);
+      
     }
     else {
       alert('something is wrong')

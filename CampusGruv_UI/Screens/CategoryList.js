@@ -69,20 +69,20 @@ export default class CategoryList extends Component {
                 </View>
               </TouchableOpacity>
             </View>
-            <View style={{marginLeft: '2%'}}>
+            
+            <View style={{marginLeft: 5}}>
               <TouchableOpacity
                 onPress={() => props.navigation.navigate('CategoryList')}>
-                <Icon2 name="view-grid" color="white" size={25} />
+                <Icon2 name="view-grid" color="white" size={28} />
               </TouchableOpacity>
             </View>
-          </View>
-          <View style={{flex: 1,marginTop:30}}>
-            <TouchableOpacity
-              onPress={() =>
-                props.navigation.navigate('FollowersPosts')
-              }>
-              <PeopleIcon name="users" color="white" size={20} />
-            </TouchableOpacity>
+
+            <View style={{  marginLeft: "10%"}}>
+                <TouchableOpacity style={{}} onPress={() => props.navigation.navigate('FollowersPosts')}>
+                    <PeopleIcon name="users" color="white" size={23} />
+                </TouchableOpacity>
+            </View>
+
           </View>
         </View>
           :
@@ -129,21 +129,20 @@ export default class CategoryList extends Component {
                 </View>
               </TouchableOpacity>
             </View>
-            <View style={{marginLeft: '2%'}}>
+            <View style={{marginLeft: 5}}>
               <TouchableOpacity
                 onPress={() => props.navigation.navigate('CategoryList')}>
-                <Icon2 name="view-grid" color="white" size={25} />
+                <Icon2 name="view-grid" color="white" size={28} />
               </TouchableOpacity>
             </View>
+
+            <View style={{  marginLeft: "10%"}}>
+                <TouchableOpacity style={{}} onPress={() => props.navigation.navigate('FollowersPosts')}>
+                    <PeopleIcon name="users" color="white" size={23} />
+                </TouchableOpacity>
+            </View>
           </View>
-          <View style={{flex: 1}}>
-            <TouchableOpacity
-              onPress={() =>
-                props.navigation.navigate('FollowersPosts')
-              }>
-              <PeopleIcon name="users" color="white" size={20} />
-            </TouchableOpacity>
-          </View>
+          
         </View>
       }
       </View>

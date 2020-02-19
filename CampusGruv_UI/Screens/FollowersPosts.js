@@ -86,14 +86,16 @@ export default class FolllowersPosts extends PureComponent {
                     <Icon2 name="view-grid" color="white" size={28} />
                   </TouchableOpacity>
                 </View>
-              </View>
-              <View style={{flex: 1}}>
+
+                <View style={{ marginLeft: "10%",marginTop:"0.5%"}}>
                 <TouchableOpacity
                   style={{paddingRight: 5}}
-                  onPress={() => params.handleThis()}>
-                  <PeopleIcon name="users" color="white" size={20} />
+                  onPress={() => props.navigation.navigate('HomeScreen')}>
+                  <PeopleIcon name="users" color="#00527a" size={23} />
                 </TouchableOpacity>
               </View>
+              </View>
+              
             </View>
           </View>
         ) : (
@@ -147,14 +149,15 @@ export default class FolllowersPosts extends PureComponent {
                   <Icon2 name="view-grid" color="white" size={28} />
                 </TouchableOpacity>
               </View>
-            </View>
-            <View style={{flex: 1}}>
+              <View style={{ marginLeft: "10%",marginTop:"0.5%"}}>
               <TouchableOpacity
                 style={{paddingRight: 5}}
-                onPress={() => params.handleThis()}>
-                <PeopleIcon name="users" color="white" size={20} />
+                onPress={() => props.navigation.navigate('HomeScreen')}>
+                <PeopleIcon name="users" color="#00527a" size={23} />
               </TouchableOpacity>
             </View>
+            </View>
+            
           </View>
         ),
     };
@@ -280,11 +283,11 @@ export default class FolllowersPosts extends PureComponent {
 if (this.state.total > 0) {
     return (
       <React.Fragment>
-        <View style={{backgroundColor: '#F0F0F0'}}>
+        {/* <View style={{backgroundColor: '#F0F0F0'}}>
           <Text
             onPress={() => {
               this.setState({FolllowersPosts: false});
-              this.props.navigation.navigate('HomeScreen');
+              
             }}
             style={{
               margin: 6,
@@ -308,7 +311,7 @@ if (this.state.total > 0) {
                 color: ThemeBlue,
               }}></CrossIcon>
           </Text>
-        </View> 
+        </View>  */}
         <ScrollView
           refreshControl={
             <RefreshControl
