@@ -419,7 +419,7 @@ const TabNavigator = createMaterialTopTabNavigator(
             screen: HomeStack,
             navigationOptions: {
                 tabBarIcon: ({ tintColor }) => (
-                    <Icon name="home" color={tintColor} style={{ fontSize: 22 }} />
+                    <Icon name="home" color={tintColor} style={{ fontSize: 27 }} />
                 ),
                 tabBarLabel: "Home"
             }
@@ -428,7 +428,7 @@ const TabNavigator = createMaterialTopTabNavigator(
             screen: NotificationScreen,
             navigationOptions: {
                 tabBarIcon: ({ tintColor }) => (
-                    <Icon2 name="bell-ring" color={tintColor} style={{ fontSize: 22 }} />
+                    <Icon2 name="bell-ring" color={tintColor} style={{ fontSize: 27 }} />
                 ),
                 tabBarLabel: "Notifications"
             },
@@ -438,7 +438,7 @@ const TabNavigator = createMaterialTopTabNavigator(
             navigationOptions: {
                 initialRouteName: 'AddPost',
                 tabBarIcon: ({ tintColor }) => (
-                    <AddIcon name="squared-plus" color={tintColor} style={{ fontSize: 22 }} />
+                    <AddIcon name="squared-plus" color={tintColor} style={{ fontSize: 27 }} />
                 ),
                 tabBarLabel: 'Add Post'
             }
@@ -447,7 +447,7 @@ const TabNavigator = createMaterialTopTabNavigator(
             screen: MessageStack,
             navigationOptions: {
                 tabBarIcon: ({ tintColor }) => (
-                    <Icon2 name="email-outline" color={tintColor} style={{ fontSize: 22 }} />
+                    <Icon2 name="email-outline" color={tintColor} style={{ fontSize: 27 }} />
                 ),
                 tabBarLabel: "Messages",
                 hederMode: 'none'
@@ -457,7 +457,7 @@ const TabNavigator = createMaterialTopTabNavigator(
             screen: ProfileStack,
             navigationOptions: {
                 tabBarIcon: ({ tintColor }) => (
-                    <Icon name="person" color={tintColor} style={{ fontSize: 22 }} />
+                    <Icon name="person" color={tintColor} style={{ fontSize: 27 }} />
                 ),
                 tabBarLabel: "Profile"
             }

@@ -76,7 +76,7 @@ class ProfilePage extends React.Component {
                 right: 8,
               }}>
               <TouchableOpacity onPress={() => params.handleThis()}>
-                <Text style={{color: 'red', padding: 2,marginTop:Platform.OS =='ios'?25:0}}>done</Text>
+                <Text style={{color: 'red', padding: 2,marginTop:Platform.OS =='ios'?25:0}}>Done</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -101,7 +101,7 @@ class ProfilePage extends React.Component {
                 onPress={() => {
                   props.navigation.navigate('UserProfile');
                 }}>
-                <Text style={{color: 'white', padding: 2,marginTop:Platform.OS =='ios'?25:0}}>back</Text>
+                <Text style={{color: 'white', padding: 2,marginTop:Platform.OS =='ios'?25:0}}>Back</Text>
               </TouchableOpacity>
             </View>
             <View style={{alignSelf: 'center'}}>
@@ -117,7 +117,7 @@ class ProfilePage extends React.Component {
                 right: 8,
               }}>
               <TouchableOpacity onPress={() => params.handleThis()}>
-                <Text style={{color: 'white', padding: 2,marginTop:Platform.OS =='ios'?25:0}}>done</Text>
+                <Text style={{color: 'white', padding: 2,marginTop:Platform.OS =='ios'?25:0}}>Done</Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -282,7 +282,7 @@ class ProfilePage extends React.Component {
 
   renderDatePicker = () => {
     return (
-      <View style={{flexDirection: 'row'}}>
+      <View style={{flexDirection: 'row',marginTop:"5%"}}>
         <Text
           style={{
             fontSize: 20,
@@ -335,7 +335,7 @@ class ProfilePage extends React.Component {
 
   renderPhoneNo = () => {
     return (
-      <View>
+      <View style={{marginTop:"5%"}}>
         <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
           <Text
             style={{fontSize: 20, marginTop: 15, marginLeft: 10, width: '25%'}}>
@@ -373,7 +373,7 @@ class ProfilePage extends React.Component {
 
   renderGradYear = () => {
     return (
-      <View>
+      <View style={{marginTop:"5%"}}> 
         <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
           <Text
             style={{fontSize: 20, marginTop: 15, marginLeft: 10, width: '25%'}}>

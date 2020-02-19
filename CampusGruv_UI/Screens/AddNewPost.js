@@ -12,6 +12,7 @@ const options = {
   takePhotoButtonTitle: 'Take a photo',
   chooseFromLibraryButtonTitle: 'Choose from gallery',
   quality: 1,
+  error:''
 };
 
 export default class AddNewPost extends Component {
@@ -40,7 +41,7 @@ export default class AddNewPost extends Component {
                         }}
                         >
                         <Text style={{color: 'white', padding: 2}}>
-                            close
+                            Close
                         </Text>
                     </TouchableOpacity>
                 </View>
@@ -147,6 +148,7 @@ deleteItems = () => {
 
   render() {
    
+    console.log(this.state.error + "asadadasdads");
     return (
       <TouchableWithoutFeedback style={{height:Dimensions.get('window').height}}>
       <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100} style={{flex: 1}}>
@@ -167,7 +169,7 @@ deleteItems = () => {
 
 <Text style={{alignSelf:'center',marginTop:10,color:'grey'}}>Title</Text>
           <TextInput style={{marginTop:10,marginLeft:'5%',width:'90%',height:45,borderRadius: 7,borderWidth:1,borderColor:'#B4B8BA'}}
-          placeholder="Enter value" value={this.state.title} onChangeText={(text)=>{this.setState({title:text})}}></TextInput>
+          placeholder=" Title" value={this.state.title} onChangeText={(text)=>{this.setState({title:text})}}></TextInput>
 
 
     {/* <Button title="Next" onPress={()=>{
@@ -186,20 +188,25 @@ deleteItems = () => {
       style={{alignItems: 'center', marginTop:'3%'}}
       onPress={()=>{      
         if(this.state.Images && this.state.title !== ''){
+          this.setState({error:''})
           this.props.navigation.navigate('CreatePost',{
             Images: this.state.Images,
             title: this.state.title,
             deleteItems: this.deleteItems
           })
         } 
+        else if(this.state.Images === undefined && this.state.title === ''){
+          this.setState({error:"Select image and title"})
+        }
       }}
       >
-      <View style={{width: '90%', borderRadius: 5, height: 30, justifyContent: 'center', backgroundColor: '#1192d1', alignSelf: 'center'}}>
+      <View style={{width: '90%', borderRadius: 5, height: 45, justifyContent: 'center', backgroundColor: '#1192d1', alignSelf: 'center'}}>
         <Text style={{color: 'white', alignSelf: 'center'}}>NEXT</Text>
       </View>
+    {this.state.error === "Select image and title" ? <Text style={{color:'red'}}>{this.state.error}</Text> : null }
       </TouchableOpacity>
 
-
+   
 
 
     </ScrollView>
