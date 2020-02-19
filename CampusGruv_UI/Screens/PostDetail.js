@@ -16,8 +16,7 @@ import {
   Platform
 } from 'react-native';
 import {ThemeConsumer, Header} from 'react-native-elements';
-import {Container, Content, Item, Input} from 'native-base';
-
+import {Container, Item, Content, Input} from 'native-base';
 import Comment from '../Components/Comment'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CrossIcon from 'react-native-vector-icons/MaterialIcons';
@@ -32,10 +31,14 @@ import RNFetchBlob from 'rn-fetch-blob';
 import { FlatList, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import Share from 'react-native-share'
+import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
 
 
 
 const IconGrey = '#b4b8bf';
+
+AndroidKeyboardAdjust.setAdjustPan();
+
 
 class PostDetail extends Component {
 
@@ -587,12 +590,13 @@ incrementView = async () => {
       alert('something is wrong')
     }
   }
-
+//style={{height: Dimensions.get('window').height-150}}
   render() {
     const data = this.props.navigation.getParam('PostData', 'nothing to render');
     return (
-      <ScrollView>
-        <Content style={{height: Dimensions.get('window').height-125}}>
+      <>
+      <Container>
+        <Content contentContainerStyle={{}}>
           {this.renderHeader(data.userAvatar, data.postId, data.first_name, data.last_name, data.uri, data.userId, data.title)}
           {this.renderImage(data.uri)}
           {this.renderTitle(data.title, data.views)}
@@ -605,11 +609,10 @@ incrementView = async () => {
                 </Text>
               </View>
           }
-        </Content>
-        <Content>
-          {this.renderAddComment(data.userAvatar, data.postId, data.userId)}
-        </Content>
-      </ScrollView>
+        </Content> 
+      </Container>
+      {this.renderAddComment(data.userAvatar, data.postId, data.userId)}
+      </>
     );
   }
 }
