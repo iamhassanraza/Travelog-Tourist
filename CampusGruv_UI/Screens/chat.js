@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
 import { View, Text, TouchableOpacity} from 'react-native'
 import PostIcon from 'react-native-vector-icons/MaterialIcons'
+import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
+
+AndroidKeyboardAdjust.setAdjustResize();
+
 
 export default class Chat extends React.Component {
 
