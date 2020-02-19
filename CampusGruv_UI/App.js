@@ -42,7 +42,7 @@ import Followers from './Screens/Followers'
 import Following from './Screens/Following'
 import { Header } from 'react-native-elements'
 import FollowersPosts from './Screens/FollowersPosts'
-
+import InboxComponent from './Components/InboxComponent'
 
 
 const AuthNavigator = createStackNavigator({
@@ -324,6 +324,7 @@ const HomeStack = createStackNavigator({
 )
 
 const MessageStack = createStackNavigator({
+    InboxComponent,
     inbox: {
         screen: inbox,
         navigationOptions: {
@@ -344,7 +345,7 @@ const MessageStack = createStackNavigator({
                     </View>
                 </View>
                 </View>
-            )
+            ),
         },
     },
     chat: {
@@ -353,8 +354,10 @@ const MessageStack = createStackNavigator({
 },
     {
         initialRouteName: 'inbox',
-        navigationOptions: {
-            tabBarVisible: false
+        navigationOptions: props => {
+            return {
+                tabBarVisible: props.navigation.state.index === 0
+            } 
         }
     },
 

@@ -16,7 +16,7 @@ export default class Chat extends React.Component {
             <View style={{ position: 'absolute', padding: 2, alignSelf: 'center', left: 8 }}>
               <TouchableOpacity
                 onPress={() => {
-                  props.navigation.push('inbox')
+                  props.navigation.goBack()
                 }}
               >
                 <PostIcon name="arrow-back" color="white" size={25} />
@@ -58,13 +58,12 @@ export default class Chat extends React.Component {
   render() {
 
     return (
-      <GiftedChat
+        <GiftedChat
         messages={this.state.messages}
         onSend={messages => this.onSend(messages)}
         user={{
           _id: 1,
         }}
-
       />
     )
   }
