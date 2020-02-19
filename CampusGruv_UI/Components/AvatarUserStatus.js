@@ -45,7 +45,7 @@ class AvatarUserStatus extends Component {
     }
     else if (parseInt(Response.status) === 200){
       console.log('200',JsonResponse)
-      alert(JsonResponse.message);
+     
     }
     else {
       alert('something is wrong')
