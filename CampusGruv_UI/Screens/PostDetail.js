@@ -33,11 +33,9 @@ import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import Share from 'react-native-share'
 import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
 
-
-
 const IconGrey = '#b4b8bf';
 
-AndroidKeyboardAdjust.setAdjustPan();
+//AndroidKeyboardAdjust.setAdjustPan();
 
 
 class PostDetail extends Component {
@@ -50,7 +48,7 @@ class PostDetail extends Component {
             <Icon name="arrow-back" />
           </TouchableOpacity>
         )} />
-      )
+      ),
     }
   }
 
