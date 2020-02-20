@@ -69,6 +69,21 @@ class Chat extends React.Component {
     })
   }
 
+  mapMessages = (msgs) => {
+    this.setState({
+      messages: msgs.map(m => {
+        return {
+          text: m.message,
+          user: {
+            _id: m.user_id,
+            name: m.name,
+            avatar: m.profile_pic_url
+          }
+        }
+      })
+    })
+  }
+
   async componentDidMount() {
     const Token = await AsyncStorage.getItem('TOKEN');
     await this.fetchRoomDetails();
@@ -77,23 +92,9 @@ class Chat extends React.Component {
       console.log('hello jee connection established')
       this.socket.emit('joinRoom')
     });
-    this.socket.on('joinRoom', (msg) => {
-      this.setState({
-        messages: msg
-      })
-        this.setState({
-          messages2: msg.map(m => {
-            return {
-            text: m.message,
-            User: {
-              _id: m.user_id,
-              name: m.name,
-              avatar: m.profile_pic_url
-            }
-          }
-        })
-      })
-      console.log('mapped array is **********', this.state.messages2)
+    this.socket.on('joinRoom', (msgs) => {
+      console.log('messages ========> ',msgs)
+      this.mapMessages(msgs)
     });
     this.socket.on('error', () => {
       console.log('hello jee error established')
@@ -109,7 +110,6 @@ class Chat extends React.Component {
   }
 
   render() {
-    console.log(this.state.messages)
     return (
         <GiftedChat
         messages={this.state.messages}
