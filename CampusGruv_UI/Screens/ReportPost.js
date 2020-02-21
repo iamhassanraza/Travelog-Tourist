@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, ScrollView, TouchableOpacity} from 'react-native';
+import {Text, View, ScrollView, TouchableOpacity,AsyncStorage} from 'react-native';
 import {Container, Header, Content, Item, Input, Button} from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ReportIcon from 'react-native-vector-icons/Octicons';
@@ -16,11 +16,60 @@ export default class ReportPost extends Component {
 
 
 
+onSubmission = async () => {
+
+  console.log('chalra ye')
+  const Token = await AsyncStorage.getItem('TOKEN');
+  
+
+  let response = await fetch(
+    'https://campus-gruv-heroku.herokuapp.com/api/v1/post/report',
+    {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Token}`,
+      },
+      body: JSON.stringify({
+        post_id: this.state.post_id,
+        reason : this.state.reason,
+        description: this.state.description
+      })  
+    }
+    )
+    
+  const postReport = await response.json();
+    console.log(response.status,'======ppost report')
+  if(parseInt(response.status) === 400) {
+    alert(postReport.message);
+  }
+  else if (parseInt(response.status) === 200){
+    alert(postReport.message);
+  }
+  else{
+    alert('something went wrong')
+  }
+
+   
+};
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
   render() {
      
-      console.log(this.state);
+      console.log(this.state.post_id + "Asdadasdasd");
     return (
       <ScrollView style={{ paddingTop: Platform.OS =='ios' ? "10%" : null }}>
         <Container style={{backgroundColor: 'white'}}>
@@ -250,7 +299,7 @@ export default class ReportPost extends Component {
             </Item>
 
             <Button
-              onPress={() => { this.state.error === "No Reason Selected" ?  alert("Select Reason") : alert("Post Reported Successfull ") }
+              onPress={() => { this.state.error === "No Reason Selected" ?  alert("Select Reason") : this.onSubmission() }
               }
               rounded
               
