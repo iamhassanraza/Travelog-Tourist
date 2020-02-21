@@ -96,11 +96,20 @@ class Chat extends React.Component {
   }
 
 
-  onSend(messages = []) {
-    this.setState(previousState => ({
-      messages: GiftedChat.append(previousState.messages, messages),
-    }))
+  onSend(messages) {
+    this.setState(previousState => {
+      tempArray = []
+      previousState.messages.unshift(messages)
+      console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",previousState.messages)
+      tempArray = this.mapMessages(previousState.messages)
+      console.log("*********************************************************",tempArray)
+      return {
+      messages: tempArray,
+    }
+  })
   }
+
+  //GiftedChat.append(previousState.messages, messages)
 
   render() {
     return (
