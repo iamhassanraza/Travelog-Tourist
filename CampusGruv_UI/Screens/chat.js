@@ -39,18 +39,6 @@ class Chat extends React.Component {
     messages: [],
     connected: false,
     room_id: null,
-    messages2: [
-      {
-        // _id: 1,
-        // text: 'Hello developer',
-        // createdAt: new Date(),
-        // user: {
-        //   _id: 2,
-        //   name: 'React Native',
-        //   avatar: 'https://placeimg.com/140/140/any',
-        // },
-      }
-    ]
   }
 
   fetchRoomDetails = async () => {
@@ -93,20 +81,16 @@ class Chat extends React.Component {
       this.socket.emit('joinRoom')
     });
     this.socket.on('joinRoom', (msgs) => {
-      // console.log('messages ========> ',msgs)
+      console.log('messages ========> ',msgs)
       this.mapMessages(msgs)
     });
     this.socket.on('error', () => {
       console.log('hello jee error established')
     });
-    socket.on('message', function (msg) {
-      $('#messages').append($('<li>').text(`${name} : ${msg}`));
-      window.scrollTo(0, document.body.scrollHeight);
-    });
-    $('.sendMessage').click(function () {
-      socket.emit('message', $('#m').val());
-      $('#m').val('');
-      return false;
+    this.socket.on('message',(msg) => {
+      console.log('message arrived.')
+      // $('#messages').append($('<li>').text(`${name} : ${msg}`));
+      // window.scrollTo(0, document.body.scrollHeight);
     });
     console.log('Passed Socket *********')
   }

@@ -9,6 +9,7 @@ import PostIcon from 'react-native-vector-icons/Foundation'
 import { Keyboard } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import OptionsIcon from 'react-native-vector-icons/SimpleLineIcons'
+import MenuIcon from 'react-native-vector-icons/Feather'
 import PeopleIcon from 'react-native-vector-icons/FontAwesome5'
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons'
 import AddIcon from 'react-native-vector-icons/Entypo'
@@ -215,25 +216,34 @@ const HomeStack = createStackNavigator({
             header: (props) => (
                 <View style={{ backgroundColor: '#1192d1',}}>
 
-                <View style={{marginTop:Platform.OS=='ios'? 38:0,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
-                    <View style={{alignSelf: 'center'}}>
-                    <Image
-                                    source={Logo}
-                                    style={{ width: 150, alignSelf: 'flex-start', height: '100%' }}
-                                    resizeMode="contain"
-                                    />
-                    </View>
-                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
-                        <TouchableOpacity 
-                            onPress = {() => {
-                                props.navigation.goBack()
-                            }}
-                            >
-                            <Icon name="arrow-back" color="white" size={20}/>
-                        </TouchableOpacity>
+                    <View style={{marginTop:Platform.OS=='ios'? 38:0,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+                        <View style={{alignSelf: 'center'}}>
+                        <Image
+                                        source={Logo}
+                                        style={{ width: 150, alignSelf: 'flex-start', height: '100%' }}
+                                        resizeMode="contain"
+                                        />
+                        </View>
+                        <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
+                            <TouchableOpacity 
+                                onPress = {() => {
+                                    props.navigation.goBack()
+                                }}
+                                >
+                                <Icon name="arrow-back" color="white" size={28}/>
+                            </TouchableOpacity>
+                        </View>
+                        <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
+                            <TouchableOpacity 
+                                onPress = {() => {
+                                    props.navigation.goBack()
+                                }}
+                                >
+                                <MenuIcon name="more-vertical" color="white" fontWeight='bold' size={26}/>
+                            </TouchableOpacity>
+                        </View>
                     </View>
                 </View>
-                            </View>
             ),
         }
     },
