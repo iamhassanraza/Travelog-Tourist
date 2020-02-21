@@ -224,13 +224,13 @@ const HomeStack = createStackNavigator({
                                     resizeMode="contain"
                                     />
                     </View>
-                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
+                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
                         <TouchableOpacity 
                             onPress = {() => {
-                                //props.navigation.push('inbox')
+                                props.navigation.goBack()
                             }}
                             >
-                            <OptionsIcon name="options-vertical" color="white" size={20}/>
+                            <Icon name="arrow-back" color="white" size={20}/>
                         </TouchableOpacity>
                     </View>
                 </View>
@@ -261,7 +261,7 @@ const HomeStack = createStackNavigator({
     {
         navigationOptions: (props) => {
             return {
-                //tabBarVisible: props.navigation.state.index < 2 ? true : false
+                tabBarVisible: props.navigation.state.routes[props.navigation.state.index].routeName === 'PostDetail' ? false : true
             }
         },
         defaultNavigationOptions: {

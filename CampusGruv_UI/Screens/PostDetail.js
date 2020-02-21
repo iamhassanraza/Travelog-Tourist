@@ -189,7 +189,7 @@ incrementView = async () => {
           </View>
 
           <TouchableOpacity 
-            style={{flexDirection: 'row', alignItems: 'center'}}
+            style={{flexDirection: 'row', marginLeft: 10, alignItems: 'center'}}
             onPress={() => this.props.navigation.push('UserProfile', {
               userNavId: userId,
               userNavDp: userdp,
@@ -349,22 +349,22 @@ incrementView = async () => {
       <View style={{}}>
         <Image
           source={{uri:image}}
-          // resizeMode='contain'
-          style={{width: '100%', height:300}}></Image>
+          resizeMode='center'
+          style={{width: '100%', height: 350}}></Image>
       </View>
     );
   };
 
   renderTitle = (title,views) => {
     return (
-      <View style={{marginLeft:"3%",flexDirection:"row", justifyContent:"space-between"}}>
+      <View style={{marginLeft:"3%",marginRight:"3%" ,flexDirection:"row", justifyContent:"space-between"}}>
        <View>
-       <Text style={{fontSize: 20}}>
+       <Text style={{fontSize: 25, fontWeight: '600'}}>
        {title}
         </Text>
        </View>
 
-        <View style={{marginRight:"3%",}}>
+        <View style={{}}>
         <ViewsIcon color="grey" name="eye" style={{fontSize:17}}/>
               <Text style={{fontSize: 9, color: 'grey', marginTop: -2,alignSelf:"center"}}>
                 {views}
@@ -378,7 +378,7 @@ incrementView = async () => {
   renderDescription = description => {
     return (
       <View style={{ marginLeft: '3%', marginRight: '5%'}}>
-        <Text style={{fontSize: 14, marginTop:'1%', color:'grey',marginBottom:10}}>
+        <Text style={{fontSize: 17, marginTop:'1%', color:'grey',marginBottom:10}}>
           {description}
         </Text>
       </View>
@@ -387,14 +387,14 @@ incrementView = async () => {
 
   renderAddComment = (dp, postId, userId) => {
     return (
-      <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{flexDirection: 'row',borderTopWidth:0.3, borderTopColor:'grey', paddingTop:5, paddingBottom:5, alignItems: 'center'}}>
               <View style={{marginLeft:'2%', width: 40, height: 40}}>
                 <Image
                   source={{uri: this.props.User.profile_pic_url}}
                   style={{width:'100%', borderRadius: 50, height: '100%'}}>
                 </Image>
               </View>
-              <Item style={{width: Dimensions.get('window').width - 90}}>
+              <Item style={{width: Dimensions.get('window').width - 100}}>
                 <Input
                   value={this.state.currentComment} 
                   getRef= {input => { this.commentInput = input }}
@@ -406,7 +406,7 @@ incrementView = async () => {
                   }}
                 />
               </Item>
-              <View style={{width: 50}}>
+              <View style={{width: 60, height:40, paddingRight:'2%', justifyContent: 'center', alignItems: 'center'}}>
                 <TouchableOpacity 
                   onPress={()=>{
                     //CALL API FOR COMMENT , USER ID ,POST ID , COMMENT DESCRIPTION 
@@ -415,9 +415,9 @@ incrementView = async () => {
                 >
                   <Text
                     style={{
-                    //fontSize: 17,
-                      color: 'grey',
-                      paddingLeft: '2%',
+                      fontSize: 18,
+                      color: ThemeBlue,
+                      //paddingLeft: '2%',
                     }}>
                     Post
                   </Text>
@@ -430,7 +430,10 @@ incrementView = async () => {
   renderAllComments = (dp) => {
     return (
       <View style={{marginLeft: '4%'}}>
-        <Text style={{color: 'grey', fontSize: 12}}>View all comments</Text>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Text style={{color: 'grey', fontSize: 12}}>Comments</Text>
+          <CrossIcon style={{}} name='expand-more'/>
+        </View>
         <FlatList
                 data={this.state.comments}
                 scrollEnabled={false}
@@ -599,14 +602,14 @@ incrementView = async () => {
     return (
       <>
       <Container>
-        <Content contentContainerStyle={{}}>
+        <Content style={{marginBottom: 10}}>
           {this.renderHeader(data.userAvatar, data.postId, data.first_name, data.last_name, data.uri, data.userId, data.title)}
           {this.renderImage(data.uri)}
           {this.renderTitle(data.title, data.views)}
           {this.renderDescription(data.description)}
           { this.state.comments[0] ? 
               this.renderAllComments(data.userAvatar, data.comments) : 
-              <View style={{height: 130, justifyContent: 'center'}}>
+              <View style={{height: 80, justifyContent: 'center'}}>
                 <Text style={{color: 'grey',fontSize:25, opacity:0.5, alignSelf: 'center'}}>
                   No comments yet!
                 </Text>
