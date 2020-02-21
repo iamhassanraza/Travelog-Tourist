@@ -43,6 +43,7 @@ import Following from './Screens/Following'
 import { Header } from 'react-native-elements'
 import FollowersPosts from './Screens/FollowersPosts'
 import InboxComponent from './Components/InboxComponent'
+import ReportPost from './Screens/ReportPost'
 
 
 const AuthNavigator = createStackNavigator({
@@ -639,7 +640,7 @@ export default class App extends Component {
   render() {
     return (
     
-<AppContainer></AppContainer>
+<ReportPost></ReportPost>
 
 )
   }
