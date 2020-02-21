@@ -354,7 +354,7 @@ incrementView = async () => {
     return (
       <View style={{marginLeft:"3%",marginRight:"3%" ,flexDirection:"row", justifyContent:"space-between"}}>
        <View>
-       <Text style={{fontSize: 25, fontWeight: 'bold'}}>
+       <Text style={{fontSize: 25, fontWeight: '600'}}>
        {title}
         </Text>
        </View>
@@ -425,7 +425,10 @@ incrementView = async () => {
   renderAllComments = (dp) => {
     return (
       <View style={{marginLeft: '4%'}}>
-        {/* <Text style={{color: 'grey', fontSize: 12}}>View all comments</Text> */}
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+          <Text style={{color: 'grey', fontSize: 12}}>Comments</Text>
+          <CrossIcon style={{}} name='expand-more'/>
+        </View>
         <FlatList
                 data={this.state.comments}
                 scrollEnabled={false}
@@ -601,7 +604,7 @@ incrementView = async () => {
           {this.renderDescription(data.description)}
           { this.state.comments[0] ? 
               this.renderAllComments(data.userAvatar, data.comments) : 
-              <View style={{height: 130, justifyContent: 'center'}}>
+              <View style={{height: 80, justifyContent: 'center'}}>
                 <Text style={{color: 'grey',fontSize:25, opacity:0.5, alignSelf: 'center'}}>
                   No comments yet!
                 </Text>

@@ -93,11 +93,20 @@ class Chat extends React.Component {
       this.socket.emit('joinRoom')
     });
     this.socket.on('joinRoom', (msgs) => {
-      console.log('messages ========> ',msgs)
+      // console.log('messages ========> ',msgs)
       this.mapMessages(msgs)
     });
     this.socket.on('error', () => {
       console.log('hello jee error established')
+    });
+    socket.on('message', function (msg) {
+      $('#messages').append($('<li>').text(`${name} : ${msg}`));
+      window.scrollTo(0, document.body.scrollHeight);
+    });
+    $('.sendMessage').click(function () {
+      socket.emit('message', $('#m').val());
+      $('#m').val('');
+      return false;
     });
     console.log('Passed Socket *********')
   }
