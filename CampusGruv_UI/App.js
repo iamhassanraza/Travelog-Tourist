@@ -484,10 +484,11 @@ const TabNavigator = createMaterialTopTabNavigator(
         tabBarOptions: {
             style: {
                 backgroundColor: "white",
-                height: 50,
+                height:Platform.OS == 'ios' ?60 : 50,
+             
             },
             iconStyle: {               
-               //marginBottom: 7,
+               marginBottom: Platform.OS == 'ios' ? "5%" :  0,
             },
             labelStyle: {
                 fontSize: 8,
