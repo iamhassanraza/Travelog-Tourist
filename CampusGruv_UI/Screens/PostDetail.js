@@ -293,7 +293,7 @@ incrementView = async () => {
                     <Text
                       onPress={() => {
                         this.setState({isModalVisible: false})
-                        this.props.navigation.navigate("ReportPost")
+                        this.props.navigation.navigate("ReportPost", { PostId : this.props.navigation.getParam('PostData', 'nothing to render') })
                         
                       }
                       }

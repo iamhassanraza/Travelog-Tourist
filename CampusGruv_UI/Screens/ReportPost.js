@@ -10,10 +10,16 @@ export default class ReportPost extends Component {
     reason: '',
     postId: undefined,
     description: '',
-    error:"No Reason Selected" 
+    error:"No Reason Selected" ,
+    post_id : this.props.navigation.getParam('PostId', null).postId
  };
 
+
+
+
+
   render() {
+     
       console.log(this.state);
     return (
       <ScrollView style={{ paddingTop: Platform.OS =='ios' ? "10%" : null }}>
