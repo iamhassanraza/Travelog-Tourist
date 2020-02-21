@@ -352,9 +352,9 @@ incrementView = async () => {
 
   renderTitle = (title,views) => {
     return (
-      <View style={{marginLeft:"3%",marginRight:"3%",flexDirection:"row", justifyContent:"space-between"}}>
+      <View style={{marginLeft:"3%",marginRight:"3%" ,flexDirection:"row", justifyContent:"space-between"}}>
        <View>
-       <Text style={{fontSize: 25}}>
+       <Text style={{fontSize: 25, fontWeight: 'bold'}}>
        {title}
         </Text>
        </View>
