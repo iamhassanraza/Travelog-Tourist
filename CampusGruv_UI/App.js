@@ -6,6 +6,7 @@ import 'react-native-gesture-handler'
 // import Screen2 from './Screens/Screen1'
 import Screen3 from './Components/Post'
 import PostIcon from 'react-native-vector-icons/Foundation'
+import { Keyboard } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import OptionsIcon from 'react-native-vector-icons/SimpleLineIcons'
 import PeopleIcon from 'react-native-vector-icons/FontAwesome5'
@@ -249,12 +250,18 @@ const HomeStack = createStackNavigator({
         navigationOptions: {
             header: null
         }
+    },
+    ReportPost : {
+        screen : ReportPost,
+        navigationOptions: {
+            header: null
+        }
     }
 },
     {
         navigationOptions: (props) => {
             return {
-                tabBarVisible: props.navigation.state.index < 2 ? true : false
+                //tabBarVisible: props.navigation.state.index < 2 ? true : false
             }
         },
         defaultNavigationOptions: {
@@ -472,11 +479,8 @@ const TabNavigator = createMaterialTopTabNavigator(
             tabBarOnPress: ({navigation, defaultHandler}) => {
                 navigation.dispatch(StackActions.popToTop());
                 defaultHandler();
-            }
+            },
         },
-
-    
-
         tabBarOptions: {
             style: {
                 backgroundColor: "white",
@@ -505,7 +509,6 @@ const TabNavigator = createMaterialTopTabNavigator(
     }
 );
 const TabContainer = createAppContainer(TabNavigator);
-
 // const RootStack = createStackNavigator({
 
 //     TabContainer: {
@@ -619,7 +622,7 @@ const RootStackNavigator = createSwitchNavigator({
         screen: AuthNavigator
     },
     App: {
-        screen: TabContainer
+        screen: TabContainer,
     },
     EditProfile:{
         screen:createStackNavigator({EditProfile})
@@ -637,11 +640,41 @@ const RootStackNavigator = createSwitchNavigator({
 const AppContainer = createAppContainer(RootStackNavigator);
 
 export default class App extends Component {
-  render() {
-    return (
-    
-<ReportPost></ReportPost>
 
-)
-  }
+    constructor(props) {
+        super(props)
+        this.keyboardWillShow = this.keyboardWillShow.bind(this)
+        this.keyboardWillHide = this.keyboardWillHide.bind(this)
+        this.state = {
+          isVisible: true
+        }
+    }
+
+    componentWillMount() {
+        this.keyboardWillShowSub = Keyboard.addListener('keyboardDidShow', this.keyboardWillShow)
+        this.keyboardWillHideSub = Keyboard.addListener('keyboardDidHide', this.keyboardWillHide)
+    }
+
+    componentWillUnmount() {
+        this.keyboardWillShowSub.remove()
+        this.keyboardWillHideSub.remove()
+    }
+
+    keyboardWillShow = event => {
+        this.setState({
+          isVisible: false
+        })
+    }
+    
+    keyboardWillHide = event => {
+        this.setState({
+          isVisible: true
+        })
+    }
+
+    render() {
+        return ( 
+          <AppContainer></AppContainer>
+        )
+    }
 }
