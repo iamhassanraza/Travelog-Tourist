@@ -189,7 +189,7 @@ incrementView = async () => {
           </View>
 
           <TouchableOpacity 
-            style={{flexDirection: 'row', alignItems: 'center'}}
+            style={{flexDirection: 'row', marginLeft: 10, alignItems: 'center'}}
             onPress={() => this.props.navigation.push('UserProfile', {
               userNavId: userId,
               userNavDp: userdp,
