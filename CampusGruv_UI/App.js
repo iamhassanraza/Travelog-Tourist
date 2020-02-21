@@ -254,7 +254,7 @@ const HomeStack = createStackNavigator({
     {
         navigationOptions: (props) => {
             return {
-                //tabBarVisible: props.navigation.state.index < 2 ? true : false
+                tabBarVisible: props.navigation.state.routes[props.navigation.state.index].routeName === 'PostDetail' ? false : true
             }
         },
         defaultNavigationOptions: {
