@@ -291,7 +291,12 @@ incrementView = async () => {
                       name="flag-variant-outline"
                       style={styles.optionIcon}></Icon>
                     <Text
-                      onPress={() => alert('Report Post')}
+                      onPress={() => {
+                        this.setState({isModalVisible: false})
+                        this.props.navigation.navigate("ReportPost", { PostId : this.props.navigation.getParam('PostData', 'nothing to render') })
+                        
+                      }
+                      }
                       style={styles.TextWithNavigation}>
                       Report Post
                     </Text>
@@ -382,7 +387,7 @@ incrementView = async () => {
 
   renderAddComment = (dp, postId, userId) => {
     return (
-      <View style={{flexDirection: 'row',borderTopWidth:0.3, borderTopColor:'grey', paddingTop:5, paddingBottom:5, alignItems: 'center'}}>
+      <View style={{marginBottom: Platform.OS == 'ios' ? 20 : 0, flexDirection: 'row',borderTopWidth:0.3, borderTopColor:'grey', paddingTop:5, paddingBottom:5, alignItems: 'center'}}>
               <View style={{marginLeft:'2%', width: 40, height: 40}}>
                 <Image
                   source={{uri: this.props.User.profile_pic_url}}
@@ -395,7 +400,7 @@ incrementView = async () => {
                   getRef= {input => { this.commentInput = input }}
                   multiline={true}
                   placeholder="Add a comment"
-                  //style={{ borderRadius: 7, borderColor:'grey'}}
+                  style={{ borderWidth: 0}}
                   onChangeText={text => {
                     this.changeCurrentCommentState(text);
                   }}

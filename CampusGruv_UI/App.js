@@ -45,6 +45,7 @@ import Following from './Screens/Following'
 import { Header } from 'react-native-elements'
 import FollowersPosts from './Screens/FollowersPosts'
 import InboxComponent from './Components/InboxComponent'
+import ReportPost from './Screens/ReportPost'
 
 
 const AuthNavigator = createStackNavigator({
@@ -256,6 +257,12 @@ const HomeStack = createStackNavigator({
     CategoryList,
     Searching: {
         screen : Searching,
+        navigationOptions: {
+            header: null
+        }
+    },
+    ReportPost : {
+        screen : ReportPost,
         navigationOptions: {
             header: null
         }
@@ -487,10 +494,11 @@ const TabNavigator = createMaterialTopTabNavigator(
         tabBarOptions: {
             style: {
                 backgroundColor: "white",
-                height: 50,
+                height:Platform.OS == 'ios' ?60 : 50,
+             
             },
             iconStyle: {               
-               //marginBottom: 7,
+               marginBottom: Platform.OS == 'ios' ? "5%" :  0,
             },
             labelStyle: {
                 fontSize: 8,
@@ -677,7 +685,7 @@ export default class App extends Component {
 
     render() {
         return ( 
-            <AppContainer></AppContainer>
+          <AppContainer></AppContainer>
         )
     }
 }
