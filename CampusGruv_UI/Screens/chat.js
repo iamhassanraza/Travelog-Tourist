@@ -7,7 +7,7 @@ import io from 'socket.io-client';
 import {connect} from 'react-redux';
 import {CreateUserDetails} from '../ReduxStore/Actions/index';
 
-//AndroidKeyboardAdjust.setAdjustResize();
+AndroidKeyboardAdjust.setAdjustResize();
 
 
 class Chat extends React.Component {
@@ -39,49 +39,6 @@ class Chat extends React.Component {
     super(props);
     this.state = {
       messages: [],
-      messages2:
-        [
-          {
-            _id: 484,
-            text: 'Hello developer',
-            //createdAt: new Date(),
-            user: {
-              _id: 486,
-              name: 'React Native',
-              avatar: 'https://placeimg.com/140/140/any',
-            },
-          },
-          {
-            _id: 6,
-            text: 'second in array',
-            //createdAt: new Date(),
-            user: {
-              _id: 484,
-              name: this.props.User.first_name + ' ' + this.props.User.last_name,
-              avatar: this.props.User.profile_pic_url,
-            },
-          },
-          {
-            _id: 2,
-            text: 'Hello Nibba',
-            //createdAt: new Date(),
-            user: {
-              _id: 486,
-              name: 'React Native',
-              avatar: 'https://placeimg.com/140/140/any',
-            },
-          },
-          {
-            _id: 7,
-            text: 'Hello Nibba',
-            //createdAt: new Date(),
-            user: {
-              _id: 484,
-              name: 'React Native',
-              avatar: 'https://placeimg.com/140/140/any',
-            },
-          }
-      ],
       connected: false,
       room_id: null,
     };
@@ -106,7 +63,7 @@ class Chat extends React.Component {
   mapMessages = (msgs) => { 
     return msgs.map(m => {
       return {
-        //_id: m.user_id === this.props.User.id ? 486 : 484,
+        _id: m.id,
         text: m.message,
         user: {
           _id: m.user_id,
@@ -125,14 +82,15 @@ class Chat extends React.Component {
       console.log('hello jee connection established')
       this.socket.emit('joinRoom')
     });
-    this.socket.on('joinRoom', (msgs) => {
-      //console.log('messages ========> ',msgs)
-      const tempArray = this.mapMessages(msgs)
+    this.socket.on('joinRoom', async (msgs) => {
+      console.log('messages ========> ',msgs[0])
+      const tempArray = await this.mapMessages(msgs)
       console.log("temporary arrrayyy ",tempArray)
       this.setState( previousState => ({
-        messages: GiftedChat.append([previousState.messages, tempArray])
+        messages: tempArray
       }) 
       );
+      console.log('it ran')
     })
     this.socket.on('error', () => {
       console.log('hello jee error established')
@@ -148,25 +106,6 @@ class Chat extends React.Component {
 
 
   onSend = async (messages = []) => {
-    //this.setState(previousState => {
-      // var tempArray = []
-      // // tempArray = previousState.messages.reverse()
-      // // console.log('reversed array is >>>>>>>>>>>>>>.',tempArray)
-      // console.log('message ============ >',messages)
-      // console.log('previous state messages =====>',previousState.messages)
-      // tempArray = GiftedChat.append( messages, previousState.messages)
-      // console.log('temp array is >>>>>>>>>>>>>>.',tempArray)
-      // // var tempArray = []
-      // // previousState.messages.unshift(messages[0])
-      // // console.log("^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^",previousState.messages)
-      // // tempArray = this.mapMessages(previousState.messages)
-      // // console.log("*********************************************************",tempArray)
-      // return {
-      //   messages: tempArray
-      // }
-    // })
-    console.log('original msg is *****', messages)
-    console.log('previous messages are *****', this.state.messages)
     this.setState(previousState => ({
       messages: GiftedChat.append(previousState.messages, messages),
     }))

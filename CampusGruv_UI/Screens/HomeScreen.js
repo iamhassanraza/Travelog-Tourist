@@ -142,7 +142,7 @@ export default class HomeScreen extends PureComponent {
   };
 
   onPageRefresh = () => {
-    this.setState({posts: [], loading: true, total: undefined, FollowersPosts:false}, () => {
+    this.setState({posts: [], pageNo: 1, loading: true, total: undefined, FollowersPosts:false}, () => {
       this.fetchdata();
     });
   };
@@ -354,6 +354,9 @@ export default class HomeScreen extends PureComponent {
     const {navigation} = this.props;
     this.focusListener = navigation.addListener('willFocus', () => {
       // The screen is focused
+      this.setState({
+        pageNo: 1
+      })
       this.fetchdata();
     });
 
@@ -398,7 +401,7 @@ export default class HomeScreen extends PureComponent {
            
             <Text
               onPress={ async () => {
-                await this.setState({posts:[],total:undefined,FollowersPosts:false});
+                await this.setState({posts:[],pageNo:1, total:undefined,FollowersPosts:false});
                 this.fetchdata();
               }}
               style={{

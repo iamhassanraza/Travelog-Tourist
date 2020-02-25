@@ -14,6 +14,9 @@ import RenderCards from '../Components/RenderCards';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import ContentLoader, {Rect} from 'react-content-loader/native';
 import NoPost from '../Components/NoPost'
+import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
+
+AndroidKeyboardAdjust.setAdjustPan();
 
 
 
