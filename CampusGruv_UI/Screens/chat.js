@@ -83,29 +83,30 @@ class Chat extends React.Component {
       this.socket.emit('joinRoom')
     });
     this.socket.on('joinRoom', async (msgs) => {
-      console.log('messages ========> ',msgs[0])
       const tempArray = await this.mapMessages(msgs)
-      console.log("temporary arrrayyy ",tempArray)
       this.setState( previousState => ({
         messages: tempArray
       }) 
       );
-      console.log('it ran')
     })
     this.socket.on('error', () => {
       console.log('hello jee error established')
     });
-    this.socket.on('message',(msg) => {
-      console.log('message arrived.')
-      // $('#messages').append($('<li>').text(`${name} : ${msg}`));
-      // window.scrollTo(0, document.body.scrollHeight);
+    this.socket.on('message', async (msg) => {
+      console.log('message arrived.',msg)
+      const tempArray = await this.mapMessages(msg)
+      this.setState( previousState => ({
+        messages: tempArray
+      }) 
+      );
     });
-    console.log('Passed Socket *********')
   }
 
 
 
   onSend = async (messages = []) => {
+    console.log('sent message ==== >',messages[0])
+    this.socket.emit('message',messages)
     this.setState(previousState => ({
       messages: GiftedChat.append(previousState.messages, messages),
     }))
@@ -114,7 +115,6 @@ class Chat extends React.Component {
   // GiftedChat.append(previousState.messages, messages)
 
   render() {
-    console.log('this.state.messages =========> ',this.state.messages)
     return (
         <GiftedChat
         messages={this.state.messages}
