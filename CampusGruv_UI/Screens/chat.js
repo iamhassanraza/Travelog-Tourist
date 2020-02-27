@@ -77,7 +77,7 @@ class Chat extends React.Component {
   async componentDidMount() {
     const Token = await AsyncStorage.getItem('TOKEN');
     await this.fetchRoomDetails();
-    this.socket = io('http://192.168.100.58:4000', { query: `token=${Token}&room_id=${this.state.room_id}`, transports: ['websocket'] });
+    this.socket = io('https://campusgruv-websocket.herokuapp.com/', { query: `token=${Token}&room_id=${this.state.room_id}`, transports: ['websocket'] });
     this.socket.on('connect', () => {
       console.log('hello jee connection established')
       this.socket.emit('joinRoom')
