@@ -77,12 +77,13 @@ class Chat extends React.Component {
   async componentDidMount() {
     const Token = await AsyncStorage.getItem('TOKEN');
     await this.fetchRoomDetails();
-    this.socket = io('https://campusgruv-websocket.herokuapp.com', { query: `token=${Token}&room_id=${this.state.room_id}`, transports: ['websocket'] });
+    this.socket = io('http://192.168.100.58:4000', { query: `token=${Token}&room_id=${this.state.room_id}`, transports: ['websocket'] });
     this.socket.on('connect', () => {
       console.log('hello jee connection established')
       this.socket.emit('joinRoom')
     });
     this.socket.on('joinRoom', async (msgs) => {
+      console.log(msgs[0])
       const tempArray = await this.mapMessages(msgs)
       this.setState( previousState => ({
         messages: tempArray
@@ -95,10 +96,13 @@ class Chat extends React.Component {
     this.socket.on('message', async (msg) => {
       console.log('message arrived.',msg)
       const tempArray = await this.mapMessages(msg)
-      this.setState( previousState => ({
-        messages: tempArray
-      }) 
-      );
+      this.setState(previousState => ({
+        messages: GiftedChat.append(previousState.messages, tempArray),
+      }))
+      // this.setState( previousState => ({
+      //   messages: tempArray
+      // }) 
+      // );
     });
   }
 
@@ -106,10 +110,18 @@ class Chat extends React.Component {
 
   onSend = async (messages = []) => {
     console.log('sent message ==== >',messages[0])
-    this.socket.emit('message',messages)
-    this.setState(previousState => ({
-      messages: GiftedChat.append(previousState.messages, messages),
-    }))
+    const tempArray =  messages.map(m => {
+        return {
+          user_id: m.user._id,
+          message: m.text,
+          profile_pic_url: m.user.avatar,
+          name: m.user.name
+        }
+    })
+    this.socket.emit('message',tempArray[0])
+    // this.setState(previousState => ({
+    //   messages: GiftedChat.append(previousState.messages, messages),
+    // }))
   }
 
   // GiftedChat.append(previousState.messages, messages)
