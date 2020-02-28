@@ -1,17 +1,41 @@
 import React, { Component } from 'react'
-import { Text, View, Platform, TouchableOpacity } from 'react-native';
+import { Text, View, Platform, TouchableOpacity, AsyncStorage } from 'react-native';
 import { SearchBar,Avatar, Divider } from 'react-native-elements';
 import { withNavigation } from 'react-navigation';
 
 
 class InboxComponent extends Component {
 
+  state = {
+    room_id: null
+  }
+
+  fetchRoomDetails = async () => {
+    const Token = await AsyncStorage.getItem('TOKEN');
+    const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/room/details?user_id=${this.props.user_id}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Token}`,
+        },
+    });
+    const JsonResponse = await Response.json();
+    console.log(JsonResponse)
+    this.setState({
+      room_id: JsonResponse[0].room_id
+    })
+  }
+
+  async componentDidMount() {
+    await this.fetchRoomDetails()
+  }
+
     render() {
-      console.log('this.props id',this.props.user_id)
         return (
           <View>
            <TouchableOpacity onPress={()=>{
              this.props.navigation.push('chat',{
+               room_id: this.state.room_id,
                user_id: this.props.user_id,
                avatar: this.props.uri,
                name: this.props.title,

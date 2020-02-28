@@ -42,21 +42,21 @@ class Chat extends React.Component {
     };
   }
 
-  fetchRoomDetails = async () => {
-    const Token = await AsyncStorage.getItem('TOKEN');
-    const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/room/details?user_id=${this.props.navigation.getParam('user_id', null)}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${Token}`,
-        },
-    });
-    const JsonResponse = await Response.json();
-    console.log(JsonResponse)
-    this.setState({
-      room_id: JsonResponse[0].room_id
-    })
-  }
+  // fetchRoomDetails = async () => {
+  //   const Token = await AsyncStorage.getItem('TOKEN');
+  //   const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/room/details?user_id=${this.props.navigation.getParam('user_id', null)}`, {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: `Bearer ${Token}`,
+  //       },
+  //   });
+  //   const JsonResponse = await Response.json();
+  //   console.log(JsonResponse)
+  //   this.setState({
+  //     room_id: JsonResponse[0].room_id
+  //   })
+  // }
 
   mapMessages = (msgs) => { 
     return msgs.map(m => {
@@ -74,8 +74,7 @@ class Chat extends React.Component {
 
   async componentDidMount() {
     const Token = await AsyncStorage.getItem('TOKEN');
-    await this.fetchRoomDetails();
-    this.socket = io('https://campusgruv-websocket.herokuapp.com/', { query: `token=${Token}&room_id=${this.state.room_id}`, transports: ['websocket'] });
+    this.socket = io('https://campusgruv-websocket.herokuapp.com/', { query: `token=${Token}&room_id=${this.props.navigation.getParam('room_id',null)}`, transports: ['websocket'] });
     this.socket.on('connect', () => {
       console.log('hello jee connection established')
       this.socket.emit('joinRoom')
