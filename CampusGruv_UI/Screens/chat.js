@@ -2,12 +2,10 @@ import React, { Component } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
 import { View, Text, TouchableOpacity, AsyncStorage} from 'react-native'
 import PostIcon from 'react-native-vector-icons/MaterialIcons'
-import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
+//import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
 import io from 'socket.io-client';
 import {connect} from 'react-redux';
 import {CreateUserDetails} from '../ReduxStore/Actions/index';
-
-AndroidKeyboardAdjust.setAdjustResize();
 
 
 class Chat extends React.Component {
@@ -46,7 +44,7 @@ class Chat extends React.Component {
 
   fetchRoomDetails = async () => {
     const Token = await AsyncStorage.getItem('TOKEN');
-    const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/room/details?user_id=486`, {
+    const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/room/details?user_id=${this.props.navigation.getParam('user_id', null)}`, {
         method: 'GET',
         headers: {
           'Content-Type': 'application/json',
@@ -86,7 +84,8 @@ class Chat extends React.Component {
       console.log(msgs[0])
       const tempArray = await this.mapMessages(msgs)
       this.setState( previousState => ({
-        messages: tempArray
+        messages: GiftedChat.append(previousState.messages, tempArray),
+        //messages: tempArray
       }) 
       );
     })

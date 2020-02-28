@@ -15,6 +15,7 @@ export default class Inbox extends Component {
         super();
         this.state= {
             Text:'',
+            data: []
         }
         
     }
@@ -25,34 +26,27 @@ export default class Inbox extends Component {
         this.setState({Text:e})
     }
 
-    componentDidMount() {
-        
-    }
-
-    data = [
+    async componentDidMount() {
+        const Token = await AsyncStorage.getItem('TOKEN');
+        const user_id = await AsyncStorage.getItem('USER_ID');
+        const Response = await fetch(
+        `https://campus-gruv-heroku.herokuapp.com/api/v1/chat/history`,
         {
-            uri: 'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-            title: "Ammar", 
-            subtitle: "how are you bro", 
-            time: "40 min"
-        }
-    ]
+            headers: {
+            Authorization: `Bearer ${Token}`,
+            },
+        },
+        );
+        const JsonResponse = await Response.json();
+        this.setState({
+            data: JsonResponse.data
+        })
+        console.log('inbox',JsonResponse.data[0])
+    }
 
     render() {
         return (
             <>
-                {/* <WS
-                    ref={ref => {this.ws = ref}}
-                    url="ws://192.168.100.46/adnois-ws"
-                    onOpen={() => {
-                        console.log('Open!')
-                        this.ws.send('Hello')
-                    }}
-                    onMessage = {message => {console.log('this is the message',message)}}
-                    onError= {error => {console.log('this is the error',error)}}
-                    onClose={console.log('connection closed')}
-                    reconnect // Will try to reconnect onClose
-                /> */}
                 <View style={{flex:1}}> 
                     <ScrollView>
                         <SearchBar 
@@ -62,13 +56,14 @@ export default class Inbox extends Component {
                             value={this.state.Text}
                         />
                         <FlatList 
-                            data={this.data}
+                            data={this.state.data}
                             renderItem={({item}) => 
-                                <InboxComponent   
-                                    uri={item.uri} 
-                                    title={item.title} 
-                                    subtitle={item.subtitle} 
-                                    time={item.time}
+                                <InboxComponent  
+                                    user_id={item.user.id} 
+                                    uri={item.user.profile_pic_url} 
+                                    title={item.user.first_name + ' ' + item.user.last_name} 
+                                    subtitle={'hello jee'} 
+                                    //time={item.time}
                                 />
                             }
                         />

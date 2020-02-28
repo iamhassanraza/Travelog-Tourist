@@ -7,10 +7,12 @@ import { withNavigation } from 'react-navigation';
 class InboxComponent extends Component {
 
     render() {
+      console.log('this.props id',this.props.user_id)
         return (
           <View>
            <TouchableOpacity onPress={()=>{
              this.props.navigation.push('chat',{
+               user_id: this.props.user_id,
                avatar: this.props.uri,
                name: this.props.title,
                msg:this.props.subtitle
@@ -25,8 +27,8 @@ class InboxComponent extends Component {
                 size={40}
               />
               <View style={{flexDirection:'column',alignSelf:'center',marginLeft:10,flex:2}}>
-                <Text style={{fontWeight:'bold',color:'#7A7E7F'}}>{this.props.title}</Text>
-                <Text style={{color:this.props.read?'black':'grey',fontWeight:'bold'}}>{this.props.subtitle}</Text>
+                <Text style={{fontWeight:'bold',color:'#181a1a'}}>{this.props.title}</Text>
+                <Text style={{color:'grey'}}>{this.props.subtitle}</Text>
               </View>
               <View style={{marginBottom:10,alignSelf:'center'}}>
                 <Text style={{color:'grey',fontSize:8}}>{this.props.time}</Text>
