@@ -15,6 +15,7 @@ import {
 import HeaderTitle from './Heading';
 import Colors from '../Assets/Colors';
 import {ScrollView} from 'react-native-gesture-handler';
+import {Container, Item, Content, Input} from 'native-base';
 import { connect } from "react-redux";
 import { CreateUserDetails } from "../ReduxStore/Actions/index";
 const API_BASE_URL = 'https://campus-gruv-heroku.herokuapp.com/api/v1';
@@ -220,33 +221,26 @@ class Signup extends React.Component {
   render() {
     // const { navigate } = this.props.navigation;
     return (
+      <Container style={{height: '100%'}}>
       <ImageBackground
         style={styles.container}
         source={require('../Assets/Images/background.png')}
         resizeMode="cover">
         <Text
-          style={{color: 'white', fontSize: 16, margin: 10, marginTop:Platform.OS=='ios'? 40:20,}}
+          style={{color: 'white', fontSize: 16, marginLeft: 10, marginTop:Platform.OS=='ios'? 40:20,}}
           onPress={() => {
             this.props.navigation.goBack();
           }}>
           Back
         </Text>
-        <View>
-          <KeyboardAvoidingView
-            behavior="padding"
-            keyboardVerticalOffset={-110}
-            enabled>
-            <ScrollView>
+            <Content style={{}}>
               {/* MAIN TITLE */}
-              <View style={{marginTop: -20}}>
+              <View style={{justifyContent: 'center', height: '30%'}}>
                 <HeaderTitle />
               </View>
 
-              <View>
+              <View style={{}}>
                 {/* 
-<InputView ph='First name' mt={20}/>
-<InputView ph='Last name' mt={20}/>
-<InputView ph='Email' mt={20}/> */}
 
                 {/* First name FIELD */}
                 <View
@@ -409,10 +403,9 @@ class Signup extends React.Component {
                   </TouchableOpacity>
                 </View>
               </View>
-            </ScrollView>
-          </KeyboardAvoidingView>
-        </View>
+              </Content>
       </ImageBackground>
+      </Container>
     );
   }
 }

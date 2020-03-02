@@ -153,17 +153,17 @@ class Login extends React.Component {
             }}>
             <KeyboardAvoidingView  behavior="padding" enabled>
               {/* MAIN TITLE */}
-              <View>
+              <View style={{ justifyContent: 'center', height: '30%'}}>
                 <HeaderTitle />
               </View>
 
-              <View style={{marginTop: 60}}>
+              <View style={{}}>
                 {/* EMAIL FIELD */}
                 <View
                   style={{
                     width: '90%',
                     marginLeft: '5%',
-                    marginTop: -30,
+                    //marginTop: -30,
                     borderColor: '#C4C4C4',
                     backgroundColor: 'white',
                     borderWidth: 0.5,
