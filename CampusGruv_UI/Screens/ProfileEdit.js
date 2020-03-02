@@ -15,6 +15,7 @@ import {
 } from 'react-native';
 import InputView from '../Components/ProfileEdit/InputViews';
 import ImagePicker from 'react-native-image-picker';
+import {Container, Item, Content, Input} from 'native-base';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import {TouchableHighlight} from 'react-native-gesture-handler';
@@ -419,7 +420,7 @@ class ProfilePage extends React.Component {
     // console.log(this.state.imageUri,'==================major============')
     //const { navigate } = this.props.navigation;
     return (
-      <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100}>
+      <Container>
              <Spinner
               visible={this.state.Spinner}
               textContent={'Uploading...'}
@@ -535,8 +536,7 @@ class ProfilePage extends React.Component {
             {this.renderGradYear()}
           </View>
         </ScrollView>
-      </KeyboardAvoidingView>
-     
+      </Container>
     );
   }
 }
