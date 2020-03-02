@@ -148,7 +148,7 @@ deleteItems = () => {
 
   render() {
    
-    console.log(this.state.error + "asadadasdads");
+    
     return (
       <TouchableWithoutFeedback style={{height:Dimensions.get('window').height}}>
       <KeyboardAvoidingView behavior="padding" keyboardVerticalOffset={100} style={{flex: 1}}>

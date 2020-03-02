@@ -412,7 +412,7 @@ class CreateNewPost extends Component {
         },
       );
       const postMasterResponse = await response.json();
-
+        //console.log(this.state.Images,' ================================ ')
       let raw_response = await fetch(
         'https://campus-gruv-heroku.herokuapp.com/api/v1/post/detail',
         {
@@ -479,7 +479,7 @@ class CreateNewPost extends Component {
 
   createFormData = (images, body) => {
     const data = new FormData();
-    data.append('post_detail_images[]', {
+    data.append('post_detail_images', {
       name: images.fileName,
       type: images.type,
       uri:
