@@ -20,6 +20,7 @@ import DatePicker from 'react-native-datepicker';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Spinner from 'react-native-loading-spinner-overlay';
 import RNFetchBlob from 'rn-fetch-blob';
+import {Container, Item, Content, Input} from 'native-base';
 
 import {
   BallIndicator,
@@ -500,11 +501,12 @@ class CreateNewPost extends Component {
   render() {
    
     return (
-      <TouchableWithoutFeedback>
-        <KeyboardAvoidingView
+      <Container>
+      <Content>
+        {/* <KeyboardAvoidingView
           style={{flex: 1}}
           keyboardVerticalOffset={80}
-          behavior="padding">
+          behavior="padding"> */}
           <ScrollView>
             <Spinner
               visible={this.state.spinner}
@@ -530,8 +532,9 @@ class CreateNewPost extends Component {
             {this.renderDescription()}
             {this.renderShareButton()}
           </ScrollView>
-        </KeyboardAvoidingView>
-      </TouchableWithoutFeedback>
+        {/* </KeyboardAvoidingView> */}
+      </Content>
+      </Container>
     );
   }
 }
