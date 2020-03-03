@@ -9,7 +9,6 @@ import PostIcon from 'react-native-vector-icons/Foundation'
 import { Keyboard } from 'react-native'
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import OptionsIcon from 'react-native-vector-icons/SimpleLineIcons'
-import MenuIcon from 'react-native-vector-icons/Feather'
 import PeopleIcon from 'react-native-vector-icons/FontAwesome5'
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons'
 import AddIcon from 'react-native-vector-icons/Entypo'
@@ -129,39 +128,39 @@ const CreatePostStack = createStackNavigator({
 const ProfileStack = createStackNavigator({
     UserProfile: {
         screen: UserProfile,
-        navigationOptions: {
-            header: (props) => (
-                // <Header 
-                // centerComponent={{text:"CAMPUS GRUV",style:{color:"#FFF",fontWeight:'bold'}}}
-                // rightComponent={(
-                //     <TouchableOpacity onPress={() => props.navigation.navigate('UserSettings')} >
-                //         <Icon name="settings" color="white" size={23} />
-                //     </TouchableOpacity>
-                // )}
-                // />
-                <View style={{backgroundColor: '#1192d1',}}>
+        // navigationOptions: {
+        //     header: (props) => (
+        //         // <Header 
+        //         // centerComponent={{text:"CAMPUS GRUV",style:{color:"#FFF",fontWeight:'bold'}}}
+        //         // rightComponent={(
+        //         //     <TouchableOpacity onPress={() => props.navigation.navigate('UserSettings')} >
+        //         //         <Icon name="settings" color="white" size={23} />
+        //         //     </TouchableOpacity>
+        //         // )}
+        //         // />
+        //         <View style={{backgroundColor: '#1192d1',}}>
 
-                <View style={{marginTop:Platform.OS=='ios'? 38:0,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
-                    <View style={{alignSelf: 'center'}}>
-                        <Image
-                            source={Logo}
-                            style={{ width: 150, alignSelf: 'flex-start', height: '90%' }}
-                            resizeMode="contain"
-                            />
-                        </View>
-                    <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
-                        <TouchableOpacity 
-                            onPress = {() => {
-                                props.navigation.navigate('UserSettings')
-                            }}
-                            >
-                            <Icon name="settings" color="white" size={23}/>
-                        </TouchableOpacity>
-                            </View>
-                    </View>
-                </View>
-            )
-        },
+        //         <View style={{marginTop:Platform.OS=='ios'? 38:0,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+        //             <View style={{alignSelf: 'center'}}>
+        //                 <Image
+        //                     source={Logo}
+        //                     style={{ width: 150, alignSelf: 'flex-start', height: '90%' }}
+        //                     resizeMode="contain"
+        //                     />
+        //                 </View>
+        //             <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
+        //                 <TouchableOpacity 
+        //                     onPress = {() => {
+        //                         props.navigation.navigate('UserSettings')
+        //                     }}
+        //                     >
+        //                     <Icon name="settings" color="white" size={23}/>
+        //                 </TouchableOpacity>
+        //                     </View>
+        //             </View>
+        //         </View>
+        //     )
+        // },
     },
     EditProfile: {
         screen: EditProfile,
@@ -201,7 +200,7 @@ const ProfileStack = createStackNavigator({
 {
     navigationOptions: (props) => {
         return {
-            tabBarVisible: props.navigation.state.index < 1 ? true : false
+            tabBarVisible: props.navigation.state.routes[props.navigation.state.index].routeName === ('Followers' || 'Following') ? false : true
         }
     },
     initialRouteName: 'UserProfile'
@@ -213,40 +212,42 @@ const HomeStack = createStackNavigator({
     FollowersPosts,
     UserProfile: {
         screen: UserProfile,
-        navigationOptions: {
-            header: (props) => (
-                <View style={{ backgroundColor: '#1192d1',}}>
+        // navigationOptions: props => {
+        //     return {
+        //     header: (
+        //         <View style={{ backgroundColor: '#1192d1',}}>
 
-                    <View style={{marginTop:Platform.OS=='ios'? 38:0,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
-                        <View style={{alignSelf: 'center'}}>
-                        <Image
-                                        source={Logo}
-                                        style={{ width: 150, alignSelf: 'flex-start', height: '100%' }}
-                                        resizeMode="contain"
-                                        />
-                        </View>
-                        <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
-                            <TouchableOpacity 
-                                onPress = {() => {
-                                    props.navigation.goBack()
-                                }}
-                                >
-                                <Icon name="arrow-back" color="white" size={28}/>
-                            </TouchableOpacity>
-                        </View>
-                        <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
-                            <TouchableOpacity 
-                                onPress = {() => {
-                                    props.navigation.goBack()
-                                }}
-                                >
-                                <MenuIcon name="more-vertical" color="white" fontWeight='bold' size={26}/>
-                            </TouchableOpacity>
-                        </View>
-                    </View>
-                </View>
-            ),
-        }
+        //             <View style={{marginTop:Platform.OS=='ios'? 38:0,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
+        //                 <View style={{alignSelf: 'center'}}>
+        //                 <Image
+        //                                 source={Logo}
+        //                                 style={{ width: 150, alignSelf: 'flex-start', height: '100%' }}
+        //                                 resizeMode="contain"
+        //                                 />
+        //                 </View>
+        //                 <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
+        //                     <TouchableOpacity 
+        //                         onPress = {() => {
+        //                             props.navigation.goBack()
+        //                         }}
+        //                         >
+        //                         <Icon name="arrow-back" color="white" size={28}/>
+        //                     </TouchableOpacity>
+        //                 </View>
+        //                 <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
+        //                     <TouchableOpacity 
+        //                         onPress = {() => {
+        //                             props.navigation.goBack()
+        //                         }}
+        //                         >
+        //                         <MenuIcon name="more-vertical" color="white" fontWeight='bold' size={26}/>
+        //                     </TouchableOpacity>
+        //                 </View>
+        //             </View>
+        //         </View>
+        //     ),
+        //     }
+        //}
     },
     PostDetail: {
         screen: PostDetail,
