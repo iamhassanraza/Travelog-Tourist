@@ -145,6 +145,19 @@ class UserProfile extends React.Component {
     });
   }
 
+  fetchRoomDetails = async () => {
+    const Token = await AsyncStorage.getItem('TOKEN');
+    const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/room/details?user_id=${this.state.otherUserId}`, {
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Token}`,
+        },
+    });
+    const JsonResponse = await Response.json();
+    return JsonResponse[0].room_id;
+  }
+
   toggleModal = () => {
     this.setState({ isModalVisible: !this.state.isModalVisible });
   };
@@ -488,10 +501,11 @@ class UserProfile extends React.Component {
 
                   <View style={{alignSelf: 'center'}}>
                     <Text
-                      onPress={() => {
+                      onPress={async () => {
                         this.setState({isModalVisible: false})
+                        room_id = await this.fetchRoomDetails();
                         this.props.navigation.navigate('chat', {
-                          text: 'hello'
+                          room_id
                         })
                       }
                       }

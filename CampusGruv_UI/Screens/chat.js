@@ -64,11 +64,14 @@ class Chat extends React.Component {
       this.socket.emit('joinRoom')
     });
     this.socket.on('joinRoom', async (msgs) => {
-      console.log(msgs[0])
-      const tempArray = await this.mapMessages(msgs)
+      console.log('kajshakdhajkdhaldhlasdjhakldjakldjaklsdjaklsjd',msgs)
+      if(msgs!==null){
+        tempArray = await this.mapMessages(msgs)
+      } else {
+        tempArray = []
+      }
       this.setState( previousState => ({
         messages: GiftedChat.append(previousState.messages, tempArray),
-        //messages: tempArray
       }) 
       );
     })
@@ -100,6 +103,7 @@ class Chat extends React.Component {
           name: m.user.name
         }
     })
+    console.log(tempArray[0],'hahahaha')
     this.socket.emit('message',tempArray[0])
     // this.setState(previousState => ({
     //   messages: GiftedChat.append(previousState.messages, messages),

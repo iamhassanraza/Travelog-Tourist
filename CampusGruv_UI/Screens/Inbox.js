@@ -62,7 +62,7 @@ export default class Inbox extends Component {
                                     user_id={item.user.id} 
                                     uri={item.user.profile_pic_url} 
                                     title={item.user.first_name + ' ' + item.user.last_name} 
-                                    subtitle={'hello jee'} 
+                                    //subtitle={'hello jee'} 
                                     //time={item.time}
                                 />
                             }
