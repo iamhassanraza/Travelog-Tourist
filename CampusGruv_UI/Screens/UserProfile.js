@@ -106,15 +106,6 @@ class UserProfile extends React.Component {
     };
   }
 
-
-  componentDidUpdate() {
-
-
-
-  }
-
-
-
   async componentDidMount() {
     const { navigation } = this.props;
     console.log('this ran &*******')

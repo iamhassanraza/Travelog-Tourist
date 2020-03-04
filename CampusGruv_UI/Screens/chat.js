@@ -11,12 +11,13 @@ import {CreateUserDetails} from '../ReduxStore/Actions/index';
 class Chat extends React.Component {
 
   static navigationOptions = props => {
+    const {params = {}} = props.navigation.state;
     return {
       header: (
         <View style={{ backgroundColor: '#1192d1' }}>
           <View style={{ marginTop: Platform.OS == 'ios' ? 38 : 0, height: 50, backgroundColor: '#1192d1', flexDirection: 'row', justifyContent: 'center' }}>
             <View style={{ alignSelf: 'center' }}>
-              <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>Messages</Text>
+              <Text style={{ color: 'white', fontSize: 20, fontWeight: 'bold' }}>{params.name}</Text>
             </View>
             <View style={{ position: 'absolute', padding: 2, alignSelf: 'center', left: 8 }}>
               <TouchableOpacity
@@ -64,7 +65,6 @@ class Chat extends React.Component {
       this.socket.emit('joinRoom')
     });
     this.socket.on('joinRoom', async (msgs) => {
-      console.log('kajshakdhajkdhaldhlasdjhakldjakldjaklsdjaklsjd',msgs)
       if(msgs!==null){
         tempArray = await this.mapMessages(msgs)
       } else {
@@ -79,22 +79,21 @@ class Chat extends React.Component {
       console.log('hello jee error established')
     });
     this.socket.on('message', async (msg) => {
-      console.log('message arrived.',msg)
       const tempArray = await this.mapMessages(msg)
       this.setState(previousState => ({
         messages: GiftedChat.append(previousState.messages, tempArray),
       }))
-      // this.setState( previousState => ({
-      //   messages: tempArray
-      // }) 
-      // );
+
+    this.props.navigation.setParams({
+      name: this.props.navigation.getParam('name',null)
+    })
+
     });
   }
 
 
 
   onSend = async (messages = []) => {
-    console.log('sent message ==== >',messages[0])
     const tempArray =  messages.map(m => {
         return {
           user_id: m.user._id,
@@ -103,14 +102,11 @@ class Chat extends React.Component {
           name: m.user.name
         }
     })
-    console.log(tempArray[0],'hahahaha')
     this.socket.emit('message',tempArray[0])
     // this.setState(previousState => ({
     //   messages: GiftedChat.append(previousState.messages, messages),
     // }))
   }
-
-  // GiftedChat.append(previousState.messages, messages)
 
   render() {
     return (
