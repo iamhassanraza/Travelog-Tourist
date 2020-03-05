@@ -69,7 +69,7 @@ class Chat extends React.Component {
     AppState.addEventListener('change', this._handleAppStateChange);
     this.props.socket.emit('joinRoom', {room_id: `${this.props.navigation.getParam('room_id',null)}`})
     this.props.socket.on('joinRoom', async (msgs) => {
-      console.log('room joined')
+      console.log('room joined',msgs[0])
       if(msgs!==null){
         var tempArray = await this.mapMessages(msgs)
       } else {
@@ -89,9 +89,6 @@ class Chat extends React.Component {
     this.props.socket.on('error', () => {
       console.log('hello jee error established')
     });
-    // this.socket.on('notification', (noti) => {
-    //   console.log('notification is : ',noti)
-    // })
     this.props.socket.on('message', async (msg) => {
       console.log('message arived nibba',msg)
       const tempArray = await this.mapMessages(msg)
@@ -113,19 +110,14 @@ class Chat extends React.Component {
   onSend = async (messages = []) => {
     const tempArray =  messages.map(m => {
         return {
-          room_id: this.props.navigation.getParam('room_id',null),
-          message: {
             user_id: m.user._id,
             message: m.text,
             profile_pic_url: m.user.avatar,
-            name: m.user.name
-          }
+            name: m.user.name,
+            room_id: this.props.navigation.getParam('room_id',null)
         }
     })
     this.props.socket.emit('message',tempArray[0])
-    // this.setState(previousState => ({
-    //   messages: GiftedChat.append(previousState.messages, messages),
-    // }))
   }
 
   render() {
