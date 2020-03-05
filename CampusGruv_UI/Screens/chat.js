@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { GiftedChat } from 'react-native-gifted-chat'
-import { View, Text, TouchableOpacity, AsyncStorage} from 'react-native'
+import { View, Text, TouchableOpacity, AppState, AsyncStorage} from 'react-native'
 import PostIcon from 'react-native-vector-icons/MaterialIcons'
 //import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
 import io from 'socket.io-client';
@@ -57,16 +57,21 @@ class Chat extends React.Component {
     })
   }
 
+  _handleAppStateChange = (nextAppState) => {
+    console.log(nextAppState,'haha')
+    // if (this.state.appState.match(/inactive|background/) && nextAppState === 'active') {
+    //   console.log('App has come to the foreground!')
+    // }
+    //this.setState({appState: nextAppState});
+  }
+
   async componentDidMount() {
-    const Token = await AsyncStorage.getItem('TOKEN');
-    this.socket = io('https://campusgruv-websocket.herokuapp.com/', { query: `token=${Token}&room_id=${this.props.navigation.getParam('room_id',null)}`, transports: ['websocket'] });
-    this.socket.on('connect', () => {
-      console.log('hello jee connection established')
-      this.socket.emit('joinRoom')
-    });
-    this.socket.on('joinRoom', async (msgs) => {
+    AppState.addEventListener('change', this._handleAppStateChange);
+    this.props.socket.emit('joinRoom', {room_id: `${this.props.navigation.getParam('room_id',null)}`})
+    this.props.socket.on('joinRoom', async (msgs) => {
+      console.log('room joined')
       if(msgs!==null){
-        tempArray = await this.mapMessages(msgs)
+        var tempArray = await this.mapMessages(msgs)
       } else {
         tempArray = []
       }
@@ -75,20 +80,32 @@ class Chat extends React.Component {
       }) 
       );
     })
-    this.socket.on('error', () => {
+    this.props.socket.on('disconnect',() => {
+      console.log('disconnected')
+      this.setState({
+        messages: []
+      })
+    })
+    this.props.socket.on('error', () => {
       console.log('hello jee error established')
     });
-    this.socket.on('message', async (msg) => {
+    // this.socket.on('notification', (noti) => {
+    //   console.log('notification is : ',noti)
+    // })
+    this.props.socket.on('message', async (msg) => {
+      console.log('message arived nibba')
       const tempArray = await this.mapMessages(msg)
       this.setState(previousState => ({
         messages: GiftedChat.append(previousState.messages, tempArray),
       }))
-
+    });
     this.props.navigation.setParams({
       name: this.props.navigation.getParam('name',null)
     })
+  }
 
-    });
+  componentWillUnmount() {
+    AppState.removeEventListener('change', this._handleAppStateChange);
   }
 
 
@@ -102,7 +119,7 @@ class Chat extends React.Component {
           name: m.user.name
         }
     })
-    this.socket.emit('message',tempArray[0])
+    this.props.socket.emit('message',tempArray[0])
     // this.setState(previousState => ({
     //   messages: GiftedChat.append(previousState.messages, messages),
     // }))
@@ -129,7 +146,10 @@ mapStateToProps = state => {
 
   //use your required reducer data in props i.e reducer1
 
-  return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+  return {
+    User: state.User,
+    socket: state.socket
+  }; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
 };
 
 export default connect(mapStateToProps, {CreateUserDetails})(Chat);

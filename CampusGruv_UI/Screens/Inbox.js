@@ -41,7 +41,6 @@ export default class Inbox extends Component {
         this.setState({
             data: JsonResponse.data
         })
-        console.log('inbox',JsonResponse.data[0])
     }
 
     render() {

@@ -16,6 +16,18 @@ const User = (initial_state = {}, action) => {
   }
 };
 
+const Socket = (initial_state = {}, action) => {
+  switch (action.type) {
+    case 'CONNECT_TO_SOCKET':
+      {
+        initial_state = action.payload
+        return initial_state
+      }
+    default:
+      return initial_state
+  }
+} 
+
 // const reducer2 = (initial_state = null, action) => {
 //   if (action.type === 'ACTION_TYPE3') {
 //   }
@@ -33,5 +45,6 @@ const User = (initial_state = {}, action) => {
 
 export default combineReducers({
   User: User,
+  socket: Socket
   // reducer2: reducer2,
 });

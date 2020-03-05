@@ -65,8 +65,6 @@ class AuthLoading extends React.Component {
 
     console.log(JsonResponse, "POPOP");
     this.props.CreateUserDetails(JsonResponse)
-
-
   }
 
   // Fetch the token from storage then navigate to our appropriate place
