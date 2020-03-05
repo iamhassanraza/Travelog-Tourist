@@ -93,7 +93,7 @@ class Chat extends React.Component {
     //   console.log('notification is : ',noti)
     // })
     this.props.socket.on('message', async (msg) => {
-      console.log('message arived nibba')
+      console.log('message arived nibba',msg)
       const tempArray = await this.mapMessages(msg)
       this.setState(previousState => ({
         messages: GiftedChat.append(previousState.messages, tempArray),
@@ -113,10 +113,13 @@ class Chat extends React.Component {
   onSend = async (messages = []) => {
     const tempArray =  messages.map(m => {
         return {
-          user_id: m.user._id,
-          message: m.text,
-          profile_pic_url: m.user.avatar,
-          name: m.user.name
+          room_id: this.props.navigation.getParam('room_id',null),
+          message: {
+            user_id: m.user._id,
+            message: m.text,
+            profile_pic_url: m.user.avatar,
+            name: m.user.name
+          }
         }
     })
     this.props.socket.emit('message',tempArray[0])
