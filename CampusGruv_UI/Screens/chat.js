@@ -90,11 +90,12 @@ class Chat extends React.Component {
       console.log('hello jee error established')
     });
     this.props.socket.on('message', async (msg) => {
-      console.log('message arived nibba',msg)
-      const tempArray = await this.mapMessages(msg)
-      this.setState(previousState => ({
-        messages: GiftedChat.append(previousState.messages, tempArray),
-      }))
+      if(msg[0].room_id === this.props.navigation.getParam('room_id',null)) {
+        const tempArray = await this.mapMessages(msg)
+        this.setState(previousState => ({
+          messages: GiftedChat.append(previousState.messages, tempArray),
+        }))
+      }
     });
     this.props.navigation.setParams({
       name: this.props.navigation.getParam('name',null)

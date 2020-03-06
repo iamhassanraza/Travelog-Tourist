@@ -353,16 +353,16 @@ class HomeScreen extends PureComponent {
     });
 
     //Socket connection goes here
-    const Token = await AsyncStorage.getItem('TOKEN');
-    this.socket = io('https://campusgruv-websocket.herokuapp.com/', { query: `token=${Token}`, transports: ['websocket'] });
+    // const Token = await AsyncStorage.getItem('TOKEN');
+    // this.socket = io('https://campusgruv-websocket.herokuapp.com/', { query: `token=${Token}`, transports: ['websocket'] });
 
-    this.socket.on('connect', () => {
-      console.log('hello jee connection established')
-      this.props.connectSocket(this.socket)
-    });
-    this.socket.on('connect_error', (err) => {
-      console.log('hello jee error established',err)
-    });
+    // this.socket.on('connect', () => {
+    //   console.log('hello jee connection established')
+    //   this.props.connectSocket(this.socket)
+    // });
+    // this.socket.on('connect_error', (err) => {
+    //   console.log('hello jee error established',err)
+    // });
 
     this.props.navigation.setParams({
       handleThis: async () => {

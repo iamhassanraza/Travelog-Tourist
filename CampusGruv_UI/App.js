@@ -45,7 +45,7 @@ import { Header } from 'react-native-elements'
 import FollowersPosts from './Screens/FollowersPosts'
 import InboxComponent from './Components/InboxComponent'
 import ReportPost from './Screens/ReportPost'
-
+import MainTabNavigation from './Screens/MainTabNavigation'
 
 const AuthNavigator = createStackNavigator({
     Login: {
@@ -310,9 +310,102 @@ const MessageStack = createStackNavigator({
             } 
         }
     },
-
-
 )
+// const TabNavigator = createMaterialTopTabNavigator()
+
+// function TabNavigation() {
+//     return (
+//             <TabNavigator.navigator
+//                 initialRouteName= 'Home'
+//                 tabBarPosition= 'bottom'
+//                 swipeEnabled= {false}
+//                 defaultNavigationOptions = {{
+//                     tabBarOnPress: ({ navigation, defaultHandler }) => {
+//                         navigation.dispatch(StackActions.popToTop());
+//                         defaultHandler();
+//                     },
+//                 }}
+//                 tabBarOptions= {{
+//                     style: {
+//                         backgroundColor: "white",
+//                         height: Platform.OS == 'ios' ? 60 : 50,
+        
+//                     },
+//                     iconStyle: {
+//                         marginBottom: Platform.OS == 'ios' ? "5%" : 0,
+//                     },
+//                     labelStyle: {
+//                         fontSize: 8,
+//                         width: '100%',
+//                         alignSelf: 'center',
+//                         marginTop: -2,
+//                     },
+//                     indicatorStyle: {
+//                         backgroundColor: '#1192d1',
+//                         height: 2,
+//                     },
+//                     upperCaseLabel: false,
+//                     inactiveTintColor: 'grey',
+//                     activeTintColor: '#1192d1',
+//                     showIcon: true,
+//                     showLabel: false
+//                 }}
+//             >
+//                 <TabNavigator.Screen
+//                     name="Home"
+//                     component={HomeStack}
+//                     options={{
+//                         tabBarIcon: ({ tintColor }) => (
+//                             <Icon name="home" color={tintColor} style={{ fontSize: 27 }} />
+//                         ),
+//                         tabBarLabel: "Home"
+//                     }}
+//                 />
+//                 <TabNavigator.Screen
+//                     name="Notifications"
+//                     component={NotificationScreen}
+//                     options={{
+//                         tabBarIcon: ({ tintColor }) => (
+//                             <Icon2 name="bell-ring" color={tintColor} style={{ fontSize: 27 }} />
+//                         ),
+//                         tabBarLabel: "Notifications"
+//                     }}
+//                 />
+//                 <TabNavigator.Screen
+//                     name="AddPost"
+//                     component={CreatePostStack}
+//                     options={{
+//                         initialRouteName: 'AddPost',
+//                         tabBarIcon: ({ tintColor }) => (
+//                             <AddIcon name="squared-plus" color={tintColor} style={{ fontSize: 27 }} />
+//                         ),
+//                         tabBarLabel: 'Add Post'
+//                     }}
+//                 />
+//                 <TabNavigator.Screen
+//                     name="Messages"
+//                     component={MessageStack}
+//                     options={{
+//                         tabBarIcon: ({ tintColor }) => (
+//                             <Icon2 name="email-outline" color={tintColor} style={{ fontSize: 27 }} />
+//                         ),
+//                         tabBarLabel: "Messages",
+//                         hederMode: 'none'
+//                     }}
+//                 />
+//                 <TabNavigator.Screen
+//                     name="Profile"
+//                     component={ProfileStack}
+//                     options={{
+//                         tabBarIcon: ({ tintColor }) => (
+//                             <Icon name="person" color={tintColor} style={{ fontSize: 27 }} />
+//                         ),
+//                         tabBarLabel: "Profile"
+//                     }}
+//                 />
+//             </TabNavigator.navigator>
+//     )
+// }
 
 const androidTabBarOptions = {
     style: {
@@ -461,7 +554,7 @@ const RootStackNavigator = createSwitchNavigator({
         screen: AuthNavigator
     },
     App: {
-        screen: TabContainer,
+        screen: MainTabNavigation,
     },
     EditProfile:{
         screen:createStackNavigator({EditProfile})
@@ -478,7 +571,7 @@ const RootStackNavigator = createSwitchNavigator({
 
 const AppContainer = createAppContainer(RootStackNavigator);
 
-export default class App extends Component {
+class App extends Component {
 
     constructor(props) {
         super(props)
@@ -517,3 +610,5 @@ export default class App extends Component {
         )
     }
 }
+
+export { App , TabContainer}
