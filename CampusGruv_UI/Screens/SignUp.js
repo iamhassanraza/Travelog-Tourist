@@ -192,8 +192,6 @@ class Signup extends React.Component {
                     //user not found with credentials
                     alert(response.message.split(':')[1]);
                   }
-        
-                  // console.log(response, 'json response -----');
                 })
                 .catch(error => {
                   console.log(error);

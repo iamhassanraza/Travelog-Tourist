@@ -60,9 +60,7 @@ class AuthLoading extends React.Component {
         Authorization: `Bearer ${Token}`,
       },
     })
-    console.log(response.status, "hahahaha");
     let JsonResponse  =  await response.json()
-
     console.log(JsonResponse, "POPOP");
     this.props.CreateUserDetails(JsonResponse)
   }
@@ -134,7 +132,6 @@ class AuthLoading extends React.Component {
 
   // Render any loading content that you like here
   render() {
-    console.log(this.props.User,'============ userr prp')
     return (
       <ImageBackground
         style={styles.container}

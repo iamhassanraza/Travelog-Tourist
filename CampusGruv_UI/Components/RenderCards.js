@@ -20,7 +20,6 @@ class RenderCards extends PureComponent {
     if (this.props.posts) {
       const column1Data = this.props.posts.filter((item, i) => i % 2 === 0);
       const column2Data = this.props.posts.filter((item, i) => i % 2 === 1);
-      console.log(column1Data[1],'post data =========================')
       return (
         <>
         <View
@@ -129,24 +128,6 @@ class RenderCards extends PureComponent {
                 )}
               </View> : null
         }
-        {/* <View style={{backgroundColor: '#F0F0F0', paddingTop: 10, paddingBottom: 10}}>
-        <Text
-          style={{
-            alignSelf: 'center',
-            color: '#1192d1',
-            backgroundColor: 'white',
-            padding: '2%',
-            borderColor: '#1192d1',
-            borderWidth: 0.6,
-            borderRadius: 4,
-          }}
-          onPress={() => {
-            this.props.loadMore()
-          }}
-        >
-          Load More Posts
-        </Text>
-        </View> */}
       </>
       );
     } else {

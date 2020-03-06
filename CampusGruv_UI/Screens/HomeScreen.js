@@ -158,7 +158,6 @@ class HomeScreen extends PureComponent {
           return { pageNo: previousState.pageNo + 1, loadmore: true };
         },
         async () => {
-          console.log('calling load more api');
           const Token = await AsyncStorage.getItem('TOKEN');
           const Response = await fetch(
             `https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_all&page=${this.state.pageNo}`,
@@ -197,7 +196,6 @@ class HomeScreen extends PureComponent {
           return { pageNo: previousState.pageNo + 1, loadmore: true };
         },
         async () => {
-          console.log('calling load more api');
           const Token = await AsyncStorage.getItem('TOKEN');
           const Response = await fetch(
             `https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_category&category_id=${this.props.navigation.getParam(
@@ -212,8 +210,6 @@ class HomeScreen extends PureComponent {
           );
 
           const JsonResponse = await Response.json();
-          console.log(JsonResponse)
-
           if (parseInt(Response.status) === 401) {
             alert(JsonResponse.message);
           } else if (parseInt(Response.status) === 200) {
@@ -235,7 +231,6 @@ class HomeScreen extends PureComponent {
 
   fetchCategoryPosts = async () => {
     this.setState({ posts: [], loading: true, total: undefined })
-    console.log('fetchcateogyr post chalra hai fetch kr rha')
     const Token = await AsyncStorage.getItem('TOKEN');
     const Response = await fetch(
       `https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_category&category_id=${this.props.navigation.getParam(
@@ -253,7 +248,6 @@ class HomeScreen extends PureComponent {
 
 
     if (parseInt(Response.status) === 401) {
-      console.log('none');
     } else if (parseInt(Response.status) === 200) {
       console.log('Category aagyi yayyyy');
       // this.setState(previousState => {
@@ -284,14 +278,12 @@ class HomeScreen extends PureComponent {
     if (
       this.props.navigation.getParam('CategoryID', 'undefined') === 'undefined'
     ) {
-      console.log('fetch data is running now1111', this.state.FollowersPosts)
       const Token = await AsyncStorage.getItem('TOKEN');
       this.setState({
         loading: true,
       });
 
       if (this.state.FollowersPosts) {
-        console.log("Poooooooooooooooooonnnnnnnnnnnnnn");
         fetch(
           `https://campus-gruv-heroku.herokuapp.com/api/v1/follower/posts`,
           {
@@ -304,8 +296,6 @@ class HomeScreen extends PureComponent {
             return response.json();
           })
           .then(responseJson => {
-            //console.log('home --------------------',responseJson.data[0])
-
             this.setState({
               posts: responseJson.data,
               total: responseJson.total,
@@ -330,8 +320,6 @@ class HomeScreen extends PureComponent {
             return response.json();
           })
           .then(responseJson => {
-            console.log('home --------------------', responseJson.data[0])
-
             this.setState({
               posts: responseJson.data,
               total: responseJson.total,
@@ -348,7 +336,6 @@ class HomeScreen extends PureComponent {
     // }
 
     else {
-      console.log('fetch data is running now333333', this.state.FollowersPosts)
       this.fetchCategoryPosts();
 
 
@@ -367,7 +354,7 @@ class HomeScreen extends PureComponent {
 
     //Socket connection goes here
     const Token = await AsyncStorage.getItem('TOKEN');
-    this.socket = io('http://192.168.100.58:4000', { query: `token=${Token}`, transports: ['websocket'] });
+    this.socket = io('https://campusgruv-websocket.herokuapp.com/', { query: `token=${Token}`, transports: ['websocket'] });
 
     this.socket.on('connect', () => {
       console.log('hello jee connection established')
@@ -379,14 +366,12 @@ class HomeScreen extends PureComponent {
 
     this.props.navigation.setParams({
       handleThis: async () => {
-        console.log('users icon clicked', this.state.FollowersPosts)
         await this.setState(prevState => {
           return {
             FollowersPosts: !prevState.FollowersPosts
           }
         })
         this.fetchdata();
-        console.log('fetch data ran')
       }
     });
 
@@ -401,10 +386,6 @@ class HomeScreen extends PureComponent {
 
   render() {
     const catid = this.props.navigation.getParam('CategoryID', 'undefined');
-    // const catname = this.props.navigation.getParam('CategoryName', 'undefi');
-    console.log(catid, '============== categoryyy idddd =========');
-    // this.setState({Category: catid});
-
     if (this.state.total > 0) {
       return (
         <React.Fragment>

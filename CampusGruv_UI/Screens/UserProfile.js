@@ -108,7 +108,6 @@ class UserProfile extends React.Component {
 
   async componentDidMount() {
     const { navigation } = this.props;
-    console.log('this ran &*******')
     this.focusListener = navigation.addListener('willFocus', async () => {
       // before the screen is focused
       userNavId = this.props.navigation.getParam('userNavId', null)
@@ -132,7 +131,6 @@ class UserProfile extends React.Component {
       this.fetchdata(userNavId ? userNavId : this.props.User.id);
       console.log("will focus")
       this.fetchFollowData(userNavId ? userNavId : this.props.User.id);
-      // this.fetchdata(this.state.otherUserId)
     });
   }
 
@@ -162,7 +160,6 @@ class UserProfile extends React.Component {
         }
       });
     const jsonresponse = await response.json();
-    console.log(jsonresponse, 'json json json ------------------------')
     this.setState({
       followers: jsonresponse[0].followerCount,
       following: jsonresponse[0].followingCount
@@ -182,14 +179,11 @@ class UserProfile extends React.Component {
 
   loadmore = () => {
     userId = this.state.otherUserId ? this.state.otherUserId : this.props.User.id
-    console.log('load more user id --------', userId)
     this.setState(
       previousState => {
         return { pageNo: previousState.pageNo + 1, loadmore: true };
       },
       async () => {
-        console.log('calling load more api');
-        console.log('user Id inside asyc ---------------', userId)
         const Token = await AsyncStorage.getItem('TOKEN');
         const Response = await fetch(
           `https://campus-gruv-heroku.herokuapp.com/api/v1/search/user?type=post&user_id=${userId}&page=${this.state.pageNo}`,
@@ -201,8 +195,6 @@ class UserProfile extends React.Component {
         );
 
         const JsonResponse = await Response.json();
-        console.log(JsonResponse, 'responseeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee-----')
-
         if (parseInt(Response.status) === 401) {
           alert(JsonResponse.message);
         }
@@ -221,7 +213,6 @@ class UserProfile extends React.Component {
   }
 
   async searchPost(text, userId) {
-    console.log(text)
     const Token = await AsyncStorage.getItem('TOKEN');
     this.setState({ spinner: true })
     const response = await fetch(
@@ -233,7 +224,6 @@ class UserProfile extends React.Component {
       },
     );
     const jsonresponse = await response.json();
-    // console.log('profile -------------------------', jsonresponse.data[0]);
     this.setState({
       spinner: false,
       posts: jsonresponse.data,
@@ -249,7 +239,6 @@ class UserProfile extends React.Component {
 
 
   fetchdata = async (userId) => {
-    console.log('calling');
     this.setState({ spinner: true })
     if (this.state.active === 'posts') {
       // const userId = await AsyncStorage.getItem('USER_ID');
@@ -264,7 +253,6 @@ class UserProfile extends React.Component {
         },
       );
       const jsonresponse = await response.json();
-      console.log('profile -------------------------', jsonresponse.data[0]);
       this.setState({
         spinner: false,
         posts: jsonresponse.data,
@@ -282,7 +270,6 @@ class UserProfile extends React.Component {
         },
       );
       const jsonresponse = await response.json();
-      console.log(jsonresponse);
       this.setState({
         spinner: false,
         posts: jsonresponse.data,
@@ -297,7 +284,6 @@ class UserProfile extends React.Component {
   };
 
   renderPost = () => {
-    console.log('renderpost');
     return (
       <View style={{ paddingTop: 10 }}>
         <RenderCards
@@ -345,7 +331,6 @@ class UserProfile extends React.Component {
     }));
     const Token = await AsyncStorage.getItem('TOKEN');
     var Response = null
-    console.log('followed ==========> ', this.state.followed)
     if (this.state.userFollowing) {
       Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/follow?user_id=${id}`, {
         method: 'GET',
@@ -386,9 +371,6 @@ class UserProfile extends React.Component {
     const postUserLastName = this.state.otherUserLastName ? this.state.otherUserLastName : this.props.User.last_name
     const postUserDp = this.state.otherUserDp ? this.state.otherUserDp : this.props.User.profile_pic_url
     const postUserCampus = this.state.otherUserCampus ? this.state.otherUserCampus : this.props.User.campus.description
-    // console.log(postUserId,postUserFirstName,postUserLastName,postUserDp, 'postuser ------')
-    console.log('user data========================>', this.state.userFollowing)
-
     return (
       <ScrollView>
         {/* EDIT PROFILE BUTTON */}
