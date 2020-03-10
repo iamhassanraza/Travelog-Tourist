@@ -32,7 +32,8 @@ class MainTabNavigation extends React.Component {
         this.socket.on('notification', (noti) => {
             console.log('noti',noti)
             this.setState({
-                unread: true
+                unreadNotifications: true,
+                unreadMessages: true
             })
         })
     }

@@ -20,6 +20,7 @@ class RenderCards extends PureComponent {
     if (this.props.posts) {
       const column1Data = this.props.posts.filter((item, i) => i % 2 === 0);
       const column2Data = this.props.posts.filter((item, i) => i % 2 === 1);
+      console.log('col 1',column1Data[0])
       return (
         <>
         <View
@@ -48,7 +49,7 @@ class RenderCards extends PureComponent {
                     userId = {item.users.id}
                     userWiseLike = {item.userWiseLike}
                     userSavedPost = {item.userSavedPost}
-                    userFollowing = {item.userFollowing[0] ? true : false}
+                    isFollowing = {item.isFollowing}
                     title={item.title}
                     views={item.view_count}
                     imageurl={
@@ -82,6 +83,7 @@ class RenderCards extends PureComponent {
                     userId = {item.users.id}
                     userWiseLike = {item.userWiseLike}
                     userSavedPost = {item.userSavedPost}
+                    isFollowing = {item.isFollowing}
                     title={item.title}
                     views={item.view_count}
                     imageurl={

@@ -102,7 +102,7 @@ class UserProfile extends React.Component {
       isModalVisible: false,
       //followed: true,
       searchbox: '',
-      userFollowing: null,
+      isFollowing: null,
     };
   }
 
@@ -253,11 +253,12 @@ class UserProfile extends React.Component {
         },
       );
       const jsonresponse = await response.json();
+      console.log('json',jsonresponse)
       this.setState({
         spinner: false,
         posts: jsonresponse.data,
         total: jsonresponse.total,
-        userFollowing: jsonresponse.data[0] ? (jsonresponse.data[0].userFollowing[0] ? true : false) : false
+        isFollowing: jsonresponse.data[0] ? (jsonresponse.data[0].isFollowing[0] ? true : false) : false
       });
     } else {
       const Token = await AsyncStorage.getItem('TOKEN');
@@ -327,11 +328,11 @@ class UserProfile extends React.Component {
 
   followButton = async (id) => {
     this.setState(prevState => ({
-      userFollowing: !prevState.userFollowing,
+      isFollowing: !prevState.isFollowing,
     }));
     const Token = await AsyncStorage.getItem('TOKEN');
     var Response = null
-    if (this.state.userFollowing) {
+    if (this.state.isFollowing) {
       Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/follow?user_id=${id}`, {
         method: 'GET',
         headers: {
@@ -399,7 +400,7 @@ class UserProfile extends React.Component {
             </Text>
             </TouchableOpacity>
           </View> :
-          this.state.userFollowing !== null ?
+          this.state.isFollowing !== null ?
             <View>
               <TouchableOpacity
                 style={{
@@ -416,14 +417,14 @@ class UserProfile extends React.Component {
                 }}>
                 <Text
                   style={{
-                    color: this.state.userFollowing ? ThemeBlue : 'grey',
+                    color: this.state.isFollowing ? ThemeBlue : 'grey',
                     borderWidth: 0.5,
                     //width: '100%',
                     padding: 5,
-                    borderColor: this.state.userFollowing ? ThemeBlue : 'grey',
+                    borderColor: this.state.isFollowing ? ThemeBlue : 'grey',
                     borderRadius: 10
                   }}>
-                  {this.state.userFollowing ? "Unfollow" : "Follow"}
+                  {this.state.isFollowing ? "Unfollow" : "Follow"}
                 </Text>
               </TouchableOpacity>
             </View> : <View style={{ height: 40 }}></View>
@@ -530,7 +531,7 @@ class UserProfile extends React.Component {
               postUserLastName,
               postUserDp,
               postUserCampus,
-              userFollowing: this.state.followed
+              isFollowing: this.state.isFollowing
             });
           }}>
             <Text style={{ color: '#B4B8BA', fontSize: 13, fontWeight: 'bold' }}>
@@ -547,7 +548,7 @@ class UserProfile extends React.Component {
               postUserLastName,
               postUserDp,
               postUserCampus,
-              userFollowing: this.state.followed
+              isFollowing: this.state.isFollowing
             });
           }}>
             <Text style={{ color: '#B4B8BA', fontSize: 13, fontWeight: 'bold' }}>

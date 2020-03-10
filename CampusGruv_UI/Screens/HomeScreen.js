@@ -304,7 +304,7 @@ class HomeScreen extends PureComponent {
               Category: 'undefined',
             });
           })
-          .catch(err => console.log(err));
+          .catch(err => console.log('error',err));
       }
 
       else {
