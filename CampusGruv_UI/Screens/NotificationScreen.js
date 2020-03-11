@@ -11,10 +11,13 @@ import {
 import NoticationComponent from '../Components/NoticationComponent';
 import {Header} from 'react-native-elements';
 import {FlatList} from 'react-native-gesture-handler';
+import ContentLoader from 'react-content-loader/native';
 
 export default class NotificationScreen extends Component {
   state = {
     notification: [],
+    pageNo: 1,
+    loading: false
   };
   // static navigationOptions = (props) => {
   //     // const {params = {}} = props.navigation.state;
@@ -30,14 +33,24 @@ export default class NotificationScreen extends Component {
   //     }
   //   }
   componentDidMount() {
-    this.getNoti();
+    // this.getNoti();
+    this.focusListener = this.props.navigation.addListener('willFocus', () => {
+      //The screen is focused
+      this.setState({
+        pageNo: 1
+      })
+      this.getNoti();
+    });
   }
 
   getNoti = async () => {
     const Token = await AsyncStorage.getItem('TOKEN');
     const user_id = await AsyncStorage.getItem('USER_ID');
+    this.setState({
+      loading: true
+    })
     const Response = await fetch(
-      `https://campus-gruv-heroku.herokuapp.com/api/v1/user/notifications?user_id=${user_id}&page=1`,
+      `https://campus-gruv-heroku.herokuapp.com/api/v1/user/notifications?user_id=${user_id}&page=${this.state.pageNo}`,
       {
         headers: {
           Authorization: `Bearer ${Token}`,
@@ -47,6 +60,7 @@ export default class NotificationScreen extends Component {
     const JsonResponse = await Response.json();
     this.setState({
       notification: JsonResponse.data,
+      loading: false
     });
   };
   render() {
@@ -67,7 +81,8 @@ export default class NotificationScreen extends Component {
                 </View>
             </View>  
         }
-        {this.state.notification[0] ?
+        {/* {this.state.notification[0] ? */
+        !this.state.loading ?
         <FlatList
           vertical
           data={this.state.notification}
@@ -87,7 +102,8 @@ export default class NotificationScreen extends Component {
 
               </NoticationComponent>
           )}
-        /> : <></>
+        /> : 
+        <ContentLoader height={700}/>
         }
 
         {/* <ScrollView>

@@ -47,7 +47,10 @@ import InboxComponent from './Components/InboxComponent'
 import ReportPost from './Screens/ReportPost'
 import MainTabNavigation from './Screens/MainTabNavigation'
 import IconBadge from 'react-native-icon-badge';
+import mystore from './index'
+import {clearNoti} from "./ReduxStore/Actions/index";
 
+// const state = mystore.getState(); 
 
 const AuthNavigator = createStackNavigator({
     Login: {
@@ -471,19 +474,29 @@ const TabNavigator = createMaterialTopTabNavigator(
         },
         Notifications: {
             screen: NotificationScreen,
-            navigationOptions: props => ({
-                tabBarIcon: ({tintColor}) =>
-                    <IconBadge
-                    MainElement={<Icon2 name="bell-ring" color={tintColor} style={{ fontSize: 27 }} />}
-                    BadgeElement={<Text style={{ color: 'white' }}>{props.screenProps.unread? 1 : 0}</Text>}
-                    Hidden={props.screenProps.unread === false}
-                    />,
-                
+            navigationOptions: props => {
+                store = mystore
+                state = store.getState()
+                console.log('state',state)
+                return ({
+                tabBarIcon: ({tintColor}) => { 
+                    return (<IconBadge
+                        MainElement={<Icon2 name="bell-ring" color={tintColor} style={{margin:3, fontSize: 27 }} />}
+                        BadgeElement={<Text style={{color: 'white' }}>{state.Notifications > 0? state.Notifications : null}</Text>}
+                        Hidden={state.Notifications === 0}
+                    />)
+                },
+                tabBarOnPress: ({navigation, defaultHandler}) => {
+                    store.dispatch(clearNoti())
+                    navigation.dispatch(StackActions.popToTop());
+                    defaultHandler();
+                },
                 // tabBarIcon: ({ tintColor }) => (
                 //     <Icon2 name="bell-ring" color={tintColor} style={{ fontSize: 27 }} />
                 // ),
                 tabBarLabel: "Notifications"
-            }),
+                })
+            },
         },
         AddPost: {
             screen: CreatePostStack,
@@ -528,11 +541,12 @@ const TabNavigator = createMaterialTopTabNavigator(
         tabBarOptions: {
             style: {
                 backgroundColor: "white",
-                height:Platform.OS == 'ios' ?60 : 50,
+                height:Platform.OS == 'ios' ? 60 : 50
              
             },
             iconStyle: {               
                marginBottom: Platform.OS == 'ios' ? "5%" :  0,
+               width: '100%'
             },
             labelStyle: {
                 fontSize: 8,

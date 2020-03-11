@@ -216,6 +216,7 @@ class ProfilePage extends React.Component {
         } else if (response.fileSize > allowedImgSize) {
           alert('Uploaded file is too large \n(allowed file size is 10MB)');
         } else {
+          console.log(response,'uri uri')
           this.setState({
             imageUri: response,
             imageURL: response.uri,

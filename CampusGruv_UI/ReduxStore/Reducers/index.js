@@ -26,7 +26,40 @@ const Socket = (initial_state = {}, action) => {
     default:
       return initial_state
   }
-} 
+}
+
+
+var unreadMsgs = 0
+var unreadNoti = 0
+
+const UnreadMsgs = (initial_state = unreadMsgs, action) => {
+  switch(action.type) {
+    case 'EDIT_UNREAD_MSGS':
+      {
+        return initial_state + 1
+      }
+    default:
+      return initial_state
+  }
+}
+
+const notifications = (initial_state = unreadNoti, action) => {
+  switch(action.type) {
+    case 'EDIT_UNREAD_NOTI':
+      {
+        return initial_state + 1
+      }
+    case 'CLEAR_NOTI':
+      {
+        initial_state = 0
+        return initial_state
+      }
+    default:
+      return initial_state
+  }
+}
+
+
 
 // const reducer2 = (initial_state = null, action) => {
 //   if (action.type === 'ACTION_TYPE3') {
@@ -45,6 +78,8 @@ const Socket = (initial_state = {}, action) => {
 
 export default combineReducers({
   User: User,
-  socket: Socket
+  socket: Socket,
+  UnreadMsgs: UnreadMsgs,
+  Notifications: notifications
   // reducer2: reducer2,
 });

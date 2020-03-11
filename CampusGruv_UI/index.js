@@ -31,3 +31,5 @@ const RN_REDUX = () => {
 };
 
 AppRegistry.registerComponent(appName, () => RN_REDUX);
+export default mystore
+

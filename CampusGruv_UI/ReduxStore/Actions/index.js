@@ -13,3 +13,27 @@ export const connectSocket = (payload) => {
         payload: payload
     }
 }
+
+export const clearMsgs = () => {
+    return {
+        type: 'CLEAR_MSGS'
+    }
+}
+
+export const clearNoti = () => {
+    return {
+        type: 'CLEAR_NOTI'
+    }
+}
+
+export const unreadMsg = () => {
+    return {
+        type: 'EDIT_UNREAD_MSGS'
+    }
+}
+
+export const unreadNoti = () => {
+    return {
+        type: 'EDIT_UNREAD_NOTI'
+    }
+}
