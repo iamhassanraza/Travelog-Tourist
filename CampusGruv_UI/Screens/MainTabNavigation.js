@@ -22,7 +22,7 @@ class MainTabNavigation extends React.Component {
             this.socket.emit('isLoggedIn')
         });
         this.socket.on('isLoggedIn', res => {
-            console.log(res,'res')
+            //console.log(res,'res')
         })
         this.socket.on('connect_error', (err) => {
             console.log('hello jee error established', err)
