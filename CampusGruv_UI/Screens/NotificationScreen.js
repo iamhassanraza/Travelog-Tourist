@@ -17,7 +17,6 @@ import mystore from '../index'
 import {clearNoti} from "../ReduxStore/Actions/index";
 
 
-
 class NotificationScreen extends Component {
   state = {
     notification: [],
@@ -39,7 +38,6 @@ class NotificationScreen extends Component {
   //     }
   //   }
   componentDidMount() {
-    // this.getNoti();
     this.focusListener = this.props.navigation.addListener('willFocus', () => {
       //The screen is focused
       this.setState({
@@ -76,7 +74,6 @@ class NotificationScreen extends Component {
   render() {
     return (
       <View style={{ flex: 1 }}>
-
         {Platform.OS == 'ios' ?
           <View style={{ backgroundColor: '#1192d1', }}>
             <View style={{ marginTop: Platform.OS === 'ios' ? 80 : 0, height: 50, backgroundColor: '#1192d1', flexDirection: 'row', justifyContent: 'center', marginTop: Platform.OS == "ios" ? 30 : 0 }}>
@@ -107,7 +104,7 @@ class NotificationScreen extends Component {
                   //   item.userNotification.last_name
                   // }
                   unread = {index <= this.props.Notifications ? true : false}
-                  time = "1 hour"
+                  time = {new Date(item.created_at.replace(' ', 'T'))}
                   activity = {item.notification_message}
                 >
                 </NoticationComponent>
@@ -125,15 +122,6 @@ class NotificationScreen extends Component {
               }
             />
         }
-
-        {/* <ScrollView>
-                    {
-                        this.state.notification && this.state.notification.map((data)=>{
-                           return <NoticationComponent uri={data.userNotification.profile_pic_url} title={data.userNotification.first_name+' '+data.userNotification.last_name} time="1 hour" activity={data.notification_message} />
-                            
-                        })
-                    }
-                    </ScrollView> */}
       </View>
     );
   }
