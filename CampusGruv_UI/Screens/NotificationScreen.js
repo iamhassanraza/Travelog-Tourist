@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -9,9 +9,9 @@ import {
   TouchableHighlightBase,
 } from 'react-native';
 import NoticationComponent from '../Components/NoticationComponent';
-import {Header} from 'react-native-elements';
-import {FlatList} from 'react-native-gesture-handler';
-import ContentLoader from 'react-content-loader/native';
+import { Header } from 'react-native-elements';
+import { FlatList } from 'react-native-gesture-handler';
+import ContentLoader, { Rect, Circle } from 'react-content-loader/native';
 
 export default class NotificationScreen extends Component {
   state = {
@@ -65,45 +65,55 @@ export default class NotificationScreen extends Component {
   };
   render() {
     return (
-      <View style={{flex: 1}}>
-        
-        {Platform.OS =='ios'?
-            <View style={{backgroundColor: '#1192d1', }}>
-                <View style={{marginTop:Platform.OS === 'ios'? 80:0, height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center',marginTop:Platform.OS == "ios" ? 30 : 0}}>
-                    <View style={{alignSelf: 'center'}}>
-                        <Text style={{color: 'white', fontSize:24, fontWeight:'bold'}}>Notifications</Text>
-                    </View>
-                </View>
-            </View> :
-            <View style={{marginTop:0, height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center',marginTop:Platform.OS == "ios" ? 30 : 0}}>
-                <View style={{alignSelf: 'center'}}>
-                    <Text style={{color: 'white', fontSize:24, fontWeight:'bold'}}>Notifications</Text>
-                </View>
-            </View>  
+      <View style={{ flex: 1 }}>
+
+        {Platform.OS == 'ios' ?
+          <View style={{ backgroundColor: '#1192d1', }}>
+            <View style={{ marginTop: Platform.OS === 'ios' ? 80 : 0, height: 50, backgroundColor: '#1192d1', flexDirection: 'row', justifyContent: 'center', marginTop: Platform.OS == "ios" ? 30 : 0 }}>
+              <View style={{ alignSelf: 'center' }}>
+                <Text style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}>Notifications</Text>
+              </View>
+            </View>
+          </View> :
+          <View style={{ marginTop: 0, height: 50, backgroundColor: '#1192d1', flexDirection: 'row', justifyContent: 'center', marginTop: Platform.OS == "ios" ? 30 : 0 }}>
+            <View style={{ alignSelf: 'center' }}>
+              <Text style={{ color: 'white', fontSize: 24, fontWeight: 'bold' }}>Notifications</Text>
+            </View>
+          </View>
         }
         {/* {this.state.notification[0] ? */
-        !this.state.loading ?
-        <FlatList
-          vertical
-          data={this.state.notification}
-          keyExtractor={item => item.id}
-          showsHorizontalScrollIndicator={false}
-          renderItem={({item}) => (
-            <NoticationComponent
-              // uri={item.userNotification.profile_pic_url}
-              // title={
-              //   item.userNotification.first_name +
-              //   ' ' +
-              //   item.userNotification.last_name
-              // }
-              time="1 hour"
-              activity={item.notification_message}
-              >
+          !this.state.loading ?
+            <FlatList
+              vertical
+              data={this.state.notification}
+              keyExtractor={item => item.id}
+              showsHorizontalScrollIndicator={false}
+              renderItem={({ item }) => (
+                <NoticationComponent
+                  // uri={item.userNotification.profile_pic_url}
+                  // title={
+                  //   item.userNotification.first_name +
+                  //   ' ' +
+                  //   item.userNotification.last_name
+                  // }
+                  time="1 hour"
+                  activity={item.notification_message}
+                >
 
-              </NoticationComponent>
-          )}
-        /> : 
-        <ContentLoader height={700}/>
+                </NoticationComponent>
+              )}
+            /> :
+            <FlatList
+              vertical
+              data={[1, 2, 3, 4,5,6,7,8,9,10]}
+              renderItem={() =>
+                <ContentLoader height={70}>
+                  <Circle cx="30" cy="40" r="30" />
+                  <Rect x="80" y="17" rx="4" ry="4" width="300" height="13" />
+                  <Rect x="80" y="40" rx="3" ry="3" width="250" height="10" />
+                </ContentLoader>
+              }
+            />
         }
 
         {/* <ScrollView>
