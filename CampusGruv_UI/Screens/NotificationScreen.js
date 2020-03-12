@@ -12,12 +12,18 @@ import NoticationComponent from '../Components/NoticationComponent';
 import { Header } from 'react-native-elements';
 import { FlatList } from 'react-native-gesture-handler';
 import ContentLoader, { Rect, Circle } from 'react-content-loader/native';
+import { connect } from "react-redux";
+import mystore from '../index'
+import {clearNoti} from "../ReduxStore/Actions/index";
 
-export default class NotificationScreen extends Component {
+
+
+class NotificationScreen extends Component {
   state = {
     notification: [],
     pageNo: 1,
-    loading: false
+    loading: false,
+    store: mystore
   };
   // static navigationOptions = (props) => {
   //     // const {params = {}} = props.navigation.state;
@@ -41,6 +47,9 @@ export default class NotificationScreen extends Component {
       })
       this.getNoti();
     });
+    this.focusListener = this.props.navigation.addListener('didBlur', () => {
+      this.state.store.dispatch(clearNoti())
+    });
   }
 
   getNoti = async () => {
@@ -58,6 +67,7 @@ export default class NotificationScreen extends Component {
       },
     );
     const JsonResponse = await Response.json();
+    console.log('res',JsonResponse.data[0])
     this.setState({
       notification: JsonResponse.data,
       loading: false
@@ -88,18 +98,18 @@ export default class NotificationScreen extends Component {
               data={this.state.notification}
               keyExtractor={item => item.id}
               showsHorizontalScrollIndicator={false}
-              renderItem={({ item }) => (
+              renderItem={({ item, index }) => (
                 <NoticationComponent
-                  // uri={item.userNotification.profile_pic_url}
+                  uri={item.userNotification.profile_pic_url}
                   // title={
                   //   item.userNotification.first_name +
                   //   ' ' +
                   //   item.userNotification.last_name
                   // }
-                  time="1 hour"
-                  activity={item.notification_message}
+                  unread = {index <= this.props.Notifications ? true : false}
+                  time = "1 hour"
+                  activity = {item.notification_message}
                 >
-
                 </NoticationComponent>
               )}
             /> :
@@ -128,3 +138,14 @@ export default class NotificationScreen extends Component {
     );
   }
 }
+
+mapStateToProps = (state) => { //this state will contain FULL redux store all the reducers data
+
+
+  //use your required reducer data in props i.e reducer1
+
+  return { Notifications: state.Notifications }  //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+
+}
+
+export default connect(mapStateToProps)(NotificationScreen);

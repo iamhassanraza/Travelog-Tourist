@@ -30,7 +30,7 @@ const Socket = (initial_state = {}, action) => {
 
 
 var unreadMsgs = 0
-var unreadNoti = 0
+var unreadNoti = -1
 
 const UnreadMsgs = (initial_state = unreadMsgs, action) => {
   switch(action.type) {
@@ -51,7 +51,7 @@ const notifications = (initial_state = unreadNoti, action) => {
       }
     case 'CLEAR_NOTI':
       {
-        initial_state = 0
+        initial_state = -1
         return initial_state
       }
     default:
