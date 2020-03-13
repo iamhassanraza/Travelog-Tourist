@@ -118,7 +118,7 @@ class UserProfile extends React.Component {
       //userFollowing = this.props.navigation.getParam('userFollowing', null)
       await this.setState({
         otherUserId: userNavId,
-        otherUserDp: userNavDp,
+        otherUserDp: userNavDp ? userNavDp : 'https://travelog-pk.herokuapp.com/images/default.png',
         otherUserFirstName: userNavFirstName,
         otherUserLastName: userNavLastName,
         otherUserCampus: userCampus,
@@ -325,6 +325,22 @@ class UserProfile extends React.Component {
     );
   };
 
+  blockUser = async (user_id) => {
+    var Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/action`, {
+      method: 'GET',
+      body: {
+        action: 'block',
+        apply_to: user_id
+      },
+      headers: {
+        'Content-Type': 'application/json',
+        Authorization: `Bearer ${Token}`,
+      }
+    });
+    const responseJson = await Response.json();
+    console.log('block response', responseJson)
+  }
+
 
   followButton = async (id) => {
     this.setState(prevState => ({
@@ -434,7 +450,6 @@ class UserProfile extends React.Component {
           style={{ flexDirection: 'row', marginLeft: 10, alignItems: 'center' }}>
           <Image
             source={{
-              // uri: this.props.User.profile_pic_url,
               uri: postUserDp
             }}
             style={{ width: 80, height: 80, borderRadius: 50 }}
@@ -496,9 +511,10 @@ class UserProfile extends React.Component {
 
                   <View style={{alignSelf: 'center'}}>
                     <Text
-                      onPress={() => 
-                        this.setState({isModalVisible: false})
-                      }
+                      onPress={() => {
+                        this.setState({isModalVisible: false});
+                        this.blockUser(postUserId);
+                      }}
                       style={{
                         color: 'black',
                         backgroundColor: 'white',
