@@ -159,7 +159,7 @@ export default class CategoryList extends Component {
 
   selectCategory = cat => {
     this.setState({Category_id: cat}, () => {
-      this.props.navigation.navigate('HomeScreen', {
+      this.props.navigation.navigate('CategoryPosts', {
         CategoryID: this.state.Category_id,
         CategoryName: this.state.CategoryName,
       });
