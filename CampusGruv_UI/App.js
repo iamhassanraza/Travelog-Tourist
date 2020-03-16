@@ -49,6 +49,7 @@ import MainTabNavigation from './Screens/MainTabNavigation'
 import IconBadge from 'react-native-icon-badge';
 import mystore from './index'
 import {clearNoti} from "./ReduxStore/Actions/index";
+import CategoryPosts from './Screens/CategoryPosts';
 
 // const state = mystore.getState(); 
 
@@ -192,6 +193,7 @@ const HomeStack = createStackNavigator({
         }
     },
     CategoryList,
+    CategoryPosts,
     Searching: {
         screen : Searching,
         navigationOptions: {

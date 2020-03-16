@@ -21,6 +21,7 @@ import CrossIcon from 'react-native-vector-icons/Entypo';
 import ContentLoader, { Rect } from 'react-content-loader/native';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons'
+import Icon3 from 'react-native-vector-icons/Feather'
 import PeopleIcon from 'react-native-vector-icons/FontAwesome5'
 import RenderCards from '../Components/RenderCards';
 import NoPosts from '../Components/NoPost';
@@ -67,8 +68,8 @@ class HomeScreen extends PureComponent {
                 </View>
                 <View style={{ marginLeft: 5 }}>
                   <TouchableOpacity onPress={() => props.navigation.navigate('CategoryList')}>
-                    <Icon2
-                      name="view-grid"
+                    <Icon3
+                      name="grid"
                       color="white"
                       size={28}
                     />
@@ -110,8 +111,8 @@ class HomeScreen extends PureComponent {
               </View>
               <View style={{ marginLeft: 5 }}>
                 <TouchableOpacity onPress={() => props.navigation.navigate('CategoryList')}>
-                  <Icon2
-                    name="view-grid"
+                  <Icon3
+                    name="grid"
                     color="white"
                     size={28}
                   />
