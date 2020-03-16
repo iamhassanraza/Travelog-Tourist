@@ -79,7 +79,7 @@ export default class CategoryList extends Component {
 
             <View style={{  marginLeft: "10%"}}>
                 <TouchableOpacity style={{}} onPress={() => props.navigation.navigate('FollowersPosts')}>
-                    <PeopleIcon name="users" color="white" size={23} />
+                    <PeopleIcon name="users" color="#00527a" size={23} />
                 </TouchableOpacity>
             </View>
 
@@ -138,7 +138,7 @@ export default class CategoryList extends Component {
 
             <View style={{  marginLeft: "10%"}}>
                 <TouchableOpacity style={{}} onPress={() => props.navigation.navigate('FollowersPosts')}>
-                    <PeopleIcon name="users" color="white" size={23} />
+                    <PeopleIcon name="users" color="#00527a" size={20} />
                 </TouchableOpacity>
             </View>
           </View>

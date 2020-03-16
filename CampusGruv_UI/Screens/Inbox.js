@@ -3,6 +3,8 @@ import { Text, View, ScrollView, AsyncStorage } from 'react-native'
 import {SearchBar} from 'react-native-elements'
 import InboxComponent from '../Components/InboxComponent'
 import { FlatList } from 'react-native-gesture-handler';
+import {clearMsgs} from "../ReduxStore/Actions/index";
+import mystore from '../index';
 // import Ws from '@adonisjs/websocket-client'
 
 
@@ -15,7 +17,8 @@ export default class Inbox extends Component {
         super();
         this.state= {
             Text:'',
-            data: []
+            data: [],
+            store: mystore
         }
         
     }
@@ -41,6 +44,9 @@ export default class Inbox extends Component {
         this.setState({
             data: JsonResponse.data
         })
+        this.focusListener = this.props.navigation.addListener('didBlur', () => {
+            this.state.store.dispatch(clearMsgs())
+        });
     }
 
     render() {

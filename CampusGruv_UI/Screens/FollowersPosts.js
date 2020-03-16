@@ -83,7 +83,7 @@ export default class FolllowersPosts extends PureComponent {
                 <View style={{marginLeft: 5}}>
                   <TouchableOpacity
                     onPress={() => props.navigation.navigate('CategoryList')}>
-                    <Icon2 name="view-grid" color="white" size={28} />
+                    <Icon2 name="view-grid" color="#00527a" size={28} />
                   </TouchableOpacity>
                 </View>
 
@@ -91,7 +91,7 @@ export default class FolllowersPosts extends PureComponent {
                 <TouchableOpacity
                   style={{paddingRight: 5}}
                   onPress={() => props.navigation.navigate('HomeScreen')}>
-                  <PeopleIcon name="users" color="#00527a" size={23} />
+                  <PeopleIcon name="users" color="white" size={23} />
                 </TouchableOpacity>
               </View>
               </View>
@@ -146,14 +146,14 @@ export default class FolllowersPosts extends PureComponent {
               <View style={{marginLeft: 5}}>
                 <TouchableOpacity
                   onPress={() => props.navigation.navigate('CategoryList')}>
-                  <Icon2 name="view-grid" color="white" size={28} />
+                  <Icon2 name="view-grid" color="#00527a" size={28} />
                 </TouchableOpacity>
               </View>
               <View style={{ marginLeft: "10%",marginTop:"0.5%"}}>
               <TouchableOpacity
                 style={{paddingRight: 5}}
                 onPress={() => props.navigation.navigate('HomeScreen')}>
-                <PeopleIcon name="users" color="#00527a" size={23} />
+                <PeopleIcon name="users" color="white" size={20} />
               </TouchableOpacity>
             </View>
             </View>

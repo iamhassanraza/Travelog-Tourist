@@ -70,14 +70,14 @@ class HomeScreen extends PureComponent {
                   <TouchableOpacity onPress={() => props.navigation.navigate('CategoryList')}>
                     <Icon3
                       name="grid"
-                      color="white"
+                      color="#00527a"
                       size={28}
                     />
                   </TouchableOpacity>
                 </View>
                 <View style={{ marginLeft: "10%", marginTop: "0.5%" }}>
                   <TouchableOpacity style={{}} onPress={() => props.navigation.navigate('FollowersPosts')}>
-                    <PeopleIcon name="users" color="white" size={23} />
+                    <PeopleIcon name="users" color="#00527a" size={23} />
                   </TouchableOpacity>
                 </View>
               </View>
@@ -111,9 +111,9 @@ class HomeScreen extends PureComponent {
               </View>
               <View style={{ marginLeft: 5 }}>
                 <TouchableOpacity onPress={() => props.navigation.navigate('CategoryList')}>
-                  <Icon3
-                    name="grid"
-                    color="white"
+                  <Icon2
+                    name="view-grid"
+                    color="#00527a"
                     size={28}
                   />
                 </TouchableOpacity>
@@ -121,7 +121,7 @@ class HomeScreen extends PureComponent {
             </View>
             <View style={{ flex: 1 }}>
               <TouchableOpacity style={{ paddingRight: 5 }} onPress={() => props.navigation.navigate('FollowersPosts')}>
-                <PeopleIcon name="users" color="white" size={20} />
+                <PeopleIcon name="users" color="#00527a" size={20} />
               </TouchableOpacity>
             </View>
           </View>

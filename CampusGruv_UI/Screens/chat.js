@@ -69,7 +69,7 @@ class Chat extends React.Component {
     AppState.addEventListener('change', this._handleAppStateChange);
     this.props.socket.emit('joinRoom', {room_id: `${this.props.navigation.getParam('room_id',null)}`})
     this.props.socket.on('joinRoom', async (msgs) => {
-      console.log('room joined',msgs[0])
+      console.log('room joined',msgs)
       if(msgs!==null){
         var tempArray = await this.mapMessages(msgs)
       } else {
@@ -90,6 +90,7 @@ class Chat extends React.Component {
       console.log('hello jee error established')
     });
     this.props.socket.on('message', async (msg) => {
+      console.log(msg,'msg msg msg')
       if(msg[0].room_id === this.props.navigation.getParam('room_id',null)) {
         const tempArray = await this.mapMessages(msg)
         this.setState(previousState => ({

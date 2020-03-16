@@ -29,14 +29,19 @@ const Socket = (initial_state = {}, action) => {
 }
 
 
-var unreadMsgs = 0
-var unreadNoti = -1
+var unreadMsgs = {qty: -1}
+var unreadNoti = {qty: -1}
 
 const UnreadMsgs = (initial_state = unreadMsgs, action) => {
   switch(action.type) {
     case 'EDIT_UNREAD_MSGS':
       {
-        return initial_state + 1
+        return {qty: initial_state.qty + 1}
+      }
+    case 'CLEAR_MSGS':
+      {
+        new_state = {qty: -1}
+        return {...initial_state, ...new_state}
       }
     default:
       return initial_state
@@ -47,12 +52,12 @@ const notifications = (initial_state = unreadNoti, action) => {
   switch(action.type) {
     case 'EDIT_UNREAD_NOTI':
       {
-        return initial_state + 1
+        return {qty: initial_state.qty + 1}
       }
     case 'CLEAR_NOTI':
       {
-        initial_state = -1
-        return initial_state
+        new_state = {qty: -1}
+        return {...initial_state, ...new_state}
       }
     default:
       return initial_state

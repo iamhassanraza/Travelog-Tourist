@@ -27,8 +27,8 @@ class MainTabNavigation extends React.Component {
         this.socket.on('connect_error', (err) => {
             console.log('hello jee error established', err)
         });
-        this.socket.on('message', (msg) => {
-            console.log('msg received')
+        this.socket.on('user_message', (msg) => {
+            console.log('msg received',msg)
             this.props.unreadMsg()
         })
         this.socket.on('notification', (noti) => {
@@ -39,7 +39,7 @@ class MainTabNavigation extends React.Component {
 
     render() {
         return (
-            <TabContainer/>
+            <TabContainer screenProps={{Notifications: this.props.notifications, unreadMsg: this.props.unreadMsgs}}/>
         )
     }
 }

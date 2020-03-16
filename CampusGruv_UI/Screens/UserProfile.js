@@ -118,7 +118,7 @@ class UserProfile extends React.Component {
       //userFollowing = this.props.navigation.getParam('userFollowing', null)
       await this.setState({
         otherUserId: userNavId,
-        otherUserDp: userNavDp ? userNavDp : 'https://travelog-pk.herokuapp.com/images/default.png',
+        otherUserDp: userNavDp,
         otherUserFirstName: userNavFirstName,
         otherUserLastName: userNavLastName,
         otherUserCampus: userCampus,
@@ -271,6 +271,7 @@ class UserProfile extends React.Component {
         },
       );
       const jsonresponse = await response.json();
+      console.log(jsonresponse,'res res res')
       this.setState({
         spinner: false,
         posts: jsonresponse.data,

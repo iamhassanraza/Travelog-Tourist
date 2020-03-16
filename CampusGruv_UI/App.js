@@ -479,22 +479,15 @@ const TabNavigator = createMaterialTopTabNavigator(
             navigationOptions: props => {
                 store = mystore
                 state = store.getState()
+                console.log('state',state)
                 return ({
                 tabBarIcon: ({tintColor}) => { 
                     return (<IconBadge
                         MainElement={<Icon2 name="bell-ring" color={tintColor} style={{margin:3, fontSize: 27 }} />}
-                        BadgeElement={<Text style={{color: 'white' }}>{state.Notifications+1 > 0? state.Notifications+1 : null}</Text>}
-                        Hidden={state.Notifications+1 === 0}
+                        BadgeElement={<Text style={{color: 'white' }}>{props.screenProps.Notifications.qty+1 > 0? props.screenProps.Notifications.qty+1 : null}</Text>}
+                        Hidden={props.screenProps.Notifications.qty+1 === 0}
                     />)
                 },
-                // tabBarOnPress: ({navigation, defaultHandler}) => {
-                //     store.dispatch(clearNoti())
-                //     navigation.dispatch(StackActions.popToTop());
-                //     defaultHandler();
-                // },
-                // tabBarIcon: ({ tintColor }) => (
-                //     <Icon2 name="bell-ring" color={tintColor} style={{ fontSize: 27 }} />
-                // ),
                 tabBarLabel: "Notifications"
                 })
             },
@@ -511,12 +504,19 @@ const TabNavigator = createMaterialTopTabNavigator(
         },
         messages: {
             screen: MessageStack,
-            navigationOptions: {
-                tabBarIcon: ({ tintColor }) => (
-                    <Icon2 name="email-outline" color={tintColor} style={{ fontSize: 27 }} />
-                ),
+            navigationOptions: props => {
+                return ({
+                tabBarIcon: ({ tintColor }) => {
+                    return (<IconBadge
+                        MainElement={<Icon2 name="email-outline" color={tintColor} style={{ fontSize: 30 }} />}
+                        BadgeElement={<Text style={{color: 'white' }}>{props.screenProps.Notifications.qty+1 > 0? props.screenProps.Notifications.qty+1 : null}</Text>}
+                        Hidden={props.screenProps.Notifications.qty+1 === 0}
+                    />)
+                    // <Icon2 name="email-outline" color={tintColor} style={{ fontSize: 27 }} />
+                },
                 tabBarLabel: "Messages",
                 hederMode: 'none'
+            })
             }
         },
         Profile: {

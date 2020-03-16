@@ -438,16 +438,16 @@ incrementView = async () => {
                 data={this.state.comments}
                 scrollEnabled={false}
                 showsVerticalScrollIndicator={false}
-                renderItem={({item}) => {
+                renderItem={({item, index}) => {
                   return (
                     <Comment 
                       dp={item.user.profile_pic_url}
                       name={item.user.first_name}
                       comment={item.description}
+                      key={index}
                     />
                   );
                 }}
-                keyExtractor={item => item}
         />
       </View>
     );

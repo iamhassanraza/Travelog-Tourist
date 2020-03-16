@@ -65,6 +65,7 @@ class NotificationScreen extends Component {
       },
     );
     const JsonResponse = await Response.json();
+    console.log('hahahah',JsonResponse)
     this.setState({
       notification: JsonResponse.data,
       loading: false
@@ -102,7 +103,7 @@ class NotificationScreen extends Component {
                   //   ' ' +
                   //   item.userNotification.last_name
                   // }
-                  unread = {index <= this.props.Notifications ? true : false}
+                  unread = {index <= this.props.Notifications.qty ? true : false}
                   time = {new Date(item.created_at.replace(' ', 'T'))}
                   activity = {item.notification_message}
                 >
