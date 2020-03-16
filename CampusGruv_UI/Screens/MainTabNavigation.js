@@ -39,7 +39,7 @@ class MainTabNavigation extends React.Component {
 
     render() {
         return (
-            <TabContainer screenProps={{Notifications: this.props.notifications, unreadMsg: this.props.unreadMsgs}}/>
+            <TabContainer screenProps={{Notifications: this.props.notifications, unreadMsgs: this.props.unreadMsgs}}/>
         )
     }
 }

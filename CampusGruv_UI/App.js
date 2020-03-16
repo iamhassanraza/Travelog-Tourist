@@ -505,12 +505,14 @@ const TabNavigator = createMaterialTopTabNavigator(
         messages: {
             screen: MessageStack,
             navigationOptions: props => {
+                store = mystore
+                state = store.getState()
                 return ({
                 tabBarIcon: ({ tintColor }) => {
                     return (<IconBadge
                         MainElement={<Icon2 name="email-outline" color={tintColor} style={{ fontSize: 30 }} />}
-                        BadgeElement={<Text style={{color: 'white' }}>{props.screenProps.Notifications.qty+1 > 0? props.screenProps.Notifications.qty+1 : null}</Text>}
-                        Hidden={props.screenProps.Notifications.qty+1 === 0}
+                        BadgeElement={<Text style={{color: 'white' }}>{props.screenProps.unreadMsgs.qty+1 > 0? props.screenProps.unreadMsgs.qty+1 : null}</Text>}
+                        Hidden={props.screenProps.unreadMsgs.qty+1 === 0}
                     />)
                     // <Icon2 name="email-outline" color={tintColor} style={{ fontSize: 27 }} />
                 },
