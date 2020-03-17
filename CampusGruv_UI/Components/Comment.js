@@ -1,11 +1,12 @@
 import React, {Component} from 'react';
 import {Text, View, Image} from 'react-native';
-
+import TextEncoding from 'text-encoding'
 
 // Props dp,name,comment
 
 export default class Comment extends Component {
   render() {
+    TextDecoder = TextEncoding.TextDecoder
     return (
       <View style={{paddingRight: '7%', marginTop: '1%'}}>
         <View

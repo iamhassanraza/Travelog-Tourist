@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
 import {
   Text,
   View,
@@ -15,14 +15,14 @@ import {
   AppState,
   Platform
 } from 'react-native';
-import {ThemeConsumer, Header} from 'react-native-elements';
-import {Container, Item, Content, Input} from 'native-base';
+import { ThemeConsumer, Header } from 'react-native-elements';
+import { Container, Item, Content, Input } from 'native-base';
 import Comment from '../Components/Comment'
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CrossIcon from 'react-native-vector-icons/MaterialIcons';
 import IconFeather from 'react-native-vector-icons/Feather';
 import BackIcon from 'react-native-vector-icons/Ionicons';
-import {ThemeBlue} from '../Assets/Colors';
+import { ThemeBlue } from '../Assets/Colors';
 import Modal from 'react-native-modal';
 import ViewsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import { connect } from "react-redux";
@@ -31,6 +31,7 @@ import RNFetchBlob from 'rn-fetch-blob';
 import { FlatList, TouchableHighlight, TouchableOpacity } from 'react-native-gesture-handler';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import Share from 'react-native-share'
+import TextEncoding from 'text-encoding'
 import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
 
 const IconGrey = '#b4b8bf';
@@ -43,7 +44,7 @@ class PostDetail extends Component {
   static navigationOptions = props => {
     return {
       header: (
-        <Header centerComponent={{text:"POST",style:{color:"#FFF",fontWeight:"bold"}}} leftComponent={(
+        <Header centerComponent={{ text: "POST", style: { color: "#FFF", fontWeight: "bold" } }} leftComponent={(
           <TouchableOpacity onPress={() => props.navigation.goBack()} >
             <Icon name="arrow-back" />
           </TouchableOpacity>
@@ -64,23 +65,23 @@ class PostDetail extends Component {
     post_id: undefined
   };
 
-componentDidMount(){
+  componentDidMount() {
 
-this.incrementView();
+    this.incrementView();
 
-}
+  }
 
-incrementView = async () => {
+  incrementView = async () => {
 
-  const DATA = this.props.navigation.getParam('PostData', 'nothing to render');
-  const Token = await AsyncStorage.getItem('TOKEN');
-  const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/view/count?post_id=${DATA.postId}`,{
-    headers: {
-      Authorization: `Bearer ${Token}`,
-    },
-  });
+    const DATA = this.props.navigation.getParam('PostData', 'nothing to render');
+    const Token = await AsyncStorage.getItem('TOKEN');
+    const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/view/count?post_id=${DATA.postId}`, {
+      headers: {
+        Authorization: `Bearer ${Token}`,
+      },
+    });
 
-}
+  }
 
 
 
@@ -92,7 +93,7 @@ incrementView = async () => {
   };
 
   toggleModal = () => {
-    this.setState({isModalVisible: !this.state.isModalVisible});
+    this.setState({ isModalVisible: !this.state.isModalVisible });
   };
 
 
@@ -102,7 +103,7 @@ incrementView = async () => {
   }
 
   downloadImage = (image_URL) => {
-    this.setState({isModalVisible: false})
+    this.setState({ isModalVisible: false })
     var date = new Date();
     var ext = this.getExtention(image_URL);
     ext = "." + ext[0];
@@ -120,15 +121,15 @@ incrementView = async () => {
     }
     config(options).fetch('GET', image_URL).then((res) => {
       alert('Download Complete')
-  
+
     });
   }
 
-  createPDF = async (first_name, last_name, image_URL, userAvatar , postTitle) => {
-    this.setState({isModalVisible: false})
+  createPDF = async (first_name, last_name, image_URL, userAvatar, postTitle) => {
+    this.setState({ isModalVisible: false })
 
     const pdfOptions = {
-      html: 
+      html:
         `<img src="${userAvatar}"></img>
          <h1>post by ${first_name} ${last_name}</h1>
          <img src="${image_URL}" alt="post image"></img>
@@ -136,7 +137,7 @@ incrementView = async () => {
       fileName: postTitle,
       directory: 'Documents',
     };
- 
+
     let file = await RNHTMLtoPDF.convert(pdfOptions)
     alert('downloaded on location:' + '\n' + file.filePath);
 
@@ -146,11 +147,11 @@ incrementView = async () => {
 
   sharePost = (first_name, postTitle) => {
 
-    let  text = `Checkout this post by ${first_name}: \n`
-        if(Platform.OS === 'android')
-            text = text.concat('https://campus-gruv-heroku.herokuapp.com/Android')
-        else
-            text = text.concat('http://itunes.apple.com/app/id1453977874')
+    let text = `Checkout this post by ${first_name}: \n`
+    if (Platform.OS === 'android')
+      text = text.concat('https://campus-gruv-heroku.herokuapp.com/Android')
+    else
+      text = text.concat('http://itunes.apple.com/app/id1453977874')
 
 
     const options = {
@@ -159,14 +160,14 @@ incrementView = async () => {
       //url: `app://`,
     }
     Share.open(options)
-    .then((res) => { console.log(res) })
-    .catch((err) => { err && console.log(err); });
+      .then((res) => { console.log(res) })
+      .catch((err) => { err && console.log(err); });
   }
 
 
   renderHeader = (userdp, postId, first_name, last_name, image_URL, userId, postTitle) => {
     return (
-      <View style={{flexDirection: 'row', justifyContent: 'space-between',marginTop:Platform.OS == 'ios' ? 38:0,}}>
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', marginTop: Platform.OS == 'ios' ? 38 : 0, }}>
         <View
           style={{
             alignItems: 'center',
@@ -188,8 +189,8 @@ incrementView = async () => {
               }}></BackIcon>
           </View>
 
-          <TouchableOpacity 
-            style={{flexDirection: 'row', marginLeft: 10, alignItems: 'center'}}
+          <TouchableOpacity
+            style={{ flexDirection: 'row', marginLeft: 10, alignItems: 'center' }}
             onPress={() => this.props.navigation.push('UserProfile', {
               userNavId: userId,
               userNavDp: userdp,
@@ -199,16 +200,16 @@ incrementView = async () => {
             })}
           >
             <Image
-              source={{uri: userdp}}
-              style={{width: 40, height: 40, borderRadius: 50}}>
+              source={{ uri: userdp }}
+              style={{ width: 40, height: 40, borderRadius: 50 }}>
             </Image>
-            <Text style={{marginLeft: '7%', color: IconGrey}}>
+            <Text style={{ marginLeft: '7%', color: IconGrey }}>
               {first_name + ' ' + last_name}
             </Text>
           </TouchableOpacity>
         </View>
 
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
           {/* <Text style={{marginRight: '3%', color: 'grey', borderWidth: 1}}>
             Edit Post
           </Text> */}
@@ -243,8 +244,8 @@ incrementView = async () => {
 
           <IconFeather
             name="send"
-            style={{fontSize: 25, color: IconGrey, paddingRight: 3}}
-            onPress={() => 
+            style={{ fontSize: 25, color: IconGrey, paddingRight: 3 }}
+            onPress={() =>
               this.sharePost(first_name, postTitle)
             }
           ></IconFeather>
@@ -252,35 +253,35 @@ incrementView = async () => {
           <View>
             <Icon
               name="dots-horizontal"
-              style={{fontSize: 30, color: IconGrey, paddingRight: 3}}
+              style={{ fontSize: 30, color: IconGrey, paddingRight: 3 }}
               onPress={this.toggleModal}></Icon>
 
             <View>
               <Modal
-                style={{margin: 0}}
+                style={{ margin: 0 }}
                 isVisible={this.state.isModalVisible}
-                onBackdropPress={() => this.setState({isModalVisible: false})}>
-                <View style={{flex: 1, justifyContent: 'flex-end'}}>
+                onBackdropPress={() => this.setState({ isModalVisible: false })}>
+                <View style={{ flex: 1, justifyContent: 'flex-end' }}>
                   <View
                     style={{
                       backgroundColor: 'white',
                       flexDirection: 'row',
                       justifyContent: 'space-between',
-                      paddingBottom:30,borderTopRightRadius:23, borderTopLeftRadius:23
+                      paddingBottom: 30, borderTopRightRadius: 23, borderTopLeftRadius: 23
                     }}>
                     <CrossIcon
                       name="cancel"
-                      onPress={() => this.setState({isModalVisible: false})}
+                      onPress={() => this.setState({ isModalVisible: false })}
                       style={{
                         flex: 0.65,
-                        paddingLeft:5,
+                        paddingLeft: 5,
                         fontSize: 20,
-                        paddingTop:4,
-                        color:IconGrey
+                        paddingTop: 4,
+                        color: IconGrey
                       }}></CrossIcon>
                     <View
-                      style={{flex: 10, alignItems: 'center', paddingTop:3}}>
-                      <Text style={{fontSize:20, fontWeight:"bold", borderTopWidth:2, borderTopColor:IconGrey}} >
+                      style={{ flex: 10, alignItems: 'center', paddingTop: 3 }}>
+                      <Text style={{ fontSize: 20, fontWeight: "bold", borderTopWidth: 2, borderTopColor: IconGrey }} >
                         More Options
                       </Text>
                     </View>
@@ -292,9 +293,9 @@ incrementView = async () => {
                       style={styles.optionIcon}></Icon>
                     <Text
                       onPress={() => {
-                        this.setState({isModalVisible: false})
-                        this.props.navigation.navigate("ReportPost", { PostId : this.props.navigation.getParam('PostData', 'nothing to render') })
-                        
+                        this.setState({ isModalVisible: false })
+                        this.props.navigation.navigate("ReportPost", { PostId: this.props.navigation.getParam('PostData', 'nothing to render') })
+
                       }
                       }
                       style={styles.TextWithNavigation}>
@@ -307,7 +308,7 @@ incrementView = async () => {
                       name="download"
                       style={styles.optionIcon}></IconFeather>
                     <Text
-                      onPress={() => 
+                      onPress={() =>
                         this.createPDF(first_name, last_name, image_URL, userdp, postTitle)
                       }
                       style={styles.TextWithNavigation}>
@@ -344,31 +345,31 @@ incrementView = async () => {
   };
 
   renderImage = image => {
-    console.log(image,'image',this.props.height)
+    console.log(image, 'image', this.props.height)
     return (
       <View style={{}}>
         <Image
-          source={{uri:image}}
+          source={{ uri: image }}
           resizeMode='center'
-          style={{width: '100%', height: 350}}></Image>
+          style={{ width: '100%', height: 350 }}></Image>
       </View>
     );
   };
 
-  renderTitle = (title,views) => {
+  renderTitle = (title, views) => {
     return (
-      <View style={{marginLeft:"3%",marginRight:"3%" ,flexDirection:"row", justifyContent:"space-between"}}>
-       <View>
-       <Text style={{fontSize: 25, fontWeight: '600'}}>
-       {title}
-        </Text>
-       </View>
+      <View style={{ marginLeft: "3%", marginRight: "3%", flexDirection: "row", justifyContent: "space-between" }}>
+        <View>
+          <Text style={{ fontSize: 25, fontWeight: '600' }}>
+            {title}
+          </Text>
+        </View>
 
         <View style={{}}>
-        <ViewsIcon color="grey" name="eye" style={{fontSize:17}}/>
-              <Text style={{fontSize: 9, color: 'grey', marginTop: -2,alignSelf:"center"}}>
-                {views}
-              </Text>
+          <ViewsIcon color="grey" name="eye" style={{ fontSize: 17 }} />
+          <Text style={{ fontSize: 9, color: 'grey', marginTop: -2, alignSelf: "center" }}>
+            {views}
+          </Text>
         </View>
 
       </View>
@@ -377,8 +378,8 @@ incrementView = async () => {
 
   renderDescription = description => {
     return (
-      <View style={{ marginLeft: '3%', marginRight: '5%'}}>
-        <Text style={{fontSize: 17, marginTop:'1%', color:'grey',marginBottom:10}}>
+      <View style={{ marginLeft: '3%', marginRight: '5%' }}>
+        <Text style={{ fontSize: 17, marginTop: '1%', color: 'grey', marginBottom: 10 }}>
           {description}
         </Text>
       </View>
@@ -387,67 +388,122 @@ incrementView = async () => {
 
   renderAddComment = (dp, postId, userId) => {
     return (
-      <View style={{marginBottom: Platform.OS == 'ios' ? 20 : 0, flexDirection: 'row',borderTopWidth:0.3, borderTopColor:'grey', paddingTop:5, paddingBottom:5, alignItems: 'center'}}>
-              <View style={{marginLeft:'2%', width: 40, height: 40}}>
-                <Image
-                  source={{uri: this.props.User.profile_pic_url}}
-                  style={{width:'100%', borderRadius: 50, height: '100%'}}>
-                </Image>
-              </View>
-              <Item style={{width: Dimensions.get('window').width - 100}}>
-                <Input
-                  value={this.state.currentComment} 
-                  getRef= {input => { this.commentInput = input }}
-                  multiline={true}
-                  placeholder="Add a comment"
-                  style={{ borderWidth: 0}}
-                  onChangeText={text => {
-                    this.changeCurrentCommentState(text);
-                  }}
-                />
-              </Item>
-              <View style={{width: 60, height:40, paddingRight:'2%', justifyContent: 'center', alignItems: 'center'}}>
-                <TouchableOpacity 
-                  onPress={()=>{
-                    //CALL API FOR COMMENT , USER ID ,POST ID , COMMENT DESCRIPTION 
-                    this.postComment(postId, userId)
-                  }}
-                >
-                  <Text
-                    style={{
-                      fontSize: 18,
-                      color: ThemeBlue,
-                      //paddingLeft: '2%',
-                    }}>
-                    Post
+      <View style={{ marginBottom: Platform.OS == 'ios' ? 20 : 0, flexDirection: 'row', borderTopWidth: 0.3, borderTopColor: 'grey', paddingTop: 5, paddingBottom: 5, alignItems: 'center' }}>
+        <View style={{ marginLeft: '2%', width: 40, height: 40 }}>
+          <Image
+            source={{ uri: this.props.User.profile_pic_url }}
+            style={{ width: '100%', borderRadius: 50, height: '100%' }}>
+          </Image>
+        </View>
+        <Item style={{ width: Dimensions.get('window').width - 100 }}>
+          <Input
+            value={this.state.currentComment}
+            getRef={input => { this.commentInput = input }}
+            multiline={true}
+            placeholder="Add a comment"
+            style={{ borderWidth: 0 }}
+            onChangeText={text => {
+              this.changeCurrentCommentState(text);
+            }}
+          />
+        </Item>
+        <View style={{ width: 60, height: 40, paddingRight: '2%', justifyContent: 'center', alignItems: 'center' }}>
+          <TouchableOpacity
+            onPress={() => {
+              //CALL API FOR COMMENT , USER ID ,POST ID , COMMENT DESCRIPTION 
+              this.postComment(postId, userId)
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 18,
+                color: ThemeBlue,
+                //paddingLeft: '2%',
+              }}>
+              Post
                   </Text>
-                </TouchableOpacity>
-              </View>
-            </View>
+          </TouchableOpacity>
+        </View>
+      </View>
     );
   };
 
   renderAllComments = (dp) => {
+    console.log('coments', this.state.comments[0].description)
+  //   function bin2string(array) {
+  //     var result = "";
+  //     for (var i = 0; i < array.length; ++i) {
+  //       result += (String.fromCharCode(array[i]));
+  //     }
+  //     return result;
+  //   }
+  //   function Utf8ArrayToStr(array) {
+  //     var out, i, len, c;
+  //     var char2, char3;
+  
+  //     out = "";
+  //     len = array.length;
+  //     i = 0;
+  //     while(i < len) {
+  //     c = array[i++];
+  //     switch(c >> 4)
+  //     { 
+  //       case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
+  //         // 0xxxxxxx
+  //         out += String.fromCharCode(c);
+  //         break;
+  //       case 12: case 13:
+  //         // 110x xxxx   10xx xxxx
+  //         char2 = array[i++];
+  //         out += String.fromCharCode(((c & 0x1F) << 6) | (char2 & 0x3F));
+  //         break;
+  //       case 14:
+  //         // 1110 xxxx  10xx xxxx  10xx xxxx
+  //         char2 = array[i++];
+  //         char3 = array[i++];
+  //         out += String.fromCharCode(((c & 0x0F) << 12) |
+  //                        ((char2 & 0x3F) << 6) |
+  //                        ((char3 & 0x3F) << 0));
+  //         break;
+  //     }
+  //     }
+  
+  //     return out;
+  // }
+  // ToBase64 = function (u8) {
+  //   return btoa(String.fromCharCode.apply(null, u8));
+  // }
+  //   console.log('str', bin2string(this.state.comments[2].description.data))
+    //TextDecoder = TextEncoding.TextDecoder
+    // TextEncoder = TextEncoding.TextEncoder
+    // // var uint8array = new TextEncoder("utf-8").encode("oops");
+    // var uint8array = this.state.comments[0].description.data;
+    // console.log('encoded',uint8array)
+    // //var string = new TextDecoder("utf-8").decode(this.state.comments[0].description.data);
+    // var string = new TextDecoder("utf-8").decode(uint8array);
+    // console.log('str',string)
     return (
-      <View style={{marginLeft: '4%'}}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
-          <Text style={{color: 'grey', fontSize: 12}}>Comments</Text>
-          <CrossIcon style={{}} name='expand-more'/>
+      <View style={{ marginLeft: '4%' }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center' }}>
+          <Text style={{ color: 'grey', fontSize: 12 }}>Comments</Text>
+          <CrossIcon style={{}} name='expand-more' />
         </View>
         <FlatList
-                data={this.state.comments}
-                scrollEnabled={false}
-                showsVerticalScrollIndicator={false}
-                renderItem={({item, index}) => {
-                  return (
-                    <Comment 
-                      dp={item.user.profile_pic_url}
-                      name={item.user.first_name}
-                      comment={item.description}
-                      key={index}
-                    />
-                  );
-                }}
+          data={this.state.comments}
+          scrollEnabled={false}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item, index }) => {
+            return (
+              <Comment
+                dp={item.user.profile_pic_url}
+                name={item.user.first_name}
+                //comment={new TextDecoder("utf-8").decode(item.description.data)}
+                //comment={bin2string(item.description.data)}
+                comment={item.description}
+                key={index}
+              />
+            );
+          }}
         />
       </View>
     );
@@ -457,12 +513,11 @@ incrementView = async () => {
 
 
   postComment = async (postId, postUserId) => {
-    console.log('hello jee',this.state.currentComment)
-    if(this.state.currentComment !== null || this.state.currentComment != '')
-    {
+    console.log('hello jee', this.state.currentComment)
+    if (this.state.currentComment !== null || this.state.currentComment != '') {
       const Token = await AsyncStorage.getItem('TOKEN');
       const userId = await AsyncStorage.getItem('USER_ID');
-      console.log('postid ------' ,postId)
+      console.log('postid ------', postId)
       const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/comment/create`, {
         method: 'POST',
         body: JSON.stringify({
@@ -478,18 +533,18 @@ incrementView = async () => {
       });
 
       const JsonResponse = await Response.json();
-      // console.log(JsonResponse[0])
-      if(parseInt(Response.status) === 400) {
-          alert(JsonResponse.message);
+      console.log(JsonResponse, 'res res')
+      if (parseInt(Response.status) === 400) {
+        alert(JsonResponse.message);
       }
-      else if (parseInt(Response.status) === 200){
-          alert('comment created');
-          const comments = this.state.comments
-          comments.push({...JsonResponse,user:{first_name: this.props.User.first_name, profile_pic_url: this.props.User.profile_pic_url}})
-          await this.setState({
-            comments: comments,
-            currentComment: ''
-          })
+      else if (parseInt(Response.status) === 200) {
+        alert('comment created');
+        const comments = this.state.comments
+        comments.push({ ...JsonResponse, user: { first_name: this.props.User.first_name, profile_pic_url: this.props.User.profile_pic_url } })
+        await this.setState({
+          comments: comments,
+          currentComment: ''
+        })
       }
       else {
         alert('something went wrong')
@@ -509,9 +564,9 @@ incrementView = async () => {
     const Token = await AsyncStorage.getItem('TOKEN');
     const userId = await AsyncStorage.getItem('USER_ID');
     console.log('hello jeeeeeee user id', userId)
-    console.log('post id is -----',postId)
+    console.log('post id is -----', postId)
     var Response = null
-    if(this.state.liked) {
+    if (this.state.liked) {
       Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/post/like`, {
         method: 'POST',
         body: JSON.stringify({
@@ -539,19 +594,19 @@ incrementView = async () => {
         },
       });
     }
-      const JsonResponse = await Response.json();
-      console.log(JsonResponse)
-      if(parseInt(Response.status) === 400) {
-        console.log('400')
-        // alert(JsonResponse.message);
-      }
-      else if (parseInt(Response.status) === 201){
-        console.log('200')
-        // alert(JsonResponse.message);
-      }
-      else {
-        alert('something is wrong')
-      }
+    const JsonResponse = await Response.json();
+    console.log(JsonResponse)
+    if (parseInt(Response.status) === 400) {
+      console.log('400')
+      // alert(JsonResponse.message);
+    }
+    else if (parseInt(Response.status) === 201) {
+      console.log('200')
+      // alert(JsonResponse.message);
+    }
+    else {
+      alert('something is wrong')
+    }
   }
 
   savePost = async (postId) => {
@@ -562,9 +617,9 @@ incrementView = async () => {
     const Token = await AsyncStorage.getItem('TOKEN');
     const userId = await AsyncStorage.getItem('USER_ID');
     console.log('hello jeeeeeee user id', userId)
-    console.log('post id is -----',postId)
+    console.log('post id is -----', postId)
     var Response = null
-    if(this.state.saved) {
+    if (this.state.saved) {
       Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/save/post?post_id=${postId}`, {
         method: 'GET',
         headers: {
@@ -584,11 +639,11 @@ incrementView = async () => {
     }
     const JsonResponse = await Response.json();
     console.log(JsonResponse)
-    if(parseInt(Response.status) === 400) {
+    if (parseInt(Response.status) === 400) {
       console.log('400')
       // alert(JsonResponse.message);
     }
-    else if (parseInt(Response.status) === 200){
+    else if (parseInt(Response.status) === 200) {
       console.log('200')
       // alert(JsonResponse.message);
     }
@@ -596,28 +651,28 @@ incrementView = async () => {
       alert('something is wrong')
     }
   }
-//style={{height: Dimensions.get('window').height-150}}
+  //style={{height: Dimensions.get('window').height-150}}
   render() {
     const data = this.props.navigation.getParam('PostData', 'nothing to render');
     return (
       <>
-      <Container>
-        <Content style={{marginBottom: 10}}>
-          {this.renderHeader(data.userAvatar, data.postId, data.first_name, data.last_name, data.uri, data.userId, data.title)}
-          {this.renderImage(data.uri)}
-          {this.renderTitle(data.title, data.views)}
-          {this.renderDescription(data.description)}
-          { this.state.comments[0] ? 
-              this.renderAllComments(data.userAvatar, data.comments) : 
-              <View style={{height: 80, justifyContent: 'center'}}>
-                <Text style={{color: 'grey',fontSize:25, opacity:0.5, alignSelf: 'center'}}>
+        <Container>
+          <Content style={{ marginBottom: 10 }}>
+            {this.renderHeader(data.userAvatar, data.postId, data.first_name, data.last_name, data.uri, data.userId, data.title)}
+            {this.renderImage(data.uri)}
+            {this.renderTitle(data.title, data.views)}
+            {this.renderDescription(data.description)}
+            {this.state.comments[0] ?
+              this.renderAllComments(data.userAvatar, data.comments) :
+              <View style={{ height: 80, justifyContent: 'center' }}>
+                <Text style={{ color: 'grey', fontSize: 25, opacity: 0.5, alignSelf: 'center' }}>
                   No comments yet!
                 </Text>
               </View>
-          }
-        </Content> 
-      </Container>
-      {this.renderAddComment(data.userAvatar, data.postId, data.userId)}
+            }
+          </Content>
+        </Container>
+        {this.renderAddComment(data.userAvatar, data.postId, data.userId)}
       </>
     );
   }
@@ -641,19 +696,19 @@ const styles = StyleSheet.create({
   optionIcon: {
     paddingLeft: '3%',
     fontSize: 25,
-  
+
   },
 });
 
 
-mapStateToProps = (state)=>{ //this state will contain FULL redux store all the reducers data
+mapStateToProps = (state) => { //this state will contain FULL redux store all the reducers data
 
 
   //use your required reducer data in props i.e reducer1
-  
-  return { User : state.User}  //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
-  
-  }
 
-export default connect(mapStateToProps,null)(PostDetail);
+  return { User: state.User }  //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+
+}
+
+export default connect(mapStateToProps, null)(PostDetail);
 

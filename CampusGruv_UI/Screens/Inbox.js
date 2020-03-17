@@ -29,7 +29,7 @@ export default class Inbox extends Component {
         this.setState({Text:e})
     }
 
-    async componentDidMount() {
+    fetchData = async () => {
         const Token = await AsyncStorage.getItem('TOKEN');
         const user_id = await AsyncStorage.getItem('USER_ID');
         const Response = await fetch(
@@ -43,6 +43,14 @@ export default class Inbox extends Component {
         const JsonResponse = await Response.json();
         this.setState({
             data: JsonResponse.data
+        })
+    }
+
+    async componentDidMount() {
+        this.fetchData()
+
+        this.focusListener2 = this.props.navigation.addListener('willFocus', () => {
+            this.fetchData()
         })
         this.focusListener = this.props.navigation.addListener('didBlur', () => {
             this.state.store.dispatch(clearMsgs())

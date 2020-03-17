@@ -257,7 +257,7 @@ if(text) {
           keyExtractor={item => item.id}
           showsHorizontalScrollIndicator={false}
           renderItem={({item}) => (
-            <AvatarUserStatus id={item.id} first_name={item.first_name} last_name={item.last_name} userFollowing={item.userFollowing.length>0 ? true : false} item={item} campus={item.campus.description} status={true} pic={item.profile_pic_url}></AvatarUserStatus>
+            <AvatarUserStatus id={item.id} first_name={item.first_name} last_name={item.last_name} userFollowing={item.isFollowing? true : false} item={item} campus={item.campus.description} status={true} pic={item.profile_pic_url}></AvatarUserStatus>
           )}
           />
         </ScrollView>
