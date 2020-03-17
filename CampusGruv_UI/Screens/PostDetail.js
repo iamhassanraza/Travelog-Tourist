@@ -429,59 +429,7 @@ class PostDetail extends Component {
   };
 
   renderAllComments = (dp) => {
-    console.log('coments', this.state.comments[0].description)
-  //   function bin2string(array) {
-  //     var result = "";
-  //     for (var i = 0; i < array.length; ++i) {
-  //       result += (String.fromCharCode(array[i]));
-  //     }
-  //     return result;
-  //   }
-  //   function Utf8ArrayToStr(array) {
-  //     var out, i, len, c;
-  //     var char2, char3;
-  
-  //     out = "";
-  //     len = array.length;
-  //     i = 0;
-  //     while(i < len) {
-  //     c = array[i++];
-  //     switch(c >> 4)
-  //     { 
-  //       case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
-  //         // 0xxxxxxx
-  //         out += String.fromCharCode(c);
-  //         break;
-  //       case 12: case 13:
-  //         // 110x xxxx   10xx xxxx
-  //         char2 = array[i++];
-  //         out += String.fromCharCode(((c & 0x1F) << 6) | (char2 & 0x3F));
-  //         break;
-  //       case 14:
-  //         // 1110 xxxx  10xx xxxx  10xx xxxx
-  //         char2 = array[i++];
-  //         char3 = array[i++];
-  //         out += String.fromCharCode(((c & 0x0F) << 12) |
-  //                        ((char2 & 0x3F) << 6) |
-  //                        ((char3 & 0x3F) << 0));
-  //         break;
-  //     }
-  //     }
-  
-  //     return out;
-  // }
-  // ToBase64 = function (u8) {
-  //   return btoa(String.fromCharCode.apply(null, u8));
-  // }
-  //   console.log('str', bin2string(this.state.comments[2].description.data))
-    //TextDecoder = TextEncoding.TextDecoder
-    // TextEncoder = TextEncoding.TextEncoder
-    // // var uint8array = new TextEncoder("utf-8").encode("oops");
-    // var uint8array = this.state.comments[0].description.data;
-    // console.log('encoded',uint8array)
-    // //var string = new TextDecoder("utf-8").decode(this.state.comments[0].description.data);
-    // var string = new TextDecoder("utf-8").decode(uint8array);
-    // console.log('str',string)
+    //console.log('coments', this.state.comments)
     return (
       <View style={{ marginLeft: '4%' }}>
         <View style={{ flexDirection: 'row', alignItems: 'center' }}>
