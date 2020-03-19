@@ -41,6 +41,7 @@ export default class Inbox extends Component {
         },
         );
         const JsonResponse = await Response.json();
+        console.log('res',JsonResponse)
         this.setState({
             data: JsonResponse.data
         })

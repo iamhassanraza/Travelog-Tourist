@@ -101,6 +101,7 @@ class UserProfile extends React.Component {
       pageNo: 1,
       isModalVisible: false,
       //followed: true,
+      userFollowing: null,
       searchbox: '',
       isFollowing: null,
     };
@@ -115,14 +116,14 @@ class UserProfile extends React.Component {
       userNavLastName = this.props.navigation.getParam('userNavLastName', null)
       userNavDp = this.props.navigation.getParam('userNavDp', null)
       userCampus = this.props.navigation.getParam('userCampus', null)
-      //userFollowing = this.props.navigation.getParam('userFollowing', null)
+      userFollowing = this.props.navigation.getParam('userFollowing', null)
       await this.setState({
         otherUserId: userNavId,
         otherUserDp: userNavDp,
         otherUserFirstName: userNavFirstName,
         otherUserLastName: userNavLastName,
         otherUserCampus: userCampus,
-        //userFollowing: userFollowing
+        userFollowing: userFollowing
       })
       this.props.navigation.setParams({
         otherUserId: this.state.otherUserId,
@@ -253,12 +254,12 @@ class UserProfile extends React.Component {
         },
       );
       const jsonresponse = await response.json();
-      console.log('json',jsonresponse)
+      console.log('json xyz == >',jsonresponse)
       this.setState({
         spinner: false,
         posts: jsonresponse.data,
         total: jsonresponse.total,
-        isFollowing: jsonresponse.data[0] ? (jsonresponse.data[0].isFollowing[0] ? true : false) : false
+        isFollowing: jsonresponse.data[0] ? (jsonresponse.data[0].isFollowing ? true : false) : this.state.userFollowing
       });
     } else {
       const Token = await AsyncStorage.getItem('TOKEN');

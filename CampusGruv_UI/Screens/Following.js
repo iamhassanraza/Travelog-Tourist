@@ -67,13 +67,13 @@ class Following extends Component {
 
     this.props.navigation.setParams({
       handleThis: () => {
-        this.props.navigation.push('UserProfile', {
+        this.props.navigation.navigate('UserProfile', {
           userNavId: this.props.navigation.getParam('postUserId', null),
           userNavDp: this.props.navigation.getParam('postUserDp', null),
           userNavFirstName: this.props.navigation.getParam('postUserFirstName', null),
           userNavLastName: this.props.navigation.getParam('postUserLastName', null),
           userCampus: this.props.navigation.getParam('postUserCampus', null),
-          userFollowing: this.props.navigation.getParam('userFollowing', null)
+          userFollowing: this.props.navigation.getParam('isFollowing', null)
         })
       }
   });
@@ -83,7 +83,7 @@ class Following extends Component {
     const Token = await AsyncStorage.getItem('TOKEN');
     const user_id = await AsyncStorage.getItem('USER_ID');
     const Response = await fetch(
-      `https://campus-gruv-heroku.herokuapp.com/api/v1/getfollowings?user_id=${navId}&page=1`,
+      `https://campus-gruv-heroku.herokuapp.com/api/v1/follower/users?user_id=${navId}&page=1`,
       {
         headers: {
           Authorization: `Bearer ${Token}`,
@@ -91,6 +91,7 @@ class Following extends Component {
       },
     );
     const JsonResponse = await Response.json();
+    console.log('following data',JsonResponse.data)
     this.setState({
       search: JsonResponse.data,
     });

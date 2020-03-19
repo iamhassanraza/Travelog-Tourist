@@ -186,6 +186,8 @@ const HomeStack = createStackNavigator({
     UserProfile: {
         screen: UserProfile
     },
+    Followers,
+    Following,
     PostDetail: {
         screen: PostDetail,
         navigationOptions: {
