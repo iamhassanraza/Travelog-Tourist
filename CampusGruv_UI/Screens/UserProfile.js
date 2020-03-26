@@ -496,7 +496,8 @@ class UserProfile extends React.Component {
                         this.setState({isModalVisible: false})
                         room_id = await this.fetchRoomDetails();
                         this.props.navigation.navigate('chat', {
-                          room_id
+                          room_id,
+                          name: postUserFirstName + ' ' + postUserLastName
                         })
                       }
                       }

@@ -579,10 +579,12 @@ const RootStackNavigator = createSwitchNavigator({
         screen: AuthLoading
     },
     Auth: {
-        screen: AuthNavigator
+        screen: AuthNavigator,
+        path: 'Auth'
     },
     App: {
         screen: MainTabNavigation,
+        path: 'App'
     },
     EditProfile:{
         screen:createStackNavigator({EditProfile})
