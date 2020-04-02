@@ -1,34 +1,33 @@
 import React, {Component} from 'react';
-import {Text, View,AsyncStorage} from 'react-native';
-import { withNavigation } from 'react-navigation';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import {Text, View, AsyncStorage, TouchableOpacity} from 'react-native';
+// import {withNavigation} from 'react-navigation';
 import IconFeather from 'react-native-vector-icons/Feather';
 
+class LogoutButton extends Component {
+  _signOutAsync = async () => {
+    await AsyncStorage.clear();
+    //await this.props.navigation.navigate('Login');
+    console.log('Logged Out');
+  };
 
- class LogoutButton extends Component {
- 
-    _signOutAsync = async () => {
-        await AsyncStorage.clear();
-        this.props.navigation.navigate('Login');
-        console.log('Logged Out')
-      };
- 
-    render() {
+  render() {
+    console.log(this.props.navigation);
     return (
       <View>
-        <TouchableOpacity style={{flexDirection: 'row', alignItems: 'center'}} onPress={this._signOutAsync}>
+        <TouchableOpacity
+          style={{flexDirection: 'row', alignItems: 'center'}}
+          onPress={this._signOutAsync}>
           <IconFeather
             name="log-out"
             style={{
               paddingLeft: '2%',
               fontSize: 30,
-            }}
-          >
-          </IconFeather>
+            }}></IconFeather>
           <Text style={this.props.style}>Log Out</Text>
         </TouchableOpacity>
       </View>
     );
   }
 }
-export default withNavigation(LogoutButton)
+// export default withNavigation(LogoutButton);
+export default LogoutButton;

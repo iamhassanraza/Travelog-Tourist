@@ -17,7 +17,7 @@ import {
 import {withNavigation, StackActions} from 'react-navigation';
 import CategoryButton from '../Components/CategoryButton';
 import DatePicker from 'react-native-datepicker';
-import Icon from 'react-native-vector-icons/MaterialIcons'
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import Spinner from 'react-native-loading-spinner-overlay';
 import RNFetchBlob from 'rn-fetch-blob';
 import {Container, Item, Content, Input} from 'native-base';
@@ -35,52 +35,72 @@ import {
 } from 'react-native-indicators';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
-
 const screenHeight = Dimensions.get('window').height;
 
 class CreateNewPost extends Component {
-
-
   static navigationOptions = props => {
     const {params = {}} = props.navigation.state;
     return {
-      header:
-     
-      <View style={{ backgroundColor: '#1192d1',}}>
-      <View style={{marginTop:Platform.OS=='ios'?38:0,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center',}}>
-          <View style={{position: 'absolute',bottom:Platform.OS=='ios'?5:5 , padding:2, alignSelf: 'center', left: 8,marginTop:Platform.OS=='ios'? 40:0}}>
-              <TouchableOpacity 
-                  onPress = {() => {
-                    props.navigation.navigate("AddPost");
-                  }}
-                  >
-                  <Icon name="arrow-back" color="white" size={25} />
+      header: (
+        <View style={{backgroundColor: '#1192d1'}}>
+          <View
+            style={{
+              marginTop: Platform.OS == 'ios' ? 38 : 0,
+              height: 50,
+              backgroundColor: '#1192d1',
+              flexDirection: 'row',
+              justifyContent: 'center',
+            }}>
+            <View
+              style={{
+                position: 'absolute',
+                bottom: Platform.OS == 'ios' ? 5 : 5,
+                padding: 2,
+                alignSelf: 'center',
+                left: 8,
+                marginTop: Platform.OS == 'ios' ? 40 : 0,
+              }}>
+              <TouchableOpacity
+                onPress={() => {
+                  props.navigation.navigate('AddPost');
+                }}>
+                <Icon name="arrow-back" color="white" size={25} />
               </TouchableOpacity>
-          </View>
-          <View style={{alignSelf: 'center',marginTop:Platform.OS=='ios'? 10:0}}>
-              <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>New post</Text>
-          </View>
-          <View style={{position: 'absolute', padding:2,bottom:Platform.OS=='ios'?5:5 , alignSelf: 'center', right: 8,marginTop:Platform.OS=='ios'? 40:0}}>
-              <TouchableOpacity 
-                  onPress = {() => {
-                    props.navigation.dispatch(StackActions.popToTop());
-                    props.navigation.navigate('HomeScreen')
-                    params.handleThis()
-                  }}
-                  >
-                  <Text style={{color: 'white', padding: 2,fontSize:20}}>
-                      Close
-                  </Text>
+            </View>
+            <View
+              style={{
+                alignSelf: 'center',
+                marginTop: Platform.OS == 'ios' ? 10 : 0,
+              }}>
+              <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
+                New post
+              </Text>
+            </View>
+            <View
+              style={{
+                position: 'absolute',
+                padding: 2,
+                bottom: Platform.OS == 'ios' ? 5 : 5,
+                alignSelf: 'center',
+                right: 8,
+                marginTop: Platform.OS == 'ios' ? 40 : 0,
+              }}>
+              <TouchableOpacity
+                onPress={() => {
+                  props.navigation.dispatch(StackActions.popToTop());
+                  props.navigation.navigate('HomeScreen');
+                  params.handleThis();
+                }}>
+                <Text style={{color: 'white', padding: 2, fontSize: 20}}>
+                  Close
+                </Text>
               </TouchableOpacity>
+            </View>
           </View>
-                  </View>
-      </View>
-       
-    }
-  }
-
-
-
+        </View>
+      ),
+    };
+  };
 
   state = {
     Category: '',
@@ -89,7 +109,10 @@ class CreateNewPost extends Component {
     Description: '',
     Price: '',
     spinner: false,
-    PicAndTitle: this.props.navigation.getParam('deleteItems', 'nothing to render'),
+    PicAndTitle: this.props.navigation.getParam(
+      'deleteItems',
+      'nothing to render',
+    ),
     Images: '',
     DATA: undefined,
     loadingCategory: false,
@@ -122,13 +145,13 @@ class CreateNewPost extends Component {
     this.getCategories();
     this.setState({
       Images: this.props.navigation.getParam('Images', 'nothing to render'),
-      Title: this.props.navigation.getParam('title', 'nothing to render')
+      Title: this.props.navigation.getParam('title', 'nothing to render'),
     });
-  //set navigation params
+    //set navigation params
     this.props.navigation.setParams({
       handleThis: () => {
-        this.state.PicAndTitle()
-      }
+        this.state.PicAndTitle();
+      },
     });
   };
 
@@ -236,7 +259,7 @@ class CreateNewPost extends Component {
                   ? `rgba(${item.rgba_colors}, 4)`
                   : `rgba(${item.rgba_colors}, 0.55)`
               }
-              bold = {this.state.Category === item.id ? "bold" : "100"}
+              bold={this.state.Category === item.id ? 'bold' : '100'}
               fsize={this.state.Category === item.id ? 14 : 12}
               // borderbottom= {this.state.Category === item.id ? 4 : 0}
               onSelect={this.changeState}
@@ -348,7 +371,7 @@ class CreateNewPost extends Component {
               borderColor: 'grey',
               borderRadius: 8,
               borderWidth: 1,
-              textAlignVertical:'top'
+              textAlignVertical: 'top',
             }}
             onChangeText={text => {
               this.changeDescriptionState(text);
@@ -384,14 +407,14 @@ class CreateNewPost extends Component {
       alert('Select Category');
     } else if (this.state.Description === '') {
       alert('Enter Description First ');
-    } 
-    else if (this.state.Category === 5 && this.state.CategoryEventDate === '' ) {
+    } else if (
+      this.state.Category === 5 &&
+      this.state.CategoryEventDate === ''
+    ) {
       alert('Enter Date First ');
-    }
-    else if (this.state.Category === 7 && this.state.Price === '' ) {
+    } else if (this.state.Category === 7 && this.state.Price === '') {
       alert('Enter Price First ');
-    }
-    else {
+    } else {
       this.setState({spinner: true});
       const Token = await AsyncStorage.getItem('TOKEN');
       const user_id = await AsyncStorage.getItem('USER_ID');
@@ -413,7 +436,7 @@ class CreateNewPost extends Component {
         },
       );
       const postMasterResponse = await response.json();
-        //console.log(this.state.Images,' ================================ ')
+      //console.log(this.state.Images,' ================================ ')
       let raw_response = await fetch(
         'https://campus-gruv-heroku.herokuapp.com/api/v1/post/detail',
         {
@@ -436,7 +459,7 @@ class CreateNewPost extends Component {
 
       this.setState({spinner: false, Description: ''});
 
-      this.props.navigation.navigate('HomeScreen', null)
+      this.props.navigation.navigate('HomeScreen', null);
       //  this.props.navigation.push('PostDetail', {
       //     PostData: {
       //       uri: imageResponse.image_url,
@@ -452,8 +475,10 @@ class CreateNewPost extends Component {
   };
 
   renderShareButton = () => {
-
-    const PicAndTitle =  this.props.navigation.getParam('deleteItems', 'nothing to render');
+    const PicAndTitle = this.props.navigation.getParam(
+      'deleteItems',
+      'nothing to render',
+    );
 
     return (
       <TouchableOpacity
@@ -461,7 +486,6 @@ class CreateNewPost extends Component {
         onPress={() => {
           this.uploadPost();
           PicAndTitle();
-          
         }}>
         <View
           style={{
@@ -496,14 +520,11 @@ class CreateNewPost extends Component {
     return data;
   };
 
-
-
   render() {
-   
     return (
       <Container>
-      <Content>
-        {/* <KeyboardAvoidingView
+        <Content>
+          {/* <KeyboardAvoidingView
           style={{flex: 1}}
           keyboardVerticalOffset={80}
           behavior="padding"> */}
@@ -532,8 +553,8 @@ class CreateNewPost extends Component {
             {this.renderDescription()}
             {this.renderShareButton()}
           </ScrollView>
-        {/* </KeyboardAvoidingView> */}
-      </Content>
+          {/* </KeyboardAvoidingView> */}
+        </Content>
       </Container>
     );
   }

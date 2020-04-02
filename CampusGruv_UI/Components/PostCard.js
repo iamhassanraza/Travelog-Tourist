@@ -5,13 +5,10 @@ import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {withNavigation} from 'react-navigation';
 
 class PostCard extends Component {
-
   state = {
-
     width: undefined,
-    height: undefined
-  }
-
+    height: undefined,
+  };
 
   componentDidMount() {
     Image.getSize(
@@ -25,11 +22,11 @@ class PostCard extends Component {
         const ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
         this.setState({width: srcWidth * ratio, height: srcHeight * ratio});
       },
-      error => {},
+      error => {
+        () => console.log(error);
+      },
     );
   }
-
-
 
   render() {
     return (
@@ -54,36 +51,44 @@ class PostCard extends Component {
               description: this.props.description,
               comments: this.props.comments,
               views: this.props.views,
-              height:this.state.height,
+              height: this.state.height,
             },
           })
         }>
-        <View style={{ }}>
+        <View style={{}}>
           <Image
             source={{uri: this.props.imageurl}}
             style={{
               width: '100%',
               borderTopLeftRadius: 15,
               borderTopRightRadius: 15,
-              height:this.state.height < 300 ? this.state.height : 200,
+              height: this.state.height < 300 ? this.state.height : 200,
             }}
             resizeMode="cover"></Image>
-         
-            <View style={{position: 'absolute',
-            //  marginTop:"10%",
-            //  marginLeft:"45%",
-            right: 5,
-            top:10,
-            borderRadius:5,
-            backgroundColor:`rgba(${this.props.categoryColor},0.8)`}}>
-            <Text style={{color:"white", fontWeight:"bold", fontSize:12,  
-              justifyContent: 'center',
-              alignItems: 'center',
-              padding:3,
-              // backgroundColor:`rgba(${this.props.categoryColor},0.8)`,
-              }}>{this.props.categoryName}</Text>
-            </View>
-        
+
+          <View
+            style={{
+              position: 'absolute',
+              //  marginTop:"10%",
+              //  marginLeft:"45%",
+              right: 5,
+              top: 10,
+              borderRadius: 5,
+              backgroundColor: `rgba(${this.props.categoryColor},0.8)`,
+            }}>
+            <Text
+              style={{
+                color: 'white',
+                fontWeight: 'bold',
+                fontSize: 12,
+                justifyContent: 'center',
+                alignItems: 'center',
+                padding: 3,
+                // backgroundColor:`rgba(${this.props.categoryColor},0.8)`,
+              }}>
+              {this.props.categoryName}
+            </Text>
+          </View>
         </View>
         <View
           style={{
@@ -112,7 +117,8 @@ class PostCard extends Component {
             <View style={{flex: 2}}>
               <Image
                 source={{
-                  uri: this.props.userdp    }}
+                  uri: this.props.userdp,
+                }}
                 style={{
                   width: 30,
                   borderColor: '#616963',
@@ -122,11 +128,25 @@ class PostCard extends Component {
                 }}></Image>
             </View>
             <View style={{flex: 6, alignSelf: 'center'}}>
-              <Text style={{color: 'grey'}}>{this.props.first_name + ' ' + this.props.last_name}</Text>
+              <Text style={{color: 'grey'}}>
+                {this.props.first_name + ' ' + this.props.last_name}
+              </Text>
             </View>
-            <View style={{justifyContent:"center",alignContent:"center",alignSelf:'center',marginRight:"4%"}}>
+            <View
+              style={{
+                justifyContent: 'center',
+                alignContent: 'center',
+                alignSelf: 'center',
+                marginRight: '4%',
+              }}>
               <ViewsIcon color="grey" name="eye" />
-              <Text style={{fontSize: 7, color: 'grey', marginTop: -2,alignSelf:"center"}}>
+              <Text
+                style={{
+                  fontSize: 7,
+                  color: 'grey',
+                  marginTop: -2,
+                  alignSelf: 'center',
+                }}>
                 {this.props.views}
               </Text>
             </View>
