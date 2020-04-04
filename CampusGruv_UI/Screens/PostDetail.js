@@ -33,7 +33,7 @@ import {
   TouchableHighlight,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
-import RNHTMLtoPDF from 'react-native-html-to-pdf';
+import PDFLib, {PDFDocument, PDFPage} from 'react-native-pdf-lib';
 import Share from 'react-native-share';
 import TextEncoding from 'text-encoding';
 import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
@@ -150,20 +150,87 @@ class PostDetail extends Component {
   ) => {
     this.setState({isModalVisible: false});
 
-    const pdfOptions = {
-      html: `<img src="${userAvatar}"></img>
-         <h1>post by ${first_name} ${last_name}</h1>
-         <img src="${image_URL}" alt="post image"></img>
-        `,
-      fileName: postTitle,
-      directory: 'Documents',
-    };
+    const granted = await PermissionsAndroid.request(
+      PermissionsAndroid.PERMISSIONS.WRITE_EXTERNAL_STORAGE,
+      {
+        title: 'Cool Photo App Camera Permission',
+        message: 'CampusGruv needs access to your storage to download post.',
+        buttonNeutral: 'Ask Me Later',
+        buttonNegative: 'Cancel',
+        buttonPositive: 'OK',
+      },
+    );
+    if (granted === PermissionsAndroid.RESULTS.GRANTED) {
+      console.log('You can use the camera');
+      const page1 = PDFPage.create()
+        .setMediaBox(300, 400)
+        .drawText('You can add text and rectangles to the PDF!', {
+          x: 5,
+          y: 385,
+          fontSize: 20,
+        })
+        .drawImage('JPG', {
+          x: 5,
+          y: 125,
+          width: 100,
+          height: 500,
+          source: image_URL,
+        });
+      // .drawCircle({
+      //   x: 25,
+      //   y: 25,
+      //   color: '#FF99CC',
+      // });
+      // .drawRectangle({
+      //   x: 75,
+      //   y: 75,
+      //   width: 50,
+      //   height: 50,
+      //   color: '#99FFCC',
+      // });
 
-    let file = await RNHTMLtoPDF.convert(pdfOptions);
-    alert('downloaded on location:' + '\n' + file.filePath);
-
-    alert(file.filePath);
+      // Create a new PDF in your app's private Documents directory
+      // const docsDir = await PDFLib.getDocumentsDirectory();
+      //${docsDir}
+      const fs = RNFetchBlob.fs;
+      const dirs = fs.dirs;
+      const pdfPath = `/sample.pdf`;
+      PDFDocument.create(`${dirs.DownloadDir}/${postTitle}.pdf`)
+        .addPages(page1)
+        .write() // Returns a promise that resolves with the PDF's path
+        .then(path => {
+          alert('PDF created at: ' + path);
+          // Do stuff with your shiny new PDF!
+        });
+    } else {
+      console.log('Camera permission denied');
+    }
   };
+
+  // createPDF = async (
+  //   first_name,
+  //   last_name,
+  //   image_URL,
+  //   userAvatar,
+  //   postTitle,
+  // ) => {
+  //   await this.setState({isModalVisible: false});
+
+  //   const pdfOptions = {
+  //     html: `<img src="${userAvatar}"></img>
+  //        <h1>post by ${first_name} ${last_name}</h1>
+  //        <img src="${image_URL}" alt="post image"></img>
+  //       `,
+  //     fileName: postTitle,
+  //     directory: 'Documents',
+  //   };
+
+  //   let file = await RNHTMLtoPDF.convert(pdfOptions);
+  //   console.log(file);
+  //   alert('downloaded on location:' + '\n' + file.filePath);
+
+  //   alert(file.filePath);
+  // };
 
   sharePost = (first_name, postTitle) => {
     let text = `Checkout this post by ${first_name}: \n`;

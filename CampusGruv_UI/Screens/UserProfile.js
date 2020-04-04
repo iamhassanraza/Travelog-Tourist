@@ -21,6 +21,7 @@ import ContentLoader, {Rect} from 'react-content-loader/native';
 import {connect} from 'react-redux';
 import {CreateUserDetails} from '../ReduxStore/Actions/index';
 import Logo from '../Assets/Images/logo.png';
+import IconFeather from 'react-native-vector-icons/Feather';
 import MenuIcon from 'react-native-vector-icons/Feather';
 import Modal from 'react-native-modal';
 const IconGrey = '#b4b8bf';
@@ -47,20 +48,6 @@ class UserProfile extends React.Component {
                   style={{width: 150, alignSelf: 'flex-start', height: '90%'}}
                   resizeMode="contain"
                 />
-              </View>
-              <View
-                style={{
-                  position: 'absolute',
-                  padding: 2,
-                  alignSelf: 'center',
-                  right: 8,
-                }}>
-                <TouchableOpacity
-                  onPress={() => {
-                    props.navigation.navigate('UserSettings');
-                  }}>
-                  <Icon name="settings" color="white" size={23} />
-                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -452,13 +439,12 @@ class UserProfile extends React.Component {
       <ScrollView>
         {/* EDIT PROFILE BUTTON */}
         {postUserId === this.props.User.id ? (
-          <View>
+          <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
             <TouchableOpacity
               style={{
                 marginTop: 5,
-                marginRight: 5,
-                width: 90,
                 alignSelf: 'flex-end',
+                padding: 2,
               }}
               onPress={() => {
                 this.props.navigation.navigate('EditProfile');
@@ -473,6 +459,29 @@ class UserProfile extends React.Component {
                   borderRadius: 10,
                 }}>
                 Edit Profile
+              </Text>
+            </TouchableOpacity>
+            <TouchableOpacity
+              style={{
+                marginTop: 5,
+                alignSelf: 'flex-end',
+                padding: 2,
+              }}
+              onPress={async () => {
+                await AsyncStorage.clear();
+                this.props.screenProps.rootNavigation.navigate('Login');
+                console.log('Logged Out');
+              }}>
+              <Text
+                style={{
+                  color: '#ACACAC',
+                  borderWidth: 0.5,
+                  padding: 5,
+                  alignSelf: 'center',
+                  borderColor: '#ACACAC',
+                  borderRadius: 10,
+                }}>
+                Logout
               </Text>
             </TouchableOpacity>
           </View>
