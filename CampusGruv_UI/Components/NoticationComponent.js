@@ -11,7 +11,34 @@ class NoticationComponent extends Component {
       <View style={{backgroundColor: this.props.unread ? '#E5E5E5' : 'white'}}>
         <TouchableOpacity
           onPress={() => {
-            this.props.navigation.navigate('PostDetail');
+            if (this.props.activity.includes('post')) {
+              this.props.navigation.navigate('PostDetail', {
+                PostData: {
+                  uri: this.props.imageurl,
+                  title: this.props.title,
+                  postId: this.props.postId,
+                  likeStatus: this.props.userWiseLike[0] ? true : false,
+                  saveStatus: this.props.userSavedPost[0] ? true : false,
+                  isFollowing: this.props.isFollowing,
+                  userAvatar: this.props.userdp,
+                  userId: this.props.userId,
+                  first_name: this.props.first_name,
+                  last_name: this.props.last_name,
+                  description: this.props.description,
+                  comments: this.props.comments,
+                  views: this.props.views,
+                },
+              });
+            } else if (this.props.activity.includes('follow')) {
+              this.props.navigation.push('UserProfile', {
+                userNavId: this.props.userId,
+                userNavDp: this.props.userdp,
+                userNavFirstName: this.props.first_name,
+                userNavLastName: this.props.last_name,
+                userCampus: this.props.campus,
+                userFollowing: this.state.followed,
+              });
+            }
           }}
           style={{
             width: '100%',

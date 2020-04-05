@@ -118,6 +118,25 @@ class NotificationScreen extends Component {
             showsHorizontalScrollIndicator={false}
             renderItem={({item, index}) => (
               <NoticationComponent
+                userdp={item.userNotification.profile_pic_url}
+                postId={item.posts !== null ? item.posts.id : null}
+                comments={item.comments}
+                description={
+                  item.posts !== null ? item.posts.description : null
+                }
+                first_name={item.userNotification.first_name}
+                last_name={item.userNotification.last_name}
+                userId={item.userNotification.id}
+                userWiseLike={item.userWiseLike}
+                userSavedPost={item.userSavedPost}
+                isFollowing={false}
+                title={item.posts !== null ? item.posts.title : null}
+                views={item.posts !== null ? item.posts.view_count : null}
+                imageurl={
+                  item.postDetail.length > 0
+                    ? item.postDetail[0].image_url
+                    : 'https://travelog-pk.herokuapp.com/images/default.png'
+                }
                 uri={item.userNotification.profile_pic_url}
                 unread={index <= this.props.Notifications.qty ? true : false}
                 time={new Date(item.created_at.replace(' ', 'T'))}

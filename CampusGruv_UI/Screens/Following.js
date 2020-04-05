@@ -133,41 +133,7 @@ class Following extends Component {
   render() {
     return (
       <View>
-        <View
-          style={{
-            marginTop: '1%',
-            marginLeft: '2%',
-            paddingRight: '13%',
-            flexDirection: 'row',
-            borderWidth: 0.5,
-            borderRadius: 12,
-            borderColor: 'grey',
-            marginRight: '20%',
-            height: 30,
-          }}>
-          <Icon
-            name="search"
-            style={{
-              color: 'grey',
-              fontSize: 16,
-
-              alignSelf: 'center',
-              paddingLeft: '2%',
-              marginRight: '1%',
-            }}></Icon>
-
-          <TextInput
-            style={{
-              width: '100%',
-              alignSelf: 'center',
-              fontSize: 16,
-              padding: 0,
-            }}
-            placeholder="Search"
-            onChangeText={text => this.setState({search: text})}></TextInput>
-        </View>
-
-        <View>
+        <View style={{padding: 5}}>
           <FlatList
             vertical
             data={this.state.search}
