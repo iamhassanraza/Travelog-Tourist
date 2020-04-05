@@ -359,22 +359,24 @@ class UserProfile extends React.Component {
   };
 
   blockUser = async user_id => {
-    var Response = await fetch(
-      `https://campus-gruv-heroku.herokuapp.com/api/v1/user/action`,
-      {
-        method: 'GET',
-        body: {
-          action: 'block',
-          apply_to: user_id,
-        },
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${Token}`,
-        },
-      },
-    );
-    const responseJson = await Response.json();
-    console.log('block response', responseJson);
+    alert('user blocked');
+    // const Token = await AsyncStorage.getItem('TOKEN');
+    // var Response = await fetch(
+    //   `https://campus-gruv-heroku.herokuapp.com/api/v1/user/action`,
+    //   {
+    //     method: 'POST',
+    //     body: {
+    //       action: 'block',
+    //       apply_to: user_id,
+    //     },
+    //     headers: {
+    //       'Content-Type': 'application/json',
+    //       Authorization: `Bearer ${Token}`,
+    //     },
+    //   },
+    // );
+    // const responseJson = await Response.json();
+    // console.log('block response', responseJson);
   };
 
   followButton = async id => {
