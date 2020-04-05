@@ -64,7 +64,7 @@ class NotificationScreen extends Component {
       },
     );
     const JsonResponse = await Response.json();
-    // console.log('hahahah',JsonResponse)
+    console.log('hahahah', JsonResponse.data[0]);
     this.setState({
       notification: JsonResponse.data,
       loading: false,
@@ -119,11 +119,6 @@ class NotificationScreen extends Component {
             renderItem={({item, index}) => (
               <NoticationComponent
                 uri={item.userNotification.profile_pic_url}
-                // title={
-                //   item.userNotification.first_name +
-                //   ' ' +
-                //   item.userNotification.last_name
-                // }
                 unread={index <= this.props.Notifications.qty ? true : false}
                 time={new Date(item.created_at.replace(' ', 'T'))}
                 activity={item.notification_message}></NoticationComponent>

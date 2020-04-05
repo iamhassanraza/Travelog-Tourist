@@ -24,6 +24,7 @@ import HomeScreen from './Screens/HomeScreen';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
 import {createStackNavigator} from 'react-navigation-stack';
 import {StackActions, NavigationActions} from 'react-navigation';
+import SelectNewChat from './Screens/SelectNewChat';
 import PostDetail from './Screens/PostDetail';
 import CreatePost from './Screens/CreateNewPost';
 import PostsList from './Components/PostsList';
@@ -337,6 +338,12 @@ const HomeStack = createStackNavigator(
 const MessageStack = createStackNavigator(
   {
     InboxComponent,
+    SelectNewChat: {
+      screen: SelectNewChat,
+      navigationOptions: {
+        header: null,
+      },
+    },
     inbox: {
       screen: inbox,
       navigationOptions: {
@@ -365,7 +372,7 @@ const MessageStack = createStackNavigator(
                 }}>
                 <TouchableOpacity
                   onPress={() => {
-                    props.navigation.push('inbox');
+                    props.navigation.push('SelectNewChat');
                   }}>
                   <PostIcon name="clipboard-pencil" color="white" size={25} />
                 </TouchableOpacity>
