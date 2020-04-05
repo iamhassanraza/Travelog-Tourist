@@ -64,7 +64,6 @@ class NotificationScreen extends Component {
       },
     );
     const JsonResponse = await Response.json();
-    console.log('hahahah', JsonResponse.data[0]);
     this.setState({
       notification: JsonResponse.data,
       loading: false,
@@ -128,8 +127,9 @@ class NotificationScreen extends Component {
                 last_name={item.userNotification.last_name}
                 userId={item.userNotification.id}
                 userWiseLike={item.userWiseLike}
+                userCampus={item.userNotification.campus.description}
                 userSavedPost={item.userSavedPost}
-                isFollowing={false}
+                isFollowing={item.isFollowing}
                 title={item.posts !== null ? item.posts.title : null}
                 views={item.posts !== null ? item.posts.view_count : null}
                 imageurl={

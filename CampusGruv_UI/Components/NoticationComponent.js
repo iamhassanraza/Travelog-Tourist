@@ -30,13 +30,13 @@ class NoticationComponent extends Component {
                 },
               });
             } else if (this.props.activity.includes('follow')) {
-              this.props.navigation.push('UserProfile', {
+              this.props.navigation.navigate('UserProfile', {
                 userNavId: this.props.userId,
                 userNavDp: this.props.userdp,
                 userNavFirstName: this.props.first_name,
                 userNavLastName: this.props.last_name,
-                userCampus: this.props.campus,
-                userFollowing: this.state.followed,
+                userCampus: this.props.userCampus,
+                userFollowing: this.props.isFollowing,
               });
             }
           }}
