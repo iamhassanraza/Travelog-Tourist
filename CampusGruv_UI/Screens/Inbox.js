@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import {Text, View, ScrollView, AsyncStorage} from 'react-native';
-import {SearchBar} from 'react-native-elements';
 import InboxComponent from '../Components/InboxComponent';
 import {FlatList} from 'react-native-gesture-handler';
 import {clearMsgs} from '../ReduxStore/Actions/index';
@@ -11,15 +10,10 @@ export default class Inbox extends Component {
   constructor() {
     super();
     this.state = {
-      Text: '',
       data: [],
       store: mystore,
     };
   }
-
-  updateSearch = e => {
-    this.setState({Text: e});
-  };
 
   fetchData = async () => {
     const Token = await AsyncStorage.getItem('TOKEN');
@@ -33,7 +27,6 @@ export default class Inbox extends Component {
       },
     );
     const JsonResponse = await Response.json();
-    console.log('res', JsonResponse);
     this.setState({
       data: JsonResponse,
     });
@@ -55,12 +48,6 @@ export default class Inbox extends Component {
       <>
         <View style={{flex: 1}}>
           <ScrollView>
-            {/* <SearchBar
-              platform="ios"
-              placeholder="Type Here..."
-              onChangeText={this.updateSearch}
-              value={this.state.Text}
-            /> */}
             <FlatList
               style={{marginTop: 10}}
               data={this.state.data}

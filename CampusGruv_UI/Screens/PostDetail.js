@@ -8,6 +8,7 @@ import {
   TextInput,
   KeyboardAvoidingView,
   TouchableWithoutFeedback,
+  Linking,
   StyleSheet,
   AsyncStorage,
   PermissionsAndroid,
@@ -27,13 +28,11 @@ import Modal from 'react-native-modal';
 import ViewsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {connect} from 'react-redux';
 import {CreateUserDetails} from '../ReduxStore/Actions/index';
-import RNFetchBlob from 'rn-fetch-blob';
 import {
   FlatList,
   TouchableHighlight,
   TouchableOpacity,
 } from 'react-native-gesture-handler';
-import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import Share from 'react-native-share';
 import TextEncoding from 'text-encoding';
 import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
@@ -114,55 +113,14 @@ class PostDetail extends Component {
     return /[.]/.exec(filename) ? /[^.]+$/.exec(filename) : undefined;
   };
 
-  downloadImage = image_URL => {
+  createPDF = async postId => {
     this.setState({isModalVisible: false});
-    var date = new Date();
-    var ext = this.getExtention(image_URL);
-    ext = '.' + ext[0];
-    const {config, fs} = RNFetchBlob;
-    let PictureDir = fs.dirs.PictureDir;
-    const options = {
-      fileCache: true,
-      addAndroidDownloads: {
-        useDownloadManager: true,
-        notification: true,
-        path:
-          PictureDir +
-          '/image_' +
-          Math.floor(date.getTime() + date.getSeconds() / 2) +
-          ext,
-        description: 'Image',
-      },
-    };
-    config(options)
-      .fetch('GET', image_URL)
-      .then(res => {
-        alert('Download Complete');
-      });
-  };
-
-  createPDF = async (
-    first_name,
-    last_name,
-    image_URL,
-    userAvatar,
-    postTitle,
-  ) => {
-    this.setState({isModalVisible: false});
-
-    const pdfOptions = {
-      html: `<img src="${userAvatar}"></img>
-         <h1>post by ${first_name} ${last_name}</h1>
-         <img src="${image_URL}" alt="post image"></img>
-        `,
-      fileName: postTitle,
-      directory: 'Documents',
-    };
-
-    let file = await RNHTMLtoPDF.convert(pdfOptions);
-    alert('downloaded on location:' + '\n' + file.filePath);
-
-    alert(file.filePath);
+    await fetch(
+      `https://campus-gruv-heroku.herokuapp.com/api/v1/generate/pdf?post_id=${postId}`,
+    );
+    Linking.openURL(
+      `https://campus-gruv-heroku.herokuapp.com/api/v1/download/pdf?post_id=${postId}`,
+    );
   };
 
   sharePost = (first_name, postTitle) => {
@@ -354,11 +312,12 @@ class PostDetail extends Component {
                     <Text
                       onPress={() =>
                         this.createPDF(
-                          first_name,
-                          last_name,
-                          image_URL,
-                          userdp,
-                          postTitle,
+                          postId,
+                          // first_name,
+                          // last_name,
+                          // image_URL,
+                          // userdp,
+                          // postTitle,
                         )
                       }
                       style={styles.TextWithNavigation}>

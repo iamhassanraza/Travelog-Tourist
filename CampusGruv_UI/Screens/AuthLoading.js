@@ -7,14 +7,14 @@ import {
   StyleSheet,
   View,
   ImageBackground,
-  Text
+  Text,
 } from 'react-native';
-import Colors from '../Assets/Colors'
+import Colors from '../Assets/Colors';
 import HeaderTitle from './Heading';
 
-import { connect } from "react-redux";
-import { CreateUserDetails } from "../ReduxStore/Actions/index";
-import NetInfo from "@react-native-community/netinfo";
+import {connect} from 'react-redux';
+import {CreateUserDetails} from '../ReduxStore/Actions/index';
+import NetInfo from '@react-native-community/netinfo';
 import {
   BallIndicator,
   BarIndicator,
@@ -30,102 +30,88 @@ import {
 const screenwidth = Dimensions.get('window').width;
 const screenheight = Dimensions.get('window').height;
 
-
-
 class AuthLoading extends React.Component {
   componentDidMount() {
-
     // Subscribe
-   const unsubscribe = NetInfo.addEventListener(state => {
-    console.log("Connection type", state.type);
-    console.log("Is connected?", state.isConnected);
-    {state.isConnected ? this._bootstrapAsync() : alert("No Internet Connection! Restart the App")}
-  });
+    const unsubscribe = NetInfo.addEventListener(state => {
+      console.log('Connection type', state.type);
+      console.log('Is connected?', state.isConnected);
+      {
+        state.isConnected
+          ? this._bootstrapAsync()
+          : alert('No Internet Connection! Restart the App');
+      }
+    });
 
-
-   // Unsubscribe
-  //  unsubscribe();
-
+    // Unsubscribe
+    //  unsubscribe();
 
     // this._bootstrapAsync();
     // this.props.CreateUserDetails({name:'hassan',id:'asndas'})
   }
 
-
   fetchUser = async () => {
-    let Token = await AsyncStorage.getItem('TOKEN')
-    let USER  = await AsyncStorage.getItem('USER_ID')
-    var response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/get/user?user_id=${USER}`,{
-      headers: {
-        Authorization: `Bearer ${Token}`,
+    let Token = await AsyncStorage.getItem('TOKEN');
+    let USER = await AsyncStorage.getItem('USER_ID');
+    var response = await fetch(
+      `https://campus-gruv-heroku.herokuapp.com/api/v1/get/user?user_id=${USER}`,
+      {
+        headers: {
+          Authorization: `Bearer ${Token}`,
+        },
       },
-    })
-    let JsonResponse  =  await response.json()
-    console.log(JsonResponse, "POPOP");
-    this.props.CreateUserDetails(JsonResponse)
-  }
+    );
+    let JsonResponse = await response.json();
+    // console.log(JsonResponse, "POPOP");
+    this.props.CreateUserDetails(JsonResponse);
+  };
 
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
-    try{
-      await this.fetchUser()
+    try {
+      await this.fetchUser();
       const userToken = await AsyncStorage.getItem('TOKEN');
       const campus_id = await AsyncStorage.getItem('CAMPUS_ID');
       const isverified = await AsyncStorage.getItem('isverified');
       const email = await AsyncStorage.getItem('email');
-     
-      console.log(userToken,'===========token id')
-      console.log(isverified,'===========verified?')
-      console.log(campus_id,'===========campus id')
-      console.log(email,'===================email')
-  
-          if(userToken)   //means logged in hai
-          { 
-            if(isverified !== '1')
-            {
-              this.props.navigation.navigate('EmailVerification',{
-                email:email
-              })
-            }
-            else if(isverified === '1' && campus_id === 'nahi_hai'){
-              this.props.navigation.navigate('EditProfile')
-            }
-            else if(isverified === '1' && campus_id !== 'nahi_hai'){
-              this.props.navigation.navigate('App')
-            }
-  
-          }
-          else
-          {  
-            this.props.navigation.navigate('Auth')
-          }
-  
-  
 
-    }
-    catch(e){
-      alert(e + ". Check connectivity")
-      
-    }
-   
+      // console.log(userToken,'===========token id')
+      // console.log(isverified,'===========verified?')
+      // console.log(campus_id,'===========campus id')
+      // console.log(email,'===================email')
 
+      if (userToken) {
+        //means logged in hai
+        if (isverified !== '1') {
+          this.props.navigation.navigate('EmailVerification', {
+            email: email,
+          });
+        } else if (isverified === '1' && campus_id === 'nahi_hai') {
+          this.props.navigation.navigate('EditProfile');
+        } else if (isverified === '1' && campus_id !== 'nahi_hai') {
+          this.props.navigation.navigate('App');
+        }
+      } else {
+        this.props.navigation.navigate('Auth');
+      }
+    } catch (e) {
+      alert(e + '. Check connectivity');
+    }
 
     // This will switch to the App screen or Auth screen and this loading
-                  // // screen will be unmounted and thrown away.
-                  // if(userToken && campus_id !== 'nahi_hai')
-                  // {
-                  //   this.props.navigation.navigate('App')
-                  // }
-                  // else if(userToken && campus_id === 'nahi_hai')
-                  // {
-                  //   this.props.navigation.navigate('EditProfile')
+    // // screen will be unmounted and thrown away.
+    // if(userToken && campus_id !== 'nahi_hai')
+    // {
+    //   this.props.navigation.navigate('App')
+    // }
+    // else if(userToken && campus_id === 'nahi_hai')
+    // {
+    //   this.props.navigation.navigate('EditProfile')
 
-                  // }
-                  // else{
-                  //   this.props.navigation.navigate('Auth')
-                  // }
-
-
+    // }
+    // else{
+    //   this.props.navigation.navigate('Auth')
+    // }
 
     // this.props.navigation.navigate(userToken && campus_id !== '' ? 'App' : 'Auth');
   };
@@ -140,27 +126,23 @@ class AuthLoading extends React.Component {
         <View style={{marginTop: '55%'}}>
           <HeaderTitle></HeaderTitle>
         </View>
-        <View style={{justifyContent:"center"}}>
-        <DotIndicator count={3} color={"white"}/>
+        <View style={{justifyContent: 'center'}}>
+          <DotIndicator count={3} color={'white'} />
         </View>
       </ImageBackground>
-   
     );
   }
 }
 
-mapStateToProps = (state)=>{ //this state will contain FULL redux store all the reducers data
-
+mapStateToProps = state => {
+  //this state will contain FULL redux store all the reducers data
 
   //use your required reducer data in props i.e reducer1
-  
-  return { User : state.User}  //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
-  
-  }
 
+  return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+};
 
-export default connect(mapStateToProps,{ CreateUserDetails })(AuthLoading);
-
+export default connect(mapStateToProps, {CreateUserDetails})(AuthLoading);
 
 const styles = StyleSheet.create({
   container: {
@@ -171,6 +153,5 @@ const styles = StyleSheet.create({
   overlay: {
     flex: 1,
     ...StyleSheet.absoluteFillObject,
-  }
+  },
 });
-

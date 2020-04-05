@@ -1,57 +1,60 @@
 import React, {Component} from 'react';
 import {Text, View, Image, AsyncStorage} from 'react-native';
 import {ThemeBlue} from '../Assets/Colors';
-import {withNavigation} from 'react-navigation'
-import {TouchableOpacity, TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import {withNavigation} from 'react-navigation';
+import {
+  TouchableOpacity,
+  TouchableWithoutFeedback,
+} from 'react-native-gesture-handler';
 
 class AvatarUserStatus extends Component {
   state = {
     followed: this.props.userFollowing,
-
   };
 
   followButton = async () => {
-    console.log('id -------------->',this.props.id)
+    console.log('id -------------->', this.props.id);
     this.setState(prevState => ({
       followed: !prevState.followed,
     }));
     const Token = await AsyncStorage.getItem('TOKEN');
     const userId = await AsyncStorage.getItem('USER_ID');
-    const id = this.props.id
-    var Response = null
-    console.log('followed ==========> ',this.state.followed,id)
-    if(this.state.followed) {
-      Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/follow?user_id=${id}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${Token}`,
+    const id = this.props.id;
+    var Response = null;
+    console.log('followed ==========> ', this.state.followed, id);
+    if (this.state.followed) {
+      Response = await fetch(
+        `https://campus-gruv-heroku.herokuapp.com/api/v1/user/follow?user_id=${id}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${Token}`,
+          },
         },
-      });
-    }
-    else {
-      Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/unfollow?user_id=${id}`, {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${Token}`,
+      );
+    } else {
+      Response = await fetch(
+        `https://campus-gruv-heroku.herokuapp.com/api/v1/user/unfollow?user_id=${id}`,
+        {
+          method: 'GET',
+          headers: {
+            'Content-Type': 'application/json',
+            Authorization: `Bearer ${Token}`,
+          },
         },
-      });
+      );
     }
     const JsonResponse = await Response.json();
-    if(parseInt(Response.status) === 400) {
-      console.log('400')
+    if (parseInt(Response.status) === 400) {
+      console.log('400');
       alert(JsonResponse.message);
+    } else if (parseInt(Response.status) === 200) {
+      console.log('200', JsonResponse);
+    } else {
+      alert('something is wrong');
     }
-    else if (parseInt(Response.status) === 200){
-      console.log('200',JsonResponse)
-     
-    }
-    else {
-      alert('something is wrong')
-    }
-  }
-
+  };
 
   render() {
     //console.log(this.props.userFollowing,'this.props')
@@ -60,30 +63,33 @@ class AvatarUserStatus extends Component {
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          marginTop: '1%'
-            // paddingBottom: '2%',
-            // paddingTop: '2%',
-            // paddingLeft: '2%',
-            // paddingRight: '2%',
-        }}
-      >
+          marginTop: '1%',
+        }}>
         <View style={{flex: 4}}>
           <TouchableWithoutFeedback
-            onPress={() => this.props.navigation.push('UserProfile', {
+            onPress={() =>
+              this.props.navigation.push('UserProfile', {
                 userNavId: this.props.id,
                 userNavDp: this.props.pic,
                 userNavFirstName: this.props.first_name,
                 userNavLastName: this.props.last_name,
                 userCampus: this.props.campus,
-                userFollowing:this.state.followed
-            })}>
+                userFollowing: this.state.followed,
+              })
+            }>
             <View style={{flexDirection: 'row', padding: '1%'}}>
               <Image
-                source={{uri : this.props.pic}}
-                style={{height: 40, width: 40, borderRadius: 50}}>
-              </Image>
-              <Text style={{ fontSize: 18,alignSelf: 'center', fontWeight: 'bold', color: 'grey', paddingLeft:"2%"}}>
-                {this.props.first_name + ' ' + this.props.last_name }
+                source={{uri: this.props.pic}}
+                style={{height: 40, width: 40, borderRadius: 50}}></Image>
+              <Text
+                style={{
+                  fontSize: 18,
+                  alignSelf: 'center',
+                  fontWeight: 'bold',
+                  color: 'grey',
+                  paddingLeft: '2%',
+                }}>
+                {this.props.first_name + ' ' + this.props.last_name}
               </Text>
             </View>
           </TouchableWithoutFeedback>
@@ -91,7 +97,7 @@ class AvatarUserStatus extends Component {
         <TouchableOpacity
           onPress={() => {
             //this.setState({follow: !this.state.follow});
-            this.followButton()
+            this.followButton();
           }}>
           <View
             style={{
@@ -121,4 +127,4 @@ class AvatarUserStatus extends Component {
   }
 }
 
-export default withNavigation(AvatarUserStatus)
+export default withNavigation(AvatarUserStatus);
