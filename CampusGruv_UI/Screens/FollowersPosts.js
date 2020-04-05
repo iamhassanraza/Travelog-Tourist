@@ -193,8 +193,15 @@ export default class FolllowersPosts extends PureComponent {
       async () => {
         console.log('calling load more api');
         const Token = await AsyncStorage.getItem('TOKEN');
+        var campus;
+        if(await AsyncStorage.getItem('otherCampus')){
+          campus = await AsyncStorage.getItem('otherCampus');
+          }
+          else{
+          campus = await AsyncStorage.getItem('CAMPUS_ID');
+          }
         const Response = await fetch(
-          `https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_all&page=${this.state.pageNo}`,
+          `https://campus-gruv-heroku.herokuapp.com/api/v1/follower/posts?campus_id=${campus}&page=${this.state.pageNo}`,
           {
             headers: {
               Authorization: `Bearer ${Token}`,
@@ -222,10 +229,17 @@ export default class FolllowersPosts extends PureComponent {
 
   fetchdata = async () => {
     const Token = await AsyncStorage.getItem('TOKEN');
+    var campus;
+    if(await AsyncStorage.getItem('otherCampus')){
+      campus = await AsyncStorage.getItem('otherCampus');
+      }
+      else{
+      campus = await AsyncStorage.getItem('CAMPUS_ID');
+      }
     this.setState({
       loading: true,
     });
-    fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/follower/posts`, {
+    fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/follower/posts?campus_id=${campus}`, {
       headers: {
         Authorization: `Bearer ${Token}`,
       },

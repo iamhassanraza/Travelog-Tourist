@@ -37,6 +37,7 @@ export default class AvatarCampusStatus extends Component {
             await AsyncStorage.setItem('otherCampus', JSON.stringify(this.props.newCampusId));
             const asad = JSON.parse(await AsyncStorage.getItem('otherCampus'));
             console.log("ye apna cu " + asad);
+            this.props.navigation.navigate('HomeScreen')
             }
            
     

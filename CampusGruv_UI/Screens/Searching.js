@@ -293,7 +293,7 @@ export default class Searching extends React.PureComponent {
   };
 
   checkCampus = async () => {
-    const campus_id = JSON.parse(await AsyncStorage.getItem('CAMPUS_ID'));
+    const campus_id =  JSON.parse(await AsyncStorage.getItem('otherCampus')) ? JSON.parse(await AsyncStorage.getItem('otherCampus')) : JSON.parse(await AsyncStorage.getItem('CAMPUS_ID'));
     this.setState({
       currentCampus: campus_id,
     });
@@ -320,7 +320,9 @@ export default class Searching extends React.PureComponent {
                     : false
                 }
                 pic={i4}
-                newCampusId={item.id}></AvatarCampusStatus>
+                navigation={this.props.navigation}
+                newCampusId={item.id}
+                ></AvatarCampusStatus>
             )
           }}
         />
