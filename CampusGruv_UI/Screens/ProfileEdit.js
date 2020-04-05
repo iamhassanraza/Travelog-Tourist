@@ -37,10 +37,9 @@ import {
   WaveIndicator,
 } from 'react-native-indicators';
 
-
 //cam_id === 'nahi_hai'
 class ProfilePage extends React.Component {
-  static navigationOptions = props => {
+  static navigationOptions = (props) => {
     tabBarVisibile = false;
     const {params = {}} = props.navigation.state;
     return {
@@ -48,7 +47,7 @@ class ProfilePage extends React.Component {
         params.cam_id === 'nahi_hai' ? (
           <View
             style={{
-              height: Platform.OS =='ios'?80:50,
+              height: Platform.OS == 'ios' ? 80 : 50,
               backgroundColor: '#1192d1',
               flexDirection: 'row',
               justifyContent: 'center',
@@ -65,7 +64,13 @@ class ProfilePage extends React.Component {
                 </TouchableOpacity>
             </View> */}
             <View style={{alignSelf: 'center'}}>
-              <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold',marginTop:Platform.OS =='ios'?25:0}}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                  marginTop: Platform.OS == 'ios' ? 25 : 0,
+                }}>
                 Edit profile
               </Text>
             </View>
@@ -77,16 +82,21 @@ class ProfilePage extends React.Component {
                 right: 8,
               }}>
               <TouchableOpacity onPress={() => params.handleThis()}>
-                <Text style={{color: 'red', padding: 2,marginTop:Platform.OS =='ios'?25:0}}>Done</Text>
+                <Text
+                  style={{
+                    color: 'red',
+                    padding: 2,
+                    marginTop: Platform.OS == 'ios' ? 25 : 0,
+                  }}>
+                  Done
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
-        ) : 
-        (
-          
+        ) : (
           <View
             style={{
-              height: Platform.OS =='ios'?80:50,
+              height: Platform.OS == 'ios' ? 80 : 50,
               backgroundColor: '#1192d1',
               flexDirection: 'row',
               justifyContent: 'center',
@@ -102,11 +112,24 @@ class ProfilePage extends React.Component {
                 onPress={() => {
                   props.navigation.navigate('UserProfile');
                 }}>
-                <Text style={{color: 'white', padding: 2,marginTop:Platform.OS =='ios'?25:0}}>Back</Text>
+                <Text
+                  style={{
+                    color: 'white',
+                    padding: 2,
+                    marginTop: Platform.OS == 'ios' ? 25 : 0,
+                  }}>
+                  Back
+                </Text>
               </TouchableOpacity>
             </View>
             <View style={{alignSelf: 'center'}}>
-              <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold',marginTop:Platform.OS =='ios'?25:0}}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize: 20,
+                  fontWeight: 'bold',
+                  marginTop: Platform.OS == 'ios' ? 25 : 0,
+                }}>
                 Edit profile
               </Text>
             </View>
@@ -118,12 +141,18 @@ class ProfilePage extends React.Component {
                 right: 8,
               }}>
               <TouchableOpacity onPress={() => params.handleThis()}>
-                <Text style={{color: 'white', padding: 2,marginTop:Platform.OS =='ios'?25:0}}>Done</Text>
+                <Text
+                  style={{
+                    color: 'white',
+                    padding: 2,
+                    marginTop: Platform.OS == 'ios' ? 25 : 0,
+                  }}>
+                  Done
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
         ),
-        
     };
   };
 
@@ -140,13 +169,13 @@ class ProfilePage extends React.Component {
     const Token = await AsyncStorage.getItem('TOKEN');
     const campusId = await AsyncStorage.getItem('CAMPUS_ID');
     await this.setState({currentCampus: campusId});
-    fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/fetch/campuses', {
+    fetch(`${require('../config').default.production}api/v1/fetch/campuses`, {
       headers: {
         Authorization: `Bearer ${Token}`,
       },
     })
-      .then(res => res.json())
-      .then(async res => {
+      .then((res) => res.json())
+      .then(async (res) => {
         //console.log(campusId)
         // const campuses = [this.state.campuses,...res]
         if (campusId === 'nahi_hai') {
@@ -156,7 +185,7 @@ class ProfilePage extends React.Component {
             campuses: cam,
           });
         } else {
-          await res.filter(campus => {
+          await res.filter((campus) => {
             if (campus.id === parseInt(campusId)) {
               const cam = [...[campus], ...res];
               console.log(campus);
@@ -170,7 +199,7 @@ class ProfilePage extends React.Component {
           });
         }
       })
-      .catch(err => console.log('error is', err));
+      .catch((err) => console.log('error is', err));
 
     this.props.navigation.setParams({
       handleThis: () => {
@@ -196,11 +225,11 @@ class ProfilePage extends React.Component {
     gradutationYear: '',
     name: '',
     focused: false,
-    Spinner:false
+    Spinner: false,
   };
 
   uploadProfilePicture = () => {
-    ImagePicker.showImagePicker(response => {
+    ImagePicker.showImagePicker((response) => {
       if (response.didCancel) {
         console.log('cancelled');
       } else if (response.error) {
@@ -216,7 +245,7 @@ class ProfilePage extends React.Component {
         } else if (response.fileSize > allowedImgSize) {
           alert('Uploaded file is too large \n(allowed file size is 10MB)');
         } else {
-          console.log(response,'uri uri')
+          console.log(response, 'uri uri');
           this.setState({
             imageUri: response,
             imageURL: response.uri,
@@ -239,7 +268,7 @@ class ProfilePage extends React.Component {
       });
     }
 
-    Object.keys(body).forEach(key => {
+    Object.keys(body).forEach((key) => {
       data.append(key, body[key]);
     });
 
@@ -247,13 +276,12 @@ class ProfilePage extends React.Component {
   };
 
   UpdateProfile = async () => {
-
-    this.setState({Spinner:true})
+    this.setState({Spinner: true});
     const Token = await AsyncStorage.getItem('TOKEN');
     //const Campusid = await AsyncStorage.getItem('CAMPUS_ID');
 
     let response = await fetch(
-      'https://campus-gruv-heroku.herokuapp.com/api/v1/edit/profile',
+      `${require('../config').default.production}api/v1/edit/profile`,
       {
         method: 'PATCH',
         headers: {
@@ -272,9 +300,9 @@ class ProfilePage extends React.Component {
     );
 
     const postMasterResponse = await response.json();
-      this.setState({Spinner:false})
-    this.props.CreateUserDetails(postMasterResponse)
-    this.setState({imageUri:''})
+    this.setState({Spinner: false});
+    this.props.CreateUserDetails(postMasterResponse);
+    this.setState({imageUri: ''});
     await AsyncStorage.setItem('CAMPUS_ID', this.state.selectedId.toString());
     AsyncStorage.getItem('CAMPUS_ID') === 'nahi_hai'
       ? this.props.navigation.navigate('App')
@@ -284,7 +312,7 @@ class ProfilePage extends React.Component {
 
   renderDatePicker = () => {
     return (
-      <View style={{flexDirection: 'row',marginTop:"5%"}}>
+      <View style={{flexDirection: 'row', marginTop: '5%'}}>
         <Text
           style={{
             fontSize: 20,
@@ -327,7 +355,7 @@ class ProfilePage extends React.Component {
             },
             // ... You can check the source to find the other keys.
           }}
-          onDateChange={date => {
+          onDateChange={(date) => {
             this.setState({dob: date});
           }}
         />
@@ -337,7 +365,7 @@ class ProfilePage extends React.Component {
 
   renderPhoneNo = () => {
     return (
-      <View style={{marginTop:"5%"}}>
+      <View style={{marginTop: '5%'}}>
         <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
           <Text
             style={{fontSize: 20, marginTop: 15, marginLeft: 10, width: '25%'}}>
@@ -360,7 +388,7 @@ class ProfilePage extends React.Component {
             }}
             value={this.state.phone}
             placeholder="XXX-XXX-XXXXX"
-            onChangeText={text => this.setState({phone: text})}
+            onChangeText={(text) => this.setState({phone: text})}
           />
           <Icon
             name="pencil"
@@ -375,7 +403,7 @@ class ProfilePage extends React.Component {
 
   renderGradYear = () => {
     return (
-      <View style={{marginTop:"5%"}}> 
+      <View style={{marginTop: '5%'}}>
         <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
           <Text
             style={{fontSize: 20, marginTop: 15, marginLeft: 10, width: '25%'}}>
@@ -398,7 +426,7 @@ class ProfilePage extends React.Component {
             }}
             placeholder="2020"
             value={this.state.gradutationYear}
-            onChangeText={text => this.setState({gradutationYear: text})}
+            onChangeText={(text) => this.setState({gradutationYear: text})}
           />
           <Icon
             name="pencil"
@@ -422,12 +450,12 @@ class ProfilePage extends React.Component {
     //const { navigate } = this.props.navigation;
     return (
       <Container>
-             <Spinner
-              visible={this.state.Spinner}
-              textContent={'Uploading...'}
-              textStyle={{color: 'black'}}
-              customIndicator={<BarIndicator count={5} />}
-            />
+        <Spinner
+          visible={this.state.Spinner}
+          textContent={'Uploading...'}
+          textStyle={{color: 'black'}}
+          customIndicator={<BarIndicator count={5} />}
+        />
         <ScrollView>
           {/* EDIT PROFILE IMAGE */}
           <View
@@ -473,7 +501,7 @@ class ProfilePage extends React.Component {
               name="Name"
               ph="Enter name"
               value={this.state.name}
-              changestate={text => {
+              changestate={(text) => {
                 this.setState({name: text});
               }}
             />
@@ -498,7 +526,7 @@ class ProfilePage extends React.Component {
                 }}>
                 <Picker
                   selectedValue={this.state.selectedId}
-                  onValueChange={itemValue => {
+                  onValueChange={(itemValue) => {
                     if (itemValue !== 'select campus')
                       this.setState({
                         selectedId: itemValue,
@@ -518,7 +546,7 @@ class ProfilePage extends React.Component {
               name="Major"
               ph="Major"
               value={this.state.major}
-              changestate={text => {
+              changestate={(text) => {
                 this.setState({major: text});
               }}
             />
@@ -542,7 +570,7 @@ class ProfilePage extends React.Component {
   }
 }
 
-mapStateToProps = state => {
+mapStateToProps = (state) => {
   //this state will contain FULL redux store all the reducers data
 
   //use your required reducer data in props i.e reducer1

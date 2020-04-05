@@ -33,7 +33,7 @@ const screenheight = Dimensions.get('window').height;
 class AuthLoading extends React.Component {
   componentDidMount() {
     // Subscribe
-    const unsubscribe = NetInfo.addEventListener(state => {
+    const unsubscribe = NetInfo.addEventListener((state) => {
       console.log('Connection type', state.type);
       console.log('Is connected?', state.isConnected);
       {
@@ -54,7 +54,9 @@ class AuthLoading extends React.Component {
     let Token = await AsyncStorage.getItem('TOKEN');
     let USER = await AsyncStorage.getItem('USER_ID');
     var response = await fetch(
-      `https://campus-gruv-heroku.herokuapp.com/api/v1/get/user?user_id=${USER}`,
+      `${
+        require('../config').default.production
+      }api/v1/get/user?user_id=${USER}`,
       {
         headers: {
           Authorization: `Bearer ${Token}`,
@@ -134,7 +136,7 @@ class AuthLoading extends React.Component {
   }
 }
 
-mapStateToProps = state => {
+mapStateToProps = (state) => {
   //this state will contain FULL redux store all the reducers data
 
   //use your required reducer data in props i.e reducer1

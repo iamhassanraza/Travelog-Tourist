@@ -17,19 +17,14 @@ import HeaderTitle from './Heading';
 import Colors from '../Assets/Colors';
 import {withNavigation} from 'react-navigation';
 import LogoutButton from '../Components/LogoutButton';
-import {
-  BarIndicator,
- 
-} from 'react-native-indicators';
-
+import {BarIndicator} from 'react-native-indicators';
 
 class RecoverCode extends React.Component {
- 
   constructor(props) {
     super(props);
     this.state = {
       code: '',
-      spinner:false
+      spinner: false,
     };
   }
 
@@ -38,28 +33,29 @@ class RecoverCode extends React.Component {
 
     if (this.state.code !== '') {
       this.setState({
-        spinner:true
-      })
-        const Response = await fetch(
-          `https://campus-gruv-heroku.herokuapp.com/api/v1/user/verify_otp?otp=${this.state.code}&type=reset_password&email=${email}`,
-        );
-        const JsonResponse = await Response.json();
-        this.setState({
-          spinner:false
-        })
-      
-        if (parseInt(Response.status) === 404) {
-          alert(JsonResponse.message);
-        } else if (parseInt(Response.status) === 200) {
-          this.props.navigation.navigate('ResetPassword', {
-            OTP: this.state.code,
-            email
-          });
-          this.setState({code: ''});
-        } else {
-          alert('something went wront');
-        }
-      
+        spinner: true,
+      });
+      const Response = await fetch(
+        `${require('../config').default.production}api/v1/user/verify_otp?otp=${
+          this.state.code
+        }&type=reset_password&email=${email}`,
+      );
+      const JsonResponse = await Response.json();
+      this.setState({
+        spinner: false,
+      });
+
+      if (parseInt(Response.status) === 404) {
+        alert(JsonResponse.message);
+      } else if (parseInt(Response.status) === 200) {
+        this.props.navigation.navigate('ResetPassword', {
+          OTP: this.state.code,
+          email,
+        });
+        this.setState({code: ''});
+      } else {
+        alert('something went wront');
+      }
     } else {
       alert('Enter CODE');
     }
@@ -72,7 +68,12 @@ class RecoverCode extends React.Component {
         source={require('../Assets/Images/background.png')}
         resizeMode="cover">
         <Text
-          style={{color: 'white', fontSize: 16, margin: 10, marginTop:Platform.OS=='ios'? 40:20,}}
+          style={{
+            color: 'white',
+            fontSize: 16,
+            margin: 10,
+            marginTop: Platform.OS == 'ios' ? 40 : 20,
+          }}
           onPress={() => {
             this.props.navigation.goBack();
           }}>
@@ -114,16 +115,17 @@ class RecoverCode extends React.Component {
                     fontSize: 20,
                     color: '#ACACAC',
                     paddingLeft: '30%',
-                    height:Platform.OS=='ios'? 40:50,
+                    height: Platform.OS == 'ios' ? 40 : 50,
                   }}
-                  onChangeText={text => this.setState({code: text})}
+                  onChangeText={(text) => this.setState({code: text})}
                   value={this.state.code}
                 />
               </View>
 
               <TouchableOpacity onPress={() => this.checkOTP()}>
                 <View style={{marginBottom: 10}}>
-                  {this.state.spinner ? (<View
+                  {this.state.spinner ? (
+                    <View
                       style={{
                         height: 40,
                         width: '50%',
@@ -133,15 +135,17 @@ class RecoverCode extends React.Component {
                         justifyContent: 'center',
                         backgroundColor: 'transparent',
                         borderColor: 'white',
-                        borderWidth: 0.6,flexDirection:'row',justifyContent:'center',
-                        alignItems:'center'
+                        borderWidth: 0.6,
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
                       }}>
                       <Text
                         style={{
-                            fontSize: 16,
-                            fontWeight: 'bold',
-                            textAlign: 'center',
-                            color: 'white',
+                          fontSize: 16,
+                          fontWeight: 'bold',
+                          textAlign: 'center',
+                          color: 'white',
                         }}>
                         Loading{' '}
                       </Text>
@@ -151,35 +155,36 @@ class RecoverCode extends React.Component {
                         size={20}
                         color={'white'}
                       />
-                    </View>)  : (<View
-                    style={{
-                      height: 40,
-                      width: '50%',
-                      marginLeft: '25%',
-                      borderRadius: 10,
-                      marginTop: 40,
-                      justifyContent: 'center',
-                      backgroundColor: 'transparent',
-                      borderColor: 'white',
-                      borderWidth: 0.6,
-                    }}>
-                    <Text
+                    </View>
+                  ) : (
+                    <View
                       style={{
-                        fontSize: 16,
-                        fontWeight: 'bold',
-                        textAlign: 'center',
-                        color: 'white',
+                        height: 40,
+                        width: '50%',
+                        marginLeft: '25%',
+                        borderRadius: 10,
+                        marginTop: 40,
+                        justifyContent: 'center',
+                        backgroundColor: 'transparent',
+                        borderColor: 'white',
+                        borderWidth: 0.6,
                       }}>
-                      Continue
-                    </Text>
-                  </View>)}
-                  
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontWeight: 'bold',
+                          textAlign: 'center',
+                          color: 'white',
+                        }}>
+                        Continue
+                      </Text>
+                    </View>
+                  )}
                 </View>
               </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>
         </ScrollView>
-      
       </ImageBackground>
     );
   }

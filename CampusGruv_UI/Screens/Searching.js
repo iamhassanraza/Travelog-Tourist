@@ -64,11 +64,15 @@ export default class Searching extends React.PureComponent {
     });
   }
 
-  fetchFeed = async text => {
+  fetchFeed = async (text) => {
     this.setState({loadingFeed: true});
     const Token = await AsyncStorage.getItem('TOKEN');
     const Response = await fetch(
-      `https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_search&description=${text}&page=${this.state.pageNo}`,
+      `${
+        require('../config').default.production
+      }api/v1/search/post?type=post_search&description=${text}&page=${
+        this.state.pageNo
+      }`,
       {
         headers: {
           Authorization: `Bearer ${Token}`,
@@ -94,11 +98,13 @@ export default class Searching extends React.PureComponent {
     }
   };
 
-  fetchUsers = async text => {
+  fetchUsers = async (text) => {
     this.setState({loadingUsers: true});
     const Token = await AsyncStorage.getItem('TOKEN');
     const Response = await fetch(
-      `https://campus-gruv-heroku.herokuapp.com/api/v1/search/user?type=user&description=${text}&page=1`,
+      `${
+        require('../config').default.production
+      }api/v1/search/user?type=user&description=${text}&page=1`,
       {
         headers: {
           Authorization: `Bearer ${Token}`,
@@ -123,11 +129,13 @@ export default class Searching extends React.PureComponent {
     }
   };
 
-  fetchCampuses = async text => {
+  fetchCampuses = async (text) => {
     this.setState({loadingCampuses: true});
     const Token = await AsyncStorage.getItem('TOKEN');
     const Response = await fetch(
-      `https://campus-gruv-heroku.herokuapp.com/api/v1/search/campus?description=${text}&page=1`,
+      `${
+        require('../config').default.production
+      }api/v1/search/campus?description=${text}&page=1`,
       {
         headers: {
           Authorization: `Bearer ${Token}`,
@@ -151,7 +159,7 @@ export default class Searching extends React.PureComponent {
     }
   };
 
-  SearchItems = text => {
+  SearchItems = (text) => {
     // if(this.state.selection === "Feed") {
     //   this.fetchFeed(text);
     //   console.log("feedddddddddddddddd");
@@ -187,7 +195,7 @@ export default class Searching extends React.PureComponent {
   //   this.setState({
   //       loading:false
   //   })
-  //   fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_all&page=1', {
+  //   fetch('${require('../config').default.production}api/v1/search/post?type=post_all&page=1', {
   //     headers: {
   //       Authorization:
   //         `Bearer ${Token}`,
@@ -253,7 +261,7 @@ export default class Searching extends React.PureComponent {
             style={{}}
             vertical
             data={this.state.Users}
-            keyExtractor={item => item.id}
+            keyExtractor={(item) => item.id}
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => (
               <AvatarUserStatus
@@ -293,7 +301,9 @@ export default class Searching extends React.PureComponent {
   };
 
   checkCampus = async () => {
-    const campus_id =  JSON.parse(await AsyncStorage.getItem('otherCampus')) ? JSON.parse(await AsyncStorage.getItem('otherCampus')) : JSON.parse(await AsyncStorage.getItem('CAMPUS_ID'));
+    const campus_id = JSON.parse(await AsyncStorage.getItem('otherCampus'))
+      ? JSON.parse(await AsyncStorage.getItem('otherCampus'))
+      : JSON.parse(await AsyncStorage.getItem('CAMPUS_ID'));
     this.setState({
       currentCampus: campus_id,
     });
@@ -301,16 +311,14 @@ export default class Searching extends React.PureComponent {
 
   renderCampuses = () => {
     if (this.state.loadingCampuses === false) {
-      
       return (
         <FlatList
           style={{}}
           vertical
           data={this.state.Campuses}
-          keyExtractor={item => item.id}
+          keyExtractor={(item) => item.id}
           showsHorizontalScrollIndicator={false}
           renderItem={({item}) => {
-            
             return (
               <AvatarCampusStatus
                 name={item.description}
@@ -321,9 +329,8 @@ export default class Searching extends React.PureComponent {
                 }
                 pic={i4}
                 navigation={this.props.navigation}
-                newCampusId={item.id}
-                ></AvatarCampusStatus>
-            )
+                newCampusId={item.id}></AvatarCampusStatus>
+            );
           }}
         />
       );
@@ -350,7 +357,7 @@ export default class Searching extends React.PureComponent {
     }
   };
 
-  renderNoPost = text => {
+  renderNoPost = (text) => {
     return (
       <View style={{paddingTop: '35%'}}>
         <NoPost name={text}></NoPost>
@@ -362,14 +369,18 @@ export default class Searching extends React.PureComponent {
     console.log('load more running --------');
 
     this.setState(
-      previousState => {
+      (previousState) => {
         return {pageNo: previousState.pageNo + 1, loadmore: true};
       },
       async () => {
         console.log('calling loadmore api.');
         const Token = await AsyncStorage.getItem('TOKEN');
         const Response = await fetch(
-          `https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_search&description=${this.state.search}&page=${this.state.pageNo}`,
+          `${
+            require('../config').default.production
+          }api/v1/search/post?type=post_search&description=${
+            this.state.search
+          }&page=${this.state.pageNo}`,
           {
             headers: {
               Authorization: `Bearer ${Token}`,
@@ -384,7 +395,7 @@ export default class Searching extends React.PureComponent {
           this.setState({error: true, totalFeed: 0});
         } else if (parseInt(Response.status) === 200) {
           if (JsonResponse.total > 0) {
-            this.setState(previousState => {
+            this.setState((previousState) => {
               return {
                 posts: [...previousState.posts, ...JsonResponse.data],
                 totalFeed: JsonResponse.total,
@@ -436,7 +447,7 @@ export default class Searching extends React.PureComponent {
                 placeholder="Search"
                 style={{height: '90%', margin: 4, width: '100%'}}
                 value={this.state.search}
-                onChangeText={text => {
+                onChangeText={(text) => {
                   this.setState({search: text});
                   this.SearchItems(text);
                 }}></TextInput>

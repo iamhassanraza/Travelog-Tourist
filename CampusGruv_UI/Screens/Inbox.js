@@ -19,7 +19,7 @@ export default class Inbox extends Component {
     const Token = await AsyncStorage.getItem('TOKEN');
     const user_id = await AsyncStorage.getItem('USER_ID');
     const Response = await fetch(
-      `https://campus-gruv-heroku.herokuapp.com/api/v1/chat/history`,
+      `${require('../config').default.production}api/v1/chat/history`,
       {
         headers: {
           Authorization: `Bearer ${Token}`,

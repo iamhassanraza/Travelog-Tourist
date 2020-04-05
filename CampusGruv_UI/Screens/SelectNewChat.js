@@ -26,11 +26,13 @@ export default class SelectNewChat extends Component {
     };
   }
 
-  fetchUsers = async text => {
+  fetchUsers = async (text) => {
     this.setState({loadingUsers: true});
     const Token = await AsyncStorage.getItem('TOKEN');
     const Response = await fetch(
-      `https://campus-gruv-heroku.herokuapp.com/api/v1/search/user?type=user&description=${text}&page=1`,
+      `${
+        require('../config').default.production
+      }api/v1/search/user?type=user&description=${text}&page=1`,
       {
         headers: {
           Authorization: `Bearer ${Token}`,
@@ -55,7 +57,7 @@ export default class SelectNewChat extends Component {
     }
   };
 
-  updateSearch = e => {
+  updateSearch = (e) => {
     this.setState({text: e});
     this.fetchUsers(e);
   };
@@ -80,7 +82,7 @@ export default class SelectNewChat extends Component {
                 style={{}}
                 vertical
                 data={this.state.users}
-                keyExtractor={item => item.id}
+                keyExtractor={(item) => item.id}
                 showsHorizontalScrollIndicator={false}
                 renderItem={({item}) => (
                   <NewMessageComponent

@@ -29,7 +29,7 @@ import {Header} from 'react-native-elements';
 import MyHeader from '../Components/MyHeader';
 
 export default class FolllowersPosts extends PureComponent {
-  static navigationOptions = props => {
+  static navigationOptions = (props) => {
     const {params = {}} = props.navigation.state;
     return {
       header:
@@ -87,15 +87,14 @@ export default class FolllowersPosts extends PureComponent {
                   </TouchableOpacity>
                 </View>
 
-                <View style={{ marginLeft: "10%",marginTop:"0.5%"}}>
-                <TouchableOpacity
-                  style={{paddingRight: 5}}
-                  onPress={() => props.navigation.navigate('HomeScreen')}>
-                  <PeopleIcon name="users" color="white" size={23} />
-                </TouchableOpacity>
+                <View style={{marginLeft: '10%', marginTop: '0.5%'}}>
+                  <TouchableOpacity
+                    style={{paddingRight: 5}}
+                    onPress={() => props.navigation.navigate('HomeScreen')}>
+                    <PeopleIcon name="users" color="white" size={23} />
+                  </TouchableOpacity>
+                </View>
               </View>
-              </View>
-              
             </View>
           </View>
         ) : (
@@ -149,15 +148,14 @@ export default class FolllowersPosts extends PureComponent {
                   <Icon2 name="view-grid" color="#00527a" size={28} />
                 </TouchableOpacity>
               </View>
-              <View style={{ marginLeft: "10%",marginTop:"0.5%"}}>
-              <TouchableOpacity
-                style={{paddingRight: 5}}
-                onPress={() => props.navigation.navigate('HomeScreen')}>
-                <PeopleIcon name="users" color="white" size={20} />
-              </TouchableOpacity>
+              <View style={{marginLeft: '10%', marginTop: '0.5%'}}>
+                <TouchableOpacity
+                  style={{paddingRight: 5}}
+                  onPress={() => props.navigation.navigate('HomeScreen')}>
+                  <PeopleIcon name="users" color="white" size={20} />
+                </TouchableOpacity>
+              </View>
             </View>
-            </View>
-            
           </View>
         ),
     };
@@ -187,21 +185,22 @@ export default class FolllowersPosts extends PureComponent {
 
   loadmore = () => {
     this.setState(
-      previousState => {
+      (previousState) => {
         return {pageNo: previousState.pageNo + 1, loadmore: true};
       },
       async () => {
         console.log('calling load more api');
         const Token = await AsyncStorage.getItem('TOKEN');
         var campus;
-        if(await AsyncStorage.getItem('otherCampus')){
+        if (await AsyncStorage.getItem('otherCampus')) {
           campus = await AsyncStorage.getItem('otherCampus');
-          }
-          else{
+        } else {
           campus = await AsyncStorage.getItem('CAMPUS_ID');
-          }
+        }
         const Response = await fetch(
-          `https://campus-gruv-heroku.herokuapp.com/api/v1/follower/posts?campus_id=${campus}&page=${this.state.pageNo}`,
+          `${
+            require('../config').default.production
+          }api/v1/follower/posts?campus_id=${campus}&page=${this.state.pageNo}`,
           {
             headers: {
               Authorization: `Bearer ${Token}`,
@@ -214,7 +213,7 @@ export default class FolllowersPosts extends PureComponent {
         if (parseInt(Response.status) === 401) {
           alert(JsonResponse.message);
         } else if (parseInt(Response.status) === 200) {
-          this.setState(previousState => {
+          this.setState((previousState) => {
             return {
               posts: [...previousState.posts, ...JsonResponse.data],
               total: JsonResponse.total,
@@ -230,24 +229,28 @@ export default class FolllowersPosts extends PureComponent {
   fetchdata = async () => {
     const Token = await AsyncStorage.getItem('TOKEN');
     var campus;
-    if(await AsyncStorage.getItem('otherCampus')){
+    if (await AsyncStorage.getItem('otherCampus')) {
       campus = await AsyncStorage.getItem('otherCampus');
-      }
-      else{
+    } else {
       campus = await AsyncStorage.getItem('CAMPUS_ID');
-      }
+    }
     this.setState({
       loading: true,
     });
-    fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/follower/posts?campus_id=${campus}`, {
-      headers: {
-        Authorization: `Bearer ${Token}`,
+    fetch(
+      `${
+        require('../config').default.production
+      }api/v1/follower/posts?campus_id=${campus}`,
+      {
+        headers: {
+          Authorization: `Bearer ${Token}`,
+        },
       },
-    })
-      .then(response => {
+    )
+      .then((response) => {
         return response.json();
       })
-      .then(responseJson => {
+      .then((responseJson) => {
         //console.log('home --------------------',responseJson.data[0])
 
         this.setState({
@@ -258,7 +261,7 @@ export default class FolllowersPosts extends PureComponent {
           Category: 'undefined',
         });
       })
-      .catch(err => console.log(err));
+      .catch((err) => console.log(err));
   };
 
   componentDidMount() {
@@ -271,7 +274,7 @@ export default class FolllowersPosts extends PureComponent {
     this.props.navigation.setParams({
       handleThis: async () => {
         console.log('users icon clicked', this.state.FollowersPosts);
-        await this.setState(prevState => {
+        await this.setState((prevState) => {
           return {
             FollowersPosts: !prevState.FollowersPosts,
           };
@@ -289,15 +292,10 @@ export default class FolllowersPosts extends PureComponent {
   }
 
   render() {
-   
-
-
-    
-
-if (this.state.total > 0) {
-    return (
-      <React.Fragment>
-        {/* <View style={{backgroundColor: '#F0F0F0'}}>
+    if (this.state.total > 0) {
+      return (
+        <React.Fragment>
+          {/* <View style={{backgroundColor: '#F0F0F0'}}>
           <Text
             onPress={() => {
               this.setState({FolllowersPosts: false});
@@ -326,48 +324,46 @@ if (this.state.total > 0) {
               }}></CrossIcon>
           </Text>
         </View>  */}
-        <ScrollView
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this.onPageRefresh}
-            />
-          }>
-          <View style={{flex: 1}}>
-            <RenderCards
-              posts={this.state.posts}
-              totalPosts={this.state.total}
-              loadMore={this.loadmore}
-              loadstate={this.state.loadmore}></RenderCards>
-          </View>
-        </ScrollView>
-      </React.Fragment>
-    );
-  } else if (this.state.total === 0) {
-    return (
-      <View style={{paddingTop: '45%', height: '100%'}}>
-        <NoPosts></NoPosts>
-      </View>
-    );
-  } else {
-    return (
-      <View>
-        <ContentLoader
-          height={450}
-          width={820}
-          speed={0.2}
-          height={Dimensions.get('window').height * 1}>
-          <Rect x="10" y="10" rx="5" ry="5" width="185" height="220" />
-          <Rect x="200" y="10" rx="5" ry="5" width="200" height="280" />
-          <Rect x="10" y="240" rx="5" ry="5" width="185" height="250" />
-          <Rect x="200" y="300" rx="5" ry="5" width="200" height="280" />
-          {/* <Rect x="280" y="300" rx="5" ry="5" width="260" height="140" />
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this.onPageRefresh}
+              />
+            }>
+            <View style={{flex: 1}}>
+              <RenderCards
+                posts={this.state.posts}
+                totalPosts={this.state.total}
+                loadMore={this.loadmore}
+                loadstate={this.state.loadmore}></RenderCards>
+            </View>
+          </ScrollView>
+        </React.Fragment>
+      );
+    } else if (this.state.total === 0) {
+      return (
+        <View style={{paddingTop: '45%', height: '100%'}}>
+          <NoPosts></NoPosts>
+        </View>
+      );
+    } else {
+      return (
+        <View>
+          <ContentLoader
+            height={450}
+            width={820}
+            speed={0.2}
+            height={Dimensions.get('window').height * 1}>
+            <Rect x="10" y="10" rx="5" ry="5" width="185" height="220" />
+            <Rect x="200" y="10" rx="5" ry="5" width="200" height="280" />
+            <Rect x="10" y="240" rx="5" ry="5" width="185" height="250" />
+            <Rect x="200" y="300" rx="5" ry="5" width="200" height="280" />
+            {/* <Rect x="280" y="300" rx="5" ry="5" width="260" height="140" />
                   <Rect x="550" y="160" rx="5" ry="5" width="260" height="280" /> */}
-        </ContentLoader>
-      </View>
-    );
+          </ContentLoader>
+        </View>
+      );
+    }
   }
 }
-}
-
-

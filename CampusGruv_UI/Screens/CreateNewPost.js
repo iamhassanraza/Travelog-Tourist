@@ -38,7 +38,7 @@ import {TouchableOpacity} from 'react-native-gesture-handler';
 const screenHeight = Dimensions.get('window').height;
 
 class CreateNewPost extends Component {
-  static navigationOptions = props => {
+  static navigationOptions = (props) => {
     const {params = {}} = props.navigation.state;
     return {
       header: (
@@ -122,7 +122,7 @@ class CreateNewPost extends Component {
   //   const Token = await AsyncStorage.getItem('TOKEN');
 
   //   const Response = await fetch(
-  //     `https://campus-gruv-heroku.herokuapp.com/api/v1/post/categories`,
+  //     `${require('../config').default.production}api/v1/post/categories`,
   //     {
   //       method: 'GET',
   //       headers: {
@@ -155,7 +155,7 @@ class CreateNewPost extends Component {
     });
   };
 
-  getExtention = filename => {
+  getExtention = (filename) => {
     return /[.]/.exec(filename) ? /[^.]+$/.exec(filename) : undefined;
   };
 
@@ -182,30 +182,30 @@ class CreateNewPost extends Component {
     };
     config(options)
       .fetch('GET', image_URL)
-      .then(res => {
+      .then((res) => {
         Alert.alert('Image Downloaded Successfully.');
       });
   };
 
-  changeState = cat => {
+  changeState = (cat) => {
     this.setState({
       Category: cat,
     });
   };
 
-  changeTitleState = title => {
+  changeTitleState = (title) => {
     this.setState({
       Title: title,
     });
   };
 
-  changeDescriptionState = desc => {
+  changeDescriptionState = (desc) => {
     this.setState({
       Description: desc,
     });
   };
 
-  changePriceState = price => {
+  changePriceState = (price) => {
     this.setState({
       Price: price,
     });
@@ -215,7 +215,7 @@ class CreateNewPost extends Component {
     const Token = await AsyncStorage.getItem('TOKEN');
 
     const Response = await fetch(
-      `https://campus-gruv-heroku.herokuapp.com/api/v1/post/categories`,
+      `${require('../config').default.production}api/v1/post/categories`,
       {
         method: 'GET',
         headers: {
@@ -248,7 +248,7 @@ class CreateNewPost extends Component {
           vertical
           numColumns={3}
           data={this.state.DATA}
-          keyExtractor={item => item.id}
+          keyExtractor={(item) => item.id}
           showsHorizontalScrollIndicator={false}
           renderItem={({item}) => (
             <CategoryButton
@@ -308,7 +308,7 @@ class CreateNewPost extends Component {
             },
             // ... You can check the source to find the other keys.
           }}
-          onDateChange={date => {
+          onDateChange={(date) => {
             this.setState({CategoryEventDate: date});
           }}
         />
@@ -337,7 +337,7 @@ class CreateNewPost extends Component {
             borderWidth: 0.5,
             borderColor: 'grey',
           }}
-          onChangeText={text => {
+          onChangeText={(text) => {
             this.changePriceState(text);
           }}
         />
@@ -373,7 +373,7 @@ class CreateNewPost extends Component {
               borderWidth: 1,
               textAlignVertical: 'top',
             }}
-            onChangeText={text => {
+            onChangeText={(text) => {
               this.changeDescriptionState(text);
             }}></TextInput>
         </View>
@@ -420,7 +420,7 @@ class CreateNewPost extends Component {
       const user_id = await AsyncStorage.getItem('USER_ID');
 
       let response = await fetch(
-        'https://campus-gruv-heroku.herokuapp.com/api/v1/post/create',
+        `${require('../config').default.production}api/v1/post/create`,
         {
           method: 'POST',
           headers: {
@@ -438,7 +438,7 @@ class CreateNewPost extends Component {
       const postMasterResponse = await response.json();
       //console.log(this.state.Images,' ================================ ')
       let raw_response = await fetch(
-        'https://campus-gruv-heroku.herokuapp.com/api/v1/post/detail',
+        `${require('../config').default.production}api/v1/post/detail`,
         {
           method: 'POST',
           headers: {
@@ -513,7 +513,7 @@ class CreateNewPost extends Component {
           : images.uri.replace('file://', ''),
     });
 
-    Object.keys(body).forEach(key => {
+    Object.keys(body).forEach((key) => {
       data.append(key, body[key]);
     });
 

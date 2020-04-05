@@ -28,7 +28,7 @@ const IconGrey = '#b4b8bf';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 class UserProfile extends React.Component {
-  static navigationOptions = props => {
+  static navigationOptions = (props) => {
     const {params = {}} = props.navigation.state;
     return {
       header:
@@ -166,7 +166,9 @@ class UserProfile extends React.Component {
   fetchRoomDetails = async () => {
     const Token = await AsyncStorage.getItem('TOKEN');
     const Response = await fetch(
-      `https://campus-gruv-heroku.herokuapp.com/api/v1/room/details?user_id=${this.state.otherUserId}`,
+      `${require('../config').default.production}api/v1/room/details?user_id=${
+        this.state.otherUserId
+      }`,
       {
         method: 'GET',
         headers: {
@@ -183,10 +185,12 @@ class UserProfile extends React.Component {
     this.setState({isModalVisible: !this.state.isModalVisible});
   };
 
-  fetchFollowData = async id => {
+  fetchFollowData = async (id) => {
     const Token = await AsyncStorage.getItem('TOKEN');
     const response = await fetch(
-      `https://campus-gruv-heroku.herokuapp.com/api/v1/follow/details?user_id=${id}`,
+      `${
+        require('../config').default.production
+      }api/v1/follow/details?user_id=${id}`,
       {
         headers: {
           Authorization: `Bearer ${Token}`,
@@ -214,13 +218,17 @@ class UserProfile extends React.Component {
       ? this.state.otherUserId
       : this.props.User.id;
     this.setState(
-      previousState => {
+      (previousState) => {
         return {pageNo: previousState.pageNo + 1, loadmore: true};
       },
       async () => {
         const Token = await AsyncStorage.getItem('TOKEN');
         const Response = await fetch(
-          `https://campus-gruv-heroku.herokuapp.com/api/v1/search/user?type=post&user_id=${userId}&page=${this.state.pageNo}`,
+          `${
+            require('../config').default.production
+          }api/v1/search/user?type=post&user_id=${userId}&page=${
+            this.state.pageNo
+          }`,
           {
             headers: {
               Authorization: `Bearer ${Token}`,
@@ -232,7 +240,7 @@ class UserProfile extends React.Component {
         if (parseInt(Response.status) === 401) {
           alert(JsonResponse.message);
         } else if (parseInt(Response.status) === 200) {
-          this.setState(previousState => {
+          this.setState((previousState) => {
             return {
               posts: [...previousState.posts, ...JsonResponse.data],
               total: JsonResponse.total,
@@ -249,7 +257,11 @@ class UserProfile extends React.Component {
     const Token = await AsyncStorage.getItem('TOKEN');
     this.setState({spinner: true});
     const response = await fetch(
-      `https://campus-gruv-heroku.herokuapp.com/api/v1/search/user?type=post&user_id=${userId}&page=${this.state.pageNo}&description=${text}`,
+      `${
+        require('../config').default.production
+      }api/v1/search/user?type=post&user_id=${userId}&page=${
+        this.state.pageNo
+      }&description=${text}`,
       {
         headers: {
           Authorization: `Bearer ${Token}`,
@@ -267,14 +279,18 @@ class UserProfile extends React.Component {
     this.setState({searchbox: ''});
   }
 
-  fetchdata = async userId => {
+  fetchdata = async (userId) => {
     this.setState({spinner: true});
     if (this.state.active === 'posts') {
       // const userId = await AsyncStorage.getItem('USER_ID');
       const Token = await AsyncStorage.getItem('TOKEN');
 
       const response = await fetch(
-        `https://campus-gruv-heroku.herokuapp.com/api/v1/search/user?type=post&user_id=${userId}&page=${this.state.pageNo}`,
+        `${
+          require('../config').default.production
+        }api/v1/search/user?type=post&user_id=${userId}&page=${
+          this.state.pageNo
+        }`,
         {
           headers: {
             Authorization: `Bearer ${Token}`,
@@ -296,7 +312,7 @@ class UserProfile extends React.Component {
     } else {
       const Token = await AsyncStorage.getItem('TOKEN');
       const response = await fetch(
-        `https://campus-gruv-heroku.herokuapp.com/api/v1/fetch/saved/posts`,
+        `${require('../config').default.production}api/v1/fetch/saved/posts`,
         {
           headers: {
             Authorization: `Bearer ${Token}`,
@@ -358,11 +374,11 @@ class UserProfile extends React.Component {
     );
   };
 
-  blockUser = async user_id => {
+  blockUser = async (user_id) => {
     alert('user blocked');
     // const Token = await AsyncStorage.getItem('TOKEN');
     // var Response = await fetch(
-    //   `https://campus-gruv-heroku.herokuapp.com/api/v1/user/action`,
+    //   `${require('../config').default.production}api/v1/user/action`,
     //   {
     //     method: 'POST',
     //     body: {
@@ -379,15 +395,17 @@ class UserProfile extends React.Component {
     // console.log('block response', responseJson);
   };
 
-  followButton = async id => {
-    this.setState(prevState => ({
+  followButton = async (id) => {
+    this.setState((prevState) => ({
       isFollowing: !prevState.isFollowing,
     }));
     const Token = await AsyncStorage.getItem('TOKEN');
     var Response = null;
     if (this.state.isFollowing) {
       Response = await fetch(
-        `https://campus-gruv-heroku.herokuapp.com/api/v1/user/follow?user_id=${id}`,
+        `${
+          require('../config').default.production
+        }api/v1/user/follow?user_id=${id}`,
         {
           method: 'GET',
           headers: {
@@ -398,7 +416,9 @@ class UserProfile extends React.Component {
       );
     } else {
       Response = await fetch(
-        `https://campus-gruv-heroku.herokuapp.com/api/v1/user/unfollow?user_id=${id}`,
+        `${
+          require('../config').default.production
+        }api/v1/user/unfollow?user_id=${id}`,
         {
           method: 'GET',
           headers: {
@@ -713,7 +733,7 @@ class UserProfile extends React.Component {
               }}
               placeholder="Search"
               value={this.state.searchbox}
-              onChangeText={searchbox => {
+              onChangeText={(searchbox) => {
                 this.setState({searchbox});
                 this.searchPost(searchbox, postUserId);
               }}
@@ -785,7 +805,7 @@ class UserProfile extends React.Component {
   }
 }
 
-mapStateToProps = state => {
+mapStateToProps = (state) => {
   //this state will contain FULL redux store all the reducers data
 
   //use your required reducer data in props i.e reducer1

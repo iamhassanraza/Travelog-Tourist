@@ -42,7 +42,7 @@ const IconGrey = '#b4b8bf';
 //AndroidKeyboardAdjust.setAdjustPan();
 
 class PostDetail extends Component {
-  static navigationOptions = props => {
+  static navigationOptions = (props) => {
     return {
       header: (
         <Header
@@ -90,7 +90,9 @@ class PostDetail extends Component {
     );
     const Token = await AsyncStorage.getItem('TOKEN');
     const Response = await fetch(
-      `https://campus-gruv-heroku.herokuapp.com/api/v1/view/count?post_id=${DATA.postId}`,
+      `${require('../config').default.production}api/v1/view/count?post_id=${
+        DATA.postId
+      }`,
       {
         headers: {
           Authorization: `Bearer ${Token}`,
@@ -99,7 +101,7 @@ class PostDetail extends Component {
     );
   };
 
-  changeCurrentCommentState = comment => {
+  changeCurrentCommentState = (comment) => {
     this.setState({
       currentComment: comment,
     });
@@ -109,24 +111,28 @@ class PostDetail extends Component {
     this.setState({isModalVisible: !this.state.isModalVisible});
   };
 
-  getExtention = filename => {
+  getExtention = (filename) => {
     return /[.]/.exec(filename) ? /[^.]+$/.exec(filename) : undefined;
   };
 
-  createPDF = async postId => {
+  createPDF = async (postId) => {
     this.setState({isModalVisible: false});
     await fetch(
-      `https://campus-gruv-heroku.herokuapp.com/api/v1/generate/pdf?post_id=${postId}`,
+      `${
+        require('../config').default.production
+      }api/v1/generate/pdf?post_id=${postId}`,
     );
     Linking.openURL(
-      `https://campus-gruv-heroku.herokuapp.com/api/v1/download/pdf?post_id=${postId}`,
+      `${
+        require('../config').default.production
+      }api/v1/download/pdf?post_id=${postId}`,
     );
   };
 
   sharePost = (first_name, postTitle) => {
     let text = `Checkout this post by ${first_name}: \n`;
     if (Platform.OS === 'android')
-      text = text.concat('https://campus-gruv-heroku.herokuapp.com/Android');
+      text = text.concat(`${require('../config').default.production}Android`);
     else text = text.concat('http://itunes.apple.com/app/id1453977874');
 
     const options = {
@@ -135,10 +141,10 @@ class PostDetail extends Component {
       //url: `app://`,
     };
     Share.open(options)
-      .then(res => {
+      .then((res) => {
         console.log(res);
       })
-      .catch(err => {
+      .catch((err) => {
         err && console.log(err);
       });
   };
@@ -353,7 +359,7 @@ class PostDetail extends Component {
     );
   };
 
-  renderImage = image => {
+  renderImage = (image) => {
     console.log(image, 'image', this.props.height);
     return (
       <View style={{}}>
@@ -394,7 +400,7 @@ class PostDetail extends Component {
     );
   };
 
-  renderDescription = description => {
+  renderDescription = (description) => {
     return (
       <View style={{marginLeft: '3%', marginRight: '5%'}}>
         <Text
@@ -430,13 +436,13 @@ class PostDetail extends Component {
         <Item style={{width: Dimensions.get('window').width - 100}}>
           <Input
             value={this.state.currentComment}
-            getRef={input => {
+            getRef={(input) => {
               this.commentInput = input;
             }}
             multiline={true}
             placeholder="Add a comment"
             style={{borderWidth: 0}}
-            onChangeText={text => {
+            onChangeText={(text) => {
               this.changeCurrentCommentState(text);
             }}
           />
@@ -468,7 +474,7 @@ class PostDetail extends Component {
     );
   };
 
-  renderAllComments = dp => {
+  renderAllComments = (dp) => {
     //console.log('coments', this.state.comments)
     return (
       <View style={{marginLeft: '4%'}}>
@@ -504,7 +510,7 @@ class PostDetail extends Component {
       const userId = await AsyncStorage.getItem('USER_ID');
       console.log('postid ------', postId);
       const Response = await fetch(
-        `https://campus-gruv-heroku.herokuapp.com/api/v1/comment/create`,
+        `${require('../config').default.production}api/v1/comment/create`,
         {
           method: 'POST',
           body: JSON.stringify({
@@ -547,7 +553,7 @@ class PostDetail extends Component {
   };
 
   likePost = async (postId, postUserId) => {
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       liked: !prevState.liked,
     }));
     const Token = await AsyncStorage.getItem('TOKEN');
@@ -557,7 +563,7 @@ class PostDetail extends Component {
     var Response = null;
     if (this.state.liked) {
       Response = await fetch(
-        `https://campus-gruv-heroku.herokuapp.com/api/v1/post/like`,
+        `${require('../config').default.production}api/v1/post/like`,
         {
           method: 'POST',
           body: JSON.stringify({
@@ -573,7 +579,7 @@ class PostDetail extends Component {
       );
     } else {
       Response = await fetch(
-        `https://campus-gruv-heroku.herokuapp.com/api/v1/post/unlike`,
+        `${require('../config').default.production}api/v1/post/unlike`,
         {
           method: 'POST',
           body: JSON.stringify({
@@ -601,8 +607,8 @@ class PostDetail extends Component {
     }
   };
 
-  savePost = async postId => {
-    this.setState(prevState => ({
+  savePost = async (postId) => {
+    this.setState((prevState) => ({
       saved: !prevState.saved,
     }));
     const Token = await AsyncStorage.getItem('TOKEN');
@@ -612,7 +618,9 @@ class PostDetail extends Component {
     var Response = null;
     if (this.state.saved) {
       Response = await fetch(
-        `https://campus-gruv-heroku.herokuapp.com/api/v1/user/save/post?post_id=${postId}`,
+        `${
+          require('../config').default.production
+        }api/v1/user/save/post?post_id=${postId}`,
         {
           method: 'GET',
           headers: {
@@ -623,7 +631,9 @@ class PostDetail extends Component {
       );
     } else {
       Response = await fetch(
-        `https://campus-gruv-heroku.herokuapp.com/api/v1/user/unsave/post?post_id=${postId}`,
+        `${
+          require('../config').default.production
+        }api/v1/user/unsave/post?post_id=${postId}`,
         {
           method: 'GET',
           headers: {
@@ -711,7 +721,7 @@ const styles = StyleSheet.create({
   },
 });
 
-mapStateToProps = state => {
+mapStateToProps = (state) => {
   //this state will contain FULL redux store all the reducers data
 
   //use your required reducer data in props i.e reducer1

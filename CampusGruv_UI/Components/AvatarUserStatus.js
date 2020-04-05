@@ -14,7 +14,7 @@ class AvatarUserStatus extends Component {
 
   followButton = async () => {
     console.log('id -------------->', this.props.id);
-    this.setState(prevState => ({
+    this.setState((prevState) => ({
       followed: !prevState.followed,
     }));
     const Token = await AsyncStorage.getItem('TOKEN');
@@ -24,7 +24,9 @@ class AvatarUserStatus extends Component {
     console.log('followed ==========> ', this.state.followed, id);
     if (this.state.followed) {
       Response = await fetch(
-        `https://campus-gruv-heroku.herokuapp.com/api/v1/user/follow?user_id=${id}`,
+        `${
+          require('../config').default.production
+        }api/v1/user/follow?user_id=${id}`,
         {
           method: 'GET',
           headers: {
@@ -35,7 +37,9 @@ class AvatarUserStatus extends Component {
       );
     } else {
       Response = await fetch(
-        `https://campus-gruv-heroku.herokuapp.com/api/v1/user/unfollow?user_id=${id}`,
+        `${
+          require('../config').default.production
+        }api/v1/user/unfollow?user_id=${id}`,
         {
           method: 'GET',
           headers: {

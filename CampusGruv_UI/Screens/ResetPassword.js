@@ -14,8 +14,8 @@ import {
 } from 'react-native';
 import HeaderTitle from './Heading';
 import Colors from '../Assets/Colors';
-import { withNavigation } from 'react-navigation';
-import { BarIndicator } from 'react-native-indicators';
+import {withNavigation} from 'react-navigation';
+import {BarIndicator} from 'react-native-indicators';
 
 class ResetPassword extends React.Component {
   static navigationOptions = {
@@ -27,41 +27,47 @@ class ResetPassword extends React.Component {
       newPassword: '',
       confirmPassword: '',
       error: '',
-      Spinner: false
+      Spinner: false,
     };
   }
 
-
-changePassword = async () => {
-
-
-  this.setState({
-    Spinner: true,
-  });
-        const Response = await fetch(`https://campus-gruv-heroku.herokuapp.com/api/v1/user/reset_password?otp=${this.props.navigation.getParam('OTP', '000')}&password=${this.state.confirmPassword}&email=${this.props.navigation.getParam('email', 'no email')}`);
-      const JsonResponse = await Response.json();
-      if(parseInt(Response.status)=== 400) {
-          alert(JsonResponse.message);
-      }
-      else if (parseInt(Response.status)=== 200){
-          alert(JsonResponse.message);
-          this.props.navigation.navigate("Login");
-          this.setState({error: ''});
-      }
-}
-
+  changePassword = async () => {
+    this.setState({
+      Spinner: true,
+    });
+    const Response = await fetch(
+      `${
+        require('../config').default.production
+      }api/v1/user/reset_password?otp=${this.props.navigation.getParam(
+        'OTP',
+        '000',
+      )}&password=${
+        this.state.confirmPassword
+      }&email=${this.props.navigation.getParam('email', 'no email')}`,
+    );
+    const JsonResponse = await Response.json();
+    if (parseInt(Response.status) === 400) {
+      alert(JsonResponse.message);
+    } else if (parseInt(Response.status) === 200) {
+      alert(JsonResponse.message);
+      this.props.navigation.navigate('Login');
+      this.setState({error: ''});
+    }
+  };
 
   render() {
-
-    
-
     return (
       <ImageBackground
         style={styles.container}
         source={require('../Assets/Images/background.png')}
         resizeMode="cover">
         <Text
-          style={{color: 'white', fontSize: 16, margin: 10, marginTop:Platform.OS=='ios'? 40:20,}}
+          style={{
+            color: 'white',
+            fontSize: 16,
+            margin: 10,
+            marginTop: Platform.OS == 'ios' ? 40 : 20,
+          }}
           onPress={() => {
             this.props.navigation.goBack();
           }}>
@@ -95,16 +101,16 @@ changePassword = async () => {
                   borderRadius: 10,
                 }}>
                 <TextInput
-                secureTextEntry
+                  secureTextEntry
                   autoCapitalize="none"
                   style={{
                     width: '90%',
                     fontSize: 20,
                     color: '#ACACAC',
                     paddingLeft: '3%',
-                    height:Platform.OS=='ios'? 40:50,
+                    height: Platform.OS == 'ios' ? 40 : 50,
                   }}
-                  onChangeText={text => this.setState({newPassword: text})}
+                  onChangeText={(text) => this.setState({newPassword: text})}
                   value={this.state.newPassword}
                 />
               </View>
@@ -130,16 +136,18 @@ changePassword = async () => {
                   borderRadius: 10,
                 }}>
                 <TextInput
-                secureTextEntry
+                  secureTextEntry
                   autoCapitalize="none"
                   style={{
                     width: '90%',
                     fontSize: 20,
                     color: '#ACACAC',
                     paddingLeft: '3%',
-                    height:Platform.OS=='ios'? 40:50,
+                    height: Platform.OS == 'ios' ? 40 : 50,
                   }}
-                  onChangeText={text => this.setState({confirmPassword: text})}
+                  onChangeText={(text) =>
+                    this.setState({confirmPassword: text})
+                  }
                   value={this.state.confirmPassword}
                 />
               </View>
@@ -147,10 +155,14 @@ changePassword = async () => {
               <TouchableOpacity
                 onPress={() => {
                   {
-                    this.state.newPassword.length < 8 ? this.setState({error: 'Minimum 8 characters required'})  : this.state.newPassword != this.state.confirmPassword ? this.setState({error: 'Password Not Match'}) : this.changePassword();
+                    this.state.newPassword.length < 8
+                      ? this.setState({error: 'Minimum 8 characters required'})
+                      : this.state.newPassword != this.state.confirmPassword
+                      ? this.setState({error: 'Password Not Match'})
+                      : this.changePassword();
                   }
 
-                  console.log(this.state.error,'error?');
+                  console.log(this.state.error, 'error?');
                 }}>
                 {this.state.error ? (
                   <View>
@@ -165,67 +177,59 @@ changePassword = async () => {
                   </View>
                 ) : null}
 
-                
-
                 {this.state.Spinner ? (
-                     
-                     <View style={{marginBottom: 10}}>
-                     <View
-                       style={{
-                         height: 40,
-                         width: '50%',
-                         marginLeft: '25%',
-                         borderRadius: 10,
-                         marginTop: 40,
-                         justifyContent: 'center',
-                         backgroundColor: 'transparent',
-                         borderColor: 'white',
-                         borderWidth: 0.6,
-                         flexDirection:"row"
-                       }}>
-                       <Text
-                         style={{
-                           fontSize: 16,
-                           fontWeight: 'bold',
-                           textAlign: 'center',
-                           color: 'white',
-                         }}>
-                         Continue
-                       </Text>
-                     </View>
-                     <BarIndicator
-                          count={3}
-                          size={20}
-                          color={'white'}
-                        />
-                   </View>
-                      
-                    ) : (
-                      <View style={{marginBottom: 10}}>
-                  <View
-                    style={{
-                      height: 40,
-                      width: '50%',
-                      marginLeft: '25%',
-                      borderRadius: 10,
-                      marginTop: 40,
-                      justifyContent: 'center',
-                      backgroundColor: 'transparent',
-                      borderColor: 'white',
-                      borderWidth: 0.6,
-                    }}>
-                    <Text
+                  <View style={{marginBottom: 10}}>
+                    <View
                       style={{
-                        fontSize: 16,
-                        fontWeight: 'bold',
-                        textAlign: 'center',
-                        color: 'white',
+                        height: 40,
+                        width: '50%',
+                        marginLeft: '25%',
+                        borderRadius: 10,
+                        marginTop: 40,
+                        justifyContent: 'center',
+                        backgroundColor: 'transparent',
+                        borderColor: 'white',
+                        borderWidth: 0.6,
+                        flexDirection: 'row',
                       }}>
-                      Continue
-                    </Text>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontWeight: 'bold',
+                          textAlign: 'center',
+                          color: 'white',
+                        }}>
+                        Continue
+                      </Text>
+                    </View>
+                    <BarIndicator count={3} size={20} color={'white'} />
                   </View>
-                </View>
-                    )}
+                ) : (
+                  <View style={{marginBottom: 10}}>
+                    <View
+                      style={{
+                        height: 40,
+                        width: '50%',
+                        marginLeft: '25%',
+                        borderRadius: 10,
+                        marginTop: 40,
+                        justifyContent: 'center',
+                        backgroundColor: 'transparent',
+                        borderColor: 'white',
+                        borderWidth: 0.6,
+                      }}>
+                      <Text
+                        style={{
+                          fontSize: 16,
+                          fontWeight: 'bold',
+                          textAlign: 'center',
+                          color: 'white',
+                        }}>
+                        Continue
+                      </Text>
+                    </View>
+                  </View>
+                )}
               </TouchableOpacity>
             </View>
           </KeyboardAvoidingView>

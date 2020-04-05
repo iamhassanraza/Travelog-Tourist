@@ -23,7 +23,9 @@ class NewMessageComponent extends Component {
   fetchRoomDetails = async () => {
     const Token = await AsyncStorage.getItem('TOKEN');
     const Response = await fetch(
-      `https://campus-gruv-heroku.herokuapp.com/api/v1/room/details?user_id=${this.props.id}`,
+      `${require('../config').default.production}api/v1/room/details?user_id=${
+        this.props.id
+      }`,
       {
         method: 'GET',
         headers: {

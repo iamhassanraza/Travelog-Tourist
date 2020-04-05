@@ -16,15 +16,11 @@ import {
 import Spinner from 'react-native-loading-spinner-overlay';
 import HeaderTitle from './Heading';
 import Colors from '../Assets/Colors';
-const API_BASE_URL = 'https://campus-gruv-heroku.herokuapp.com/api/v1';
-import { connect } from "react-redux";
-import { CreateUserDetails } from "../ReduxStore/Actions/index";
+const API_BASE_URL = `${require('../config').default.production}api/v1`;
+import {connect} from 'react-redux';
+import {CreateUserDetails} from '../ReduxStore/Actions/index';
 
-
-import {
-  BarIndicator,
-
-} from 'react-native-indicators';
+import {BarIndicator} from 'react-native-indicators';
 
 const screenwidth = Dimensions.get('window').width;
 const screenheight = Dimensions.get('window').height;
@@ -74,7 +70,7 @@ class Login extends React.Component {
     return true;
   };
 
-  submitForm =  () => {
+  submitForm = () => {
     var status = '';
     if (!this.validateForm()) {
       console.log('sendng req .....');
@@ -94,7 +90,7 @@ class Login extends React.Component {
           password: this.state.password,
         }),
       })
-        .then(res => {
+        .then((res) => {
           status = res.status;
           this.setState({
             Spinner: false,
@@ -105,26 +101,24 @@ class Login extends React.Component {
         .then(async (response) => {
           if (status === 200) {
             //good to go
-            console.log(response)
-            this.props.CreateUserDetails(response)
-             await AsyncStorage.setItem('TOKEN', response.token);
-             await AsyncStorage.setItem('email', response.email);
-             console.log(response.email_verified.toString())
-             await AsyncStorage.setItem('isverified', response.email_verified.toString());
-             await AsyncStorage.setItem('USER_ID', response.id.toString());
-              
-            if(response.campus_id===null)
-            {     
-             await AsyncStorage.setItem('CAMPUS_ID', 'nahi_hai');
-               
+            console.log(response);
+            this.props.CreateUserDetails(response);
+            await AsyncStorage.setItem('TOKEN', response.token);
+            await AsyncStorage.setItem('email', response.email);
+            console.log(response.email_verified.toString());
+            await AsyncStorage.setItem(
+              'isverified',
+              response.email_verified.toString(),
+            );
+            await AsyncStorage.setItem('USER_ID', response.id.toString());
+
+            if (response.campus_id === null) {
+              await AsyncStorage.setItem('CAMPUS_ID', 'nahi_hai');
+            } else {
+              AsyncStorage.setItem('CAMPUS_ID', response.campus_id.toString());
             }
-            else{
-              AsyncStorage.setItem('CAMPUS_ID', response.campus_id.toString());    
-            }
 
-            this.props.navigation.navigate('AuthLoading')
-
-
+            this.props.navigation.navigate('AuthLoading');
           } else if (status === 401) {
             //user not found with credentials
             alert(response.message.split(':')[1]);
@@ -132,7 +126,7 @@ class Login extends React.Component {
 
           console.log(response, 'json response -----');
         })
-        .catch(error => {
+        .catch((error) => {
           console.log(error);
         });
     }
@@ -151,9 +145,9 @@ class Login extends React.Component {
               height: screenheight,
               justifyContent: 'space-between',
             }}>
-            <KeyboardAvoidingView  behavior="padding" enabled>
+            <KeyboardAvoidingView behavior="padding" enabled>
               {/* MAIN TITLE */}
-              <View style={{ justifyContent: 'center', height: '30%'}}>
+              <View style={{justifyContent: 'center', height: '30%'}}>
                 <HeaderTitle />
               </View>
 
@@ -172,14 +166,14 @@ class Login extends React.Component {
                   <TextInput
                     style={{
                       width: '90%',
-                      height:Platform.OS=='ios'? 40:50,
+                      height: Platform.OS == 'ios' ? 40 : 50,
                       marginLeft: 10,
                       fontSize: 20,
                       color: '#ACACAC',
                     }}
                     placeholder="Email"
                     value={this.state.email}
-                    onChangeText={email => this.setState({email})}
+                    onChangeText={(email) => this.setState({email})}
                     keyboardType="email-address"
                   />
                 </View>
@@ -194,7 +188,7 @@ class Login extends React.Component {
                 <View
                   style={{
                     width: '90%',
-                    height:Platform.OS=='ios'?40:50,
+                    height: Platform.OS == 'ios' ? 40 : 50,
                     marginLeft: '5%',
                     marginTop: 20,
                     borderColor: '#C4C4C4',
@@ -205,14 +199,14 @@ class Login extends React.Component {
                   <TextInput
                     style={{
                       width: '90%',
-                      height:Platform.OS=='ios'? 40:50,
+                      height: Platform.OS == 'ios' ? 40 : 50,
                       marginLeft: 10,
                       fontSize: 20,
                       color: '#ACACAC',
                     }}
                     placeholder="Password"
                     value={this.state.password}
-                    onChangeText={password => this.setState({password})}
+                    onChangeText={(password) => this.setState({password})}
                     secureTextEntry
                   />
                 </View>
@@ -357,4 +351,4 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null ,{ CreateUserDetails })(Login);
+export default connect(null, {CreateUserDetails})(Login);

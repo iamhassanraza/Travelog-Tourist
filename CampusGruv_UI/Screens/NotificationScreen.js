@@ -48,6 +48,7 @@ class NotificationScreen extends Component {
       this.state.store.dispatch(clearNoti());
     });
   }
+  //${require('../config').default.production}
 
   getNoti = async () => {
     const Token = await AsyncStorage.getItem('TOKEN');
@@ -56,7 +57,9 @@ class NotificationScreen extends Component {
       loading: true,
     });
     const Response = await fetch(
-      `https://campus-gruv-heroku.herokuapp.com/api/v1/user/notifications?user_id=${user_id}&page=${this.state.pageNo}`,
+      `${
+        require('../config').default.production
+      }api/v1/user/notifications?user_id=${user_id}&page=${this.state.pageNo}`,
       {
         headers: {
           Authorization: `Bearer ${Token}`,
@@ -113,7 +116,7 @@ class NotificationScreen extends Component {
           <FlatList
             vertical
             data={this.state.notification}
-            keyExtractor={item => item.id}
+            keyExtractor={(item) => item.id}
             showsHorizontalScrollIndicator={false}
             renderItem={({item, index}) => (
               <NoticationComponent
@@ -161,7 +164,7 @@ class NotificationScreen extends Component {
   }
 }
 
-mapStateToProps = state => {
+mapStateToProps = (state) => {
   //this state will contain FULL redux store all the reducers data
 
   //use your required reducer data in props i.e reducer1

@@ -17,7 +17,7 @@ import SearchInput, {createFilter} from 'react-native-search-filter';
 const KEYS_TO_FILTERS = ['name', 'subject'];
 
 class Following extends Component {
-  static navigationOptions = props => {
+  static navigationOptions = (props) => {
     const {params = {}} = props.navigation.state;
     return {
       header:
@@ -117,7 +117,9 @@ class Following extends Component {
     const Token = await AsyncStorage.getItem('TOKEN');
     const user_id = await AsyncStorage.getItem('USER_ID');
     const Response = await fetch(
-      `https://campus-gruv-heroku.herokuapp.com/api/v1/following/users?user_id=${navId}&page=1`,
+      `${
+        require('../config').default.production
+      }api/v1/following/users?user_id=${navId}&page=1`,
       {
         headers: {
           Authorization: `Bearer ${Token}`,
@@ -137,7 +139,7 @@ class Following extends Component {
           <FlatList
             vertical
             data={this.state.search}
-            keyExtractor={item => item.name}
+            keyExtractor={(item) => item.name}
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => (
               <AvatarUserStatus

@@ -1,4 +1,3 @@
-
 import React, {Component, PureComponent} from 'react';
 import {
   Text,
@@ -22,7 +21,7 @@ import CrossIcon from 'react-native-vector-icons/Entypo';
 import ContentLoader, {Rect} from 'react-content-loader/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
-import Icon3 from 'react-native-vector-icons/Feather'
+import Icon3 from 'react-native-vector-icons/Feather';
 import PeopleIcon from 'react-native-vector-icons/FontAwesome5';
 import RenderCards from '../Components/RenderCards';
 import NoPosts from '../Components/NoPost';
@@ -31,7 +30,7 @@ import {Header} from 'react-native-elements';
 import MyHeader from '../Components/MyHeader';
 
 export default class CategoryPosts extends PureComponent {
-  static navigationOptions = props => {
+  static navigationOptions = (props) => {
     const {params = {}} = props.navigation.state;
     return {
       header:
@@ -89,15 +88,14 @@ export default class CategoryPosts extends PureComponent {
                   </TouchableOpacity>
                 </View>
 
-                <View style={{ marginLeft: "10%",marginTop:"0.5%"}}>
-                <TouchableOpacity
-                  style={{paddingRight: 5}}
-                  onPress={() => props.navigation.navigate('HomeScreen')}>
-                  <PeopleIcon name="users" color="white" size={23} />
-                </TouchableOpacity>
+                <View style={{marginLeft: '10%', marginTop: '0.5%'}}>
+                  <TouchableOpacity
+                    style={{paddingRight: 5}}
+                    onPress={() => props.navigation.navigate('HomeScreen')}>
+                    <PeopleIcon name="users" color="white" size={23} />
+                  </TouchableOpacity>
+                </View>
               </View>
-              </View>
-              
             </View>
           </View>
         ) : (
@@ -151,15 +149,14 @@ export default class CategoryPosts extends PureComponent {
                   <Icon2 name="view-grid" color="white" size={28} />
                 </TouchableOpacity>
               </View>
-              <View style={{ marginLeft: "10%",marginTop:"0.5%"}}>
-              <TouchableOpacity
-                style={{paddingRight: 5}}
-                onPress={() => props.navigation.navigate('HomeScreen')}>
-                <PeopleIcon name="users" color="white" size={23} />
-              </TouchableOpacity>
+              <View style={{marginLeft: '10%', marginTop: '0.5%'}}>
+                <TouchableOpacity
+                  style={{paddingRight: 5}}
+                  onPress={() => props.navigation.navigate('HomeScreen')}>
+                  <PeopleIcon name="users" color="white" size={23} />
+                </TouchableOpacity>
+              </View>
             </View>
-            </View>
-            
           </View>
         ),
     };
@@ -189,21 +186,22 @@ export default class CategoryPosts extends PureComponent {
 
   loadmore = () => {
     this.setState(
-      previousState => {
+      (previousState) => {
         return {pageNo: previousState.pageNo + 1, loadmore: true};
       },
       async () => {
         console.log('calling load more api');
         const Token = await AsyncStorage.getItem('TOKEN');
         var campus;
-        if(await AsyncStorage.getItem('otherCampus')){
+        if (await AsyncStorage.getItem('otherCampus')) {
           campus = await AsyncStorage.getItem('otherCampus');
-          }
-          else{
+        } else {
           campus = await AsyncStorage.getItem('CAMPUS_ID');
-          }
+        }
         const Response = await fetch(
-          `https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_category&category_id=${this.props.navigation.getParam(
+          `${
+            require('../config').default.production
+          }api/v1/search/post?type=post_category&category_id=${this.props.navigation.getParam(
             'CategoryID',
             'undefined',
           )}&page=${this.state.pageNo}&campus_id=${campus}`,
@@ -219,7 +217,7 @@ export default class CategoryPosts extends PureComponent {
         if (parseInt(Response.status) === 401) {
           alert(JsonResponse.message);
         } else if (parseInt(Response.status) === 200) {
-          this.setState(previousState => {
+          this.setState((previousState) => {
             return {
               posts: [...previousState.posts, ...JsonResponse.data],
               total: JsonResponse.total,
@@ -233,17 +231,18 @@ export default class CategoryPosts extends PureComponent {
   };
 
   fetchCategoryPosts = async () => {
-    this.setState({ posts: [], loading: true, total: undefined })
+    this.setState({posts: [], loading: true, total: undefined});
     const Token = await AsyncStorage.getItem('TOKEN');
     var campus;
-    if(await AsyncStorage.getItem('otherCampus')){
+    if (await AsyncStorage.getItem('otherCampus')) {
       campus = await AsyncStorage.getItem('otherCampus');
-      }
-      else{
+    } else {
       campus = await AsyncStorage.getItem('CAMPUS_ID');
-      }
+    }
     const Response = await fetch(
-      `https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_category&category_id=${this.props.navigation.getParam(
+      `${
+        require('../config').default.production
+      }api/v1/search/post?type=post_category&category_id=${this.props.navigation.getParam(
         'CategoryID',
         'undefined',
       )}&page=${this.state.pageNo}&campus_id=${campus}`,
@@ -255,11 +254,9 @@ export default class CategoryPosts extends PureComponent {
     );
     const JsonResponse = await Response.json();
 
-
     if (parseInt(Response.status) === 401) {
-        console.log("Error code status 401");
-    } 
-    else if (parseInt(Response.status) === 200) {
+      console.log('Error code status 401');
+    } else if (parseInt(Response.status) === 200) {
       console.log('Category aagyi yayyyy');
       // this.setState(previousState => {
       //   return {
@@ -277,8 +274,6 @@ export default class CategoryPosts extends PureComponent {
       });
     }
   };
-
-
 
   componentDidMount() {
     const {navigation} = this.props;
@@ -308,55 +303,49 @@ export default class CategoryPosts extends PureComponent {
   }
 
   render() {
-   
-
-if (this.state.total > 0) {
-    return (
-      <React.Fragment>
-       
-        <ScrollView
-        
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this.onPageRefresh}
-            />
-          }>
-          <View style={{flex: 1}}>
-            <RenderCards
-              posts={this.state.posts}
-              totalPosts={this.state.total}
-              loadMore={this.loadmore}
-              loadstate={this.state.loadmore}></RenderCards>
-          </View>
-        </ScrollView>
-      </React.Fragment>
-    );
-  } else if (this.state.total === 0) {
-    return (
-      <View style={{paddingTop: '45%', height: '100%'}}>
-        <NoPosts></NoPosts>
-      </View>
-    );
-  } else {
-    return (
-      <View>
-        <ContentLoader
-          height={450}
-          width={820}
-          speed={0.2}
-          height={Dimensions.get('window').height * 1}>
-          <Rect x="10" y="10" rx="5" ry="5" width="185" height="220" />
-          <Rect x="200" y="10" rx="5" ry="5" width="200" height="280" />
-          <Rect x="10" y="240" rx="5" ry="5" width="185" height="250" />
-          <Rect x="200" y="300" rx="5" ry="5" width="200" height="280" />
-          {/* <Rect x="280" y="300" rx="5" ry="5" width="260" height="140" />
+    if (this.state.total > 0) {
+      return (
+        <React.Fragment>
+          <ScrollView
+            refreshControl={
+              <RefreshControl
+                refreshing={this.state.refreshing}
+                onRefresh={this.onPageRefresh}
+              />
+            }>
+            <View style={{flex: 1}}>
+              <RenderCards
+                posts={this.state.posts}
+                totalPosts={this.state.total}
+                loadMore={this.loadmore}
+                loadstate={this.state.loadmore}></RenderCards>
+            </View>
+          </ScrollView>
+        </React.Fragment>
+      );
+    } else if (this.state.total === 0) {
+      return (
+        <View style={{paddingTop: '45%', height: '100%'}}>
+          <NoPosts></NoPosts>
+        </View>
+      );
+    } else {
+      return (
+        <View>
+          <ContentLoader
+            height={450}
+            width={820}
+            speed={0.2}
+            height={Dimensions.get('window').height * 1}>
+            <Rect x="10" y="10" rx="5" ry="5" width="185" height="220" />
+            <Rect x="200" y="10" rx="5" ry="5" width="200" height="280" />
+            <Rect x="10" y="240" rx="5" ry="5" width="185" height="250" />
+            <Rect x="200" y="300" rx="5" ry="5" width="200" height="280" />
+            {/* <Rect x="280" y="300" rx="5" ry="5" width="260" height="140" />
                   <Rect x="550" y="160" rx="5" ry="5" width="260" height="280" /> */}
-        </ContentLoader>
-      </View>
-    );
+          </ContentLoader>
+        </View>
+      );
+    }
   }
 }
-}
-
-

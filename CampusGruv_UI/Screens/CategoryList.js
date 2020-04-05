@@ -7,7 +7,8 @@ import {
   FlatList,
   TouchableOpacity,
   AsyncStorage,
-  ActivityIndicator,Platform
+  ActivityIndicator,
+  Platform,
 } from 'react-native';
 import Category from '../Components/CategoryComp';
 import {withNavigation} from 'react-navigation';
@@ -18,135 +19,142 @@ import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
 import PeopleIcon from 'react-native-vector-icons/FontAwesome5';
 
 export default class CategoryList extends Component {
-  static navigationOptions = props => {
+  static navigationOptions = (props) => {
     const {params = {}} = props.navigation.state;
     return {
       header: (
         <View>
-
-        {
-          Platform.OS =='ios' ?
-          <View
-          style={{
-            height: 80,
-            flexDirection: 'row',
-            alignItems: 'center',
-            backgroundColor: '#1192d1',
-          }}>
-          <View style={{flexDirection: 'row', alignItems: 'center', flex: 10,marginTop:30}}>
+          {Platform.OS == 'ios' ? (
             <View
               style={{
-                marginLeft: '2%',
+                height: 80,
                 flexDirection: 'row',
-                alignSelf: 'center',
+                alignItems: 'center',
+                backgroundColor: '#1192d1',
               }}>
-              <TouchableOpacity
-                onPress={() => props.navigation.navigate('Searching')}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  flex: 10,
+                  marginTop: 30,
+                }}>
                 <View
                   style={{
-                    height: 30,
-                    padding: 0,
+                    marginLeft: '2%',
                     flexDirection: 'row',
-                    alignItems: 'center',
-                    width: 250,
-                    backgroundColor: '#F0F0F0',
-                    borderRadius: 10,
+                    alignSelf: 'center',
                   }}>
-                  <View style={{marginLeft: '2%'}}>
-                    <Icon name="search" color="#1192d1" size={20} />
-                  </View>
-                  <View style={{height: 20}}>
-                    <Image
-                      source={Logo}
+                  <TouchableOpacity
+                    onPress={() => props.navigation.navigate('Searching')}>
+                    <View
                       style={{
-                        width: 150,
-                        alignSelf: 'flex-start',
-                        height: '100%',
-                      }}
-                      resizeMode="contain"
-                    />
-                  </View>
+                        height: 30,
+                        padding: 0,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        width: 250,
+                        backgroundColor: '#F0F0F0',
+                        borderRadius: 10,
+                      }}>
+                      <View style={{marginLeft: '2%'}}>
+                        <Icon name="search" color="#1192d1" size={20} />
+                      </View>
+                      <View style={{height: 20}}>
+                        <Image
+                          source={Logo}
+                          style={{
+                            width: 150,
+                            alignSelf: 'flex-start',
+                            height: '100%',
+                          }}
+                          resizeMode="contain"
+                        />
+                      </View>
+                    </View>
+                  </TouchableOpacity>
                 </View>
-              </TouchableOpacity>
-            </View>
-            
-            <View style={{marginLeft: 5}}>
-              <TouchableOpacity
-                onPress={() => props.navigation.navigate('CategoryList')}>
-                <Icon2 name="view-grid" color="white" size={28} />
-              </TouchableOpacity>
-            </View>
 
-            <View style={{  marginLeft: "10%"}}>
-                <TouchableOpacity style={{}} onPress={() => props.navigation.navigate('FollowersPosts')}>
+                <View style={{marginLeft: 5}}>
+                  <TouchableOpacity
+                    onPress={() => props.navigation.navigate('CategoryList')}>
+                    <Icon2 name="view-grid" color="white" size={28} />
+                  </TouchableOpacity>
+                </View>
+
+                <View style={{marginLeft: '10%'}}>
+                  <TouchableOpacity
+                    style={{}}
+                    onPress={() => props.navigation.navigate('FollowersPosts')}>
                     <PeopleIcon name="users" color="#00527a" size={23} />
-                </TouchableOpacity>
+                  </TouchableOpacity>
+                </View>
+              </View>
             </View>
-
-          </View>
-        </View>
-          :
-          <View
-          style={{
-            height: 50,
-            flexDirection: 'row',
-            alignItems: 'center',
-            backgroundColor: '#1192d1',
-          }}>
-          <View style={{flexDirection: 'row', alignItems: 'center', flex: 10}}>
+          ) : (
             <View
               style={{
-                marginLeft: '2%',
+                height: 50,
                 flexDirection: 'row',
-                alignSelf: 'center',
+                alignItems: 'center',
+                backgroundColor: '#1192d1',
               }}>
-              <TouchableOpacity
-                onPress={() => props.navigation.navigate('Searching')}>
+              <View
+                style={{flexDirection: 'row', alignItems: 'center', flex: 10}}>
                 <View
                   style={{
-                    height: 30,
-                    padding: 0,
+                    marginLeft: '2%',
                     flexDirection: 'row',
-                    alignItems: 'center',
-                    width: 250,
-                    backgroundColor: '#F0F0F0',
-                    borderRadius: 10,
+                    alignSelf: 'center',
                   }}>
-                  <View style={{marginLeft: '2%'}}>
-                    <Icon name="search" color="#1192d1" size={20} />
-                  </View>
-                  <View style={{height: 20}}>
-                    <Image
-                      source={Logo}
+                  <TouchableOpacity
+                    onPress={() => props.navigation.navigate('Searching')}>
+                    <View
                       style={{
-                        width: 150,
-                        alignSelf: 'flex-start',
-                        height: '100%',
-                      }}
-                      resizeMode="contain"
-                      />
-                  </View>
+                        height: 30,
+                        padding: 0,
+                        flexDirection: 'row',
+                        alignItems: 'center',
+                        width: 250,
+                        backgroundColor: '#F0F0F0',
+                        borderRadius: 10,
+                      }}>
+                      <View style={{marginLeft: '2%'}}>
+                        <Icon name="search" color="#1192d1" size={20} />
+                      </View>
+                      <View style={{height: 20}}>
+                        <Image
+                          source={Logo}
+                          style={{
+                            width: 150,
+                            alignSelf: 'flex-start',
+                            height: '100%',
+                          }}
+                          resizeMode="contain"
+                        />
+                      </View>
+                    </View>
+                  </TouchableOpacity>
                 </View>
-              </TouchableOpacity>
-            </View>
-            <View style={{marginLeft: 5}}>
-              <TouchableOpacity
-                onPress={() => props.navigation.navigate('CategoryList')}>
-                <Icon2 name="view-grid" color="white" size={28} />
-              </TouchableOpacity>
-            </View>
+                <View style={{marginLeft: 5}}>
+                  <TouchableOpacity
+                    onPress={() => props.navigation.navigate('CategoryList')}>
+                    <Icon2 name="view-grid" color="white" size={28} />
+                  </TouchableOpacity>
+                </View>
 
-            <View style={{  marginLeft: "10%"}}>
-                <TouchableOpacity style={{}} onPress={() => props.navigation.navigate('FollowersPosts')}>
+                <View style={{marginLeft: '10%'}}>
+                  <TouchableOpacity
+                    style={{}}
+                    onPress={() => props.navigation.navigate('FollowersPosts')}>
                     <PeopleIcon name="users" color="#00527a" size={20} />
-                </TouchableOpacity>
+                  </TouchableOpacity>
+                </View>
+              </View>
             </View>
-          </View>
-          
+          )}
         </View>
-      }
-      </View>
-        ),
+      ),
     };
   };
 
@@ -157,7 +165,7 @@ export default class CategoryList extends Component {
     loading: false,
   };
 
-  selectCategory = cat => {
+  selectCategory = (cat) => {
     this.setState({Category_id: cat}, () => {
       this.props.navigation.navigate('CategoryPosts', {
         CategoryID: this.state.Category_id,
@@ -173,17 +181,17 @@ export default class CategoryList extends Component {
   componentDidMount = async () => {
     this.setState({loading: true});
     const Token = await AsyncStorage.getItem('TOKEN');
-    fetch('https://campus-gruv-heroku.herokuapp.com/api/v1/post/categories', {
+    fetch(`${require('../config').default.production}api/v1/post/categories`, {
       headers: {
         Authorization: `Bearer ${Token}`,
       },
     })
-      .then(response => response.json())
-      .then(responseJson => {
+      .then((response) => response.json())
+      .then((responseJson) => {
         // console.log('response==========>', responseJson);
         this.setState({Data: responseJson, loading: false});
       })
-      .catch(error => {
+      .catch((error) => {
         console.error(error);
       });
   };
@@ -206,7 +214,7 @@ export default class CategoryList extends Component {
             style={{margin: 10}}
             numColumns={2}
             data={this.state.Data}
-            keyExtractor={item => item.id}
+            keyExtractor={(item) => item.id}
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => {
               console.log(item.id);

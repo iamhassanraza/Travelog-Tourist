@@ -13,10 +13,7 @@ import {
   KeyboardAvoidingView,
   AsyncStorage,
 } from 'react-native';
-import {
-  BarIndicator,
- 
-} from 'react-native-indicators';
+import {BarIndicator} from 'react-native-indicators';
 import HeaderTitle from './Heading';
 import Colors from '../Assets/Colors';
 import {withNavigation} from 'react-navigation';
@@ -35,24 +32,26 @@ class EmailVerification extends React.Component {
   }
 
   checkOTP = async () => {
-      this.setState({
-          spinner:true
-      })
+    this.setState({
+      spinner: true,
+    });
     const email = await this.props.navigation.getParam('email', 'no email');
 
     if (this.state.code !== '') {
       const Response = await fetch(
-        `https://campus-gruv-heroku.herokuapp.com/api/v1/user/verify_otp?otp=${this.state.code}&type=email&email=${email}`,
+        `${require('../config').default.production}api/v1/user/verify_otp?otp=${
+          this.state.code
+        }&type=email&email=${email}`,
       );
       const JsonResponse = await Response.json();
       console.log(JsonResponse, '======== response ');
-      this.setState({spinner:false});
+      this.setState({spinner: false});
       if (parseInt(Response.status) === 404) {
         alert(JsonResponse.message);
       } else if (parseInt(Response.status) === 200) {
-        this.setState({code:''});
+        this.setState({code: ''});
         alert(JsonResponse.message);
-     
+
         await AsyncStorage.setItem('isverified', '1');
         this.props.navigation.navigate('EditProfile');
       } else {
@@ -118,9 +117,9 @@ class EmailVerification extends React.Component {
                     fontSize: 20,
                     color: '#ACACAC',
                     paddingLeft: '30%',
-                    height:Platform.OS=='ios'? 40:50,
+                    height: Platform.OS == 'ios' ? 40 : 50,
                   }}
-                  onChangeText={text => this.setState({code: text})}
+                  onChangeText={(text) => this.setState({code: text})}
                   value={this.state.code}
                 />
               </View>
@@ -138,15 +137,17 @@ class EmailVerification extends React.Component {
                         justifyContent: 'center',
                         backgroundColor: 'transparent',
                         borderColor: 'white',
-                        borderWidth: 0.6,flexDirection:'row',justifyContent:'center',
-                        alignItems:'center'
+                        borderWidth: 0.6,
+                        flexDirection: 'row',
+                        justifyContent: 'center',
+                        alignItems: 'center',
                       }}>
                       <Text
                         style={{
-                            fontSize: 16,
-                            fontWeight: 'bold',
-                            textAlign: 'center',
-                            color: 'white',
+                          fontSize: 16,
+                          fontWeight: 'bold',
+                          textAlign: 'center',
+                          color: 'white',
                         }}>
                         Loading{' '}
                       </Text>
