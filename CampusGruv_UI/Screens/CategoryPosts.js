@@ -195,8 +195,18 @@ export default class CategoryPosts extends PureComponent {
       async () => {
         console.log('calling load more api');
         const Token = await AsyncStorage.getItem('TOKEN');
+        var campus;
+        if(await AsyncStorage.getItem('otherCampus')){
+          campus = await AsyncStorage.getItem('otherCampus');
+          }
+          else{
+          campus = await AsyncStorage.getItem('CAMPUS_ID');
+          }
         const Response = await fetch(
-          `https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_all&page=${this.state.pageNo}`,
+          `https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_category&category_id=${this.props.navigation.getParam(
+            'CategoryID',
+            'undefined',
+          )}&page=${this.state.pageNo}&campus_id=${campus}`,
           {
             headers: {
               Authorization: `Bearer ${Token}`,
@@ -225,11 +235,18 @@ export default class CategoryPosts extends PureComponent {
   fetchCategoryPosts = async () => {
     this.setState({ posts: [], loading: true, total: undefined })
     const Token = await AsyncStorage.getItem('TOKEN');
+    var campus;
+    if(await AsyncStorage.getItem('otherCampus')){
+      campus = await AsyncStorage.getItem('otherCampus');
+      }
+      else{
+      campus = await AsyncStorage.getItem('CAMPUS_ID');
+      }
     const Response = await fetch(
       `https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_category&category_id=${this.props.navigation.getParam(
         'CategoryID',
         'undefined',
-      )}&page=${this.state.pageNo}`,
+      )}&page=${this.state.pageNo}&campus_id=${campus}`,
       {
         headers: {
           Authorization: `Bearer ${Token}`,

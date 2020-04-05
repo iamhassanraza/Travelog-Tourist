@@ -160,8 +160,17 @@ class HomeScreen extends PureComponent {
         },
         async () => {
           const Token = await AsyncStorage.getItem('TOKEN');
+          var campus;
+          if(await AsyncStorage.getItem('otherCampus')){
+            campus = await AsyncStorage.getItem('otherCampus');
+            }
+            else{
+            campus = await AsyncStorage.getItem('CAMPUS_ID');
+            }
+
+
           const Response = await fetch(
-            `https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_all&page=${this.state.pageNo}`,
+            `https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_all&page=${this.state.pageNo}&campus_id=${campus}`,
             {
               headers: {
                 Authorization: `Bearer ${Token}`,
@@ -309,8 +318,15 @@ class HomeScreen extends PureComponent {
       }
 
       else {
+        var campus;
+        if(await AsyncStorage.getItem('otherCampus')){
+          campus = await AsyncStorage.getItem('otherCampus');
+          }
+          else{
+          campus = await AsyncStorage.getItem('CAMPUS_ID');
+          }
         fetch(
-          `https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_all&page=${this.state.pageNo}`,
+          `https://campus-gruv-heroku.herokuapp.com/api/v1/search/post?type=post_all&page=${this.state.pageNo}&campus_id=${campus}`,
           {
             headers: {
               Authorization: `Bearer ${Token}`,
