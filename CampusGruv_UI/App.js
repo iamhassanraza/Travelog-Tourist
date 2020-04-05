@@ -244,7 +244,7 @@ const HomeStack = createStackNavigator(
       return {
         tabBarVisible:
           props.navigation.state.routes[props.navigation.state.index]
-            .routeName === 'PostDetail' || 'ReportPost'
+            .routeName === ('PostDetail' || 'ReportPost')
             ? false
             : true,
       };

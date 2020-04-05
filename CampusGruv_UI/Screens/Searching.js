@@ -45,9 +45,11 @@ export default class Searching extends React.PureComponent {
     loadingUsers: undefined,
     loadingCampuses: undefined,
     pageNo: 1,
+    currentCampus: undefined,
   };
 
   componentDidMount() {
+    this.checkCampus();
     this.focusListener = this.props.navigation.addListener('willFocus', () => {
       console.log('searching is gong tpo be focused');
       this.setState({
@@ -290,8 +292,16 @@ export default class Searching extends React.PureComponent {
     }
   };
 
+  checkCampus = async () => {
+    const campus_id = JSON.parse(await AsyncStorage.getItem('CAMPUS_ID'));
+    this.setState({
+      currentCampus: campus_id,
+    });
+  };
+
   renderCampuses = () => {
     if (this.state.loadingCampuses === false) {
+      
       return (
         <FlatList
           style={{}}
@@ -299,12 +309,20 @@ export default class Searching extends React.PureComponent {
           data={this.state.Campuses}
           keyExtractor={item => item.id}
           showsHorizontalScrollIndicator={false}
-          renderItem={({item}) => (
-            <AvatarCampusStatus
-              name={item.description}
-              status={false}
-              pic={i4}></AvatarCampusStatus>
-          )}
+          renderItem={({item}) => {
+            
+            return (
+              <AvatarCampusStatus
+                name={item.description}
+                status={
+                  parseInt(this.state.currentCampus) === parseInt(item.id)
+                    ? true
+                    : false
+                }
+                pic={i4}
+                newCampusId={item.id}></AvatarCampusStatus>
+            )
+          }}
         />
       );
     } else if (this.state.loadingCampuses === true) {
@@ -382,6 +400,7 @@ export default class Searching extends React.PureComponent {
 
   render() {
     //console.log(this.state);
+
     return (
       <View style={{backgroundColor: '#1192d1'}}>
         <View

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View, Image} from 'react-native';
+import {Text, View, Image,AsyncStorage} from 'react-native';
 import {ThemeBlue} from '../Assets/Colors';
 import {TouchableOpacity} from 'react-native-gesture-handler';
 
@@ -29,8 +29,17 @@ export default class AvatarCampusStatus extends Component {
         </View>
 
         <TouchableOpacity
-          onPress={() => {
+          onPress={async () => {
             this.setState({current: !this.state.current});
+           
+            // Agar pehle se us campus pe hai tw kuch nh ho..
+            if(JSON.parse(await AsyncStorage.getItem('otherCampus'))!== this.props.newCampusId ){
+            await AsyncStorage.setItem('otherCampus', JSON.stringify(this.props.newCampusId));
+            const asad = JSON.parse(await AsyncStorage.getItem('otherCampus'));
+            console.log("ye apna cu " + asad);
+            }
+           
+    
           }}>
           <View
             style={{
