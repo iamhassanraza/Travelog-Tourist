@@ -539,10 +539,20 @@ class UserProfile extends React.Component {
 
         <View>
           <Modal
-            style={{margin: 0, backgroundColor: 'white', flexDirection: 'row'}}
+            style={{
+              margin: 0,
+              //backgroundColor: 'white',
+              flexDirection: 'row',
+              // alignItems: 'flex-end',
+            }}
             isVisible={this.state.isModalVisible}
             onBackdropPress={() => this.setState({isModalVisible: false})}>
-            <View style={{flex: 1, justifyContent: 'flex-end'}}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+              }}>
               <View
                 style={{
                   backgroundColor: 'white',
@@ -552,7 +562,13 @@ class UserProfile extends React.Component {
                   borderTopRightRadius: 23,
                   borderTopLeftRadius: 23,
                 }}>
-                <View style={{flex: 10, alignItems: 'center', paddingTop: 3}}>
+                <View
+                  style={{
+                    flex: 10,
+                    alignItems: 'center',
+                    backgroundColor: 'white',
+                    paddingTop: 3,
+                  }}>
                   <Text
                     style={{
                       fontSize: 20,
@@ -565,7 +581,11 @@ class UserProfile extends React.Component {
                 </View>
               </View>
 
-              <View style={{alignSelf: 'center'}}>
+              <View
+                style={{
+                  width: '100%',
+                  backgroundColor: 'white',
+                }}>
                 <Text
                   onPress={async () => {
                     this.setState({isModalVisible: false});
@@ -578,6 +598,7 @@ class UserProfile extends React.Component {
                   style={{
                     color: 'black',
                     backgroundColor: 'white',
+                    textAlign: 'center',
                     width: '100%',
                     fontSize: 17,
                     paddingBottom: 20,
@@ -586,7 +607,11 @@ class UserProfile extends React.Component {
                 </Text>
               </View>
 
-              <View style={{alignSelf: 'center'}}>
+              <View
+                style={{
+                  width: '100%',
+                  backgroundColor: 'white',
+                }}>
                 <Text
                   onPress={() => {
                     this.setState({isModalVisible: false});
@@ -595,6 +620,7 @@ class UserProfile extends React.Component {
                   style={{
                     color: 'black',
                     backgroundColor: 'white',
+                    textAlign: 'center',
                     width: '100%',
                     fontSize: 17,
                     paddingBottom: 20,
