@@ -160,7 +160,7 @@ const ProfileStack = createStackNavigator(
     UserSettings: {
       screen: UserSettings,
       navigationOptions: {
-        header: props => (
+        header: (props) => (
           <View style={{backgroundColor: '#1192d1'}}>
             <View
               style={{
@@ -197,7 +197,7 @@ const ProfileStack = createStackNavigator(
     },
   },
   {
-    navigationOptions: props => {
+    navigationOptions: (props) => {
       return {
         tabBarVisible:
           props.navigation.state.routes[props.navigation.state.index]
@@ -241,7 +241,7 @@ const HomeStack = createStackNavigator(
     },
   },
   {
-    navigationOptions: props => {
+    navigationOptions: (props) => {
       return {
         tabBarVisible:
           props.navigation.state.routes[props.navigation.state.index]
@@ -251,7 +251,7 @@ const HomeStack = createStackNavigator(
       };
     },
     defaultNavigationOptions: {
-      header: props => (
+      header: (props) => (
         <View style={{backgroundColor: '#1192d1'}}>
           <View
             style={{
@@ -341,13 +341,45 @@ const MessageStack = createStackNavigator(
     SelectNewChat: {
       screen: SelectNewChat,
       navigationOptions: {
-        header: null,
+        header: (props) => (
+          <View style={{backgroundColor: '#1192d1'}}>
+            <View
+              style={{
+                marginTop: Platform.OS == 'ios' ? 38 : 0,
+                height: 50,
+                backgroundColor: '#1192d1',
+                flexDirection: 'row',
+                justifyContent: 'center',
+              }}>
+              <View style={{alignSelf: 'center'}}>
+                <Text
+                  style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
+                  Select New Chat
+                </Text>
+              </View>
+              <View
+                style={{
+                  position: 'absolute',
+                  padding: 2,
+                  alignSelf: 'center',
+                  left: 8,
+                }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    props.navigation.push('SelectNewChat');
+                  }}>
+                  <Icon name="arrow-back" color="white" size={25} />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        ),
       },
     },
     inbox: {
       screen: inbox,
       navigationOptions: {
-        header: props => (
+        header: (props) => (
           <View style={{backgroundColor: '#1192d1'}}>
             <View
               style={{
@@ -388,7 +420,7 @@ const MessageStack = createStackNavigator(
   },
   {
     initialRouteName: 'inbox',
-    navigationOptions: props => {
+    navigationOptions: (props) => {
       return {
         tabBarVisible: props.navigation.state.index === 0,
       };
@@ -553,7 +585,7 @@ const TabNavigator = createMaterialTopTabNavigator(
     },
     Notifications: {
       screen: NotificationScreen,
-      navigationOptions: props => {
+      navigationOptions: (props) => {
         store = mystore;
         state = store.getState();
         // console.log('state',state)
@@ -599,7 +631,7 @@ const TabNavigator = createMaterialTopTabNavigator(
     },
     messages: {
       screen: MessageStack,
-      navigationOptions: props => {
+      navigationOptions: (props) => {
         store = mystore;
         state = store.getState();
         return {
@@ -731,13 +763,13 @@ class App extends Component {
     this.keyboardWillHideSub.remove();
   }
 
-  keyboardWillShow = event => {
+  keyboardWillShow = (event) => {
     this.setState({
       isVisible: false,
     });
   };
 
-  keyboardWillHide = event => {
+  keyboardWillHide = (event) => {
     this.setState({
       isVisible: true,
     });
