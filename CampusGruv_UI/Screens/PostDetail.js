@@ -527,7 +527,7 @@ class PostDetail extends Component {
       );
 
       const JsonResponse = await Response.json();
-      console.log(JsonResponse, 'res res');
+      console.log(JsonResponse, 'res');
       if (parseInt(Response.status) === 400) {
         alert(JsonResponse.message);
       } else if (parseInt(Response.status) === 200) {
