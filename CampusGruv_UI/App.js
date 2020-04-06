@@ -366,7 +366,7 @@ const MessageStack = createStackNavigator(
                 }}>
                 <TouchableOpacity
                   onPress={() => {
-                    props.navigation.push('SelectNewChat');
+                    props.navigation.navigate('inbox');
                   }}>
                   <Icon name="arrow-back" color="white" size={25} />
                 </TouchableOpacity>
