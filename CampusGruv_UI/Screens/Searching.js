@@ -86,6 +86,7 @@ export default class Searching extends React.PureComponent {
     if (parseInt(Response.status) === 400) {
       this.setState({error: true, totalFeed: 0});
     } else if (parseInt(Response.status) === 200) {
+      console.log("YE Feeed AGAYE ::::::::",JsonResponse.data)
       if (JsonResponse.total > 0) {
         this.setState({
           posts: JsonResponse.data,
@@ -117,6 +118,7 @@ export default class Searching extends React.PureComponent {
     if (parseInt(Response.status) === 400) {
       this.setState({error: true, totalUsers: 0});
     } else if (parseInt(Response.status) === 200) {
+      console.log("YE USERS AGAYE :::::::::::===========================:::::",JsonResponse.data)
       if (JsonResponse.total > 0) {
         this.setState({
           Users: JsonResponse.data,
@@ -147,6 +149,7 @@ export default class Searching extends React.PureComponent {
     if (parseInt(Response.status) === 400) {
       this.setState({error: true, totalCampuses: 0});
     } else if (parseInt(Response.status) === 200) {
+      console.log("YE CAMPUS AGAYE ::::::::",JsonResponse.data)
       if (JsonResponse.total > 0) {
         this.setState({
           Campuses: JsonResponse.data,
@@ -260,7 +263,7 @@ export default class Searching extends React.PureComponent {
           <FlatList
             style={{}}
             vertical
-            data={this.state.Users}
+            data={this.state.Users }
             keyExtractor={(item) => item.id}
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => (
@@ -412,7 +415,7 @@ export default class Searching extends React.PureComponent {
   };
 
   render() {
-    //console.log(this.state);
+    console.log("122222217846193469184791841847193470194801980913480148991048019348",this.state.Users);
 
     return (
       <View style={{backgroundColor: '#1192d1'}}>

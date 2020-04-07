@@ -531,7 +531,7 @@ class PostDetail extends Component {
       if (parseInt(Response.status) === 400) {
         alert(JsonResponse.message);
       } else if (parseInt(Response.status) === 200) {
-        alert('comment created');
+        // alert('comment created');
         const comments = this.state.comments;
         comments.push({
           ...JsonResponse,
@@ -545,10 +545,12 @@ class PostDetail extends Component {
           currentComment: '',
         });
       } else {
-        alert("comment can't be empty");
+        // alert("comment can't be empty");
+        console.log("Semething wrong")
       }
     } else {
-      alert("comment can't be empty");
+      // alert("comment can't be empty");
+      console.log("Semething wrong")
     }
   };
 
@@ -603,7 +605,8 @@ class PostDetail extends Component {
       console.log('200');
       // alert(JsonResponse.message);
     } else {
-      alert('something is wrong');
+      // alert('something is wrong');
+      console.log("Semething wrong")
     }
   };
 
@@ -652,7 +655,8 @@ class PostDetail extends Component {
       console.log('200');
       // alert(JsonResponse.message);
     } else {
-      alert('something is wrong');
+      // alert('something is wrong');
+      console.log("Semething wrong")
     }
   };
   //style={{height: Dimensions.get('window').height-150}}
