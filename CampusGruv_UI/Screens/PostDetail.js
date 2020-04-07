@@ -463,7 +463,7 @@ class PostDetail extends Component {
             <Text
               style={{
                 fontSize: 18,
-                color: ThemeBlue,
+                color: this.state.currentComment === null || this.state.currentComment === '' ? '#e8d7d5' :ThemeBlue,
                 //paddingLeft: '2%',
               }}>
               Post
@@ -545,7 +545,7 @@ class PostDetail extends Component {
           currentComment: '',
         });
       } else {
-        alert('something went wrong');
+        alert("comment can't be empty");
       }
     } else {
       alert("comment can't be empty");
