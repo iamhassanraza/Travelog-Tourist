@@ -367,6 +367,8 @@ class UserProfile extends React.Component {
           <Rect x="200" y="10" rx="5" ry="5" width="200" height="280" />
           <Rect x="10" y="240" rx="5" ry="5" width="185" height="250" />
           <Rect x="200" y="300" rx="5" ry="5" width="200" height="280" />
+          <Rect x="10" y="500" rx="5" ry="5" width="185" height="250" />
+          <Rect x="200" y="590" rx="5" ry="5" width="200" height="280" />
           {/* <Rect x="280" y="300" rx="5" ry="5" width="260" height="140" />
               <Rect x="550" y="160" rx="5" ry="5" width="260" height="280" /> */}
         </ContentLoader>

@@ -1,12 +1,13 @@
 import React, {Component} from 'react';
 import {Text, View, Image} from 'react-native';
-import TextEncoding from 'text-encoding'
+import TextEncoding from 'text-encoding';
+import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 
 // Props dp,name,comment
 
 export default class Comment extends Component {
   render() {
-    TextDecoder = TextEncoding.TextDecoder
+    TextDecoder = TextEncoding.TextDecoder;
     return (
       <View style={{paddingRight: '7%', marginTop: '1%'}}>
         <View
@@ -20,7 +21,13 @@ export default class Comment extends Component {
             paddingBottom: '2%',
           }}>
           <Image
-            source={{uri: this.props.dp}}
+            source={
+              this.props.dp === '' || !this.props.dp
+                ? defaultAvatar
+                : {
+                    uri: this.props.dp,
+                  }
+            }
             style={{width: 30, height: 30, borderRadius: 50}}></Image>
 
           <View style={{flexDirection: 'column', width: 270, marginLeft: '2%'}}>

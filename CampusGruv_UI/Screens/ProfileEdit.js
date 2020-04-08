@@ -5,7 +5,6 @@ import {
   ScrollView,
   View,
   TouchableOpacity,
-  Picker,
   StyleSheet,
   Dimensions,
   Platform,
@@ -15,7 +14,7 @@ import {
 } from 'react-native';
 import InputView from '../Components/ProfileEdit/InputViews';
 import ImagePicker from 'react-native-image-picker';
-import {Container, Item, Content, Input} from 'native-base';
+import {Container, Item, Picker, Content, Input} from 'native-base';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import {TouchableHighlight} from 'react-native-gesture-handler';

@@ -3,6 +3,7 @@ import {Text, View, ImageBackground, Image, Dimensions} from 'react-native';
 import ViewsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {withNavigation} from 'react-navigation';
+import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 
 class PostCard extends Component {
   state = {
@@ -22,7 +23,7 @@ class PostCard extends Component {
         const ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
         this.setState({width: srcWidth * ratio, height: srcHeight * ratio});
       },
-      error => {
+      (error) => {
         () => console.log(error);
       },
     );
@@ -116,9 +117,13 @@ class PostCard extends Component {
             }}>
             <View style={{flex: 2}}>
               <Image
-                source={{
-                  uri: this.props.userdp,
-                }}
+                source={
+                  this.props.userdp === '' || !this.props.userdp
+                    ? defaultAvatar
+                    : {
+                        uri: this.props.userdp,
+                      }
+                }
                 style={{
                   width: 30,
                   borderColor: '#616963',

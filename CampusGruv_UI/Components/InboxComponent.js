@@ -8,6 +8,7 @@ import {
 } from 'react-native';
 import {SearchBar, Avatar, Divider} from 'react-native-elements';
 import {withNavigation} from 'react-navigation';
+import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 
 class InboxComponent extends Component {
   state = {
@@ -60,7 +61,13 @@ class InboxComponent extends Component {
             <Avatar
               size="small"
               rounded
-              source={{uri: this.props.uri}}
+              source={
+                this.props.uri === '' || !this.props.uri
+                  ? defaultAvatar
+                  : {
+                      uri: this.props.uri,
+                    }
+              }
               size={40}
             />
             <View

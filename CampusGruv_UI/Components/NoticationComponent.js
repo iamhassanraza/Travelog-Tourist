@@ -5,6 +5,7 @@ import {bkgdColor, primaryColor, greyColor} from '../Assets/Colors';
 import TimeAgo from 'react-native-timeago';
 import {withNavigation} from 'react-navigation';
 import {connect} from 'react-redux';
+import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 
 class NoticationComponent extends Component {
   render() {
@@ -48,7 +49,17 @@ class NoticationComponent extends Component {
             alignItems: 'center',
           }}>
           <View style={{flexDirection: 'row', width: '12%'}}>
-            <Avatar size="small" rounded source={{uri: this.props.uri}} />
+            <Avatar
+              size="small"
+              rounded
+              source={
+                this.props.uri === '' || !this.props.uri
+                  ? defaultAvatar
+                  : {
+                      uri: this.props.uri,
+                    }
+              }
+            />
           </View>
 
           <View style={{width: '75%', flexDirection: 'row'}}>
