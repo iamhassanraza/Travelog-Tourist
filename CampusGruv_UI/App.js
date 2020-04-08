@@ -777,11 +777,7 @@ class App extends Component {
   };
 
   render() {
-    return (
-      <SafeAreaView>
-        <AppContainer></AppContainer>
-      </SafeAreaView>
-    );
+    return <AppContainer></AppContainer>;
   }
 }
 

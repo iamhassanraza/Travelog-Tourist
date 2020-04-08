@@ -94,6 +94,7 @@ class AuthLoading extends React.Component {
           this.props.navigation.navigate('App');
         }
       } else {
+        console.log('else ran');
         this.props.navigation.navigate('Auth');
       }
     } catch (e) {
