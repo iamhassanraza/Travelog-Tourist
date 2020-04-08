@@ -201,8 +201,9 @@ const ProfileStack = createStackNavigator(
     navigationOptions: (props) => {
       return {
         tabBarVisible:
-          props.navigation.state.routes[props.navigation.state.index]
-            .routeName === ('Followers' || 'Following')
+          (props.navigation.state.routes[props.navigation.state.index]
+            .routeName === 'Followers') || (props.navigation.state.routes[props.navigation.state.index]
+              .routeName ==='Following')
             ? false
             : true,
       };
@@ -245,8 +246,11 @@ const HomeStack = createStackNavigator(
     navigationOptions: (props) => {
       return {
         tabBarVisible:
-          props.navigation.state.routes[props.navigation.state.index]
-            .routeName === ('PostDetail' || 'ReportPost')
+          (props.navigation.state.routes[props.navigation.state.index]
+            .routeName === 'PostDetail') || (props.navigation.state.routes[props.navigation.state.index]
+              .routeName === 'ReportPost') || (props.navigation.state.routes[props.navigation.state.index]
+                .routeName === 'Followers') || (props.navigation.state.routes[props.navigation.state.index]
+                  .routeName ==="Following")
             ? false
             : true,
       };

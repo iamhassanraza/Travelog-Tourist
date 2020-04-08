@@ -83,7 +83,7 @@ class ProfilePage extends React.Component {
               <TouchableOpacity onPress={() => params.handleThis()}>
                 <Text
                   style={{
-                    color: 'red',
+                    color: 'white',
                     padding: 2,
                     marginTop: Platform.OS == 'ios' ? 25 : 0,
                   }}>
@@ -315,9 +315,13 @@ class ProfilePage extends React.Component {
     this.props.CreateUserDetails(postMasterResponse);
     this.setState({imageUri: ''});
     await AsyncStorage.setItem('CAMPUS_ID', this.state.selectedId.toString());
-    AsyncStorage.getItem('CAMPUS_ID') === 'nahi_hai'
-      ? this.props.navigation.navigate('App')
-      : this.props.navigation.navigate('HomeScreen');
+    const campusId=await AsyncStorage.getItem('CAMPUS_ID');
+    console.log('campussssss',campusId)
+    //his.props.navigation.navigate('HomeScreen')
+    this.state.currentCampus === 'nahi_hai'? this.props.navigation.navigate('AuthLoading') : this.props.navigation.navigate('HomeScreen');
+    // AsyncStorage.getItem('CAMPUS_ID') === 'nahi_hai'
+      // ? this.props.navigation.navigate('App')
+      // : this.props.navigation.navigate('HomeScreen');
     console.log(postMasterResponse, 'patch request');
   };
 
