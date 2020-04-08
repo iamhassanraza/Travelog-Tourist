@@ -12,6 +12,7 @@ import {
 import {withNavigation} from 'react-navigation';
 import AvatarUserStatus from '../Components/AvatarUserStatus';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import NoPost from '../Components/NoPost';
 
 class Followers extends Component {
   static navigationOptions = (props) => {
@@ -130,8 +131,19 @@ class Followers extends Component {
     });
   };
 
-  render() {
+  renderNoPost = (text) => {
     return (
+      <View style={{paddingTop: '35%'}}>
+        <NoPost name={text}></NoPost>
+      </View>
+    );
+  };
+
+  render() {
+   
+    return (
+      (this.state.data.length)   ?
+    
       <View>
         <View style={{padding: 5}}>
           <FlatList
@@ -150,6 +162,10 @@ class Followers extends Component {
           />
         </View>
       </View>
+      :
+      <View>
+       {this.renderNoPost('You Have No Followers')}
+     </View>
     );
   }
 }

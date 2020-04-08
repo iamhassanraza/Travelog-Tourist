@@ -13,6 +13,7 @@ import {withNavigation} from 'react-navigation';
 import AvatarUserStatus from '../Components/AvatarUserStatus';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import SearchInput, {createFilter} from 'react-native-search-filter';
+import NoPost from '../Components/NoPost';
 
 const KEYS_TO_FILTERS = ['name', 'subject'];
 
@@ -86,7 +87,7 @@ class Following extends Component {
   };
 
   state = {
-    search: null,
+    search: [],
   };
 
   componentDidMount() {
@@ -132,8 +133,21 @@ class Following extends Component {
     });
   };
 
-  render() {
+
+  renderNoPost = (text) => {
     return (
+      <View style={{paddingTop: '35%'}}>
+        <NoPost name={text}></NoPost>
+      </View>
+    );
+  };
+
+
+  render() {
+    console.log(this.state.search,"HAHAHAAHHAAHAHAHA")
+    return (
+    (this.state.search.length)  ?
+    
       <View>
         <View style={{padding: 5}}>
           <FlatList
@@ -153,6 +167,10 @@ class Following extends Component {
           />
         </View>
       </View>
+      :
+       <View>
+       {this.renderNoPost('Not Following Anyone')}
+     </View>
     );
   }
 }
