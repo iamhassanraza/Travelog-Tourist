@@ -187,7 +187,7 @@ class EmailVerification extends React.Component {
             </View>
           </KeyboardAvoidingView>
         </ScrollView>
-        <LogoutButton
+        {/* <LogoutButton
           style={{
             alignSelf: 'center',
             position: 'absolute',
@@ -197,7 +197,7 @@ class EmailVerification extends React.Component {
             color: 'white',
             borderColor: 'white',
             fontWeight: 'bold',
-          }}></LogoutButton>
+          }}></LogoutButton> */}
       </ImageBackground>
     );
   }
