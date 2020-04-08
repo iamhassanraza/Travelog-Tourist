@@ -163,21 +163,6 @@ export default class Searching extends React.PureComponent {
   };
 
   SearchItems = (text) => {
-    // if(this.state.selection === "Feed") {
-    //   this.fetchFeed(text);
-    //   console.log("feedddddddddddddddd");
-    // }
-
-    // else if(this.state.selection === 'Users'){
-    //   this.fetchUsers(text);
-    //   console.log("userrrrrrrrrrrrrrrrrrr");
-    // }
-
-    // else if(this.state.selection === 'Campuses') {
-    //   this.fetchCampuses(text);
-    //   console.log("camppppppppppppp");
-    // }
-
     if (text) {
       this.fetchFeed(text);
       this.fetchUsers(text);
@@ -248,6 +233,8 @@ export default class Searching extends React.PureComponent {
             <Rect x="200" y="10" rx="5" ry="5" width="200" height="280" />
             <Rect x="10" y="240" rx="5" ry="5" width="185" height="250" />
             <Rect x="200" y="300" rx="5" ry="5" width="200" height="280" />
+            <Rect x="10" y="500" rx="5" ry="5" width="185" height="250" />
+            <Rect x="200" y="590" rx="5" ry="5" width="200" height="280" />
             {/* <Rect x="280" y="300" rx="5" ry="5" width="260" height="140" />
                     <Rect x="550" y="160" rx="5" ry="5" width="260" height="280" /> */}
           </ContentLoader>
@@ -263,7 +250,7 @@ export default class Searching extends React.PureComponent {
           <FlatList
             style={{}}
             vertical
-            data={this.state.Users }
+            data={this.state.Users}
             keyExtractor={(item) => item.id}
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => (

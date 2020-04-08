@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
+import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 
 class AvatarUserStatus extends Component {
   state = {
@@ -83,7 +84,13 @@ class AvatarUserStatus extends Component {
             }>
             <View style={{flexDirection: 'row', padding: '1%'}}>
               <Image
-                source={{uri: this.props.pic}}
+                source={
+                  this.props.pic === '' || !this.props.pic
+                    ? defaultAvatar
+                    : {
+                        uri: this.props.pic,
+                      }
+                }
                 style={{height: 40, width: 40, borderRadius: 50}}></Image>
               <Text
                 style={{

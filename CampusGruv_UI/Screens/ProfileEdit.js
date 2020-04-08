@@ -5,7 +5,6 @@ import {
   ScrollView,
   View,
   TouchableOpacity,
-  Picker,
   StyleSheet,
   Dimensions,
   Platform,
@@ -15,7 +14,7 @@ import {
 } from 'react-native';
 import InputView from '../Components/ProfileEdit/InputViews';
 import ImagePicker from 'react-native-image-picker';
-import {Container, Item, Content, Input} from 'native-base';
+import {Container, Item, Picker, Content, Input} from 'native-base';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 import SearchableDropdown from 'react-native-searchable-dropdown';
 import {TouchableHighlight} from 'react-native-gesture-handler';
@@ -188,9 +187,9 @@ class ProfilePage extends React.Component {
           await res.filter((campus) => {
             if (campus.id === parseInt(campusId)) {
               const cam = [...[campus], ...res];
-              console.log(campus);
+              console.log(campus, 'campus');
               this.setState({
-                selectedId: campus,
+                selectedId: campus.id,
                 campuses: cam,
               });
             } else {
@@ -229,30 +228,42 @@ class ProfilePage extends React.Component {
   };
 
   uploadProfilePicture = () => {
-    ImagePicker.showImagePicker((response) => {
-      if (response.didCancel) {
-        console.log('cancelled');
-      } else if (response.error) {
-        console.log('error is:', response.error);
-      } else {
-        const source = {uri: response.uri};
-        const fileTypes = /jpeg|jpg|png|gif/;
-        const allowedImgSize = 1024 * 1024 * 10;
-        if (!fileTypes.test(response.type)) {
-          alert(
-            'Uploaded file is not a valid image. \n(allowed file types: jpeg, jpg, png, gif)',
-          );
-        } else if (response.fileSize > allowedImgSize) {
-          alert('Uploaded file is too large \n(allowed file size is 10MB)');
+    ImagePicker.showImagePicker(
+      {
+        maxWidth: 1000,
+        maxHeight: 1000,
+        storageOptions: {
+          skipBackup: true,
+          path: 'images',
+          cameraRoll: true,
+          waitUntilSaved: true,
+        },
+      },
+      (response) => {
+        if (response.didCancel) {
+          console.log('cancelled');
+        } else if (response.error) {
+          console.log('error is:', response.error);
         } else {
-          console.log(response, 'uri uri');
-          this.setState({
-            imageUri: response,
-            imageURL: response.uri,
-          });
+          const source = {uri: response.uri};
+          const fileTypes = /jpeg|jpg|png|gif/;
+          const allowedImgSize = 1024 * 1024 * 10;
+          if (!fileTypes.test(response.type)) {
+            alert(
+              'Uploaded file is not a valid image. \n(allowed file types: jpeg, jpg, png, gif)',
+            );
+          } else if (response.fileSize > allowedImgSize) {
+            alert('Uploaded file is too large \n(allowed file size is 10MB)');
+          } else {
+            console.log(response, 'uri uri');
+            this.setState({
+              imageUri: response,
+              imageURL: response.uri,
+            });
+          }
         }
-      }
-    });
+      },
+    );
   };
 
   createFormData = (images, body) => {
@@ -527,10 +538,11 @@ class ProfilePage extends React.Component {
                 <Picker
                   selectedValue={this.state.selectedId}
                   onValueChange={(itemValue) => {
-                    if (itemValue !== 'select campus')
+                    if (itemValue !== 'select campus') {
                       this.setState({
                         selectedId: itemValue,
                       });
+                    }
                   }}>
                   {pickerItems}
                 </Picker>

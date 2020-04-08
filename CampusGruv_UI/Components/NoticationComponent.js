@@ -4,6 +4,8 @@ import {Avatar, Divider} from 'react-native-elements';
 import {bkgdColor, primaryColor, greyColor} from '../Assets/Colors';
 import TimeAgo from 'react-native-timeago';
 import {withNavigation} from 'react-navigation';
+import {connect} from 'react-redux';
+import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 
 class NoticationComponent extends Component {
   render() {
@@ -20,10 +22,10 @@ class NoticationComponent extends Component {
                   likeStatus: this.props.userWiseLike[0] ? true : false,
                   saveStatus: this.props.userSavedPost[0] ? true : false,
                   isFollowing: this.props.isFollowing,
-                  userAvatar: this.props.userdp,
+                  userAvatar: this.props.User.profile_pic_url,
                   userId: this.props.userId,
-                  first_name: this.props.first_name,
-                  last_name: this.props.last_name,
+                  first_name: this.props.User.first_name,
+                  last_name: this.props.User.last_name,
                   description: this.props.description,
                   comments: this.props.comments,
                   views: this.props.views,
@@ -47,7 +49,17 @@ class NoticationComponent extends Component {
             alignItems: 'center',
           }}>
           <View style={{flexDirection: 'row', width: '12%'}}>
-            <Avatar size="small" rounded source={{uri: this.props.uri}} />
+            <Avatar
+              size="small"
+              rounded
+              source={
+                this.props.uri === '' || !this.props.uri
+                  ? defaultAvatar
+                  : {
+                      uri: this.props.uri,
+                    }
+              }
+            />
           </View>
 
           <View style={{width: '75%', flexDirection: 'row'}}>
@@ -68,4 +80,14 @@ class NoticationComponent extends Component {
   }
 }
 
-export default withNavigation(NoticationComponent);
+mapStateToProps = (state) => {
+  //this state will contain FULL redux store all the reducers data
+
+  //use your required reducer data in props i.e reducer1
+
+  return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+};
+
+export default withNavigation(
+  connect(mapStateToProps, null)(NoticationComponent),
+);

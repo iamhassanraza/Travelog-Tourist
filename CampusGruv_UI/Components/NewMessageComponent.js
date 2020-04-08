@@ -10,6 +10,8 @@ import {
   Dimensions,
 } from 'react-native';
 import ContentLoader, {Rect} from 'react-content-loader/native';
+import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
+
 // import {withNavigation} from 'react-navigation';
 
 class NewMessageComponent extends Component {
@@ -64,7 +66,14 @@ class NewMessageComponent extends Component {
             }>
             <View style={{flexDirection: 'row', padding: '1%'}}>
               <Image
-                source={{uri: this.props.profile_pic_url}}
+                source={
+                  this.props.profile_pic_url === '' ||
+                  !this.props.profile_pic_url
+                    ? defaultAvatar
+                    : {
+                        uri: this.props.profile_pic_url,
+                      }
+                }
                 style={{
                   height: 40,
                   width: 40,
