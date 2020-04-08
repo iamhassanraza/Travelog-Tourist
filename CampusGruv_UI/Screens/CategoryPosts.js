@@ -302,6 +302,12 @@ export default class CategoryPosts extends PureComponent {
     this.focusListener.remove();
   }
 
+
+
+  onPageRefresh = () => {
+    this.fetchCategoryPosts();
+  };
+
   render() {
     if (this.state.total > 0) {
       return (
