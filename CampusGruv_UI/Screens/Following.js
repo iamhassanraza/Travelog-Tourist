@@ -146,11 +146,8 @@ class Following extends Component {
   render() {
     console.log(this.state.search,"HAHAHAAHHAAHAHAHA")
     return (
-      Array.isArray(this.state.search)  ?
-     <View>
-       {this.renderNoPost('You have no following ')}
-     </View>
-     :
+    (this.state.search.length)  ?
+    
       <View>
         <View style={{padding: 5}}>
           <FlatList
@@ -170,6 +167,10 @@ class Following extends Component {
           />
         </View>
       </View>
+      :
+       <View>
+       {this.renderNoPost('You have no following ')}
+     </View>
     );
   }
 }

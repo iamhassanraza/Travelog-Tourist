@@ -142,11 +142,8 @@ class Followers extends Component {
   render() {
    
     return (
-      Array.isArray(this.state.data)  ?
-     <View>
-       {this.renderNoPost('No one is following you')}
-     </View>
-     :
+      (this.state.data.length)   ?
+    
       <View>
         <View style={{padding: 5}}>
           <FlatList
@@ -165,6 +162,10 @@ class Followers extends Component {
           />
         </View>
       </View>
+      :
+      <View>
+       {this.renderNoPost('No one is following you')}
+     </View>
     );
   }
 }
