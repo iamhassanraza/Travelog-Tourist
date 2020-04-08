@@ -588,7 +588,7 @@ const TabNavigator = createMaterialTopTabNavigator(
       navigationOptions: (props) => {
         store = mystore;
         state = store.getState();
-        // console.log('state',state)
+        //console.log('state', state);
         return {
           tabBarIcon: ({tintColor}) => {
             return (
