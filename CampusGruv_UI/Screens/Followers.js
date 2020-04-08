@@ -164,7 +164,7 @@ class Followers extends Component {
       </View>
       :
       <View>
-       {this.renderNoPost('No one is following you')}
+       {this.renderNoPost('You Have No Followers')}
      </View>
     );
   }

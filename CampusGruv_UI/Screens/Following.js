@@ -169,7 +169,7 @@ class Following extends Component {
       </View>
       :
        <View>
-       {this.renderNoPost('You have no following ')}
+       {this.renderNoPost('Not Following Anyone')}
      </View>
     );
   }
