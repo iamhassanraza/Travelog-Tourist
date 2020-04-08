@@ -229,7 +229,16 @@ class ProfilePage extends React.Component {
 
   uploadProfilePicture = () => {
     ImagePicker.showImagePicker(
-      {maxWidth: 1000, maxHeight: 1000},
+      {
+        maxWidth: 1000,
+        maxHeight: 1000,
+        storageOptions: {
+          skipBackup: true,
+          path: 'images',
+          cameraRoll: true,
+          waitUntilSaved: true,
+        },
+      },
       (response) => {
         if (response.didCancel) {
           console.log('cancelled');
