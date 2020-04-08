@@ -597,7 +597,7 @@ const TabNavigator = createMaterialTopTabNavigator(
                   <Icon2
                     name="bell-ring"
                     color={tintColor}
-                    style={{margin: 3, fontSize: 27}}
+                    style={{fontSize: 27}}
                   />
                 }
                 BadgeElement={
