@@ -187,9 +187,9 @@ class ProfilePage extends React.Component {
           await res.filter((campus) => {
             if (campus.id === parseInt(campusId)) {
               const cam = [...[campus], ...res];
-              console.log(campus);
+              console.log(campus, 'campus');
               this.setState({
-                selectedId: campus,
+                selectedId: campus.id,
                 campuses: cam,
               });
             } else {
@@ -538,10 +538,11 @@ class ProfilePage extends React.Component {
                 <Picker
                   selectedValue={this.state.selectedId}
                   onValueChange={(itemValue) => {
-                    if (itemValue !== 'select campus')
+                    if (itemValue !== 'select campus') {
                       this.setState({
                         selectedId: itemValue,
                       });
+                    }
                   }}>
                   {pickerItems}
                 </Picker>
