@@ -4,6 +4,7 @@ import {
   View,
   TextInput,
   Image,
+  SafeAreaView,
   TouchableOpacity,
   Platform,
 } from 'react-native';
@@ -776,7 +777,11 @@ class App extends Component {
   };
 
   render() {
-    return <AppContainer></AppContainer>;
+    return (
+      <SafeAreaView>
+        <AppContainer></AppContainer>
+      </SafeAreaView>
+    );
   }
 }
 
