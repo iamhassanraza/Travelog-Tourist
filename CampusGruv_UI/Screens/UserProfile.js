@@ -32,7 +32,7 @@ class UserProfile extends React.Component {
     const {params = {}} = props.navigation.state;
     return {
       header:
-        params.otherUserId === null ? (
+        (params.otherUserId === null || params.otherUserId === params.currentUserId) ? (
           <View style={{backgroundColor: '#1192d1'}}>
             <View
               style={{
@@ -155,6 +155,7 @@ class UserProfile extends React.Component {
       });
       this.props.navigation.setParams({
         otherUserId: this.state.otherUserId,
+        currentUserId: this.props.User.id,
         handleThis: () => this.toggleModal(),
       });
       this.fetchdata(userNavId ? userNavId : this.props.User.id);
