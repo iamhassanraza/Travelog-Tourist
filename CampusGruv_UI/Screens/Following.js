@@ -14,6 +14,18 @@ import AvatarUserStatus from '../Components/AvatarUserStatus';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import SearchInput, {createFilter} from 'react-native-search-filter';
 import NoPost from '../Components/NoPost';
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from 'react-native-indicators';
+import { ThemeBlue } from '../Assets/Colors';
 
 const KEYS_TO_FILTERS = ['name', 'subject'];
 
@@ -88,6 +100,7 @@ class Following extends Component {
 
   state = {
     search: [],
+    loading: true
   };
 
   componentDidMount() {
@@ -130,6 +143,7 @@ class Following extends Component {
     const JsonResponse = await Response.json();
     this.setState({
       search: JsonResponse.data,
+      loading: false
     });
   };
 
@@ -143,11 +157,19 @@ class Following extends Component {
   };
 
 
+
+
+
+
+
+
   render() {
     console.log(this.state.search,"HAHAHAAHHAAHAHAHA")
     return (
-    (this.state.search.length)  ?
-    
+    this.state.loading ?   <View style={{justifyContent: 'center',alignSelf:"center"}}>
+    <BarIndicator count={4} color={ThemeBlue} />
+  </View> :
+      (this.state.search.length)  ?
       <View>
         <View style={{padding: 5}}>
           <FlatList
