@@ -13,6 +13,18 @@ import {withNavigation} from 'react-navigation';
 import AvatarUserStatus from '../Components/AvatarUserStatus';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import NoPost from '../Components/NoPost';
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from 'react-native-indicators';
+import { ThemeBlue } from '../Assets/Colors';
 
 class Followers extends Component {
   static navigationOptions = (props) => {
@@ -86,6 +98,7 @@ class Followers extends Component {
   state = {
     data: [],
     search: null,
+    loading: true
   };
 
   componentDidMount() {
@@ -128,6 +141,7 @@ class Followers extends Component {
     const JsonResponse = await Response.json();
     this.setState({
       data: JsonResponse.data,
+      loading: false
     });
   };
 
@@ -142,8 +156,10 @@ class Followers extends Component {
   render() {
    
     return (
+      this.state.loading ?   <View style={{justifyContent: 'center',alignSelf:"center"}}>
+    <BarIndicator count={4} color={ThemeBlue} />
+  </View> :
       (this.state.data.length)   ?
-    
       <View>
         <View style={{padding: 5}}>
           <FlatList
@@ -164,7 +180,7 @@ class Followers extends Component {
       </View>
       :
       <View>
-       {this.renderNoPost('You Have No Followers')}
+       {this.renderNoPost('You Have No Followers ')}
      </View>
     );
   }

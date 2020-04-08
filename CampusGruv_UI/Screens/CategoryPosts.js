@@ -307,6 +307,7 @@ export default class CategoryPosts extends PureComponent {
       return (
         <React.Fragment>
           <ScrollView
+          style={{ backgroundColor: '#F0F0F0'}}
             refreshControl={
               <RefreshControl
                 refreshing={this.state.refreshing}
