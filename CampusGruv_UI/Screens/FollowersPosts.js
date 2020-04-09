@@ -352,18 +352,17 @@ export default class FolllowersPosts extends PureComponent {
       return (
         <View>
           <ContentLoader
-            height={450}
+            height={800}
             width={820}
-            speed={0.2}
-            height={Dimensions.get('window').height * 1}>
-            <Rect x="10" y="10" rx="5" ry="5" width="185" height="220" />
-            <Rect x="200" y="10" rx="5" ry="5" width="200" height="280" />
-            <Rect x="10" y="240" rx="5" ry="5" width="185" height="250" />
-            <Rect x="200" y="300" rx="5" ry="5" width="200" height="280" />
-            <Rect x="10" y="500" rx="5" ry="5" width="185" height="250" />
-            <Rect x="200" y="590" rx="5" ry="5" width="200" height="280" />
-            {/* <Rect x="280" y="300" rx="5" ry="5" width="260" height="140" />
-                  <Rect x="550" y="160" rx="5" ry="5" width="260" height="280" /> */}
+            speed={0.2}>
+            <Rect x="10" y="10" rx="5" ry="5" width="185" height="200" />
+            <Rect x="200" y="10" rx="5" ry="5" width="200" height="200" />
+            <Rect x="10" y="220" rx="5" ry="5" width="185" height="200" />
+            <Rect x="200" y="220" rx="5" ry="5" width="200" height="200" />
+            <Rect x="10" y="430" rx="5" ry="5" width="185" height="200" />
+            <Rect x="200" y="430" rx="5" ry="5" width="200" height="200" />
+            <Rect x="10" y="640" rx="5" ry="5" width="185" height="200" />
+            <Rect x="200" y="640" rx="5" ry="5" width="200" height="200" />
           </ContentLoader>
         </View>
       );

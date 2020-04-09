@@ -63,7 +63,8 @@ class PostCard extends Component {
               width: '100%',
               borderTopLeftRadius: 15,
               borderTopRightRadius: 15,
-              height: this.state.height < 300 ? this.state.height : 200,
+              height:200
+              // height: this.state.height < 300 ? this.state.height : 200,
             }}
             resizeMode="cover"></Image>
 

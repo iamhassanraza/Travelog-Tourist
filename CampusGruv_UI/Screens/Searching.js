@@ -277,19 +277,17 @@ class Searching extends React.PureComponent {
       return (
         <View>
           <ContentLoader
-            height={450}
+            height={850}
             speed={0.2}
             height={Dimensions.get('window').height * 1}>
-            <Rect x="10" y="10" rx="5" ry="5" width="85%" height="45" />
-            <Rect x="10" y="60" rx="5" ry="5" width="85%" height="45" />
-            <Rect x="10" y="110" rx="5" ry="5" width="85%" height="45" />
-            <Rect x="10" y="160" rx="5" ry="5" width="85%" height="45" />
-            <Rect x="10" y="210" rx="5" ry="5" width="85%" height="45" />
-            <Rect x="10" y="260" rx="5" ry="5" width="85%" height="45" />
-            <Rect x="10" y="310" rx="5" ry="5" width="85%" height="45" />
-            <Rect x="10" y="360" rx="5" ry="5" width="85%" height="45" />
-            {/* <Rect x="280" y="300" rx="5" ry="5" width="260" height="140" />
-                    <Rect x="550" y="160" rx="5" ry="5" width="260" height="280" /> */}
+             <Rect x="10" y="10" rx="5" ry="5" width="185" height="200" />
+            <Rect x="200" y="10" rx="5" ry="5" width="200" height="200" />
+            <Rect x="10" y="220" rx="5" ry="5" width="185" height="200" />
+            <Rect x="200" y="220" rx="5" ry="5" width="200" height="200" />
+            <Rect x="10" y="430" rx="5" ry="5" width="185" height="200" />
+            <Rect x="200" y="430" rx="5" ry="5" width="200" height="200" />
+            <Rect x="10" y="640" rx="5" ry="5" width="185" height="200" />
+            <Rect x="200" y="640" rx="5" ry="5" width="200" height="200" />
           </ContentLoader>
         </View>
       );
