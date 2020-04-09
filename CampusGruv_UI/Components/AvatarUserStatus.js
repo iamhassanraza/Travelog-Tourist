@@ -74,7 +74,8 @@ class AvatarUserStatus extends Component {
         }}>
         <View style={{flex: 4}}>
           <TouchableWithoutFeedback
-            onPress={() =>
+            onPress={() => {
+              if(this.props.id !== this.props.User.id)
               this.props.navigation.push('UserProfile', {
                 userNavId: this.props.id,
                 userNavDp: this.props.pic,
@@ -83,6 +84,7 @@ class AvatarUserStatus extends Component {
                 userCampus: this.props.campus,
                 userFollowing: this.state.followed,
               })
+            }
             }>
             <View style={{flexDirection: 'row', padding: '1%'}}>
               <Image
