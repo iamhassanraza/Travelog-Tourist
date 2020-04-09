@@ -25,8 +25,10 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import ContentLoader, {Rect} from 'react-content-loader/native';
 import NoPost from '../Components/NoPost';
 import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
+import {connect} from 'react-redux';
 
-export default class Searching extends React.PureComponent {
+
+class Searching extends React.PureComponent {
   state = {
     selection: 'Feed',
     posts: [],
@@ -253,17 +255,21 @@ export default class Searching extends React.PureComponent {
             data={this.state.Users}
             keyExtractor={(item) => item.id}
             showsHorizontalScrollIndicator={false}
-            renderItem={({item}) => (
-              <AvatarUserStatus
-                id={item.id}
-                first_name={item.first_name}
-                last_name={item.last_name}
-                userFollowing={item.isFollowing ? true : false}
-                item={item}
-                campus={item.campus.description}
-                status={true}
-                pic={item.profile_pic_url}></AvatarUserStatus>
-            )}
+            renderItem={({item}) => {
+              if(item.id !== this.props.User.id) {
+                return (
+                  <AvatarUserStatus
+                    id={item.id}
+                    first_name={item.first_name}
+                    last_name={item.last_name}
+                    userFollowing={item.isFollowing ? true : false}
+                    item={item}
+                    campus={item.campus.description}
+                    status={true}
+                    pic={item.profile_pic_url}></AvatarUserStatus>
+                )
+              }
+            }}
           />
         </ScrollView>
       );
@@ -271,19 +277,17 @@ export default class Searching extends React.PureComponent {
       return (
         <View>
           <ContentLoader
-            height={450}
+            height={850}
             speed={0.2}
             height={Dimensions.get('window').height * 1}>
-            <Rect x="10" y="10" rx="5" ry="5" width="85%" height="45" />
-            <Rect x="10" y="60" rx="5" ry="5" width="85%" height="45" />
-            <Rect x="10" y="110" rx="5" ry="5" width="85%" height="45" />
-            <Rect x="10" y="160" rx="5" ry="5" width="85%" height="45" />
-            <Rect x="10" y="210" rx="5" ry="5" width="85%" height="45" />
-            <Rect x="10" y="260" rx="5" ry="5" width="85%" height="45" />
-            <Rect x="10" y="310" rx="5" ry="5" width="85%" height="45" />
-            <Rect x="10" y="360" rx="5" ry="5" width="85%" height="45" />
-            {/* <Rect x="280" y="300" rx="5" ry="5" width="260" height="140" />
-                    <Rect x="550" y="160" rx="5" ry="5" width="260" height="280" /> */}
+             <Rect x="10" y="10" rx="5" ry="5" width="185" height="200" />
+            <Rect x="200" y="10" rx="5" ry="5" width="200" height="200" />
+            <Rect x="10" y="220" rx="5" ry="5" width="185" height="200" />
+            <Rect x="200" y="220" rx="5" ry="5" width="200" height="200" />
+            <Rect x="10" y="430" rx="5" ry="5" width="185" height="200" />
+            <Rect x="200" y="430" rx="5" ry="5" width="200" height="200" />
+            <Rect x="10" y="640" rx="5" ry="5" width="185" height="200" />
+            <Rect x="200" y="640" rx="5" ry="5" width="200" height="200" />
           </ContentLoader>
         </View>
       );
@@ -540,3 +544,13 @@ export default class Searching extends React.PureComponent {
     );
   }
 }
+
+mapStateToProps = (state) => {
+  //this state will contain FULL redux store all the reducers data
+
+  //use your required reducer data in props i.e reducer1
+
+  return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+};
+
+export default connect(mapStateToProps, null)(Searching);

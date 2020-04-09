@@ -14,8 +14,10 @@ import {SearchBar} from 'react-native-elements';
 import AvatarUserStatus from '../Components/AvatarUserStatus';
 import ContentLoader, {Rect} from 'react-content-loader/native';
 import NewMessageComponent from '../Components/NewMessageComponent';
+import {connect} from 'react-redux';
 
-export default class SelectNewChat extends Component {
+
+class SelectNewChat extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -84,15 +86,19 @@ export default class SelectNewChat extends Component {
                 data={this.state.users}
                 keyExtractor={(item) => item.id}
                 showsHorizontalScrollIndicator={false}
-                renderItem={({item}) => (
-                  <NewMessageComponent
-                    id={item.id}
-                    profile_pic_url={item.profile_pic_url}
-                    first_name={item.first_name}
-                    last_name={item.last_name}
-                    navigationProps={this.props.navigation}
-                  />
-                )}
+                renderItem={({item}) => {
+                  if(item.id !== this.props.User.id) {
+                    return (
+                      <NewMessageComponent
+                        id={item.id}
+                        profile_pic_url={item.profile_pic_url}
+                        first_name={item.first_name}
+                        last_name={item.last_name}
+                        navigationProps={this.props.navigation}
+                      />
+                    )
+                  }
+                }}
               />
             </ScrollView>
           ) : (
@@ -119,3 +125,14 @@ export default class SelectNewChat extends Component {
     );
   }
 }
+
+
+mapStateToProps = (state) => {
+  //this state will contain FULL redux store all the reducers data
+
+  //use your required reducer data in props i.e reducer1
+
+  return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+};
+
+export default connect(mapStateToProps, null)(SelectNewChat);

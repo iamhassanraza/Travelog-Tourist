@@ -6,6 +6,8 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
+import {connect} from 'react-redux';
+
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 
 class AvatarUserStatus extends Component {
@@ -72,7 +74,8 @@ class AvatarUserStatus extends Component {
         }}>
         <View style={{flex: 4}}>
           <TouchableWithoutFeedback
-            onPress={() =>
+            onPress={() => {
+              if(this.props.id !== this.props.User.id)
               this.props.navigation.push('UserProfile', {
                 userNavId: this.props.id,
                 userNavDp: this.props.pic,
@@ -81,6 +84,7 @@ class AvatarUserStatus extends Component {
                 userCampus: this.props.campus,
                 userFollowing: this.state.followed,
               })
+            }
             }>
             <View style={{flexDirection: 'row', padding: '1%'}}>
               <Image
@@ -110,6 +114,7 @@ class AvatarUserStatus extends Component {
             //this.setState({follow: !this.state.follow});
             this.followButton();
           }}>
+            {this.props.id !== this.props.User.id ?
           <View
             style={{
               flex: 1,
@@ -130,7 +135,7 @@ class AvatarUserStatus extends Component {
               }}>
               {this.state.followed ? 'Following' : 'Follow'}
             </Text>
-          </View>
+          </View> : null}
         </TouchableOpacity>
       </View>
       // </TouchableWithoutFeedback>
@@ -138,4 +143,13 @@ class AvatarUserStatus extends Component {
   }
 }
 
-export default withNavigation(AvatarUserStatus);
+mapStateToProps = (state) => {
+  //this state will contain FULL redux store all the reducers data
+
+  //use your required reducer data in props i.e reducer1
+
+  return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+};
+
+export default withNavigation(connect(mapStateToProps, null)(AvatarUserStatus))
+

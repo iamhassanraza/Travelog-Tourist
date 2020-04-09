@@ -26,6 +26,8 @@ import {
   WaveIndicator,
 } from 'react-native-indicators';
 import { ThemeBlue } from '../Assets/Colors';
+import {connect} from 'react-redux';
+
 
 const KEYS_TO_FILTERS = ['name', 'subject'];
 
@@ -164,7 +166,6 @@ class Following extends Component {
 
 
   render() {
-    console.log(this.state.search,"HAHAHAAHHAAHAHAHA")
     return (
     this.state.loading ?   <View style={{justifyContent: 'center',alignSelf:"center"}}>
     <BarIndicator count={4} color={ThemeBlue} />
@@ -178,14 +179,15 @@ class Following extends Component {
             keyExtractor={(item) => item.name}
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => (
-              <AvatarUserStatus
-                id={item.id}
-                first_name={item.first_name}
-                last_name={item.last_name}
-                userFollowing={item.userFollowing[0] ? true : false}
-                pic={item.profile_pic_url}
-              />
-            )}
+                  <AvatarUserStatus
+                    id={item.id}
+                    first_name={item.first_name}
+                    last_name={item.last_name}
+                    userFollowing={item.userFollowing[0] ? true : false}
+                    pic={item.profile_pic_url}
+                  />
+                )
+              }
           />
         </View>
       </View>
@@ -196,5 +198,12 @@ class Following extends Component {
     );
   }
 }
+mapStateToProps = (state) => {
+  //this state will contain FULL redux store all the reducers data
 
-export default withNavigation(Following);
+  //use your required reducer data in props i.e reducer1
+
+  return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+};
+
+export default withNavigation(connect(mapStateToProps, null)(Following))
