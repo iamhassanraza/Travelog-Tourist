@@ -463,7 +463,11 @@ class PostDetail extends Component {
             <Text
               style={{
                 fontSize: 18,
-                color: this.state.currentComment === null || this.state.currentComment === '' ? '#e8d7d5' :ThemeBlue,
+                color:
+                  this.state.currentComment === null ||
+                  this.state.currentComment === ''
+                    ? '#e8d7d5'
+                    : ThemeBlue,
                 //paddingLeft: '2%',
               }}>
               Post
@@ -546,11 +550,11 @@ class PostDetail extends Component {
         });
       } else {
         // alert("comment can't be empty");
-        console.log("Semething wrong")
+        console.log('Semething wrong');
       }
     } else {
       // alert("comment can't be empty");
-      console.log("Semething wrong")
+      console.log('Semething wrong');
     }
   };
 
@@ -606,7 +610,7 @@ class PostDetail extends Component {
       // alert(JsonResponse.message);
     } else {
       // alert('something is wrong');
-      console.log("Semething wrong")
+      console.log('Semething wrong');
     }
   };
 
@@ -656,7 +660,7 @@ class PostDetail extends Component {
       // alert(JsonResponse.message);
     } else {
       // alert('something is wrong');
-      console.log("Semething wrong")
+      console.log('Semething wrong');
     }
   };
   //style={{height: Dimensions.get('window').height-150}}
@@ -666,39 +670,38 @@ class PostDetail extends Component {
       'nothing to render',
     );
     return (
-        <Container style={{marginTop: -20}}>
-          <Content style={{marginBottom: 10}}>
-            {this.renderHeader(
-              data.userAvatar,
-              data.postId,
-              data.first_name,
-              data.last_name,
-              data.uri,
-              data.userId,
-              data.title,
-            )}
-            {this.renderImage(data.uri)}
-            {this.renderTitle(data.title, data.views)}
-            {this.renderDescription(data.description)}
-            {this.state.comments[0] ? (
-              this.renderAllComments(data.userAvatar, data.comments)
-            ) : (
-              <View style={{height: 80, justifyContent: 'center'}}>
-                <Text
-                  style={{
-                    color: 'grey',
-                    fontSize: 25,
-                    opacity: 0.5,
-                    alignSelf: 'center',
-                  }}>
-                  No comments yet!
-                </Text>
-              </View>
-            )}
-          </Content>
-          {this.renderAddComment(data.userAvatar, data.postId, data.userId)}
-
-        </Container>
+      <Container style={{marginTop: Platform === 'ios' ? -20 : 0}}>
+        <Content style={{marginBottom: 10}}>
+          {this.renderHeader(
+            data.userAvatar,
+            data.postId,
+            data.first_name,
+            data.last_name,
+            data.uri,
+            data.userId,
+            data.title,
+          )}
+          {this.renderImage(data.uri)}
+          {this.renderTitle(data.title, data.views)}
+          {this.renderDescription(data.description)}
+          {this.state.comments[0] ? (
+            this.renderAllComments(data.userAvatar, data.comments)
+          ) : (
+            <View style={{height: 80, justifyContent: 'center'}}>
+              <Text
+                style={{
+                  color: 'grey',
+                  fontSize: 25,
+                  opacity: 0.5,
+                  alignSelf: 'center',
+                }}>
+                No comments yet!
+              </Text>
+            </View>
+          )}
+        </Content>
+        {this.renderAddComment(data.userAvatar, data.postId, data.userId)}
+      </Container>
     );
   }
 }
