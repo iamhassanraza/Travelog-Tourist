@@ -4,9 +4,10 @@ import InboxComponent from '../Components/InboxComponent';
 import {FlatList} from 'react-native-gesture-handler';
 import {clearMsgs} from '../ReduxStore/Actions/index';
 import mystore from '../index';
+import {connect} from 'react-redux';
 // import Ws from '@adonisjs/websocket-client'
 
-export default class Inbox extends Component {
+  class Inbox extends Component {
   constructor() {
     super();
     this.state = {
@@ -51,7 +52,10 @@ export default class Inbox extends Component {
             <FlatList
               style={{marginTop: 10}}
               data={this.state.data}
-              renderItem={({item}) => (
+              renderItem={({item}) => {
+                console.log('item',item.id, this.props.User.id)
+                if(item.id !== this.props.User.id)
+                 return (
                 <InboxComponent
                   user_id={item.id}
                   uri={item.profile_pic_url}
@@ -59,7 +63,9 @@ export default class Inbox extends Component {
                   subtitle={item.message}
                   //time={item.time}
                 />
-              )}
+              )
+            }
+                 }
             />
           </ScrollView>
         </View>
@@ -67,3 +73,13 @@ export default class Inbox extends Component {
     );
   }
 }
+
+mapStateToProps = (state) => {
+  //this state will contain FULL redux store all the reducers data
+
+  //use your required reducer data in props i.e reducer1
+
+  return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+};
+
+export default connect(mapStateToProps, null)(Inbox);

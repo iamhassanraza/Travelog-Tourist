@@ -337,7 +337,7 @@ class UserProfile extends React.Component {
 
   renderPost = () => {
     return (
-      <View style={{paddingTop: 10,backgroundColor: '#F0F0F0'}}>
+      <View style={{paddingTop: 10, backgroundColor: '#F0F0F0'}}>
         <RenderCards
           posts={this.state.posts}
           loadMore={this.loadmore}
@@ -461,7 +461,7 @@ class UserProfile extends React.Component {
       ? this.state.otherUserCampus
       : this.props.User.campus.description;
     return (
-      <ScrollView>
+      <ScrollView style={{ backgroundColor: '#F0F0F0'}}>
         {/* EDIT PROFILE BUTTON */}
         {postUserId === this.props.User.id ? (
           <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>

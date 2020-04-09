@@ -25,6 +25,8 @@ import {
   WaveIndicator,
 } from 'react-native-indicators';
 import { ThemeBlue } from '../Assets/Colors';
+import {connect} from 'react-redux';
+
 
 class Followers extends Component {
   static navigationOptions = (props) => {
@@ -185,5 +187,13 @@ class Followers extends Component {
     );
   }
 }
+mapStateToProps = (state) => {
+  //this state will contain FULL redux store all the reducers data
 
-export default withNavigation(Followers);
+  //use your required reducer data in props i.e reducer1
+
+  return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+};
+
+export default withNavigation(connect(mapStateToProps, null)(Followers))
+
