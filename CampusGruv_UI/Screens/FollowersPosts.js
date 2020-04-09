@@ -325,6 +325,7 @@ export default class FolllowersPosts extends PureComponent {
           </Text>
         </View>  */}
           <ScrollView
+          style={{backgroundColor: '#F0F0F0'}}
             refreshControl={
               <RefreshControl
                 refreshing={this.state.refreshing}

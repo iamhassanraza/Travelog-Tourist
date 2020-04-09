@@ -337,7 +337,7 @@ class UserProfile extends React.Component {
 
   renderPost = () => {
     return (
-      <View style={{paddingTop: 10,   backgroundColor: '#F0F0F0'}}>
+      <View style={{paddingTop: 10,backgroundColor: '#F0F0F0'}}>
         <RenderCards
           posts={this.state.posts}
           loadMore={this.loadmore}
