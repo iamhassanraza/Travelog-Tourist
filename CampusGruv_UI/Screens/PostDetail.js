@@ -666,8 +666,7 @@ class PostDetail extends Component {
       'nothing to render',
     );
     return (
-      <>
-        <Container>
+        <Container style={{marginTop: -20}}>
           <Content style={{marginBottom: 10}}>
             {this.renderHeader(
               data.userAvatar,
@@ -697,9 +696,9 @@ class PostDetail extends Component {
               </View>
             )}
           </Content>
+          {this.renderAddComment(data.userAvatar, data.postId, data.userId)}
+
         </Container>
-        {this.renderAddComment(data.userAvatar, data.postId, data.userId)}
-      </>
     );
   }
 }

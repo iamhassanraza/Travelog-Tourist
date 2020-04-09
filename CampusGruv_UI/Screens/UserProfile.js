@@ -587,6 +587,16 @@ class UserProfile extends React.Component {
                   borderTopRightRadius: 23,
                   borderTopLeftRadius: 23,
                 }}>
+                  <Icon
+                      name="cancel"
+                      onPress={() => this.setState({isModalVisible: false})}
+                      style={{
+                        flex: 0.65,
+                        paddingLeft: 5,
+                        fontSize: 20,
+                        paddingTop: 4,
+                        color: IconGrey,
+                      }}></Icon>
                 <View
                   style={{
                     flex: 10,

@@ -259,7 +259,7 @@ class CreateNewPost extends Component {
                   ? `rgba(${item.rgba_colors}, 4)`
                   : `rgba(${item.rgba_colors}, 0.55)`
               }
-              bold={this.state.Category === item.id ? 'bold' : '100'}
+              bold={this.state.Category === item.id ? 'bold' : 'normal'}
               fsize={this.state.Category === item.id ? 14 : 12}
               // borderbottom= {this.state.Category === item.id ? 4 : 0}
               onSelect={this.changeState}

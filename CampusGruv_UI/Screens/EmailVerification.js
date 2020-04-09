@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   AsyncStorage,
+  SafeAreaView,
 } from 'react-native';
 import {BarIndicator} from 'react-native-indicators';
 import HeaderTitle from './Heading';
@@ -64,13 +65,14 @@ class EmailVerification extends React.Component {
 
   render() {
     return (
-      <ImageBackground
+      // <SafeAreaView style={{flex: 1}}>
+        <ImageBackground
         style={styles.container}
         source={require('../Assets/Images/background.png')}
         resizeMode="cover">
         <ScrollView style={{flex: 1}}>
           <KeyboardAvoidingView positon="padding">
-            <View style={{flex: 0.5, marginTop: -10}}>
+            <View style={{flex: 0.5, marginTop: 50}}>
               <HeaderTitle />
             </View>
 
@@ -187,18 +189,19 @@ class EmailVerification extends React.Component {
             </View>
           </KeyboardAvoidingView>
         </ScrollView>
-        {/* <LogoutButton
+        <LogoutButton
           style={{
-            alignSelf: 'center',
-            position: 'absolute',
-            bottom: 50,
-            borderWidth: 0.5,
-            padding: 5,
+            // marginBottom: 20
+            // alignSelf: 'center',
+            // position: 'absolute',
+            // bottom: 50,
+            paddingLeft: 5,
+            fontSize: 18,
             color: 'white',
-            borderColor: 'white',
             fontWeight: 'bold',
-          }}></LogoutButton> */}
+          }}></LogoutButton>
       </ImageBackground>
+      // </SafeAreaView>
     );
   }
 }
