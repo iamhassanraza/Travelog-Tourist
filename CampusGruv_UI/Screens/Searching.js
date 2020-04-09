@@ -207,7 +207,7 @@ export default class Searching extends React.PureComponent {
     if (this.state.loadingFeed === false) {
       return (
         <ScrollView
-          style={{}}
+          style={{backgroundColor: '#F0F0F0'}}
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}
