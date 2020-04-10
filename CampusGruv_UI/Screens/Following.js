@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import {withNavigation} from 'react-navigation';
 import AvatarUserStatus from '../Components/AvatarUserStatus';
-
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import NoPost from '../Components/NoPost';
 import {
   BallIndicator,

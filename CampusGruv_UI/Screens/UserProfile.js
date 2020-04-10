@@ -28,11 +28,12 @@ const IconGrey = '#b4b8bf';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 class UserProfile extends React.Component {
-  static navigationOptions = (props) => {
+  static navigationOptions = props => {
     const {params = {}} = props.navigation.state;
     return {
       header:
-        (params.otherUserId === null || params.otherUserId === params.currentUserId) ? (
+        params.otherUserId === null ||
+        params.otherUserId === params.currentUserId ? (
           <View style={{backgroundColor: '#1192d1'}}>
             <View
               style={{
@@ -186,7 +187,7 @@ class UserProfile extends React.Component {
     this.setState({isModalVisible: !this.state.isModalVisible});
   };
 
-  fetchFollowData = async (id) => {
+  fetchFollowData = async id => {
     const Token = await AsyncStorage.getItem('TOKEN');
     const response = await fetch(
       `${
@@ -219,7 +220,7 @@ class UserProfile extends React.Component {
       ? this.state.otherUserId
       : this.props.User.id;
     this.setState(
-      (previousState) => {
+      previousState => {
         return {pageNo: previousState.pageNo + 1, loadmore: true};
       },
       async () => {
@@ -241,7 +242,7 @@ class UserProfile extends React.Component {
         if (parseInt(Response.status) === 401) {
           alert(JsonResponse.message);
         } else if (parseInt(Response.status) === 200) {
-          this.setState((previousState) => {
+          this.setState(previousState => {
             return {
               posts: [...previousState.posts, ...JsonResponse.data],
               total: JsonResponse.total,
@@ -280,7 +281,7 @@ class UserProfile extends React.Component {
     this.setState({searchbox: ''});
   }
 
-  fetchdata = async (userId) => {
+  fetchdata = async userId => {
     this.setState({spinner: true});
     if (this.state.active === 'posts') {
       // const userId = await AsyncStorage.getItem('USER_ID');
@@ -342,7 +343,8 @@ class UserProfile extends React.Component {
           posts={this.state.posts}
           loadMore={this.loadmore}
           loadstate={this.state.loadmore}
-          totalPosts={this.state.total}></RenderCards>
+          totalPosts={this.state.total}
+        />
       </View>
     );
   };
@@ -351,7 +353,7 @@ class UserProfile extends React.Component {
     console.log('no post');
     return (
       <View style={{paddingTop: 30, height: '100%'}}>
-        <NoPosts></NoPosts>
+        <NoPosts />
       </View>
     );
   };
@@ -364,20 +366,20 @@ class UserProfile extends React.Component {
           width={820}
           speed={0.2}
           height={Dimensions.get('window').height * 1}>
-           <Rect x="10" y="10" rx="5" ry="5" width="185" height="200" />
-            <Rect x="200" y="10" rx="5" ry="5" width="200" height="200" />
-            <Rect x="10" y="220" rx="5" ry="5" width="185" height="200" />
-            <Rect x="200" y="220" rx="5" ry="5" width="200" height="200" />
-            <Rect x="10" y="430" rx="5" ry="5" width="185" height="200" />
-            <Rect x="200" y="430" rx="5" ry="5" width="200" height="200" />
-            <Rect x="10" y="640" rx="5" ry="5" width="185" height="200" />
-            <Rect x="200" y="640" rx="5" ry="5" width="200" height="200" />
+          <Rect x="10" y="10" rx="5" ry="5" width="185" height="200" />
+          <Rect x="200" y="10" rx="5" ry="5" width="200" height="200" />
+          <Rect x="10" y="220" rx="5" ry="5" width="185" height="200" />
+          <Rect x="200" y="220" rx="5" ry="5" width="200" height="200" />
+          <Rect x="10" y="430" rx="5" ry="5" width="185" height="200" />
+          <Rect x="200" y="430" rx="5" ry="5" width="200" height="200" />
+          <Rect x="10" y="640" rx="5" ry="5" width="185" height="200" />
+          <Rect x="200" y="640" rx="5" ry="5" width="200" height="200" />
         </ContentLoader>
       </View>
     );
   };
 
-  blockUser = async (user_id) => {
+  blockUser = async user_id => {
     alert('user blocked');
     // const Token = await AsyncStorage.getItem('TOKEN');
     // var Response = await fetch(
@@ -398,8 +400,8 @@ class UserProfile extends React.Component {
     // console.log('block response', responseJson);
   };
 
-  followButton = async (id) => {
-    this.setState((prevState) => ({
+  followButton = async id => {
+    this.setState(prevState => ({
       isFollowing: !prevState.isFollowing,
     }));
     const Token = await AsyncStorage.getItem('TOKEN');
@@ -461,7 +463,7 @@ class UserProfile extends React.Component {
       ? this.state.otherUserCampus
       : this.props.User.campus.description;
     return (
-      <ScrollView style={{ backgroundColor: '#F0F0F0'}}>
+      <ScrollView style={{backgroundColor: '#F0F0F0'}}>
         {/* EDIT PROFILE BUTTON */}
         {postUserId === this.props.User.id ? (
           <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
@@ -539,7 +541,7 @@ class UserProfile extends React.Component {
             </TouchableOpacity>
           </View>
         ) : (
-          <View style={{height: 40}}></View>
+          <View style={{height: 40}} />
         )}
         {/* IMAGE and NAME  */}
         <View
@@ -587,16 +589,17 @@ class UserProfile extends React.Component {
                   borderTopRightRadius: 23,
                   borderTopLeftRadius: 23,
                 }}>
-                  <Icon
-                      name="cancel"
-                      onPress={() => this.setState({isModalVisible: false})}
-                      style={{
-                        flex: 0.65,
-                        paddingLeft: 5,
-                        fontSize: 20,
-                        paddingTop: 4,
-                        color: IconGrey,
-                      }}></Icon>
+                <Icon
+                  name="cancel"
+                  onPress={() => this.setState({isModalVisible: false})}
+                  style={{
+                    flex: 0.65,
+                    paddingLeft: 5,
+                    fontSize: 20,
+                    paddingTop: 4,
+                    color: IconGrey,
+                  }}
+                />
                 <View
                   style={{
                     flex: 10,
@@ -725,28 +728,34 @@ class UserProfile extends React.Component {
           <View
             style={{
               flexDirection: 'row',
+              alignItems: 'center',
               borderWidth: 1,
               borderColor: '#C4C4C4',
               width: '65%',
               marginLeft: 0,
               borderRadius: 12,
-              paddingTop: '2%',
-              paddingLeft: '2%',
+              // paddingTop: '2%',
+              // paddingLeft: '2%',
               height: '75%',
             }}>
-            <Icon name="search" color="#C4C4C4" size={20} style={{}} />
+            <Icon
+              name="search"
+              color="#C4C4C4"
+              size={20}
+              style={{paddingLeft: Platform.OS == 'ios' ? 5 : 3}}
+            />
             <TextInput
               style={{
                 width: '100%',
                 fontSize: 15,
                 color: '#ACACAC',
-                paddingTop: 0,
-                paddingBottom: Platform.OS == 'ios' ? 10 : 10,
-                height: Platform.OS == 'ios' ? 30 : 30,
+                //SpaddingTop: 0,
+                paddingLeft: Platform.OS == 'ios' ? 5 : 3,
+                height: Platform.OS == 'ios' ? 40 : 30,
               }}
               placeholder="Search"
               value={this.state.searchbox}
-              onChangeText={(searchbox) => {
+              onChangeText={searchbox => {
                 this.setState({searchbox});
                 this.searchPost(searchbox, postUserId);
               }}
@@ -798,7 +807,7 @@ class UserProfile extends React.Component {
                   color: this.state.active === 'saves' ? '#0C91CF' : '#B4B8BA',
                 }}>
                 {' '}
-                Saved
+                saves
               </Text>
             </View>
           ) : null}
@@ -818,7 +827,7 @@ class UserProfile extends React.Component {
   }
 }
 
-mapStateToProps = (state) => {
+mapStateToProps = state => {
   //this state will contain FULL redux store all the reducers data
 
   //use your required reducer data in props i.e reducer1
@@ -826,4 +835,7 @@ mapStateToProps = (state) => {
   return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
 };
 
-export default connect(mapStateToProps, null)(UserProfile);
+export default connect(
+  mapStateToProps,
+  null,
+)(UserProfile);

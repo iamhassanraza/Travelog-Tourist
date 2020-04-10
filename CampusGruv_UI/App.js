@@ -162,7 +162,7 @@ const ProfileStack = createStackNavigator(
     UserSettings: {
       screen: UserSettings,
       navigationOptions: {
-        header: (props) => (
+        header: props => (
           <View style={{backgroundColor: '#1192d1'}}>
             <View
               style={{
@@ -199,12 +199,13 @@ const ProfileStack = createStackNavigator(
     },
   },
   {
-    navigationOptions: (props) => {
+    navigationOptions: props => {
       return {
         tabBarVisible:
-          (props.navigation.state.routes[props.navigation.state.index]
-            .routeName === 'Followers') || (props.navigation.state.routes[props.navigation.state.index]
-              .routeName ==='Following')
+          props.navigation.state.routes[props.navigation.state.index]
+            .routeName === 'Followers' ||
+          props.navigation.state.routes[props.navigation.state.index]
+            .routeName === 'Following'
             ? false
             : true,
       };
@@ -244,20 +245,23 @@ const HomeStack = createStackNavigator(
     },
   },
   {
-    navigationOptions: (props) => {
+    navigationOptions: props => {
       return {
         tabBarVisible:
-          (props.navigation.state.routes[props.navigation.state.index]
-            .routeName === 'PostDetail') || (props.navigation.state.routes[props.navigation.state.index]
-              .routeName === 'ReportPost') || (props.navigation.state.routes[props.navigation.state.index]
-                .routeName === 'Followers') || (props.navigation.state.routes[props.navigation.state.index]
-                  .routeName ==="Following")
+          // props.navigation.state.routes[props.navigation.state.index]
+          //   .routeName === 'PostDetail' ||
+          props.navigation.state.routes[props.navigation.state.index]
+            .routeName === 'ReportPost' ||
+          props.navigation.state.routes[props.navigation.state.index]
+            .routeName === 'Followers' ||
+          props.navigation.state.routes[props.navigation.state.index]
+            .routeName === 'Following'
             ? false
             : true,
       };
     },
     defaultNavigationOptions: {
-      header: (props) => (
+      header: props => (
         <View style={{backgroundColor: '#1192d1'}}>
           <View
             style={{
@@ -347,7 +351,7 @@ const MessageStack = createStackNavigator(
     SelectNewChat: {
       screen: SelectNewChat,
       navigationOptions: {
-        header: (props) => (
+        header: props => (
           <View style={{backgroundColor: '#1192d1'}}>
             <View
               style={{
@@ -385,7 +389,7 @@ const MessageStack = createStackNavigator(
     inbox: {
       screen: inbox,
       navigationOptions: {
-        header: (props) => (
+        header: props => (
           <View style={{backgroundColor: '#1192d1'}}>
             <View
               style={{
@@ -426,7 +430,7 @@ const MessageStack = createStackNavigator(
   },
   {
     initialRouteName: 'inbox',
-    navigationOptions: (props) => {
+    navigationOptions: props => {
       return {
         tabBarVisible: props.navigation.state.index === 0,
       };
@@ -591,7 +595,7 @@ const TabNavigator = createMaterialTopTabNavigator(
     },
     Notifications: {
       screen: NotificationScreen,
-      navigationOptions: (props) => {
+      navigationOptions: props => {
         store = mystore;
         state = store.getState();
         //console.log('state', state);
@@ -637,7 +641,7 @@ const TabNavigator = createMaterialTopTabNavigator(
     },
     messages: {
       screen: MessageStack,
-      navigationOptions: (props) => {
+      navigationOptions: props => {
         store = mystore;
         state = store.getState();
         return {
@@ -769,22 +773,20 @@ class App extends Component {
     this.keyboardWillHideSub.remove();
   }
 
-  keyboardWillShow = (event) => {
+  keyboardWillShow = event => {
     this.setState({
       isVisible: false,
     });
   };
 
-  keyboardWillHide = (event) => {
+  keyboardWillHide = event => {
     this.setState({
       isVisible: true,
     });
   };
 
   render() {
-    return (
- <AppContainer></AppContainer>
-    )
+    return <AppContainer />;
   }
 }
 
