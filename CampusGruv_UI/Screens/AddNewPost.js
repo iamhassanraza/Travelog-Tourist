@@ -53,7 +53,7 @@ export default class AddNewPost extends Component {
             }}>
             <View style={{alignSelf: 'center'}}>
               <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
-                New post
+                New Post
               </Text>
             </View>
             <View
@@ -146,42 +146,58 @@ export default class AddNewPost extends Component {
         <View
           style={{
             width: 170,
+            height:140,
             backgroundColor: '#0C91CF',
             alignSelf: 'center',
-            marginTop: 10,
+            marginTop: Platform.OS == 'ios' ? '20%' : '10%',
             borderRadius: 10,
+           
+            justifyContent:"center"
           }}>
           <TouchableOpacity onPress={this.selectPhoto}>
             <ImageBackground
               source={require('../Assets/Images/picture.png')}
-              style={{width: 160, height: 140, alignSelf: 'center'}}
+              style={{width: 100, height: 100, alignSelf: 'center'}}
             />
+             <Text
+              style={{
+                color: 'white',
+                fontSize: 22,
+                alignSelf: 'center',
+                fontWeight: 'bold',
+                marginTop:"-4%"
+              }}>
+              Choose Photo
+            </Text>
           </TouchableOpacity>
         </View>
 
         <View
           style={{
             width: 170,
+            height:140,
             backgroundColor: '#0C91CF',
             alignSelf: 'center',
-            marginTop: 10,
+            marginTop: Platform.OS == 'ios' ? '20%' : '10%',
             borderRadius: 10,
+            justifyContent:"center"
           }}>
           <TouchableOpacity onPress={this.selectPhoto}>
             <ImageBackground
               source={require('../Assets/Images/photo-camera.png')}
               style={{
-                width: 160,
-                height: 140,
+                width: 100,
+                height: 100,
                 color: 'white',
                 alignSelf: 'center',
-                marginTop: 20,
+                
               }}
             />
             <Text
               style={{
                 color: 'white',
-                fontSize: 16,
+                fontSize: 22,
+                marginTop:"-4%",
                 alignSelf: 'center',
                 fontWeight: 'bold',
               }}>
@@ -234,7 +250,7 @@ export default class AddNewPost extends Component {
 
             {this.state.Images ? this.renderDeleteIcon() : this.renderOptions()}
 
-            <Text style={{alignSelf: 'center', marginTop: 10, color: 'grey'}}>
+            <Text style={{alignSelf: 'center', marginTop: Platform.OS == 'ios' ? '20%' : 20, fontSize:22,color: 'grey'}}>
               Title
             </Text>
             <TextInput
@@ -285,13 +301,13 @@ export default class AddNewPost extends Component {
               <View
                 style={{
                   width: '90%',
-                  borderRadius: 5,
+                  borderRadius: 10,
                   height: 45,
                   justifyContent: 'center',
                   backgroundColor: '#1192d1',
                   alignSelf: 'center',
                 }}>
-                <Text style={{color: 'white', alignSelf: 'center'}}>NEXT</Text>
+                <Text style={{color: 'white', alignSelf: 'center',fontSize:20,fontWeight:"bold"}}>NEXT</Text>
               </View>
               {this.state.error === 'Select image and title' ? (
                 <Text style={{color: 'red'}}>{this.state.error}</Text>
