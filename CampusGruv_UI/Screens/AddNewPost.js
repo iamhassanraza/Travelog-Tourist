@@ -52,7 +52,7 @@ export default class AddNewPost extends Component {
               marginTop: Platform.OS == 'ios' ? 30 : 0,
             }}>
             <View style={{alignSelf: 'center'}}>
-              <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
+              <Text style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>
                 New Post
               </Text>
             </View>
@@ -250,7 +250,7 @@ export default class AddNewPost extends Component {
 
             {this.state.Images ? this.renderDeleteIcon() : this.renderOptions()}
 
-            <Text style={{alignSelf: 'center', marginTop: Platform.OS == 'ios' ? '20%' : 20, fontSize:22,color: 'grey'}}>
+            <Text style={{alignSelf: 'center', marginTop: Platform.OS == 'ios' ? '25%' : 20, fontSize:22,color: 'grey'}}>
               Title
             </Text>
             <TextInput
@@ -306,6 +306,7 @@ export default class AddNewPost extends Component {
                   justifyContent: 'center',
                   backgroundColor: '#1192d1',
                   alignSelf: 'center',
+                  marginTop: Platform.OS == 'ios' ? 25 :10,
                 }}>
                 <Text style={{color: 'white', alignSelf: 'center',fontSize:20,fontWeight:"bold"}}>NEXT</Text>
               </View>
