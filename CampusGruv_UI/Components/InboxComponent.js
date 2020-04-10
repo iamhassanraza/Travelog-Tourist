@@ -9,6 +9,7 @@ import {
 import {SearchBar, Avatar, Divider} from 'react-native-elements';
 import {withNavigation} from 'react-navigation';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
+import TimeAgo from 'react-native-timeago';
 
 class InboxComponent extends Component {
   state = {
@@ -83,8 +84,8 @@ class InboxComponent extends Component {
               <Text style={{color: 'grey'}}>{this.props.subtitle}</Text>
             </View>
             <View style={{marginBottom: 10, alignSelf: 'center'}}>
-              <Text style={{color: 'grey', fontSize: 8}}>
-                {this.props.time}
+              <Text style={{color: 'grey', fontSize: 10}}>
+                <TimeAgo time={this.props.time} style={{fontSize: 8}} />
               </Text>
             </View>
           </View>
