@@ -370,7 +370,7 @@ class PostDetail extends Component {
       <View style={{}}>
         <Image
           source={{uri: image}}
-          resizeMode="center"
+          //resizeMode="center"
           style={{width: '100%', height: 350}}
         />
       </View>
@@ -387,7 +387,7 @@ class PostDetail extends Component {
           justifyContent: 'space-between',
         }}>
         <View>
-          <Text style={{fontSize: 25, fontWeight: '600'}}>{title}</Text>
+          <Text style={{fontSize: 25, fontWeight: '400'}}>{title}</Text>
         </View>
 
         <View style={{}}>
