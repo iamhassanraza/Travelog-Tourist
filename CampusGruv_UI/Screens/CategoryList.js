@@ -13,7 +13,7 @@ import {
 import Category from '../Components/CategoryComp';
 import {withNavigation} from 'react-navigation';
 import Logo from '../Assets/Images/logo.png';
-
+import BackIcon from 'react-native-vector-icons/Ionicons';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
 import PeopleIcon from 'react-native-vector-icons/FontAwesome5';
@@ -25,133 +25,103 @@ export default class CategoryList extends Component {
       header: (
         <View>
           {Platform.OS == 'ios' ? (
+            <View style={{backgroundColor: '#1192d1'}}>
             <View
               style={{
-                height: 80,
-                flexDirection: 'row',
-                alignItems: 'center',
+                marginTop: Platform.OS == 'ios' ? 38 : 0,
+                height: 50,
                 backgroundColor: '#1192d1',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginTop: Platform.OS == 'ios' ? 30 : 0,
               }}>
+                <View style={{
+                   position: 'absolute',
+                   padding: 2,
+                   alignSelf: 'center',
+                   left: 8,
+                }}>
+            <BackIcon
+              name="ios-arrow-back"
+              onPress={() => this.props.navigation.goBack()}
+              style={{
+                marginRight: 8,
+                fontSize: 28,
+                color: "white",
+                paddingLeft: 3,
+                paddingRight: 3,
+              }}></BackIcon>
+          </View>
+              <View style={{alignSelf: 'center'}}>
+                <Text style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>
+                  Categories
+                </Text>
+              </View>
               <View
                 style={{
-                  flexDirection: 'row',
-                  alignItems: 'center',
-                  flex: 10,
-                  marginTop: 30,
+                  position: 'absolute',
+                  padding: 2,
+                  alignSelf: 'center',
+                  right: 8,
                 }}>
-                <View
-                  style={{
-                    marginLeft: '2%',
-                    flexDirection: 'row',
-                    alignSelf: 'center',
+                <TouchableOpacity
+                  onPress={() => {
+                    props.navigation.navigate('HomeScreen');
                   }}>
-                  <TouchableOpacity
-                    onPress={() => props.navigation.navigate('Searching')}>
-                    <View
-                      style={{
-                        height: 30,
-                        padding: 0,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        width: 250,
-                        backgroundColor: '#F0F0F0',
-                        borderRadius: 10,
-                      }}>
-                      <View style={{marginLeft: '2%'}}>
-                        <Icon name="search" color="#1192d1" size={20} />
-                      </View>
-                      <View style={{height: 20}}>
-                        <Image
-                          source={Logo}
-                          style={{
-                            width: 150,
-                            alignSelf: 'flex-start',
-                            height: '100%',
-                          }}
-                          resizeMode="contain"
-                        />
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-
-                <View style={{marginLeft: 5}}>
-                  <TouchableOpacity
-                    onPress={() => props.navigation.navigate('CategoryList')}>
-                    <Icon2 name="view-grid" color="white" size={28} />
-                  </TouchableOpacity>
-                </View>
-
-                <View style={{marginLeft: '10%'}}>
-                  <TouchableOpacity
-                    style={{}}
-                    onPress={() => props.navigation.navigate('FollowersPosts')}>
-                    <PeopleIcon name="users" color="#00527a" size={23} />
-                  </TouchableOpacity>
-                </View>
+                  <Text style={{color: 'white', padding: 2,fontSize:16}}>Close</Text>
+                </TouchableOpacity>
               </View>
             </View>
+          </View>
           ) : (
+            <View style={{backgroundColor: '#1192d1'}}>
             <View
               style={{
+                marginTop: Platform.OS == 'ios' ? 38 : 0,
                 height: 50,
-                flexDirection: 'row',
-                alignItems: 'center',
                 backgroundColor: '#1192d1',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                marginTop: Platform.OS == 'ios' ? 30 : 0,
               }}>
+                <View style={{
+                   position: 'absolute',
+                   padding: 2,
+                   alignSelf: 'center',
+                   left: 8,
+                }}>
+            <BackIcon
+              name="ios-arrow-back"
+              onPress={() => this.props.navigation.goBack()}
+              style={{
+                marginRight: 8,
+                fontSize: 28,
+                color: "white",
+                paddingLeft: 3,
+                paddingRight: 3,
+              }}></BackIcon>
+          </View>
+              <View style={{alignSelf: 'center'}}>
+                <Text style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>
+                  Categories
+                </Text>
+              </View>
               <View
-                style={{flexDirection: 'row', alignItems: 'center', flex: 10}}>
-                <View
-                  style={{
-                    marginLeft: '2%',
-                    flexDirection: 'row',
-                    alignSelf: 'center',
+                style={{
+                  position: 'absolute',
+                  padding: 2,
+                  alignSelf: 'center',
+                  right: 8,
+                }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    props.navigation.navigate('HomeScreen');
                   }}>
-                  <TouchableOpacity
-                    onPress={() => props.navigation.navigate('Searching')}>
-                    <View
-                      style={{
-                        height: 30,
-                        padding: 0,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        width: 250,
-                        backgroundColor: '#F0F0F0',
-                        borderRadius: 10,
-                      }}>
-                      <View style={{marginLeft: '2%'}}>
-                        <Icon name="search" color="#1192d1" size={20} />
-                      </View>
-                      <View style={{height: 20}}>
-                        <Image
-                          source={Logo}
-                          style={{
-                            width: 150,
-                            alignSelf: 'flex-start',
-                            height: '100%',
-                          }}
-                          resizeMode="contain"
-                        />
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-                <View style={{marginLeft: 5}}>
-                  <TouchableOpacity
-                    onPress={() => props.navigation.navigate('CategoryList')}>
-                    <Icon2 name="view-grid" color="white" size={28} />
-                  </TouchableOpacity>
-                </View>
-
-                <View style={{marginLeft: '10%'}}>
-                  <TouchableOpacity
-                    style={{}}
-                    onPress={() => props.navigation.navigate('FollowersPosts')}>
-                    <PeopleIcon name="users" color="#00527a" size={20} />
-                  </TouchableOpacity>
-                </View>
+                  <Text style={{color: 'white', padding: 2,fontSize:16}}>Close</Text>
+                </TouchableOpacity>
               </View>
             </View>
+          </View>
           )}
         </View>
       ),
