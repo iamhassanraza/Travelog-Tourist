@@ -17,7 +17,7 @@ class AvatarUserStatus extends Component {
 
   followButton = async () => {
     console.log('id -------------->', this.props.id);
-    this.setState((prevState) => ({
+    this.setState(prevState => ({
       followed: !prevState.followed,
     }));
     const Token = await AsyncStorage.getItem('TOKEN');
@@ -75,17 +75,16 @@ class AvatarUserStatus extends Component {
         <View style={{flex: 4}}>
           <TouchableWithoutFeedback
             onPress={() => {
-              if(this.props.id !== this.props.User.id)
-              this.props.navigation.push('UserProfile', {
-                userNavId: this.props.id,
-                userNavDp: this.props.pic,
-                userNavFirstName: this.props.first_name,
-                userNavLastName: this.props.last_name,
-                userCampus: this.props.campus,
-                userFollowing: this.state.followed,
-              })
-            }
-            }>
+              if (this.props.id !== this.props.User.id)
+                this.props.navigation.push('UserProfile', {
+                  userNavId: this.props.id,
+                  userNavDp: this.props.pic,
+                  userNavFirstName: this.props.first_name,
+                  userNavLastName: this.props.last_name,
+                  userCampus: this.props.campus,
+                  userFollowing: this.state.followed,
+                });
+            }}>
             <View style={{flexDirection: 'row', padding: '1%'}}>
               <Image
                 source={
@@ -95,7 +94,8 @@ class AvatarUserStatus extends Component {
                         uri: this.props.pic,
                       }
                 }
-                style={{height: 40, width: 40, borderRadius: 50}}></Image>
+                style={{height: 40, width: 40, borderRadius: 50}}
+              />
               <Text
                 style={{
                   fontSize: 18,
@@ -114,28 +114,30 @@ class AvatarUserStatus extends Component {
             //this.setState({follow: !this.state.follow});
             this.followButton();
           }}>
-            {this.props.id !== this.props.User.id ?
-          <View
-            style={{
-              flex: 1,
-              borderWidth: 1,
-              flexDirection: 'row',
-              height: 27,
-              width: 62,
-              marginRight: 5,
-              justifyContent: 'center',
-              alignItems: 'center',
-              borderRadius: 5,
-              borderColor: this.state.followed ? 'black' : 'grey',
-            }}>
-            <Text
+          {this.props.id !== this.props.User.id ? (
+            <View
               style={{
-                color: this.state.followed ? 'black' : 'grey',
-                fontSize: 12,
+                flex: 1,
+                borderWidth: 1,
+                flexDirection: 'row',
+                height: 24,
+                width: 62,
+                marginRight: 5,
+                justifyContent: 'center',
+                alignItems: 'center',
+                borderRadius: 8,
+                borderColor: this.state.followed ? ThemeBlue : 'grey',
               }}>
-              {this.state.followed ? 'Following' : 'Follow'}
-            </Text>
-          </View> : null}
+              <Text
+                style={{
+                  color: this.state.followed ? ThemeBlue : 'grey',
+                  fontSize: 10,
+                  fontWeight: 'bold',
+                }}>
+                {this.state.followed ? 'Following' : 'Follow'}
+              </Text>
+            </View>
+          ) : null}
         </TouchableOpacity>
       </View>
       // </TouchableWithoutFeedback>
@@ -143,7 +145,7 @@ class AvatarUserStatus extends Component {
   }
 }
 
-mapStateToProps = (state) => {
+mapStateToProps = state => {
   //this state will contain FULL redux store all the reducers data
 
   //use your required reducer data in props i.e reducer1
@@ -151,5 +153,9 @@ mapStateToProps = (state) => {
   return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
 };
 
-export default withNavigation(connect(mapStateToProps, null)(AvatarUserStatus))
-
+export default withNavigation(
+  connect(
+    mapStateToProps,
+    null,
+  )(AvatarUserStatus),
+);
