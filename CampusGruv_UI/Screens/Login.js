@@ -90,7 +90,7 @@ class Login extends React.Component {
           password: this.state.password,
         }),
       })
-        .then((res) => {
+        .then(res => {
           status = res.status;
           this.setState({
             Spinner: false,
@@ -98,7 +98,7 @@ class Login extends React.Component {
 
           return res.json();
         })
-        .then(async (response) => {
+        .then(async response => {
           if (status === 200) {
             //good to go
             console.log(response);
@@ -126,7 +126,7 @@ class Login extends React.Component {
 
           console.log(response, 'json response -----');
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     }
@@ -147,11 +147,16 @@ class Login extends React.Component {
             }}>
             <KeyboardAvoidingView behavior="padding" enabled>
               {/* MAIN TITLE */}
-              <View style={{justifyContent: 'center', height: '30%'}}>
+              <View
+                style={{
+                  justifyContent: 'center',
+                  marginTop: Platform.OS === 'ios' ? 30 : 0,
+                  height: '30%',
+                }}>
                 <HeaderTitle />
               </View>
 
-              <View style={{}}>
+              <View style={{marginTop: Platform.OS === 'ios' ? 30 : 0}}>
                 {/* EMAIL FIELD */}
                 <View
                   style={{
@@ -173,7 +178,7 @@ class Login extends React.Component {
                     }}
                     placeholder="Email"
                     value={this.state.email}
-                    onChangeText={(email) => this.setState({email})}
+                    onChangeText={email => this.setState({email})}
                     keyboardType="email-address"
                   />
                 </View>
@@ -206,7 +211,7 @@ class Login extends React.Component {
                     }}
                     placeholder="Password"
                     value={this.state.password}
-                    onChangeText={(password) => this.setState({password})}
+                    onChangeText={password => this.setState({password})}
                     secureTextEntry
                   />
                 </View>
@@ -258,7 +263,7 @@ class Login extends React.Component {
                     color: 'white',
                     textAlign: 'center',
                     fontSize: 18,
-                    marginTop: 15,
+                    marginTop: Platform.OS === 'ios' ? 20 : 15,
                   }}
                   onPress={() => {
                     this.props.navigation.navigate('ForgotPassword');
@@ -268,7 +273,7 @@ class Login extends React.Component {
               </View>
 
               {/* SIGN UP NAVIGATION */}
-              <View style={{marginTop: '15%'}}>
+              <View style={{marginTop: Platform.OS === 'ios' ? 200 : '15%'}}>
                 <View />
                 <View>
                   <Text
@@ -351,4 +356,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, {CreateUserDetails})(Login);
+export default connect(
+  null,
+  {CreateUserDetails},
+)(Login);

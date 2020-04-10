@@ -42,7 +42,7 @@ const IconGrey = '#b4b8bf';
 //AndroidKeyboardAdjust.setAdjustPan();
 
 class PostDetail extends Component {
-  static navigationOptions = (props) => {
+  static navigationOptions = props => {
     return {
       header: (
         <Header
@@ -101,7 +101,7 @@ class PostDetail extends Component {
     );
   };
 
-  changeCurrentCommentState = (comment) => {
+  changeCurrentCommentState = comment => {
     this.setState({
       currentComment: comment,
     });
@@ -111,11 +111,11 @@ class PostDetail extends Component {
     this.setState({isModalVisible: !this.state.isModalVisible});
   };
 
-  getExtention = (filename) => {
+  getExtention = filename => {
     return /[.]/.exec(filename) ? /[^.]+$/.exec(filename) : undefined;
   };
 
-  createPDF = async (postId) => {
+  createPDF = async postId => {
     this.setState({isModalVisible: false});
     await fetch(
       `${
@@ -141,10 +141,10 @@ class PostDetail extends Component {
       //url: `app://`,
     };
     Share.open(options)
-      .then((res) => {
+      .then(res => {
         console.log(res);
       })
-      .catch((err) => {
+      .catch(err => {
         err && console.log(err);
       });
   };
@@ -183,7 +183,8 @@ class PostDetail extends Component {
                 color: IconGrey,
                 paddingLeft: 3,
                 paddingRight: 3,
-              }}></BackIcon>
+              }}
+            />
           </View>
 
           <TouchableOpacity
@@ -199,7 +200,8 @@ class PostDetail extends Component {
             }>
             <Image
               source={{uri: userdp}}
-              style={{width: 40, height: 40, borderRadius: 50}}></Image>
+              style={{width: 40, height: 40, borderRadius: 50}}
+            />
             <Text style={{marginLeft: '7%', color: IconGrey}}>
               {first_name + ' ' + last_name}
             </Text>
@@ -223,7 +225,8 @@ class PostDetail extends Component {
               //   liked: !prevState.liked,
               // }));
               this.likePost(postId, userId);
-            }}></Icon>
+            }}
+          />
 
           <Icon
             name="content-save-outline"
@@ -237,7 +240,8 @@ class PostDetail extends Component {
               //   saved: !prevState.saved,
               // }));
               this.savePost(postId);
-            }}></Icon>
+            }}
+          />
 
           {/* <IconFeather
             name="send"
@@ -251,7 +255,8 @@ class PostDetail extends Component {
             <Icon
               name="dots-horizontal"
               style={{fontSize: 30, color: IconGrey, paddingRight: 3}}
-              onPress={this.toggleModal}></Icon>
+              onPress={this.toggleModal}
+            />
 
             <View>
               <Modal
@@ -277,7 +282,8 @@ class PostDetail extends Component {
                         fontSize: 20,
                         paddingTop: 4,
                         color: IconGrey,
-                      }}></CrossIcon>
+                      }}
+                    />
                     <View
                       style={{flex: 10, alignItems: 'center', paddingTop: 3}}>
                       <Text
@@ -295,7 +301,8 @@ class PostDetail extends Component {
                   <View style={styles.modalOptions}>
                     <Icon
                       name="flag-variant-outline"
-                      style={styles.optionIcon}></Icon>
+                      style={styles.optionIcon}
+                    />
                     <Text
                       onPress={() => {
                         this.setState({isModalVisible: false});
@@ -312,9 +319,7 @@ class PostDetail extends Component {
                   </View>
 
                   <View style={styles.modalOptions}>
-                    <IconFeather
-                      name="download"
-                      style={styles.optionIcon}></IconFeather>
+                    <IconFeather name="download" style={styles.optionIcon} />
                     <Text
                       onPress={() =>
                         this.createPDF(
@@ -359,14 +364,15 @@ class PostDetail extends Component {
     );
   };
 
-  renderImage = (image) => {
+  renderImage = image => {
     console.log(image, 'image', this.props.height);
     return (
       <View style={{}}>
         <Image
           source={{uri: image}}
           resizeMode="center"
-          style={{width: '100%', height: 350}}></Image>
+          style={{width: '100%', height: 350}}
+        />
       </View>
     );
   };
@@ -400,7 +406,7 @@ class PostDetail extends Component {
     );
   };
 
-  renderDescription = (description) => {
+  renderDescription = description => {
     return (
       <View style={{marginLeft: '3%', marginRight: '5%'}}>
         <Text
@@ -420,29 +426,40 @@ class PostDetail extends Component {
     return (
       <View
         style={{
-          marginBottom: Platform.OS == 'ios' ? 20 : 0,
+          // marginBottom: Platform.OS == 'ios' ? 20 : 0,
           flexDirection: 'row',
-          borderTopWidth: 0.3,
+          // borderTopWidth: 0.3,
           borderTopColor: 'grey',
           paddingTop: 5,
-          paddingBottom: 5,
+          // paddingBottom: 5,
           alignItems: 'center',
         }}>
-        <View style={{marginLeft: '2%', width: 40, height: 40}}>
+        <View style={{marginLeft: '2%', width: 30, height: 30}}>
           <Image
             source={{uri: this.props.User.profile_pic_url}}
-            style={{width: '100%', borderRadius: 50, height: '100%'}}></Image>
+            style={{width: '100%', borderRadius: 50, height: '100%'}}
+          />
         </View>
-        <Item style={{width: Dimensions.get('window').width - 100}}>
+        <Item
+          style={{
+            marginLeft: 5,
+            borderBottomWidth: 0,
+            width: Dimensions.get('window').width - 100,
+          }}>
           <Input
             value={this.state.currentComment}
-            getRef={(input) => {
+            getRef={input => {
               this.commentInput = input;
             }}
             multiline={true}
             placeholder="Add a comment"
-            style={{borderWidth: 0}}
-            onChangeText={(text) => {
+            style={{
+              borderWidth: 0.3,
+              padding: 2,
+              borderRadius: 10,
+              borderColor: 'grey',
+            }}
+            onChangeText={text => {
               this.changeCurrentCommentState(text);
             }}
           />
@@ -478,7 +495,7 @@ class PostDetail extends Component {
     );
   };
 
-  renderAllComments = (dp) => {
+  renderAllComments = dp => {
     //console.log('coments', this.state.comments)
     return (
       <View style={{marginLeft: '4%'}}>
@@ -559,7 +576,7 @@ class PostDetail extends Component {
   };
 
   likePost = async (postId, postUserId) => {
-    this.setState((prevState) => ({
+    this.setState(prevState => ({
       liked: !prevState.liked,
     }));
     const Token = await AsyncStorage.getItem('TOKEN');
@@ -614,8 +631,8 @@ class PostDetail extends Component {
     }
   };
 
-  savePost = async (postId) => {
-    this.setState((prevState) => ({
+  savePost = async postId => {
+    this.setState(prevState => ({
       saved: !prevState.saved,
     }));
     const Token = await AsyncStorage.getItem('TOKEN');
@@ -670,8 +687,8 @@ class PostDetail extends Component {
       'nothing to render',
     );
     return (
-      <Container style={{marginTop: Platform === 'ios' ? -20 : 0}}>
-        <Content style={{marginBottom: 10}}>
+      <Container style={{marginTop: Platform.OS === 'ios' ? -25 : 0}}>
+        <Content style={{marginBottom: Platform.OS === 'ios' ? 10 : 0}}>
           {this.renderHeader(
             data.userAvatar,
             data.postId,
@@ -727,7 +744,7 @@ const styles = StyleSheet.create({
   },
 });
 
-mapStateToProps = (state) => {
+mapStateToProps = state => {
   //this state will contain FULL redux store all the reducers data
 
   //use your required reducer data in props i.e reducer1
@@ -735,4 +752,7 @@ mapStateToProps = (state) => {
   return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
 };
 
-export default connect(mapStateToProps, null)(PostDetail);
+export default connect(
+  mapStateToProps,
+  null,
+)(PostDetail);
