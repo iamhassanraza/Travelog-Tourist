@@ -61,6 +61,7 @@ import mystore from './index';
 import {clearNoti} from './ReduxStore/Actions/index';
 import CategoryPosts from './Screens/CategoryPosts';
 
+
 // const state = mystore.getState();
 
 const AuthNavigator = createStackNavigator({
@@ -781,7 +782,9 @@ class App extends Component {
   };
 
   render() {
-    return <AppContainer></AppContainer>;
+    return (
+ <AppContainer></AppContainer>
+    )
   }
 }
 

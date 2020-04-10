@@ -8,6 +8,8 @@ import {
   AsyncStorage,
   TouchableOpacity,
   TouchableHighlightBase,
+  StyleSheet,
+  ScrollView
 } from 'react-native';
 import {withNavigation} from 'react-navigation';
 import AvatarUserStatus from '../Components/AvatarUserStatus';
@@ -27,8 +29,19 @@ import {
 import { ThemeBlue } from '../Assets/Colors';
 import {connect} from 'react-redux';
 
+import SearchInput, {createFilter} from 'react-native-search-filter';
+import SearchIcon from 'react-native-vector-icons/Feather';
+
+const KEYS_TO_FILTERS = ['id','first_name','last_name'];
+
 
 class Followers extends Component {
+
+
+  searchUpdated(term) {
+    this.setState({searchTerm: term});
+  }
+
   static navigationOptions = (props) => {
     const {params = {}} = props.navigation.state;
     return {
@@ -100,7 +113,8 @@ class Followers extends Component {
   state = {
     data: [],
     search: null,
-    loading: true
+    loading: true,
+    searchTerm: '',
   };
 
   componentDidMount() {
@@ -156,17 +170,49 @@ class Followers extends Component {
   };
 
   render() {
-   
+    const filtereddata = this.state.data.filter(
+      createFilter(this.state.searchTerm, KEYS_TO_FILTERS),
+    );
     return (
       this.state.loading ?   <View style={{justifyContent: 'center',alignSelf:"center"}}>
     <BarIndicator count={4} color={ThemeBlue} />
   </View> :
       (this.state.data.length)   ?
       <View>
+         <View
+          style={{
+            flexDirection: 'row',
+            marginRight: '20%',
+            marginLeft: '2%',
+            borderColor: '#CCC',
+            borderWidth: 1,
+            borderRadius: 15,
+            height: 40,
+            marginTop: 10
+
+          }}>
+          <SearchIcon
+            name="search"
+            style={{
+              alignSelf: 'center',
+              fontSize: 25,
+              color: '#d3e0d7',
+              paddingLeft:"2%"
+            }}
+          />
+          <SearchInput
+            onChangeText={term => {
+              this.searchUpdated(term);
+            }}
+            style={styles.searchInput}
+            placeholder="Search"
+          >
+            </SearchInput>
+        </View>
         <View style={{padding: 5}}>
           <FlatList
             vertical
-            data={this.state.data}
+            data={filtereddata}
             keyExtractor={(item) => item.name}
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => (
@@ -178,6 +224,8 @@ class Followers extends Component {
                 pic={item.profile_pic_url}></AvatarUserStatus>
             )}
           />
+
+
         </View>
       </View>
       :
@@ -197,3 +245,11 @@ mapStateToProps = (state) => {
 
 export default withNavigation(connect(mapStateToProps, null)(Followers))
 
+
+const styles = StyleSheet.create({
+ 
+  searchInput: {
+    padding: 10,
+    width:250
+  },
+});

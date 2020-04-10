@@ -126,11 +126,11 @@ class AvatarUserStatus extends Component {
               justifyContent: 'center',
               alignItems: 'center',
               borderRadius: 5,
-              borderColor: this.state.followed ? 'black' : 'grey',
+              borderColor: this.state.followed ? ThemeBlue : 'grey',
             }}>
             <Text
               style={{
-                color: this.state.followed ? 'black' : 'grey',
+                color: this.state.followed ? ThemeBlue : 'grey',
                 fontSize: 12,
               }}>
               {this.state.followed ? 'Following' : 'Follow'}

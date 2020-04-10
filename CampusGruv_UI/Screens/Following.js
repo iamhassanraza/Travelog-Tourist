@@ -8,11 +8,11 @@ import {
   Platform,
   AsyncStorage,
   TouchableHighlightBase,
+  StyleSheet,
 } from 'react-native';
 import {withNavigation} from 'react-navigation';
 import AvatarUserStatus from '../Components/AvatarUserStatus';
-import Icon from 'react-native-vector-icons/MaterialIcons';
-import SearchInput, {createFilter} from 'react-native-search-filter';
+
 import NoPost from '../Components/NoPost';
 import {
   BallIndicator,
@@ -28,10 +28,19 @@ import {
 import { ThemeBlue } from '../Assets/Colors';
 import {connect} from 'react-redux';
 
+import SearchInput, {createFilter} from 'react-native-search-filter';
+import SearchIcon from 'react-native-vector-icons/Feather';
 
-const KEYS_TO_FILTERS = ['name', 'subject'];
+const KEYS_TO_FILTERS = ['id','first_name','last_name'];
 
 class Following extends Component {
+
+
+  searchUpdated(term) {
+    this.setState({searchTerm: term});
+  }
+
+
   static navigationOptions = (props) => {
     const {params = {}} = props.navigation.state;
     return {
@@ -102,7 +111,8 @@ class Following extends Component {
 
   state = {
     search: [],
-    loading: true
+    loading: true,
+    searchTerm: '',
   };
 
   componentDidMount() {
@@ -166,16 +176,49 @@ class Following extends Component {
 
 
   render() {
+    const filtereddata = this.state.search.filter(
+      createFilter(this.state.searchTerm, KEYS_TO_FILTERS),
+    );
     return (
     this.state.loading ?   <View style={{justifyContent: 'center',alignSelf:"center"}}>
     <BarIndicator count={4} color={ThemeBlue} />
   </View> :
       (this.state.search.length)  ?
       <View>
+        <View
+          style={{
+            flexDirection: 'row',
+            marginRight: '20%',
+            marginLeft: '2%',
+            borderColor: '#CCC',
+            borderWidth: 1,
+            borderRadius: 15,
+            height: 40,
+            marginTop: 10
+
+          }}>
+          <SearchIcon
+            name="search"
+            style={{
+              alignSelf: 'center',
+              fontSize: 25,
+              color: '#d3e0d7',
+              paddingLeft:"2%"
+            }}
+          />
+          <SearchInput
+            onChangeText={term => {
+              this.searchUpdated(term);
+            }}
+            style={styles.searchInput}
+            placeholder="Search"
+          >
+            </SearchInput>
+        </View>
         <View style={{padding: 5}}>
           <FlatList
             vertical
-            data={this.state.search}
+            data={filtereddata}
             keyExtractor={(item) => item.name}
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => (
@@ -207,3 +250,14 @@ mapStateToProps = (state) => {
 };
 
 export default withNavigation(connect(mapStateToProps, null)(Following))
+
+
+
+
+const styles = StyleSheet.create({
+ 
+  searchInput: {
+    padding: 10,
+    width:250
+  },
+});
