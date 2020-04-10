@@ -60,7 +60,9 @@ class Inbox extends Component {
                     <InboxComponent
                       user_id={item.id}
                       uri={item.profile_pic_url}
-                      title={item.first_name + ' ' + item.last_name}
+                      title={
+                        item.first_name + ' ' + item.last_name.charAt(0) + '.'
+                      }
                       subtitle={item.message}
                       time={new Date(item.created_at.replace(' ', 'T'))}
                       //time={5}

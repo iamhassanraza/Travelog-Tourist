@@ -78,7 +78,7 @@ class InboxComponent extends Component {
                 marginLeft: 10,
                 flex: 2,
               }}>
-              <Text style={{fontWeight: 'bold', color: '#181a1a'}}>
+              <Text style={{fontWeight: '700', color: '#181a1a'}}>
                 {this.props.title}
               </Text>
               <Text style={{color: 'grey'}}>{this.props.subtitle}</Text>
