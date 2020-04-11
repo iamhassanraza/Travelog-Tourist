@@ -28,6 +28,9 @@ import {ThemeBlue} from '../Assets/Colors';
 import {Header} from 'react-native-elements';
 import MyHeader from '../Components/MyHeader';
 
+import NoCategory from '../Assets/Images/NoCategory.png'
+import YesFollower from '../Assets/Images/YesFollower.png'
+
 export default class FolllowersPosts extends PureComponent {
   static navigationOptions = (props) => {
     const {params = {}} = props.navigation.state;
@@ -142,19 +145,26 @@ export default class FolllowersPosts extends PureComponent {
                   </View>
                 </TouchableOpacity>
               </View>
-              <View style={{marginLeft: 5}}>
+              <View style={{paddingLeft:"4%"}}>
                 <TouchableOpacity
                   onPress={() => props.navigation.navigate('CategoryList')}>
-                  <Icon2 name="view-grid" color="#00527a" size={28} />
+                  
+                  <View style={{height:40,width:40,justifyContent:"center"}}>
+                  <Image source={NoCategory} style={{height:30,width:30,borderWidth:1}}></Image>
+                  </View>
                 </TouchableOpacity>
               </View>
-              <View style={{marginLeft: '10%', marginTop: '0.5%'}}>
-                <TouchableOpacity
-                  style={{paddingRight: 5}}
-                  onPress={() => props.navigation.navigate('HomeScreen')}>
-                  <PeopleIcon name="users" color="white" size={20} />
-                </TouchableOpacity>
-              </View>
+
+              <View style={{paddingLeft:"2%"}}>
+              <TouchableOpacity
+               
+                onPress={() => props.navigation.navigate('HomeScreen')}>
+                
+                <View style={{height:40,width:50,justifyContent:"center"}}>
+                  <Image source={YesFollower} style={{height:30,width:35,borderWidth:1}}></Image>
+                  </View>
+              </TouchableOpacity>
+            </View>
             </View>
           </View>
         ),
