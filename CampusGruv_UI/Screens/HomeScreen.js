@@ -616,7 +616,12 @@ class HomeScreen extends PureComponent {
       );
     } else if (this.state.total === 0) {
       return (
-        <View style={{paddingTop: '45%', height: '100%'}}>
+        <View
+          style={{
+            paddingTop: '45%',
+            backgroundColor: '#F0F0F0',
+            height: '100%',
+          }}>
           <NoPosts />
         </View>
       );

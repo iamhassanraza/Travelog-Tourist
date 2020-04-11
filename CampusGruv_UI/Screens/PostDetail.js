@@ -15,6 +15,7 @@ import {
   Dimensions,
   AppState,
   Platform,
+  StatusBar,
 } from 'react-native';
 import {ThemeConsumer, Header} from 'react-native-elements';
 import {Container, Item, Content, Input} from 'native-base';
@@ -713,7 +714,8 @@ class PostDetail extends Component {
       'nothing to render',
     );
     return (
-      <Container style={{marginTop: Platform.OS === 'ios' ? -30 : 0}}>
+      <Container style={{marginTop: Platform.OS === 'ios' ? -35 : 0}}>
+        <StatusBar barStyle="dark-content" />
         <Content style={{marginBottom: Platform.OS === 'ios' ? 10 : 0}}>
           {this.renderHeader(
             data.userAvatar,
