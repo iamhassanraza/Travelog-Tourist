@@ -559,7 +559,7 @@ class UserProfile extends React.Component {
           />
           <View style={{marginLeft: 5}}>
             <Text style={{fontSize: 25, fontWeight: 'bold', color: '#727272'}}>
-              {postUserFirstName + ' ' + postUserLastName}
+              {postUserFirstName + ' ' + postUserLastName.charAt(0) + '.'}
             </Text>
             <Text style={{fontSize: 13, color: '#727272'}}>
               {postUserCampus}

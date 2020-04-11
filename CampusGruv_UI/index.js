@@ -2,14 +2,13 @@
  * @format
  */
 
-import {AppRegistry} from 'react-native';
+import {AppRegistry, StatusBar} from 'react-native';
 import {App} from './App';
 import {name as appName} from './app.json';
 import React from 'react';
 import {Provider} from 'react-redux';
 import {createStore, compose} from 'redux';
 import CombinedReducers from './ReduxStore/Reducers';
-
 
 let composeEnhancer = compose;
 
@@ -18,18 +17,16 @@ if (__DEV__) {
   composeEnhancer = window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose; //dev mode me devtools wala compose function use kare
 }
 
-
-
 mystore = createStore(CombinedReducers, composeEnhancer());
 
 const RN_REDUX = () => {
   return (
     <Provider store={mystore}>
-      <App></App>
+      <App />
+      <StatusBar barStyle="light-content" translucent={true} />
     </Provider>
   );
 };
 
 AppRegistry.registerComponent(appName, () => RN_REDUX);
-export default mystore
-
+export default mystore;

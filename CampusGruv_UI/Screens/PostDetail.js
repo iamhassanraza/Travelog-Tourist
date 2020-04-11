@@ -37,10 +37,10 @@ import Share from 'react-native-share';
 import TextEncoding from 'text-encoding';
 import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
 
-import NoLike from '../Assets/Images/NoLike.png'
-import NoSave from '../Assets/Images/NoSave.png'
-import YesLike from '../Assets/Images/YesLike.png'
-import YesSave from '../Assets/Images/YesSave.png'
+import NoLike from '../Assets/Images/NoLike.png';
+import NoSave from '../Assets/Images/NoSave.png';
+import YesLike from '../Assets/Images/YesLike.png';
+import YesSave from '../Assets/Images/YesSave.png';
 
 const IconGrey = '#b4b8bf';
 
@@ -208,7 +208,7 @@ class PostDetail extends Component {
               style={{width: 40, height: 40, borderRadius: 50}}
             />
             <Text style={{marginLeft: '7%', color: IconGrey}}>
-              {first_name + ' ' + last_name}
+              {first_name + ' ' + last_name.charAt(0) + '.'}
             </Text>
           </TouchableOpacity>
         </View>
@@ -233,27 +233,29 @@ class PostDetail extends Component {
             }}
           /> */}
 
-
-            <TouchableOpacity  onPress={() => {
+          <TouchableOpacity
+            onPress={() => {
               this.likePost(postId, userId);
             }}>
-              
-            <View style={{height:40,width:40,justifyContent:"center"}}>
-                  <Image source={this.state.liked ? YesLike : NoLike} style={{height:25,width:28,borderWidth:1}}></Image>
-                  </View>
-            
-            </TouchableOpacity>
+            <View style={{height: 40, width: 40, justifyContent: 'center'}}>
+              <Image
+                source={this.state.liked ? YesLike : NoLike}
+                style={{height: 25, width: 28}}
+              />
+            </View>
+          </TouchableOpacity>
 
-            <TouchableOpacity  onPress={() => {
+          <TouchableOpacity
+            onPress={() => {
               this.savePost(postId);
             }}>
-              
-            <View style={{height:40,width:40,justifyContent:"center"}}>
-                  <Image source={this.state.saved ? YesSave : NoSave} style={{height:25,width:25,borderWidth:1}}></Image>
-                  </View>
-            
-            </TouchableOpacity>
-
+            <View style={{height: 40, width: 40, justifyContent: 'center'}}>
+              <Image
+                source={this.state.saved ? YesSave : NoSave}
+                style={{height: 25, width: 25}}
+              />
+            </View>
+          </TouchableOpacity>
 
           {/* <Icon
             name="content-save-outline"
@@ -711,7 +713,7 @@ class PostDetail extends Component {
       'nothing to render',
     );
     return (
-      <Container style={{marginTop: Platform.OS === 'ios' ? -25 : 0}}>
+      <Container style={{marginTop: Platform.OS === 'ios' ? -30 : 0}}>
         <Content style={{marginBottom: Platform.OS === 'ios' ? 10 : 0}}>
           {this.renderHeader(
             data.userAvatar,
