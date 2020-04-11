@@ -1,10 +1,16 @@
 import React, {Component} from 'react';
-import {Text, View, ScrollView, AsyncStorage} from 'react-native';
+import {Text, View, ScrollView, AsyncStorage, StyleSheet} from 'react-native';
 import InboxComponent from '../Components/InboxComponent';
 import {FlatList} from 'react-native-gesture-handler';
 import {clearMsgs} from '../ReduxStore/Actions/index';
 import mystore from '../index';
 import {connect} from 'react-redux';
+
+import SearchInput, {createFilter} from 'react-native-search-filter';
+import SearchIcon from 'react-native-vector-icons/Feather';
+
+const KEYS_TO_FILTERS = ['id','first_name','last_name'];
+
 // import Ws from '@adonisjs/websocket-client'
 
 class Inbox extends Component {
@@ -13,8 +19,15 @@ class Inbox extends Component {
     this.state = {
       data: [],
       store: mystore,
+      searchTerm:''
     };
   }
+
+
+  searchUpdated(term) {
+    this.setState({searchTerm: term});
+  }
+
 
   fetchData = async () => {
     const Token = await AsyncStorage.getItem('TOKEN');
@@ -46,13 +59,46 @@ class Inbox extends Component {
   }
 
   render() {
+    const filtereddata = this.state.data.filter(
+      createFilter(this.state.searchTerm, KEYS_TO_FILTERS),
+    );
     return (
       <>
         <View style={{flex: 1}}>
           <ScrollView>
+          <View
+          style={{
+            flexDirection: 'row',
+            marginRight: '2%',
+            marginLeft: '2%',
+            borderColor: '#CCC',
+            borderWidth: 1,
+            borderRadius: 15,
+            height: 40,
+            marginTop: 10
+
+          }}>
+          <SearchIcon
+            name="search"
+            style={{
+              alignSelf: 'center',
+              fontSize: 25,
+              color: '#d3e0d7',
+              paddingLeft:"2%"
+            }}
+          />
+          <SearchInput
+            onChangeText={term => {
+              this.searchUpdated(term);
+            }}
+            style={styles.searchInput}
+            placeholder="Search"
+          >
+            </SearchInput>
+        </View>
             <FlatList
               style={{marginTop: 10}}
-              data={this.state.data}
+              data={filtereddata}
               renderItem={({item}) => {
                 console.log('item', item.id, this.props.User.id);
                 if (item.id !== this.props.User.id)
@@ -89,3 +135,14 @@ export default connect(
   mapStateToProps,
   null,
 )(Inbox);
+
+
+
+const styles = StyleSheet.create({
+ 
+  searchInput: {
+    padding: 10,
+    width:330
+    
+  },
+});
