@@ -19,109 +19,119 @@ import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
 import PeopleIcon from 'react-native-vector-icons/FontAwesome5';
 
 export default class CategoryList extends Component {
-  static navigationOptions = (props) => {
+  static navigationOptions = props => {
     const {params = {}} = props.navigation.state;
     return {
       header: (
         <View>
           {Platform.OS == 'ios' ? (
             <View style={{backgroundColor: '#1192d1'}}>
-            <View
-              style={{
-                marginTop: Platform.OS == 'ios' ? 38 : 0,
-                height: 50,
-                backgroundColor: '#1192d1',
-                flexDirection: 'row',
-                justifyContent: 'center',
-                marginTop: Platform.OS == 'ios' ? 30 : 0,
-              }}>
-                <View style={{
-                   position: 'absolute',
-                   padding: 2,
-                   alignSelf: 'center',
-                   left: 8,
-                }}>
-            <BackIcon
-              name="ios-arrow-back"
-              onPress={() => this.props.navigation.goBack()}
-              style={{
-                marginRight: 8,
-                fontSize: 28,
-                color: "white",
-                paddingLeft: 3,
-                paddingRight: 3,
-              }}></BackIcon>
-          </View>
-              <View style={{alignSelf: 'center'}}>
-                <Text style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>
-                  Categories
-                </Text>
-              </View>
               <View
                 style={{
-                  position: 'absolute',
-                  padding: 2,
-                  alignSelf: 'center',
-                  right: 8,
+                  marginTop: Platform.OS == 'ios' ? 38 : 0,
+                  height: 50,
+                  backgroundColor: '#1192d1',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  marginTop: Platform.OS == 'ios' ? 30 : 0,
                 }}>
-                <TouchableOpacity
-                  onPress={() => {
-                    props.navigation.navigate('HomeScreen');
+                <View
+                  style={{
+                    position: 'absolute',
+                    padding: 2,
+                    alignSelf: 'center',
+                    left: 8,
                   }}>
-                  <Text style={{color: 'white', padding: 2,fontSize:16}}>Close</Text>
-                </TouchableOpacity>
+                  <BackIcon
+                    name="ios-arrow-back"
+                    onPress={() => props.navigation.goBack()}
+                    style={{
+                      marginRight: 8,
+                      fontSize: 28,
+                      color: 'white',
+                      paddingLeft: 3,
+                      paddingRight: 3,
+                    }}
+                  />
+                </View>
+                <View style={{alignSelf: 'center'}}>
+                  <Text
+                    style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>
+                    Categories
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    position: 'absolute',
+                    padding: 2,
+                    alignSelf: 'center',
+                    right: 8,
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      props.navigation.navigate('HomeScreen');
+                    }}>
+                    <Text style={{color: 'white', padding: 2, fontSize: 16}}>
+                      Close
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-          </View>
           ) : (
             <View style={{backgroundColor: '#1192d1'}}>
-            <View
-              style={{
-                marginTop: Platform.OS == 'ios' ? 38 : 0,
-                height: 50,
-                backgroundColor: '#1192d1',
-                flexDirection: 'row',
-                justifyContent: 'center',
-                marginTop: Platform.OS == 'ios' ? 30 : 0,
-              }}>
-                <View style={{
-                   position: 'absolute',
-                   padding: 2,
-                   alignSelf: 'center',
-                   left: 8,
-                }}>
-            <BackIcon
-              name="ios-arrow-back"
-              onPress={() => this.props.navigation.goBack()}
-              style={{
-                marginRight: 8,
-                fontSize: 28,
-                color: "white",
-                paddingLeft: 3,
-                paddingRight: 3,
-              }}></BackIcon>
-          </View>
-              <View style={{alignSelf: 'center'}}>
-                <Text style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>
-                  Categories
-                </Text>
-              </View>
               <View
                 style={{
-                  position: 'absolute',
-                  padding: 2,
-                  alignSelf: 'center',
-                  right: 8,
+                  marginTop: Platform.OS == 'ios' ? 38 : 0,
+                  height: 50,
+                  backgroundColor: '#1192d1',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  marginTop: Platform.OS == 'ios' ? 30 : 0,
                 }}>
-                <TouchableOpacity
-                  onPress={() => {
-                    props.navigation.navigate('HomeScreen');
+                <View
+                  style={{
+                    position: 'absolute',
+                    padding: 2,
+                    alignSelf: 'center',
+                    left: 8,
                   }}>
-                  <Text style={{color: 'white', padding: 2,fontSize:16}}>Close</Text>
-                </TouchableOpacity>
+                  <BackIcon
+                    name="ios-arrow-back"
+                    onPress={() => props.navigation.goBack()}
+                    style={{
+                      marginRight: 8,
+                      fontSize: 28,
+                      color: 'white',
+                      paddingLeft: 3,
+                      paddingRight: 3,
+                    }}
+                  />
+                </View>
+                <View style={{alignSelf: 'center'}}>
+                  <Text
+                    style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>
+                    Categories
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    position: 'absolute',
+                    padding: 2,
+                    alignSelf: 'center',
+                    right: 8,
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      props.navigation.navigate('HomeScreen');
+                    }}>
+                    <Text style={{color: 'white', padding: 2, fontSize: 16}}>
+                      Close
+                    </Text>
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
-          </View>
           )}
         </View>
       ),
@@ -135,7 +145,7 @@ export default class CategoryList extends Component {
     loading: false,
   };
 
-  selectCategory = (cat) => {
+  selectCategory = cat => {
     this.setState({Category_id: cat}, () => {
       this.props.navigation.navigate('CategoryPosts', {
         CategoryID: this.state.Category_id,
@@ -156,12 +166,12 @@ export default class CategoryList extends Component {
         Authorization: `Bearer ${Token}`,
       },
     })
-      .then((response) => response.json())
-      .then((responseJson) => {
+      .then(response => response.json())
+      .then(responseJson => {
         // console.log('response==========>', responseJson);
         this.setState({Data: responseJson, loading: false});
       })
-      .catch((error) => {
+      .catch(error => {
         console.error(error);
       });
   };
@@ -176,7 +186,8 @@ export default class CategoryList extends Component {
             <ActivityIndicator
               color="#1192d1"
               size={50}
-              style={{marginBottom: '5%'}}></ActivityIndicator>
+              style={{marginBottom: '5%'}}
+            />
             <Text>Loading Categories</Text>
           </View>
         ) : (
@@ -184,7 +195,7 @@ export default class CategoryList extends Component {
             style={{margin: 10}}
             numColumns={2}
             data={this.state.Data}
-            keyExtractor={(item) => item.id}
+            keyExtractor={item => item.id}
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => {
               console.log(item.id);

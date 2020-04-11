@@ -32,8 +32,12 @@ import io from 'socket.io-client';
 import {connect} from 'react-redux';
 import {connectSocket} from '../ReduxStore/Actions/index';
 
+import NoCategory from '../Assets/Images/NoCategory.png';
+import NoFollower from '../Assets/Images/NoFollower.png';
+import SearchIcon from '../Assets/Images/SearchIcon.png';
+
 class HomeScreen extends PureComponent {
-  static navigationOptions = (props) => {
+  static navigationOptions = props => {
     const {params = {}} = props.navigation.state;
     return {
       header:
@@ -48,55 +52,90 @@ class HomeScreen extends PureComponent {
                 backgroundColor: '#1192d1',
                 alignItems: 'center',
               }}>
-              <View style={{flexDirection: 'row', flex: 10}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  // justifyContent: 'space-around',
+                  flex: 1,
+                }}>
                 <View
                   style={{
-                    marginLeft: '2%',
+                    // marginLeft: '5%',
+                    height: 25,
+                    position: 'absolute',
+                    // top: 0,
+                    // bottom: 0,
+                    left: 0,
+                    right: 0,
+                    //alignItems: 'center',
+                    justifyContent: 'center',
+                    // left: Dimensions.get('window').width / 2,
                     flexDirection: 'row',
-                    alignSelf: 'center',
+                    // alignSelf: 'center',
+                    // justifyContent: 'center',
                   }}>
-                  <TouchableOpacity
-                    onPress={() => props.navigation.navigate('Searching')}>
-                    <View
-                      style={{
-                        height: 30,
-                        padding: 0,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        width: 250,
-                        backgroundColor: '#F0F0F0',
-                        borderRadius: 10,
-                      }}>
-                      <View style={{marginLeft: '2%'}}>
-                        <Icon name="search" color="#1192d1" size={20} />
-                      </View>
-                      <View style={{height: 20}}>
-                        <Image
-                          source={Logo}
-                          style={{
-                            width: 150,
-                            alignSelf: 'flex-start',
-                            height: '100%',
-                          }}
-                          resizeMode="contain"
-                        />
-                      </View>
-                    </View>
-                  </TouchableOpacity>
+                  <Image
+                    source={Logo}
+                    style={{
+                      width: 150,
+                      alignSelf: 'flex-start',
+                      height: '100%',
+                    }}
+                    resizeMode="contain"
+                  />
                 </View>
-                <View style={{marginLeft: 5}}>
-                  <TouchableOpacity
-                    onPress={() => props.navigation.navigate('CategoryList')}>
-                    <Icon3 name="grid" color="#00527a" size={28} />
-                  </TouchableOpacity>
-                </View>
-                <View style={{marginLeft: '10%', marginTop: '0.5%'}}>
-                  <TouchableOpacity
-                    style={{}}
-                    onPress={() => props.navigation.navigate('FollowersPosts')}>
-                    <PeopleIcon name="users" color="#00527a" size={23} />
-                  </TouchableOpacity>
-                </View>
+
+                <TouchableOpacity
+                  onPress={() => props.navigation.navigate('Searching')}
+                  style={{position: 'absolute', left: 8}}>
+                  {/* <Icon2 name="view-grid" color="#00527a" size={28} /> */}
+                  <View
+                    style={{
+                      height: 40,
+                      width: 40,
+                      justifyContent: 'center',
+                    }}>
+                    <Image
+                      source={SearchIcon}
+                      style={{height: 25, width: 30}}
+                    />
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => props.navigation.navigate('CategoryList')}
+                  style={{position: 'absolute', right: 60}}>
+                  {/* <Icon2 name="view-grid" color="#00527a" size={28} /> */}
+                  <View
+                    style={{
+                      height: 40,
+                      width: 40,
+                      justifyContent: 'center',
+                    }}>
+                    <Image
+                      source={NoCategory}
+                      style={{height: 25, width: 30}}
+                    />
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => props.navigation.navigate('FollowersPosts')}
+                  style={{position: 'absolute', right: 5}}>
+                  {/* <PeopleIcon name="users" color="#00527a" size={20} /> */}
+                  <View
+                    style={{
+                      height: 40,
+                      width: 40,
+                      justifyContent: 'center',
+                    }}>
+                    <Image
+                      source={NoFollower}
+                      style={{height: 25, width: 30}}
+                    />
+                  </View>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -109,55 +148,68 @@ class HomeScreen extends PureComponent {
               alignItems: 'center',
             }}>
             <View
-              style={{flexDirection: 'row', alignItems: 'center', flex: 10}}>
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                justifyContent: 'space-around',
+                flex: 10,
+              }}>
+              <TouchableOpacity
+                style={{marginLeft: '2%'}}
+                onPress={() => props.navigation.navigate('Searching')}>
+                <View>
+                  <Image source={SearchIcon} style={{height: 25, width: 25}} />
+                </View>
+              </TouchableOpacity>
+
               <View
                 style={{
-                  marginLeft: '2%',
+                  marginLeft: '5%',
+                  height: 25,
                   flexDirection: 'row',
                   alignSelf: 'center',
+                  justifyContent: 'center',
                 }}>
-                <TouchableOpacity
-                  onPress={() => props.navigation.navigate('Searching')}>
-                  <View
-                    style={{
-                      height: 30,
-                      padding: 0,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      width: 250,
-                      backgroundColor: '#F0F0F0',
-                      borderRadius: 10,
-                    }}>
-                    <View style={{marginLeft: '2%'}}>
-                      <Icon name="search" color="#1192d1" size={20} />
-                    </View>
-                    <View style={{height: 20}}>
+                <Image
+                  source={Logo}
+                  style={{
+                    width: 150,
+                    alignSelf: 'flex-start',
+                    height: '100%',
+                  }}
+                  resizeMode="contain"
+                />
+              </View>
+
+              <View style={{flexDirection: 'row', marginLeft: '5%'}}>
+                <View style={{paddingLeft: '4%'}}>
+                  <TouchableOpacity
+                    onPress={() => props.navigation.navigate('CategoryList')}>
+                    {/* <Icon2 name="view-grid" color="#00527a" size={28} /> */}
+                    <View
+                      style={{height: 40, width: 40, justifyContent: 'center'}}>
                       <Image
-                        source={Logo}
-                        style={{
-                          width: 150,
-                          alignSelf: 'flex-start',
-                          height: '100%',
-                        }}
-                        resizeMode="contain"
+                        source={NoCategory}
+                        style={{height: 30, width: 30, borderWidth: 1}}
                       />
                     </View>
-                  </View>
-                </TouchableOpacity>
+                  </TouchableOpacity>
+                </View>
+
+                <View style={{paddingLeft: '2%'}}>
+                  <TouchableOpacity
+                    onPress={() => props.navigation.navigate('FollowersPosts')}>
+                    {/* <PeopleIcon name="users" color="#00527a" size={20} /> */}
+                    <View
+                      style={{height: 40, width: 50, justifyContent: 'center'}}>
+                      <Image
+                        source={NoFollower}
+                        style={{height: 30, width: 35, borderWidth: 1}}
+                      />
+                    </View>
+                  </TouchableOpacity>
+                </View>
               </View>
-              <View style={{marginLeft: 5}}>
-                <TouchableOpacity
-                  onPress={() => props.navigation.navigate('CategoryList')}>
-                  <Icon2 name="view-grid" color="#00527a" size={28} />
-                </TouchableOpacity>
-              </View>
-            </View>
-            <View style={{flex: 1}}>
-              <TouchableOpacity
-                style={{paddingRight: 5}}
-                onPress={() => props.navigation.navigate('FollowersPosts')}>
-                <PeopleIcon name="users" color="#00527a" size={20} />
-              </TouchableOpacity>
             </View>
           </View>
         ),
@@ -200,7 +252,7 @@ class HomeScreen extends PureComponent {
       this.props.navigation.getParam('CategoryID', 'undefined') === 'undefined'
     ) {
       this.setState(
-        (previousState) => {
+        previousState => {
           return {pageNo: previousState.pageNo + 1, loadmore: true};
         },
         async () => {
@@ -230,7 +282,7 @@ class HomeScreen extends PureComponent {
           if (parseInt(Response.status) === 401) {
             alert(JsonResponse.message);
           } else if (parseInt(Response.status) === 200) {
-            this.setState((previousState) => {
+            this.setState(previousState => {
               return {
                 posts: [...previousState.posts, ...JsonResponse.data],
                 total: JsonResponse.total,
@@ -243,7 +295,7 @@ class HomeScreen extends PureComponent {
       );
     } else {
       this.setState(
-        (previousState) => {
+        previousState => {
           return {pageNo: previousState.pageNo + 1, loadmore: true};
         },
         async () => {
@@ -266,7 +318,7 @@ class HomeScreen extends PureComponent {
           if (parseInt(Response.status) === 401) {
             alert(JsonResponse.message);
           } else if (parseInt(Response.status) === 200) {
-            this.setState((previousState) => {
+            this.setState(previousState => {
               return {
                 posts: [...previousState.posts, ...JsonResponse.data],
                 totl: JsonResponse.total,
@@ -337,10 +389,10 @@ class HomeScreen extends PureComponent {
             },
           },
         )
-          .then((response) => {
+          .then(response => {
             return response.json();
           })
-          .then((responseJson) => {
+          .then(responseJson => {
             this.setState({
               posts: responseJson.data,
               total: responseJson.total,
@@ -349,7 +401,7 @@ class HomeScreen extends PureComponent {
               Category: 'undefined',
             });
           })
-          .catch((err) => console.log('error', err));
+          .catch(err => console.log('error', err));
       } else {
         var campus;
         if (await AsyncStorage.getItem('otherCampus')) {
@@ -369,10 +421,10 @@ class HomeScreen extends PureComponent {
             },
           },
         )
-          .then((response) => {
+          .then(response => {
             return response.json();
           })
-          .then((responseJson) => {
+          .then(responseJson => {
             this.setState({
               posts: responseJson.data,
               total: responseJson.total,
@@ -381,7 +433,7 @@ class HomeScreen extends PureComponent {
               Category: 'undefined',
             });
           })
-          .catch((err) => console.log(err));
+          .catch(err => console.log(err));
       }
     }
     // else if (this.state.FollowersPosts){
@@ -416,7 +468,7 @@ class HomeScreen extends PureComponent {
 
     this.props.navigation.setParams({
       handleThis: async () => {
-        await this.setState((prevState) => {
+        await this.setState(prevState => {
           return {
             FollowersPosts: !prevState.FollowersPosts,
           };
@@ -474,7 +526,8 @@ class HomeScreen extends PureComponent {
                       borderWidth: 1,
                       alignSelf: 'center',
                       color: ThemeBlue,
-                    }}></CrossIcon>
+                    }}
+                  />
                 </Text>
               </View>
             ) : null
@@ -508,7 +561,8 @@ class HomeScreen extends PureComponent {
                     borderWidth: 1,
                     alignSelf: 'center',
                     color: ThemeBlue,
-                  }}></CrossIcon>
+                  }}
+                />
               </Text>
             </View>
           )}
@@ -525,7 +579,8 @@ class HomeScreen extends PureComponent {
                 posts={this.state.posts}
                 totalPosts={this.state.total}
                 loadMore={this.loadmore}
-                loadstate={this.state.loadmore}></RenderCards>
+                loadstate={this.state.loadmore}
+              />
               {/* <View
                 style={{
                   backgroundColor: '#F0F0F0',
@@ -562,7 +617,7 @@ class HomeScreen extends PureComponent {
     } else if (this.state.total === 0) {
       return (
         <View style={{paddingTop: '45%', height: '100%'}}>
-          <NoPosts></NoPosts>
+          <NoPosts />
         </View>
       );
     } else {
@@ -573,7 +628,7 @@ class HomeScreen extends PureComponent {
             width={820}
             speed={0.2}
             height={Dimensions.get('window').height * 1}>
-              <Rect x="10" y="10" rx="5" ry="5" width="185" height="200" />
+            <Rect x="10" y="10" rx="5" ry="5" width="185" height="200" />
             <Rect x="200" y="10" rx="5" ry="5" width="200" height="200" />
             <Rect x="10" y="220" rx="5" ry="5" width="185" height="200" />
             <Rect x="200" y="220" rx="5" ry="5" width="200" height="200" />
@@ -588,7 +643,7 @@ class HomeScreen extends PureComponent {
   }
 }
 
-mapStateToProps = (state) => {
+mapStateToProps = state => {
   //this state will contain FULL redux store all the reducers data
 
   //use your required reducer data in props i.e reducer1
@@ -596,4 +651,7 @@ mapStateToProps = (state) => {
   return {socket: state.socket}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
 };
 
-export default connect(mapStateToProps, {connectSocket})(HomeScreen);
+export default connect(
+  mapStateToProps,
+  {connectSocket},
+)(HomeScreen);

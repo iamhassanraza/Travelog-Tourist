@@ -812,7 +812,7 @@ class UserProfile extends React.Component {
                   color: this.state.active === 'saves' ? '#0C91CF' : '#B4B8BA',
                 }}>
                 {' '}
-                saves
+                Saves
               </Text>
             </View>
           ) : null}

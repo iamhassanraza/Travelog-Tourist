@@ -12,7 +12,7 @@ import {
 } from 'react-native';
 import {withNavigation} from 'react-navigation';
 import AvatarUserStatus from '../Components/AvatarUserStatus';
-import Icon from 'react-native-vector-icons/MaterialIcons';
+import Icon from 'react-native-vector-icons/Ionicons';
 import NoPost from '../Components/NoPost';
 import {
   BallIndicator,
@@ -72,7 +72,7 @@ class Following extends Component {
                   onPress={() => {
                     params.handleThis();
                   }}>
-                  <Icon name="arrow-back" color="white" size={25} />
+                  <Icon name="ios-arrow-back" color="white" size={25} />
                 </TouchableOpacity>
               </View>
             </View>
@@ -101,7 +101,7 @@ class Following extends Component {
                 onPress={() => {
                   params.handleThis();
                 }}>
-                <Icon name="arrow-back" color="white" size={25} />
+                <Icon name="ios-arrow-back" color="white" size={25} />
               </TouchableOpacity>
             </View>
           </View>

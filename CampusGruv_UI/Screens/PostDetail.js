@@ -37,6 +37,11 @@ import Share from 'react-native-share';
 import TextEncoding from 'text-encoding';
 import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
 
+import NoLike from '../Assets/Images/NoLike.png'
+import NoSave from '../Assets/Images/NoSave.png'
+import YesLike from '../Assets/Images/YesLike.png'
+import YesSave from '../Assets/Images/YesSave.png'
+
 const IconGrey = '#b4b8bf';
 
 //AndroidKeyboardAdjust.setAdjustPan();
@@ -213,7 +218,7 @@ class PostDetail extends Component {
             Edit Post
           </Text> */}
 
-          <Icon
+          {/* <Icon
             name={this.state.liked ? 'star' : 'star-outline'}
             style={{
               fontSize: 28,
@@ -226,9 +231,31 @@ class PostDetail extends Component {
               // }));
               this.likePost(postId, userId);
             }}
-          />
+          /> */}
 
-          <Icon
+
+            <TouchableOpacity  onPress={() => {
+              this.likePost(postId, userId);
+            }}>
+              
+            <View style={{height:40,width:40,justifyContent:"center"}}>
+                  <Image source={this.state.liked ? YesLike : NoLike} style={{height:25,width:28,borderWidth:1}}></Image>
+                  </View>
+            
+            </TouchableOpacity>
+
+            <TouchableOpacity  onPress={() => {
+              this.savePost(postId);
+            }}>
+              
+            <View style={{height:40,width:40,justifyContent:"center"}}>
+                  <Image source={this.state.saved ? YesSave : NoSave} style={{height:25,width:25,borderWidth:1}}></Image>
+                  </View>
+            
+            </TouchableOpacity>
+
+
+          {/* <Icon
             name="content-save-outline"
             style={{
               fontSize: 28,
@@ -236,12 +263,9 @@ class PostDetail extends Component {
               color: this.state.saved ? ThemeBlue : IconGrey,
             }}
             onPress={() => {
-              // this.setState(prevState => ({
-              //   saved: !prevState.saved,
-              // }));
               this.savePost(postId);
             }}
-          />
+          /> */}
 
           {/* <IconFeather
             name="send"

@@ -29,8 +29,12 @@ import {ThemeBlue} from '../Assets/Colors';
 import {Header} from 'react-native-elements';
 import MyHeader from '../Components/MyHeader';
 
+import YesCategory from '../Assets/Images/YesCategory.png';
+import NoFollower from '../Assets/Images/NoFollower.png';
+import SearchIcon from '../Assets/Images/SearchIcon.png';
+
 export default class CategoryPosts extends PureComponent {
-  static navigationOptions = (props) => {
+  static navigationOptions = props => {
     const {params = {}} = props.navigation.state;
     return {
       header:
@@ -45,56 +49,90 @@ export default class CategoryPosts extends PureComponent {
                 backgroundColor: '#1192d1',
                 alignItems: 'center',
               }}>
-              <View style={{flexDirection: 'row', flex: 10}}>
+              <View
+                style={{
+                  flexDirection: 'row',
+                  alignItems: 'center',
+                  // justifyContent: 'space-around',
+                  flex: 1,
+                }}>
                 <View
                   style={{
-                    marginLeft: '2%',
+                    // marginLeft: '5%',
+                    height: 25,
+                    position: 'absolute',
+                    // top: 0,
+                    // bottom: 0,
+                    left: 0,
+                    right: 0,
+                    //alignItems: 'center',
+                    justifyContent: 'center',
+                    // left: Dimensions.get('window').width / 2,
                     flexDirection: 'row',
-                    alignSelf: 'center',
+                    // alignSelf: 'center',
+                    // justifyContent: 'center',
                   }}>
-                  <TouchableOpacity
-                    onPress={() => props.navigation.navigate('Searching')}>
-                    <View
-                      style={{
-                        height: 30,
-                        padding: 0,
-                        flexDirection: 'row',
-                        alignItems: 'center',
-                        width: 250,
-                        backgroundColor: '#F0F0F0',
-                        borderRadius: 10,
-                      }}>
-                      <View style={{marginLeft: '2%'}}>
-                        <Icon name="search" color="#1192d1" size={20} />
-                      </View>
-                      <View style={{height: 20}}>
-                        <Image
-                          source={Logo}
-                          style={{
-                            width: 150,
-                            alignSelf: 'flex-start',
-                            height: '100%',
-                          }}
-                          resizeMode="contain"
-                        />
-                      </View>
-                    </View>
-                  </TouchableOpacity>
-                </View>
-                <View style={{marginLeft: 5}}>
-                  <TouchableOpacity
-                    onPress={() => props.navigation.navigate('CategoryList')}>
-                    <Icon2 name="view-grid" color="white" size={28} />
-                  </TouchableOpacity>
+                  <Image
+                    source={Logo}
+                    style={{
+                      width: 150,
+                      alignSelf: 'flex-start',
+                      height: '100%',
+                    }}
+                    resizeMode="contain"
+                  />
                 </View>
 
-                <View style={{marginLeft: '10%', marginTop: '0.5%'}}>
-                  <TouchableOpacity
-                    style={{paddingRight: 5}}
-                    onPress={() => props.navigation.navigate('HomeScreen')}>
-                    <PeopleIcon name="users" color="white" size={23} />
-                  </TouchableOpacity>
-                </View>
+                <TouchableOpacity
+                  onPress={() => props.navigation.navigate('Searching')}
+                  style={{position: 'absolute', left: 8}}>
+                  {/* <Icon2 name="view-grid" color="#00527a" size={28} /> */}
+                  <View
+                    style={{
+                      height: 40,
+                      width: 40,
+                      justifyContent: 'center',
+                    }}>
+                    <Image
+                      source={SearchIcon}
+                      style={{height: 25, width: 30}}
+                    />
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => props.navigation.navigate('CategoryList')}
+                  style={{position: 'absolute', right: 60}}>
+                  {/* <Icon2 name="view-grid" color="#00527a" size={28} /> */}
+                  <View
+                    style={{
+                      height: 40,
+                      width: 40,
+                      justifyContent: 'center',
+                    }}>
+                    <Image
+                      source={YesCategory}
+                      style={{height: 25, width: 30}}
+                    />
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => props.navigation.navigate('FollowersPosts')}
+                  style={{position: 'absolute', right: 5}}>
+                  {/* <PeopleIcon name="users" color="#00527a" size={20} /> */}
+                  <View
+                    style={{
+                      height: 40,
+                      width: 40,
+                      justifyContent: 'center',
+                    }}>
+                    <Image
+                      source={NoFollower}
+                      style={{height: 25, width: 30}}
+                    />
+                  </View>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -143,17 +181,29 @@ export default class CategoryPosts extends PureComponent {
                   </View>
                 </TouchableOpacity>
               </View>
-              <View style={{marginLeft: 5}}>
+              <View style={{paddingLeft: '4%'}}>
                 <TouchableOpacity
                   onPress={() => props.navigation.navigate('CategoryList')}>
-                  <Icon2 name="view-grid" color="white" size={28} />
+                  <View
+                    style={{height: 40, width: 40, justifyContent: 'center'}}>
+                    <Image
+                      source={YesCategory}
+                      style={{height: 30, width: 30, borderWidth: 1}}
+                    />
+                  </View>
                 </TouchableOpacity>
               </View>
-              <View style={{marginLeft: '10%', marginTop: '0.5%'}}>
+
+              <View style={{paddingLeft: '2%'}}>
                 <TouchableOpacity
-                  style={{paddingRight: 5}}
-                  onPress={() => props.navigation.navigate('HomeScreen')}>
-                  <PeopleIcon name="users" color="white" size={23} />
+                  onPress={() => props.navigation.navigate('FollowersPosts')}>
+                  <View
+                    style={{height: 40, width: 50, justifyContent: 'center'}}>
+                    <Image
+                      source={NoFollower}
+                      style={{height: 30, width: 35, borderWidth: 1}}
+                    />
+                  </View>
                 </TouchableOpacity>
               </View>
             </View>
@@ -186,7 +236,7 @@ export default class CategoryPosts extends PureComponent {
 
   loadmore = () => {
     this.setState(
-      (previousState) => {
+      previousState => {
         return {pageNo: previousState.pageNo + 1, loadmore: true};
       },
       async () => {
@@ -217,7 +267,7 @@ export default class CategoryPosts extends PureComponent {
         if (parseInt(Response.status) === 401) {
           alert(JsonResponse.message);
         } else if (parseInt(Response.status) === 200) {
-          this.setState((previousState) => {
+          this.setState(previousState => {
             return {
               posts: [...previousState.posts, ...JsonResponse.data],
               total: JsonResponse.total,
@@ -302,8 +352,6 @@ export default class CategoryPosts extends PureComponent {
     this.focusListener.remove();
   }
 
-
-
   onPageRefresh = () => {
     this.fetchCategoryPosts();
   };
@@ -313,7 +361,7 @@ export default class CategoryPosts extends PureComponent {
       return (
         <React.Fragment>
           <ScrollView
-          style={{ backgroundColor: '#F0F0F0'}}
+            style={{backgroundColor: '#F0F0F0'}}
             refreshControl={
               <RefreshControl
                 refreshing={this.state.refreshing}
@@ -325,7 +373,8 @@ export default class CategoryPosts extends PureComponent {
                 posts={this.state.posts}
                 totalPosts={this.state.total}
                 loadMore={this.loadmore}
-                loadstate={this.state.loadmore}></RenderCards>
+                loadstate={this.state.loadmore}
+              />
             </View>
           </ScrollView>
         </React.Fragment>
@@ -333,7 +382,7 @@ export default class CategoryPosts extends PureComponent {
     } else if (this.state.total === 0) {
       return (
         <View style={{paddingTop: '45%', height: '100%'}}>
-          <NoPosts></NoPosts>
+          <NoPosts />
         </View>
       );
     } else {
@@ -344,7 +393,7 @@ export default class CategoryPosts extends PureComponent {
             width={820}
             speed={0.2}
             height={Dimensions.get('window').height * 1}>
-             <Rect x="10" y="10" rx="5" ry="5" width="185" height="200" />
+            <Rect x="10" y="10" rx="5" ry="5" width="185" height="200" />
             <Rect x="200" y="10" rx="5" ry="5" width="200" height="200" />
             <Rect x="10" y="220" rx="5" ry="5" width="185" height="200" />
             <Rect x="200" y="220" rx="5" ry="5" width="200" height="200" />
