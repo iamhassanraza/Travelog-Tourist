@@ -38,7 +38,7 @@ import {
 
 //cam_id === 'nahi_hai'
 class ProfilePage extends React.Component {
-  static navigationOptions = (props) => {
+  static navigationOptions = props => {
     tabBarVisibile = false;
     const {params = {}} = props.navigation.state;
     return {
@@ -173,8 +173,8 @@ class ProfilePage extends React.Component {
         Authorization: `Bearer ${Token}`,
       },
     })
-      .then((res) => res.json())
-      .then(async (res) => {
+      .then(res => res.json())
+      .then(async res => {
         //console.log(campusId)
         // const campuses = [this.state.campuses,...res]
         if (campusId === 'nahi_hai') {
@@ -184,7 +184,7 @@ class ProfilePage extends React.Component {
             campuses: cam,
           });
         } else {
-          await res.filter((campus) => {
+          await res.filter(campus => {
             if (campus.id === parseInt(campusId)) {
               const cam = [...[campus], ...res];
               console.log(campus, 'campus');
@@ -198,7 +198,7 @@ class ProfilePage extends React.Component {
           });
         }
       })
-      .catch((err) => console.log('error is', err));
+      .catch(err => console.log('error is', err));
 
     this.props.navigation.setParams({
       handleThis: () => {
@@ -239,7 +239,7 @@ class ProfilePage extends React.Component {
           waitUntilSaved: true,
         },
       },
-      (response) => {
+      response => {
         if (response.didCancel) {
           console.log('cancelled');
         } else if (response.error) {
@@ -279,7 +279,7 @@ class ProfilePage extends React.Component {
       });
     }
 
-    Object.keys(body).forEach((key) => {
+    Object.keys(body).forEach(key => {
       data.append(key, body[key]);
     });
 
@@ -315,13 +315,15 @@ class ProfilePage extends React.Component {
     this.props.CreateUserDetails(postMasterResponse);
     this.setState({imageUri: ''});
     await AsyncStorage.setItem('CAMPUS_ID', this.state.selectedId.toString());
-    const campusId=await AsyncStorage.getItem('CAMPUS_ID');
-    console.log('campussssss',campusId)
+    const campusId = await AsyncStorage.getItem('CAMPUS_ID');
+    console.log('campussssss', campusId);
     //his.props.navigation.navigate('HomeScreen')
-    this.state.currentCampus === 'nahi_hai'? this.props.navigation.navigate('AuthLoading') : this.props.navigation.navigate('HomeScreen');
+    this.state.currentCampus === 'nahi_hai'
+      ? this.props.navigation.navigate('AuthLoading')
+      : this.props.navigation.navigate('HomeScreen');
     // AsyncStorage.getItem('CAMPUS_ID') === 'nahi_hai'
-      // ? this.props.navigation.navigate('App')
-      // : this.props.navigation.navigate('HomeScreen');
+    // ? this.props.navigation.navigate('App')
+    // : this.props.navigation.navigate('HomeScreen');
     console.log(postMasterResponse, 'patch request');
   };
 
@@ -370,7 +372,7 @@ class ProfilePage extends React.Component {
             },
             // ... You can check the source to find the other keys.
           }}
-          onDateChange={(date) => {
+          onDateChange={date => {
             this.setState({dob: date});
           }}
         />
@@ -403,7 +405,7 @@ class ProfilePage extends React.Component {
             }}
             value={this.state.phone}
             placeholder="XXX-XXX-XXXXX"
-            onChangeText={(text) => this.setState({phone: text})}
+            onChangeText={text => this.setState({phone: text})}
           />
           <Icon
             name="pencil"
@@ -441,7 +443,7 @@ class ProfilePage extends React.Component {
             }}
             placeholder="2020"
             value={this.state.gradutationYear}
-            onChangeText={(text) => this.setState({gradutationYear: text})}
+            onChangeText={text => this.setState({gradutationYear: text})}
           />
           <Icon
             name="pencil"
@@ -516,7 +518,7 @@ class ProfilePage extends React.Component {
               name="Name"
               ph="Enter name"
               value={this.state.name}
-              changestate={(text) => {
+              changestate={text => {
                 this.setState({name: text});
               }}
             />
@@ -541,7 +543,7 @@ class ProfilePage extends React.Component {
                 }}>
                 <Picker
                   selectedValue={this.state.selectedId}
-                  onValueChange={(itemValue) => {
+                  onValueChange={itemValue => {
                     if (itemValue !== 'select campus') {
                       this.setState({
                         selectedId: itemValue,
@@ -562,7 +564,7 @@ class ProfilePage extends React.Component {
               name="Major"
               ph="Major"
               value={this.state.major}
-              changestate={(text) => {
+              changestate={text => {
                 this.setState({major: text});
               }}
             />
@@ -586,7 +588,7 @@ class ProfilePage extends React.Component {
   }
 }
 
-mapStateToProps = (state) => {
+mapStateToProps = state => {
   //this state will contain FULL redux store all the reducers data
 
   //use your required reducer data in props i.e reducer1
@@ -594,4 +596,7 @@ mapStateToProps = (state) => {
   return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
 };
 
-export default connect(mapStateToProps, {CreateUserDetails})(ProfilePage);
+export default connect(
+  mapStateToProps,
+  {CreateUserDetails},
+)(ProfilePage);

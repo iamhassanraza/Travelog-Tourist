@@ -26,6 +26,7 @@ import MenuIcon from 'react-native-vector-icons/Feather';
 import Modal from 'react-native-modal';
 const IconGrey = '#b4b8bf';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 
 class UserProfile extends React.Component {
   static navigationOptions = props => {
@@ -547,9 +548,13 @@ class UserProfile extends React.Component {
         <View
           style={{flexDirection: 'row', marginLeft: 10, alignItems: 'center'}}>
           <Image
-            source={{
-              uri: postUserDp,
-            }}
+            source={
+              postUserDp === '' || !postUserDp
+                ? defaultAvatar
+                : {
+                    uri: postUserDp,
+                  }
+            }
             style={{width: 80, height: 80, borderRadius: 50}}
           />
           <View style={{marginLeft: 5}}>
