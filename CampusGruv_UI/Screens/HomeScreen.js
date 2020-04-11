@@ -34,6 +34,7 @@ import {connectSocket} from '../ReduxStore/Actions/index';
 
 import NoCategory from '../Assets/Images/NoCategory.png'
 import NoFollower from '../Assets/Images/NoFollower.png'
+import SearchIcon from '../Assets/Images/SearchIcon.png'
 
 class HomeScreen extends PureComponent {
   static navigationOptions = (props) => {
@@ -112,29 +113,26 @@ class HomeScreen extends PureComponent {
               alignItems: 'center',
             }}>
             <View
-              style={{flexDirection: 'row', alignItems: 'center', flex: 10}}>
+              style={{flexDirection: 'row', alignItems: 'center', justifyContent:"space-around",flex: 10}}>
+ 
+                <TouchableOpacity
+                style={{marginLeft:'2%'}}
+                  onPress={() => props.navigation.navigate('Searching')}>
+                    <View >
+                      <Image source={SearchIcon} style={{height:25,width:25}}></Image>
+                </View>
+                </TouchableOpacity>
+
+
               <View
                 style={{
-                  marginLeft: '2%',
+                  marginLeft: '5%',
+                  height:25,
                   flexDirection: 'row',
                   alignSelf: 'center',
+               justifyContent:"center"
                 }}>
-                <TouchableOpacity
-                  onPress={() => props.navigation.navigate('Searching')}>
-                  <View
-                    style={{
-                      height: 30,
-                      padding: 0,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      width: 250,
-                      backgroundColor: '#F0F0F0',
-                      borderRadius: 10,
-                    }}>
-                    <View style={{marginLeft: '2%'}}>
-                      <Icon name="search" color="#1192d1" size={20} />
-                    </View>
-                    <View style={{height: 20}}>
+                  
                       <Image
                         source={Logo}
                         style={{
@@ -144,10 +142,9 @@ class HomeScreen extends PureComponent {
                         }}
                         resizeMode="contain"
                       />
-                    </View>
-                  </View>
-                </TouchableOpacity>
               </View>
+          
+              <View style={{flexDirection:'row',marginLeft:'5%'}}>
               <View style={{paddingLeft:"4%"}}>
                 <TouchableOpacity
                   onPress={() => props.navigation.navigate('CategoryList')}>
@@ -168,6 +165,7 @@ class HomeScreen extends PureComponent {
                   </View>
               </TouchableOpacity>
             </View>
+              </View>
             </View>
             
           </View>
