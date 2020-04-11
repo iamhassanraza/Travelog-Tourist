@@ -32,6 +32,9 @@ import io from 'socket.io-client';
 import {connect} from 'react-redux';
 import {connectSocket} from '../ReduxStore/Actions/index';
 
+import NoCategory from '../Assets/Images/NoCategory.png'
+import NoFollower from '../Assets/Images/NoFollower.png'
+
 class HomeScreen extends PureComponent {
   static navigationOptions = (props) => {
     const {params = {}} = props.navigation.state;
@@ -145,20 +148,28 @@ class HomeScreen extends PureComponent {
                   </View>
                 </TouchableOpacity>
               </View>
-              <View style={{marginLeft: 5}}>
+              <View style={{paddingLeft:"4%"}}>
                 <TouchableOpacity
                   onPress={() => props.navigation.navigate('CategoryList')}>
-                  <Icon2 name="view-grid" color="#00527a" size={28} />
+                  {/* <Icon2 name="view-grid" color="#00527a" size={28} /> */}
+                  <View style={{height:40,width:40,justifyContent:"center"}}>
+                  <Image source={NoCategory} style={{height:30,width:30,borderWidth:1}}></Image>
+                  </View>
                 </TouchableOpacity>
               </View>
-            </View>
-            <View style={{flex: 1}}>
+
+              <View style={{paddingLeft:"2%"}}>
               <TouchableOpacity
-                style={{paddingRight: 5}}
+               
                 onPress={() => props.navigation.navigate('FollowersPosts')}>
-                <PeopleIcon name="users" color="#00527a" size={20} />
+                {/* <PeopleIcon name="users" color="#00527a" size={20} /> */}
+                <View style={{height:40,width:50,justifyContent:"center"}}>
+                  <Image source={NoFollower} style={{height:30,width:35,borderWidth:1}}></Image>
+                  </View>
               </TouchableOpacity>
             </View>
+            </View>
+            
           </View>
         ),
     };
