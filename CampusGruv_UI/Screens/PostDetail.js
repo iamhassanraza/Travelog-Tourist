@@ -37,6 +37,7 @@ import {
 import Share from 'react-native-share';
 import TextEncoding from 'text-encoding';
 import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
+import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 
 import NoLike from '../Assets/Images/NoLike.png';
 import NoSave from '../Assets/Images/NoSave.png';
@@ -205,7 +206,7 @@ class PostDetail extends Component {
               })
             }>
             <Image
-              source={{uri: userdp}}
+              source={!userdp || userdp !== '' ? defaultAvatar : {uri: userdp}}
               style={{width: 40, height: 40, borderRadius: 50}}
             />
             <Text style={{marginLeft: '7%', color: IconGrey}}>
