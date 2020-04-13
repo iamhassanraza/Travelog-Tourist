@@ -153,8 +153,13 @@ class Followers extends Component {
     );
     const JsonResponse = await Response.json();
     this.setState({
+<<<<<<< HEAD
       data: JsonResponse.data,
       loading: false,
+=======
+      data: JsonResponse,
+      loading: false
+>>>>>>> 5257a50b1cb91351b23902041e19eb7206b0f24b
     });
   };
 

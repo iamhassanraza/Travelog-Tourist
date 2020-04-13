@@ -145,7 +145,7 @@ class Following extends Component {
     const Response = await fetch(
       `${
         require('../config').default.production
-      }api/v1/following/users?user_id=${navId}&page=1`,
+      }api/v1/following/users?user_id=${navId}`,
       {
         headers: {
           Authorization: `Bearer ${Token}`,
@@ -153,10 +153,12 @@ class Following extends Component {
       },
     );
     const JsonResponse = await Response.json();
+  
     this.setState({
-      search: JsonResponse.data,
+      search: JsonResponse,
       loading: false
     });
+  
   };
 
 
