@@ -715,7 +715,7 @@ class PostDetail extends Component {
     );
     return (
       <Container style={{marginTop: Platform.OS === 'ios' ? -35 : 0}}>
-        <StatusBar barStyle="dark-content" />
+        {Platform.OS === 'ios' ? <StatusBar barStyle="dark-content" /> : null}
         <Content style={{marginBottom: Platform.OS === 'ios' ? 10 : 0}}>
           {this.renderHeader(
             data.userAvatar,

@@ -51,6 +51,26 @@ class UserProfile extends React.Component {
                   resizeMode="contain"
                 />
               </View>
+              <View
+                style={{
+                  position: 'absolute',
+                  padding: 2,
+                  alignSelf: 'center',
+                  right: 8,
+                }}>
+                <TouchableOpacity
+                  onPress={
+                    () => params.handleOtherThis()
+                    //props.navigation.goBack()
+                  }>
+                  <MenuIcon
+                    name="more-vertical"
+                    color="white"
+                    fontWeight="bold"
+                    size={26}
+                  />
+                </TouchableOpacity>
+              </View>
             </View>
           </View>
         ) : (
@@ -127,6 +147,7 @@ class UserProfile extends React.Component {
       loadmore: false,
       pageNo: 1,
       isModalVisible: false,
+      otherModalVisible: false,
       //followed: true,
       userFollowing: null,
       searchbox: '',
@@ -159,6 +180,7 @@ class UserProfile extends React.Component {
         otherUserId: this.state.otherUserId,
         currentUserId: this.props.User.id,
         handleThis: () => this.toggleModal(),
+        handleOtherThis: () => this.toggleOtherModal(),
       });
       this.fetchdata(userNavId ? userNavId : this.props.User.id);
       console.log('will focus');
@@ -186,6 +208,10 @@ class UserProfile extends React.Component {
 
   toggleModal = () => {
     this.setState({isModalVisible: !this.state.isModalVisible});
+  };
+
+  toggleOtherModal = () => {
+    this.setState({otherModalVisible: !this.state.otherModalVisible});
   };
 
   fetchFollowData = async id => {
@@ -472,7 +498,7 @@ class UserProfile extends React.Component {
               style={{
                 marginTop: 5,
                 alignSelf: 'flex-end',
-                padding: 2,
+                padding: 5,
               }}
               onPress={() => {
                 this.props.navigation.navigate('EditProfile');
@@ -489,7 +515,7 @@ class UserProfile extends React.Component {
                 Edit Profile
               </Text>
             </TouchableOpacity>
-            <TouchableOpacity
+            {/* <TouchableOpacity
               style={{
                 marginTop: 5,
                 alignSelf: 'flex-end',
@@ -511,7 +537,7 @@ class UserProfile extends React.Component {
                 }}>
                 Logout
               </Text>
-            </TouchableOpacity>
+            </TouchableOpacity> */}
           </View>
         ) : this.state.isFollowing !== null ? (
           <View>
@@ -669,6 +695,88 @@ class UserProfile extends React.Component {
                     paddingBottom: 20,
                   }}>
                   Block user
+                </Text>
+              </View>
+            </View>
+          </Modal>
+
+          {/* THE OTHER MODAL GOES HERE */}
+
+          <Modal
+            style={{
+              margin: 0,
+              //backgroundColor: 'white',
+              flexDirection: 'row',
+              // alignItems: 'flex-end',
+            }}
+            isVisible={this.state.otherModalVisible}
+            onBackdropPress={() => this.setState({otherModalVisible: false})}>
+            <View
+              style={{
+                flex: 1,
+                justifyContent: 'flex-end',
+                alignItems: 'center',
+              }}>
+              <View
+                style={{
+                  backgroundColor: 'white',
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  paddingBottom: 30,
+                  borderTopRightRadius: 23,
+                  borderTopLeftRadius: 23,
+                }}>
+                <Icon
+                  name="cancel"
+                  onPress={() => this.setState({otherModalVisible: false})}
+                  style={{
+                    flex: 0.65,
+                    paddingLeft: 5,
+                    fontSize: 20,
+                    paddingTop: 4,
+                    color: IconGrey,
+                  }}
+                />
+                <View
+                  style={{
+                    flex: 10,
+                    alignItems: 'center',
+                    backgroundColor: 'white',
+                    paddingTop: 3,
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: 'bold',
+                      borderTopWidth: 2,
+                      borderTopColor: IconGrey,
+                    }}>
+                    Profile actions
+                  </Text>
+                </View>
+              </View>
+
+              <View
+                style={{
+                  width: '100%',
+                  backgroundColor: 'white',
+                }}>
+                <Text
+                  onPress={async () => {
+                    this.setState({otherModalVisible: false});
+                    await AsyncStorage.clear();
+                    this.props.screenProps.rootNavigation.navigate('Login');
+                    console.log('Logged Out');
+                  }}
+                  style={{
+                    color: 'black',
+                    backgroundColor: 'white',
+                    textAlign: 'center',
+                    width: '100%',
+                    fontSize: 17,
+                    paddingBottom: 40,
+                  }}>
+                  Logout
                 </Text>
               </View>
             </View>

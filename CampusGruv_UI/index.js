@@ -2,7 +2,7 @@
  * @format
  */
 
-import {AppRegistry, StatusBar} from 'react-native';
+import {AppRegistry, StatusBar, PixelRatio, Platform} from 'react-native';
 import {App} from './App';
 import {name as appName} from './app.json';
 import React from 'react';
@@ -23,7 +23,9 @@ const RN_REDUX = () => {
   return (
     <Provider store={mystore}>
       <App />
-      <StatusBar barStyle="light-content" translucent={true} />
+      {Platform.OS === 'ios' ? (
+        <StatusBar barStyle="light-content" translucent={true} />
+      ) : null}
     </Provider>
   );
 };
