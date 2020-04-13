@@ -153,10 +153,12 @@ class Following extends Component {
       },
     );
     const JsonResponse = await Response.json();
+  
     this.setState({
-      search: JsonResponse.data,
+      search: JsonResponse,
       loading: false
     });
+  
   };
 
 
