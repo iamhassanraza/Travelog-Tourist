@@ -144,7 +144,7 @@ class Followers extends Component {
     const Response = await fetch(
       `${
         require('../config').default.production
-      }api/v1/follower/users?user_id=${navId}&page=1`,
+      }api/v1/follower/users?user_id=${navId}`,
       {
         headers: {
           Authorization: `Bearer ${Token}`,

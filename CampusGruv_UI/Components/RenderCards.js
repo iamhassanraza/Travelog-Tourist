@@ -27,7 +27,7 @@ class RenderCards extends PureComponent {
           style={{
             height: '100%',
             flexDirection: 'row',
-            backgroundColor: '#F0F0F0',
+            backgroundColor: '#f9fdfe',
             flex:1
           }}>
           <SafeAreaView style={{flex: 1}}>

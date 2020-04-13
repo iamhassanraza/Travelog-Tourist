@@ -495,7 +495,7 @@ class HomeScreen extends PureComponent {
           {this.props.navigation.getParam('CategoryID', 'undefined') ===
           'undefined' ? (
             this.state.FollowersPosts ? (
-              <View style={{backgroundColor: '#F0F0F0'}}>
+              <View style={{backgroundColor: '#f9fdfe'}}>
                 <Text
                   onPress={async () => {
                     await this.setState({
@@ -532,7 +532,7 @@ class HomeScreen extends PureComponent {
               </View>
             ) : null
           ) : (
-            <View style={{backgroundColor: '#F0F0F0'}}>
+            <View style={{backgroundColor: '#f9fdfe'}}>
               <Text
                 onPress={async () => {
                   await this.setState({posts: [], total: undefined});
@@ -619,7 +619,7 @@ class HomeScreen extends PureComponent {
         <View
           style={{
             paddingTop: '45%',
-            backgroundColor: '#F0F0F0',
+            backgroundColor: '#f9fdfe',
             height: '100%',
           }}>
           <NoPosts />
