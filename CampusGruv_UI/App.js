@@ -19,7 +19,10 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import OptionsIcon from 'react-native-vector-icons/SimpleLineIcons';
 import PeopleIcon from 'react-native-vector-icons/FontAwesome5';
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
-import AddIcon from 'react-native-vector-icons/Entypo';
+import HomeIcon from 'react-native-vector-icons/Feather'
+import ProfileIcon from 'react-native-vector-icons/Feather'
+import NotiIcon from'react-native-vector-icons/Feather'
+import AddIcon from 'react-native-vector-icons/Octicons';
 import Logo from './Assets/Images/logo.png';
 import HomeScreen from './Screens/HomeScreen';
 import {createAppContainer, createSwitchNavigator} from 'react-navigation';
@@ -588,7 +591,7 @@ const TabNavigator = createMaterialTopTabNavigator(
       screen: HomeStack,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
-          <Icon name="home" color={tintColor} style={{fontSize: 27}} />
+          <HomeIcon name="home" color={tintColor} style={{fontSize: 27}} />
         ),
         tabBarLabel: 'Home',
       },
@@ -604,10 +607,10 @@ const TabNavigator = createMaterialTopTabNavigator(
             return (
               <IconBadge
                 MainElement={
-                  <Icon2
-                    name="bell-ring"
+                  <NotiIcon
+                    name="bell"
                     color={tintColor}
-                    style={{fontSize: 27}}
+                    style={{fontSize: 30}}
                   />
                 }
                 BadgeElement={
@@ -631,9 +634,9 @@ const TabNavigator = createMaterialTopTabNavigator(
         initialRouteName: 'AddPost',
         tabBarIcon: ({tintColor}) => (
           <AddIcon
-            name="squared-plus"
+            name="diff-added"
             color={tintColor}
-            style={{fontSize: 27}}
+            style={{fontSize: 30}}
           />
         ),
         tabBarLabel: 'Add Post',
@@ -676,7 +679,7 @@ const TabNavigator = createMaterialTopTabNavigator(
       screen: ProfileStack,
       navigationOptions: {
         tabBarIcon: ({tintColor}) => (
-          <Icon name="person" color={tintColor} style={{fontSize: 27}} />
+          <ProfileIcon name="user" color={tintColor} style={{fontSize: 30}} />
         ),
         tabBarLabel: 'Profile',
       },
@@ -712,7 +715,7 @@ const TabNavigator = createMaterialTopTabNavigator(
         height: 2,
       },
       upperCaseLabel: false,
-      inactiveTintColor: 'grey',
+      inactiveTintColor: '#C4C4C4',
       activeTintColor: '#1192d1',
       showIcon: true,
       showLabel: false,
