@@ -14,6 +14,7 @@ export default class Category extends Component {
           justifyContent: 'center',
           alignItems: 'center',
           marginTop: 10,
+         
         }}>
      
           <TouchableWithoutFeedback 
@@ -22,7 +23,7 @@ export default class Category extends Component {
               // this.props.onSelect2(this.props.cat_id, this.props.description);
           }}
           >
-          <View style={{backgroundColor: `rgba(${this.props.color},0.6)`}}>
+          <View style={{backgroundColor: `rgba(${this.props.color},0.6)`, borderRadius:8}}>
             <Image
               source={{uri: this.props.image}}
               style={{
@@ -30,6 +31,7 @@ export default class Category extends Component {
                 height: 105,
                 borderRadius: 5,
                 opacity: 0.4,
+                borderRadius:12
               }}></Image>
             <Text
               style={{
