@@ -168,7 +168,7 @@ class UserProfile extends React.Component {
       userFollowing = this.props.navigation.getParam('userFollowing', null);
       await this.setState({
         otherUserId: userNavId,
-        otherUserDp: userNavDp ? userNavDp : defaultAvatar,
+        otherUserDp: userNavDp,
         otherUserFirstName: userNavFirstName,
         otherUserLastName: userNavLastName,
         otherUserCampus: userCampus,
@@ -573,7 +573,7 @@ class UserProfile extends React.Component {
           style={{flexDirection: 'row', marginLeft: 10, alignItems: 'center'}}>
           <Image
             source={
-              postUserDp === defaultAvatar || !postUserDp
+              postUserDp === '' || !postUserDp
                 ? defaultAvatar
                 : {
                     uri: postUserDp,

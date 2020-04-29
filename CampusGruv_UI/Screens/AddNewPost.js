@@ -140,7 +140,7 @@ export default class AddNewPost extends Component {
             height: 140,
             backgroundColor: '#0C91CF',
             alignSelf: 'center',
-            marginTop: Platform.OS == 'ios' ? '20%' : '10%',
+            marginTop: Platform.OS == 'ios' ? '10%' : '10%',
             borderRadius: 10,
 
             justifyContent: 'center',
@@ -169,7 +169,7 @@ export default class AddNewPost extends Component {
             height: 140,
             backgroundColor: '#0C91CF',
             alignSelf: 'center',
-            marginTop: Platform.OS == 'ios' ? '20%' : '10%',
+            marginTop: Platform.OS == 'ios' ? '10%' : '10%',
             borderRadius: 10,
             justifyContent: 'center',
           }}>
@@ -231,7 +231,7 @@ export default class AddNewPost extends Component {
                 style={{
                   height: 200,
                   width: 200,
-                  marginTop: 30,
+                  marginTop: 20,
                   marginBottom: 20,
                   alignSelf: 'center',
                 }}
@@ -244,7 +244,7 @@ export default class AddNewPost extends Component {
             <Text
               style={{
                 alignSelf: 'center',
-                marginTop: Platform.OS == 'ios' ? '25%' : 20,
+                marginTop: Platform.OS == 'ios' ? '15%' : 20,
                 fontSize: 22,
                 color: 'grey',
               }}>
@@ -267,18 +267,6 @@ export default class AddNewPost extends Component {
               }}
             />
 
-            {/* <Button title="Next" onPress={()=>{
-      // this.uploadPhoto
-    
-      if(this.state.Images && this.state.title !== ''){
-        this.setState({Images:undefined,title:'',imageSource:null})
-        this.props.navigation.navigate('CreatePost',{
-          Images: this.state.Images,
-          title: this.state.title
-        })
-      }
-     
-    }}></Button> */}
             <TouchableOpacity
               style={{alignItems: 'center', marginTop: '3%'}}
               onPress={() => {
