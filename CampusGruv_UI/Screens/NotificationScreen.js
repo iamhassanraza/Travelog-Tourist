@@ -23,19 +23,7 @@ class NotificationScreen extends Component {
     loading: false,
     store: mystore,
   };
-  // static navigationOptions = (props) => {
-  //     // const {params = {}} = props.navigation.state;
-  //     return  {
-  //         header: (
-  //           <View style={{backgroundColor: '#1192d1',}}>
-  //             <View style={{marginTop:Platform.OS=='ios'?38:0,height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center',marginTop:Platform.OS == "ios" ? 30 : 0}}>
-  //                 <View style={{alignSelf: 'center'}}>
-  //                     <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>Notifications</Text>
-  //                 </View>
-  //                         </View>
-  //             </View>)
-  //     }
-  //   }
+
   componentDidMount() {
     this.focusListener = this.props.navigation.addListener('willFocus', () => {
       //The screen is focused
@@ -79,12 +67,10 @@ class NotificationScreen extends Component {
           <View style={{backgroundColor: '#1192d1'}}>
             <View
               style={{
-                marginTop: Platform.OS === 'ios' ? 80 : 0,
                 height: 50,
                 backgroundColor: '#1192d1',
                 flexDirection: 'row',
                 justifyContent: 'center',
-                marginTop: Platform.OS == 'ios' ? 30 : 0,
               }}>
               <View style={{alignSelf: 'center'}}>
                 <Text
@@ -116,7 +102,7 @@ class NotificationScreen extends Component {
           <FlatList
             vertical
             data={this.state.notification}
-            keyExtractor={(item) => item.id}
+            keyExtractor={item => item.id}
             showsHorizontalScrollIndicator={false}
             renderItem={({item, index}) => (
               <NoticationComponent
@@ -143,7 +129,8 @@ class NotificationScreen extends Component {
                 uri={item.userNotification.profile_pic_url}
                 unread={index <= this.props.Notifications.qty ? true : false}
                 time={new Date(item.created_at.replace(' ', 'T'))}
-                activity={item.notification_message}></NoticationComponent>
+                activity={item.notification_message}
+              />
             )}
           />
         ) : (
@@ -164,7 +151,7 @@ class NotificationScreen extends Component {
   }
 }
 
-mapStateToProps = (state) => {
+mapStateToProps = state => {
   //this state will contain FULL redux store all the reducers data
 
   //use your required reducer data in props i.e reducer1

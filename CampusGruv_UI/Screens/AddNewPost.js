@@ -30,26 +30,17 @@ const options = {
 };
 
 export default class AddNewPost extends Component {
-  static navigationOptions = (props) => {
+  static navigationOptions = props => {
     const {params = {}} = props.navigation.state;
     return {
       header: (
-        //   <Header centerComponent={{text:"New Post",style:{fontWeight:"bold",color:"#FFF"}}} rightComponent={(
-        //     <TouchableOpacity onPress={() => props.navigation.navigate('HomeScreen')} >
-        //       <Text style={{color:"#FFF"}} >Close</Text>
-        //     </TouchableOpacity>
-        //   )} />
-        // )
-        //     (
         <View style={{backgroundColor: '#1192d1'}}>
           <View
             style={{
-              marginTop: Platform.OS == 'ios' ? 38 : 0,
               height: 50,
               backgroundColor: '#1192d1',
               flexDirection: 'row',
               justifyContent: 'center',
-              marginTop: Platform.OS == 'ios' ? 30 : 0,
             }}>
             <View style={{alignSelf: 'center'}}>
               <Text style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>
@@ -106,7 +97,7 @@ export default class AddNewPost extends Component {
           waitUntilSaved: true,
         },
       },
-      (response) => {
+      response => {
         if (response.didCancel) {
         } else if (response.error) {
         } else {
@@ -137,7 +128,7 @@ export default class AddNewPost extends Component {
     const options = {
       noData: true,
     };
-    ImagePicker.launchCamera(options, (response) => {});
+    ImagePicker.launchCamera(options, response => {});
   };
 
   renderOptions = () => {
@@ -146,26 +137,26 @@ export default class AddNewPost extends Component {
         <View
           style={{
             width: 170,
-            height:140,
+            height: 140,
             backgroundColor: '#0C91CF',
             alignSelf: 'center',
             marginTop: Platform.OS == 'ios' ? '20%' : '10%',
             borderRadius: 10,
-           
-            justifyContent:"center"
+
+            justifyContent: 'center',
           }}>
           <TouchableOpacity onPress={this.selectPhoto}>
             <ImageBackground
               source={require('../Assets/Images/picture.png')}
               style={{width: 100, height: 100, alignSelf: 'center'}}
             />
-             <Text
+            <Text
               style={{
                 color: 'white',
                 fontSize: 22,
                 alignSelf: 'center',
                 fontWeight: 'bold',
-                marginTop:"-4%"
+                marginTop: '-4%',
               }}>
               Choose Photo
             </Text>
@@ -175,12 +166,12 @@ export default class AddNewPost extends Component {
         <View
           style={{
             width: 170,
-            height:140,
+            height: 140,
             backgroundColor: '#0C91CF',
             alignSelf: 'center',
             marginTop: Platform.OS == 'ios' ? '20%' : '10%',
             borderRadius: 10,
-            justifyContent:"center"
+            justifyContent: 'center',
           }}>
           <TouchableOpacity onPress={this.selectPhoto}>
             <ImageBackground
@@ -190,14 +181,13 @@ export default class AddNewPost extends Component {
                 height: 100,
                 color: 'white',
                 alignSelf: 'center',
-                
               }}
             />
             <Text
               style={{
                 color: 'white',
                 fontSize: 22,
-                marginTop:"-4%",
+                marginTop: '-4%',
                 alignSelf: 'center',
                 fontWeight: 'bold',
               }}>
@@ -217,7 +207,8 @@ export default class AddNewPost extends Component {
           style={{fontSize: 30, color: 'grey'}}
           onPress={() => {
             this.setState({Images: undefined});
-          }}></Icon>
+          }}
+        />
       </View>
     );
   };
@@ -250,7 +241,13 @@ export default class AddNewPost extends Component {
 
             {this.state.Images ? this.renderDeleteIcon() : this.renderOptions()}
 
-            <Text style={{alignSelf: 'center', marginTop: Platform.OS == 'ios' ? '25%' : 20, fontSize:22,color: 'grey'}}>
+            <Text
+              style={{
+                alignSelf: 'center',
+                marginTop: Platform.OS == 'ios' ? '25%' : 20,
+                fontSize: 22,
+                color: 'grey',
+              }}>
               Title
             </Text>
             <TextInput
@@ -265,9 +262,10 @@ export default class AddNewPost extends Component {
               }}
               placeholder=" Title"
               value={this.state.title}
-              onChangeText={(text) => {
+              onChangeText={text => {
                 this.setState({title: text});
-              }}></TextInput>
+              }}
+            />
 
             {/* <Button title="Next" onPress={()=>{
       // this.uploadPhoto
@@ -306,9 +304,17 @@ export default class AddNewPost extends Component {
                   justifyContent: 'center',
                   backgroundColor: '#1192d1',
                   alignSelf: 'center',
-                  marginTop: Platform.OS == 'ios' ? 25 :10,
+                  marginTop: Platform.OS == 'ios' ? 25 : 10,
                 }}>
-                <Text style={{color: 'white', alignSelf: 'center',fontSize:20,fontWeight:"bold"}}>NEXT</Text>
+                <Text
+                  style={{
+                    color: 'white',
+                    alignSelf: 'center',
+                    fontSize: 20,
+                    fontWeight: 'bold',
+                  }}>
+                  NEXT
+                </Text>
               </View>
               {this.state.error === 'Select image and title' ? (
                 <Text style={{color: 'red'}}>{this.state.error}</Text>

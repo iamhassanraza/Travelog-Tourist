@@ -46,29 +46,17 @@ class ProfilePage extends React.Component {
         params.cam_id === 'nahi_hai' ? (
           <View
             style={{
-              height: Platform.OS == 'ios' ? 80 : 50,
+              height: 50,
               backgroundColor: '#1192d1',
               flexDirection: 'row',
               justifyContent: 'center',
             }}>
-            {/* <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
-                <TouchableOpacity 
-                    // onPress = {() => {
-                    //     props.navigation.navigate("UserProfile");
-                    // }}
-                >
-                    <Text style={{color: 'white', padding: 2}}>
-                        back
-                    </Text>
-                </TouchableOpacity>
-            </View> */}
             <View style={{alignSelf: 'center'}}>
               <Text
                 style={{
                   color: 'white',
                   fontSize: 20,
                   fontWeight: 'bold',
-                  marginTop: Platform.OS == 'ios' ? 25 : 0,
                 }}>
                 Edit profile
               </Text>
@@ -85,7 +73,6 @@ class ProfilePage extends React.Component {
                   style={{
                     color: 'white',
                     padding: 2,
-                    marginTop: Platform.OS == 'ios' ? 25 : 0,
                   }}>
                   Done
                 </Text>
@@ -95,7 +82,7 @@ class ProfilePage extends React.Component {
         ) : (
           <View
             style={{
-              height: Platform.OS == 'ios' ? 80 : 50,
+              height: 50,
               backgroundColor: '#1192d1',
               flexDirection: 'row',
               justifyContent: 'center',
@@ -115,7 +102,6 @@ class ProfilePage extends React.Component {
                   style={{
                     color: 'white',
                     padding: 2,
-                    marginTop: Platform.OS == 'ios' ? 25 : 0,
                   }}>
                   Back
                 </Text>
@@ -127,7 +113,6 @@ class ProfilePage extends React.Component {
                   color: 'white',
                   fontSize: 20,
                   fontWeight: 'bold',
-                  marginTop: Platform.OS == 'ios' ? 25 : 0,
                 }}>
                 Edit profile
               </Text>
@@ -144,7 +129,6 @@ class ProfilePage extends React.Component {
                   style={{
                     color: 'white',
                     padding: 2,
-                    marginTop: Platform.OS == 'ios' ? 25 : 0,
                   }}>
                   Done
                 </Text>

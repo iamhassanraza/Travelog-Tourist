@@ -44,7 +44,6 @@ export default class FolllowersPosts extends PureComponent {
             <View
               style={{
                 height: 50,
-                marginTop: Platform.OS == 'ios' ? 32 : 0,
                 flexDirection: 'row',
                 backgroundColor: '#1192d1',
                 alignItems: 'center',
@@ -53,24 +52,16 @@ export default class FolllowersPosts extends PureComponent {
                 style={{
                   flexDirection: 'row',
                   alignItems: 'center',
-                  // justifyContent: 'space-around',
                   flex: 1,
                 }}>
                 <View
                   style={{
-                    // marginLeft: '5%',
                     height: 25,
                     position: 'absolute',
-                    // top: 0,
-                    // bottom: 0,
                     left: 0,
                     right: 0,
-                    //alignItems: 'center',
                     justifyContent: 'center',
-                    // left: Dimensions.get('window').width / 2,
                     flexDirection: 'row',
-                    // alignSelf: 'center',
-                    // justifyContent: 'center',
                   }}>
                   <Image
                     source={Logo}

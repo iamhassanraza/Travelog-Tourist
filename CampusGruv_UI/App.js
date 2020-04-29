@@ -107,36 +107,6 @@ const CreatePostStack = createStackNavigator(
     PostDetail,
     CreatePost: {
       screen: CreatePost,
-      // navigationOptions: {
-      //     header: (props) => (
-      //         <View style={{height: 50, backgroundColor: '#1192d1', flexDirection: 'row' ,justifyContent: 'center'}}>
-      //             <View style={{position: 'absolute', padding:2, alignSelf: 'center', left: 8}}>
-      //                 <TouchableOpacity
-      //                     onPress = {() => {
-      //                         props.navigation.navigate("AddPost");
-      //                     }}
-      //                 >
-      //                     <Icon name="arrow-back" color="white" size={25} />
-      //                 </TouchableOpacity>
-      //             </View>
-      //             <View style={{alignSelf: 'center'}}>
-      //                 <Text style={{color: 'white', fontSize:20, fontWeight:'bold'}}>New post</Text>
-      //             </View>
-      //             <View style={{position: 'absolute', padding:2, alignSelf: 'center', right: 8}}>
-      //                 <TouchableOpacity
-      //                     onPress = {() => {
-      //                         props.navigation.dispatch(StackActions.popToTop());
-      //                         props.navigation.navigate('HomeScreen')
-      //                     }}
-      //                 >
-      //                     <Text style={{color: 'white', padding: 2}}>
-      //                         Close
-      //                     </Text>
-      //                 </TouchableOpacity>
-      //             </View>
-      //         </View>
-      //     )
-      // },
     },
   },
   {
@@ -168,7 +138,6 @@ const ProfileStack = createStackNavigator(
           <View style={{backgroundColor: '#1192d1'}}>
             <View
               style={{
-                marginTop: Platform.OS == 'ios' ? 38 : 0,
                 height: 50,
                 backgroundColor: '#1192d1',
                 flexDirection: 'row',
@@ -267,7 +236,6 @@ const HomeStack = createStackNavigator(
         <View style={{backgroundColor: '#1192d1'}}>
           <View
             style={{
-              marginTop: Platform.OS == 'ios' ? 38 : 0,
               height: 50,
               flexDirection: 'row',
               alignItems: 'center',
@@ -324,22 +292,6 @@ const HomeStack = createStackNavigator(
                 <PeopleIcon name="users" color="white" size={20} />
               </TouchableOpacity>
             </View>
-            {/* <View style={{ marginRight: '2%' }}>
-                    <TouchableOpacity onPress={() => props.navigation.navigate('CategoryList')}>
-                        <Icon2
-                            name="view-grid"
-                            color="white"
-                            size={25}
-                        />
-                    </TouchableOpacity>
-                </View>
-            <View style={{ flex: 1 }}>
-                <TouchableOpacity onPress={() => props.navigation.push('TabContainer', {
-                    categorySelected: true
-                })}>
-                    <PeopleIcon name="users" color="white" size={20} />
-                </TouchableOpacity>
-            </View> */}
           </View>
         </View>
       ),
@@ -357,7 +309,6 @@ const MessageStack = createStackNavigator(
           <View style={{backgroundColor: '#1192d1'}}>
             <View
               style={{
-                marginTop: Platform.OS == 'ios' ? 38 : 0,
                 height: 50,
                 backgroundColor: '#1192d1',
                 flexDirection: 'row',
@@ -366,7 +317,7 @@ const MessageStack = createStackNavigator(
               <View style={{alignSelf: 'center'}}>
                 <Text
                   style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
-                  Select New Chat
+                  New Message
                 </Text>
               </View>
               <View
@@ -395,7 +346,6 @@ const MessageStack = createStackNavigator(
           <View style={{backgroundColor: '#1192d1'}}>
             <View
               style={{
-                marginTop: Platform.OS == 'ios' ? 38 : 0,
                 height: 50,
                 backgroundColor: '#1192d1',
                 flexDirection: 'row',
@@ -439,101 +389,6 @@ const MessageStack = createStackNavigator(
     },
   },
 );
-// const TabNavigator = createMaterialTopTabNavigator()
-
-// function TabNavigation() {
-//     return (
-//             <TabNavigator.navigator
-//                 initialRouteName= 'Home'
-//                 tabBarPosition= 'bottom'
-//                 swipeEnabled= {false}
-//                 defaultNavigationOptions = {{
-//                     tabBarOnPress: ({ navigation, defaultHandler }) => {
-//                         navigation.dispatch(StackActions.popToTop());
-//                         defaultHandler();
-//                     },
-//                 }}
-//                 tabBarOptions= {{
-//                     style: {
-//                         backgroundColor: "white",
-//                         height: Platform.OS == 'ios' ? 60 : 50,
-
-//                     },
-//                     iconStyle: {
-//                         marginBottom: Platform.OS == 'ios' ? "5%" : 0,
-//                     },
-//                     labelStyle: {
-//                         fontSize: 8,
-//                         width: '100%',
-//                         alignSelf: 'center',
-//                         marginTop: -2,
-//                     },
-//                     indicatorStyle: {
-//                         backgroundColor: '#1192d1',
-//                         height: 2,
-//                     },
-//                     upperCaseLabel: false,
-//                     inactiveTintColor: 'grey',
-//                     activeTintColor: '#1192d1',
-//                     showIcon: true,
-//                     showLabel: false
-//                 }}
-//             >
-//                 <TabNavigator.Screen
-//                     name="Home"
-//                     component={HomeStack}
-//                     options={{
-//                         tabBarIcon: ({ tintColor }) => (
-//                             <Icon name="home" color={tintColor} style={{ fontSize: 27 }} />
-//                         ),
-//                         tabBarLabel: "Home"
-//                     }}
-//                 />
-//                 <TabNavigator.Screen
-//                     name="Notifications"
-//                     component={NotificationScreen}
-//                     options={{
-//                         tabBarIcon: ({ tintColor }) => (
-//                             <Icon2 name="bell-ring" color={tintColor} style={{ fontSize: 27 }} />
-//                         ),
-//                         tabBarLabel: "Notifications"
-//                     }}
-//                 />
-//                 <TabNavigator.Screen
-//                     name="AddPost"
-//                     component={CreatePostStack}
-//                     options={{
-//                         initialRouteName: 'AddPost',
-//                         tabBarIcon: ({ tintColor }) => (
-//                             <AddIcon name="squared-plus" color={tintColor} style={{ fontSize: 27 }} />
-//                         ),
-//                         tabBarLabel: 'Add Post'
-//                     }}
-//                 />
-//                 <TabNavigator.Screen
-//                     name="Messages"
-//                     component={MessageStack}
-//                     options={{
-//                         tabBarIcon: ({ tintColor }) => (
-//                             <Icon2 name="email-outline" color={tintColor} style={{ fontSize: 27 }} />
-//                         ),
-//                         tabBarLabel: "Messages",
-//                         hederMode: 'none'
-//                     }}
-//                 />
-//                 <TabNavigator.Screen
-//                     name="Profile"
-//                     component={ProfileStack}
-//                     options={{
-//                         tabBarIcon: ({ tintColor }) => (
-//                             <Icon name="person" color={tintColor} style={{ fontSize: 27 }} />
-//                         ),
-//                         tabBarLabel: "Profile"
-//                     }}
-//                 />
-//             </TabNavigator.navigator>
-//     )
-// }
 
 const androidTabBarOptions = {
   style: {
@@ -693,17 +548,14 @@ const TabNavigator = createMaterialTopTabNavigator(
     tabBarOptions: {
       style: {
         backgroundColor: 'white',
-        height: Platform.OS == 'ios' ? 60 : 50,
       },
       iconStyle: {
-        marginBottom: Platform.OS == 'ios' ? '5%' : 0,
         width: '100%',
       },
       labelStyle: {
         fontSize: 8,
         width: '100%',
         alignSelf: 'center',
-        marginTop: -2,
       },
       indicatorStyle: {
         backgroundColor: '#1192d1',

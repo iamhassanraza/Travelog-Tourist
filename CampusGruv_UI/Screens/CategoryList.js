@@ -28,12 +28,10 @@ export default class CategoryList extends Component {
             <View style={{backgroundColor: '#1192d1'}}>
               <View
                 style={{
-                  marginTop: Platform.OS == 'ios' ? 38 : 0,
                   height: 50,
                   backgroundColor: '#1192d1',
                   flexDirection: 'row',
                   justifyContent: 'center',
-                  marginTop: Platform.OS == 'ios' ? 30 : 0,
                 }}>
                 <View
                   style={{
@@ -82,12 +80,10 @@ export default class CategoryList extends Component {
             <View style={{backgroundColor: '#1192d1'}}>
               <View
                 style={{
-                  marginTop: Platform.OS == 'ios' ? 38 : 0,
                   height: 50,
                   backgroundColor: '#1192d1',
                   flexDirection: 'row',
                   justifyContent: 'center',
-                  marginTop: Platform.OS == 'ios' ? 30 : 0,
                 }}>
                 <View
                   style={{

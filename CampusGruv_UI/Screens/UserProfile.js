@@ -38,7 +38,6 @@ class UserProfile extends React.Component {
           <View style={{backgroundColor: '#1192d1'}}>
             <View
               style={{
-                marginTop: Platform.OS == 'ios' ? 38 : 0,
                 height: 50,
                 backgroundColor: '#1192d1',
                 flexDirection: 'row',
@@ -77,7 +76,6 @@ class UserProfile extends React.Component {
           <View style={{backgroundColor: '#1192d1'}}>
             <View
               style={{
-                marginTop: Platform.OS == 'ios' ? 38 : 0,
                 height: 50,
                 backgroundColor: '#1192d1',
                 flexDirection: 'row',

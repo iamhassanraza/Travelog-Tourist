@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, AsyncStorage} from 'react-native';
+import {Text, View, AsyncStorage, SafeAreaView} from 'react-native';
 import {TabContainer} from '../App';
 import io from 'socket.io-client';
 import {connect} from 'react-redux';
@@ -27,17 +27,17 @@ class MainTabNavigation extends React.Component {
       this.props.connectSocket(this.socket);
       this.socket.emit('isLoggedIn');
     });
-    this.socket.on('isLoggedIn', (res) => {
+    this.socket.on('isLoggedIn', res => {
       //console.log(res,'res')
     });
-    this.socket.on('connect_error', (err) => {
+    this.socket.on('connect_error', err => {
       console.log('hello jee error established', err);
     });
-    this.socket.on('user_message', (msg) => {
+    this.socket.on('user_message', msg => {
       console.log('msg received', msg);
       this.props.unreadMsg();
     });
-    this.socket.on('notification', (noti) => {
+    this.socket.on('notification', noti => {
       console.log('noti', noti);
       this.props.unreadNoti();
     });
@@ -56,7 +56,7 @@ class MainTabNavigation extends React.Component {
   }
 }
 
-mapStateToProps = (state) => {
+mapStateToProps = state => {
   //this state will contain FULL redux store all the reducers data
 
   //use your required reducer data in props i.e reducer1
@@ -68,6 +68,7 @@ mapStateToProps = (state) => {
   }; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
 };
 
-export default connect(mapStateToProps, {connectSocket, unreadMsg, unreadNoti})(
-  MainTabNavigation,
-);
+export default connect(
+  mapStateToProps,
+  {connectSocket, unreadMsg, unreadNoti},
+)(MainTabNavigation);

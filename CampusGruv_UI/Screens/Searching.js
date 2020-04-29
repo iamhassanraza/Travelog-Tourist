@@ -27,7 +27,6 @@ import NoPost from '../Components/NoPost';
 import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
 import {connect} from 'react-redux';
 
-
 class Searching extends React.PureComponent {
   state = {
     selection: 'Feed',
@@ -66,7 +65,7 @@ class Searching extends React.PureComponent {
     });
   }
 
-  fetchFeed = async (text) => {
+  fetchFeed = async text => {
     this.setState({loadingFeed: true});
     const Token = await AsyncStorage.getItem('TOKEN');
     const Response = await fetch(
@@ -101,7 +100,7 @@ class Searching extends React.PureComponent {
     }
   };
 
-  fetchUsers = async (text) => {
+  fetchUsers = async text => {
     this.setState({loadingUsers: true});
     const Token = await AsyncStorage.getItem('TOKEN');
     const Response = await fetch(
@@ -133,7 +132,7 @@ class Searching extends React.PureComponent {
     }
   };
 
-  fetchCampuses = async (text) => {
+  fetchCampuses = async text => {
     this.setState({loadingCampuses: true});
     const Token = await AsyncStorage.getItem('TOKEN');
     const Response = await fetch(
@@ -164,7 +163,7 @@ class Searching extends React.PureComponent {
     }
   };
 
-  SearchItems = (text) => {
+  SearchItems = text => {
     if (text) {
       this.fetchFeed(text);
       this.fetchUsers(text);
@@ -179,31 +178,6 @@ class Searching extends React.PureComponent {
     const Token = await AsyncStorage.getItem('TOKEN');
     return Token;
   };
-
-  // fetchdata = async () => {
-  //   const Token = await this.getToken();
-  //   this.setState({
-  //       loading:false
-  //   })
-  //   fetch('${require('../config').default.production}api/v1/search/post?type=post_all&page=1', {
-  //     headers: {
-  //       Authorization:
-  //         `Bearer ${Token}`,
-  //     },
-  //   })
-  //     .then(response => {
-  //       return response.json();
-  //     })
-  //     .then(responseJson => {
-
-  //       this.setState({
-  //         posts: responseJson.data,
-  //         refreshing: false,
-  //         loading:false
-  //       });
-  //     })
-  //     .catch(err => console.log(err));
-  // };
 
   renderFeed = () => {
     if (this.state.loadingFeed === false) {
@@ -220,7 +194,8 @@ class Searching extends React.PureComponent {
             posts={this.state.posts}
             loadMore={this.loadmore}
             loadstate={this.state.loadmore}
-            totalPosts={this.state.totalFeed}></RenderCards>
+            totalPosts={this.state.totalFeed}
+          />
         </ScrollView>
       );
     } else if (this.state.loadingFeed === true) {
@@ -253,10 +228,10 @@ class Searching extends React.PureComponent {
             style={{}}
             vertical
             data={this.state.Users}
-            keyExtractor={(item) => item.id}
+            keyExtractor={item => item.id}
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => {
-              if(item.id !== this.props.User.id) {
+              if (item.id !== this.props.User.id) {
                 return (
                   <AvatarUserStatus
                     id={item.id}
@@ -266,8 +241,9 @@ class Searching extends React.PureComponent {
                     item={item}
                     campus={item.campus.description}
                     status={true}
-                    pic={item.profile_pic_url}></AvatarUserStatus>
-                )
+                    pic={item.profile_pic_url}
+                  />
+                );
               }
             }}
           />
@@ -280,7 +256,7 @@ class Searching extends React.PureComponent {
             height={850}
             speed={0.2}
             height={Dimensions.get('window').height * 1}>
-             <Rect x="10" y="10" rx="5" ry="5" width="185" height="200" />
+            <Rect x="10" y="10" rx="5" ry="5" width="185" height="200" />
             <Rect x="200" y="10" rx="5" ry="5" width="200" height="200" />
             <Rect x="10" y="220" rx="5" ry="5" width="185" height="200" />
             <Rect x="200" y="220" rx="5" ry="5" width="200" height="200" />
@@ -310,7 +286,7 @@ class Searching extends React.PureComponent {
           style={{}}
           vertical
           data={this.state.Campuses}
-          keyExtractor={(item) => item.id}
+          keyExtractor={item => item.id}
           showsHorizontalScrollIndicator={false}
           renderItem={({item}) => {
             return (
@@ -323,7 +299,8 @@ class Searching extends React.PureComponent {
                 }
                 pic={i4}
                 navigation={this.props.navigation}
-                newCampusId={item.id}></AvatarCampusStatus>
+                newCampusId={item.id}
+              />
             );
           }}
         />
@@ -351,10 +328,10 @@ class Searching extends React.PureComponent {
     }
   };
 
-  renderNoPost = (text) => {
+  renderNoPost = text => {
     return (
       <View style={{paddingTop: '35%'}}>
-        <NoPost name={text}></NoPost>
+        <NoPost name={text} />
       </View>
     );
   };
@@ -363,7 +340,7 @@ class Searching extends React.PureComponent {
     console.log('load more running --------');
 
     this.setState(
-      (previousState) => {
+      previousState => {
         return {pageNo: previousState.pageNo + 1, loadmore: true};
       },
       async () => {
@@ -389,7 +366,7 @@ class Searching extends React.PureComponent {
           this.setState({error: true, totalFeed: 0});
         } else if (parseInt(Response.status) === 200) {
           if (JsonResponse.total > 0) {
-            this.setState((previousState) => {
+            this.setState(previousState => {
               return {
                 posts: [...previousState.posts, ...JsonResponse.data],
                 totalFeed: JsonResponse.total,
@@ -406,14 +383,11 @@ class Searching extends React.PureComponent {
   };
 
   render() {
-    // console.log("122222217846193469184791841847193470194801980913480148991048019348",this.state.Users);
-
     return (
       <View style={{backgroundColor: '#1192d1'}}>
         <View
           style={{
             backgroundColor: ThemeBlue,
-            marginTop: Platform.OS == 'ios' ? 38 : 5,
           }}>
           <View
             style={{
@@ -424,9 +398,11 @@ class Searching extends React.PureComponent {
             <View
               style={{
                 flexDirection: 'row',
+                height: 30,
                 width: '65%',
                 backgroundColor: 'white',
-                margin: 5,
+                marginLeft: 10,
+                marginTop: 10,
                 borderRadius: 8,
               }}>
               <Icon
@@ -436,15 +412,17 @@ class Searching extends React.PureComponent {
                   fontSize: 20,
                   paddingLeft: '3%',
                   color: 'grey',
-                }}></Icon>
+                }}
+              />
               <TextInput
                 placeholder="Search"
-                style={{height: '90%', margin: 4, width: '100%'}}
+                style={{height: '90%', width: '100%'}}
                 value={this.state.search}
-                onChangeText={(text) => {
+                onChangeText={text => {
                   this.setState({search: text});
                   this.SearchItems(text);
-                }}></TextInput>
+                }}
+              />
             </View>
           </View>
 
@@ -545,7 +523,7 @@ class Searching extends React.PureComponent {
   }
 }
 
-mapStateToProps = (state) => {
+mapStateToProps = state => {
   //this state will contain FULL redux store all the reducers data
 
   //use your required reducer data in props i.e reducer1
@@ -553,4 +531,7 @@ mapStateToProps = (state) => {
   return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
 };
 
-export default connect(mapStateToProps, null)(Searching);
+export default connect(
+  mapStateToProps,
+  null,
+)(Searching);

@@ -33,7 +33,7 @@ const screenheight = Dimensions.get('window').height;
 class AuthLoading extends React.Component {
   componentDidMount() {
     // Subscribe
-    const unsubscribe = NetInfo.addEventListener((state) => {
+    const unsubscribe = NetInfo.addEventListener(state => {
       console.log('Connection type', state.type);
       console.log('Is connected?', state.isConnected);
       {
@@ -64,7 +64,7 @@ class AuthLoading extends React.Component {
       },
     );
     let JsonResponse = await response.json();
-    // console.log(JsonResponse, "POPOP");
+    console.log(JsonResponse, 'POPOP');
     this.props.CreateUserDetails(JsonResponse);
   };
 
@@ -127,7 +127,7 @@ class AuthLoading extends React.Component {
         source={require('../Assets/Images/background.png')}
         resizeMode="cover">
         <View style={{marginTop: '55%'}}>
-          <HeaderTitle></HeaderTitle>
+          <HeaderTitle />
         </View>
         <View style={{justifyContent: 'center'}}>
           <DotIndicator count={3} color={'white'} />
@@ -137,7 +137,7 @@ class AuthLoading extends React.Component {
   }
 }
 
-mapStateToProps = (state) => {
+mapStateToProps = state => {
   //this state will contain FULL redux store all the reducers data
 
   //use your required reducer data in props i.e reducer1
@@ -145,7 +145,10 @@ mapStateToProps = (state) => {
   return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
 };
 
-export default connect(mapStateToProps, {CreateUserDetails})(AuthLoading);
+export default connect(
+  mapStateToProps,
+  {CreateUserDetails},
+)(AuthLoading);
 
 const styles = StyleSheet.create({
   container: {

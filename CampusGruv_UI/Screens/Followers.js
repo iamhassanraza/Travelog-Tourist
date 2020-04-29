@@ -47,7 +47,6 @@ class Followers extends Component {
           <View style={{backgroundColor: '#1192d1'}}>
             <View
               style={{
-                marginTop: 38,
                 height: 50,
                 backgroundColor: '#1192d1',
                 flexDirection: 'row',

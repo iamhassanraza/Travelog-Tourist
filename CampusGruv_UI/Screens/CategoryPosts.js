@@ -44,7 +44,6 @@ export default class CategoryPosts extends PureComponent {
             <View
               style={{
                 height: 50,
-                marginTop: Platform.OS == 'ios' ? 32 : 0,
                 flexDirection: 'row',
                 backgroundColor: '#1192d1',
                 alignItems: 'center',

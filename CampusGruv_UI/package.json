@@ -33,6 +33,7 @@
     "react-native-search-filter": "^0.1.5",
     "react-native-searchable-dropdown": "^1.1.1",
     "react-native-share": "^2.0.0",
+    "react-native-status-bar-height": "^2.5.0",
     "react-native-stripe-api": "^0.1.0",
     "react-native-svg": "^9.13.6",
     "react-native-tab-view": "^2.13.0",
