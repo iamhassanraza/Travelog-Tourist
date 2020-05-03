@@ -16,6 +16,7 @@ import {
   AppState,
   Platform,
   StatusBar,
+  SafeAreaView,
 } from 'react-native';
 import {ThemeConsumer, Header} from 'react-native-elements';
 import {Container, Item, Content, Input} from 'native-base';
@@ -37,6 +38,8 @@ import {
 import Share from 'react-native-share';
 import TextEncoding from 'text-encoding';
 import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 
 import NoLike from '../Assets/Images/NoLike.png';
@@ -708,6 +711,10 @@ class PostDetail extends Component {
       console.log('Semething wrong');
     }
   };
+
+  static navigationOptions = {
+    header: null,
+  };
   //style={{height: Dimensions.get('window').height-150}}
   render() {
     const data = this.props.navigation.getParam(
@@ -715,39 +722,45 @@ class PostDetail extends Component {
       'nothing to render',
     );
     return (
-      <Container style={{marginTop: Platform.OS === 'ios' ? -35 : 0}}>
-        {Platform.OS === 'ios' ? <StatusBar barStyle="dark-content" /> : null}
-        <Content style={{marginBottom: Platform.OS === 'ios' ? 10 : 0}}>
-          {this.renderHeader(
-            data.userAvatar,
-            data.postId,
-            data.first_name,
-            data.last_name,
-            data.uri,
-            data.userId,
-            data.title,
-          )}
-          {this.renderImage(data.uri)}
-          {this.renderTitle(data.title, data.views)}
-          {this.renderDescription(data.description)}
-          {this.state.comments[0] ? (
-            this.renderAllComments(data.userAvatar, data.comments)
-          ) : (
-            <View style={{height: 80, justifyContent: 'center'}}>
-              <Text
-                style={{
-                  color: 'grey',
-                  fontSize: 25,
-                  opacity: 0.5,
-                  alignSelf: 'center',
-                }}>
-                No comments yet!
-              </Text>
-            </View>
-          )}
-        </Content>
-        {this.renderAddComment(data.userAvatar, data.postId, data.userId)}
-      </Container>
+      <>
+        <Container style={{}}>
+          {/* {Platform.OS === 'ios' ? <StatusBar barStyle="dark-content" /> : null} */}
+          <Content
+            style={{
+              marginBottom: Platform.OS === 'ios' ? 10 : 0,
+              marginTop: Platform.OS === 'ios' ? '-10%' : 0,
+            }}>
+            {this.renderHeader(
+              data.userAvatar,
+              data.postId,
+              data.first_name,
+              data.last_name,
+              data.uri,
+              data.userId,
+              data.title,
+            )}
+            {this.renderImage(data.uri)}
+            {this.renderTitle(data.title, data.views)}
+            {this.renderDescription(data.description)}
+            {this.state.comments[0] ? (
+              this.renderAllComments(data.userAvatar, data.comments)
+            ) : (
+              <View style={{height: 80, justifyContent: 'center'}}>
+                <Text
+                  style={{
+                    color: 'grey',
+                    fontSize: 25,
+                    opacity: 0.5,
+                    alignSelf: 'center',
+                  }}>
+                  No comments yet!
+                </Text>
+              </View>
+            )}
+          </Content>
+          {this.renderAddComment(data.userAvatar, data.postId, data.userId)}
+        </Container>
+      </>
     );
   }
 }

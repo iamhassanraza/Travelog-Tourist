@@ -1,5 +1,5 @@
 import React from 'react';
-import {Text, View, AsyncStorage, SafeAreaView} from 'react-native';
+import {Text, View, AsyncStorage, StatusBar, SafeAreaView} from 'react-native';
 import {TabContainer} from '../App';
 import io from 'socket.io-client';
 import {connect} from 'react-redux';
@@ -8,6 +8,8 @@ import {
   unreadMsg,
   unreadNoti,
 } from '../ReduxStore/Actions/index';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+import {ThemeBlue} from '../Assets/Colors';
 
 class MainTabNavigation extends React.Component {
   state = {
@@ -45,13 +47,24 @@ class MainTabNavigation extends React.Component {
 
   render() {
     return (
-      <TabContainer
-        screenProps={{
-          rootNavigation: this.props.navigation,
-          Notifications: this.props.notifications,
-          unreadMsgs: this.props.unreadMsgs,
-        }}
-      />
+      <>
+        {Platform.OS === 'ios' ? (
+          <View
+            style={{
+              height: getStatusBarHeight(),
+              backgroundColor: ThemeBlue,
+            }}>
+            <StatusBar translucent={true} barStyle="light-content" />
+          </View>
+        ) : null}
+        <TabContainer
+          screenProps={{
+            rootNavigation: this.props.navigation,
+            Notifications: this.props.notifications,
+            unreadMsgs: this.props.unreadMsgs,
+          }}
+        />
+      </>
     );
   }
 }

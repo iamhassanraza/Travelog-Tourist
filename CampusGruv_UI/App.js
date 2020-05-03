@@ -33,7 +33,10 @@ import PostDetail from './Screens/PostDetail';
 import CreatePost from './Screens/CreateNewPost';
 import PostsList from './Components/PostsList';
 import CategoryList from './Screens/CategoryList';
-import {createMaterialTopTabNavigator} from 'react-navigation-tabs';
+import {
+  createMaterialTopTabNavigator,
+  createBottomTabNavigator,
+} from 'react-navigation-tabs';
 import inbox from './Screens/Inbox';
 import chat from './Screens/chat';
 import NotificationScreen from './Screens/NotificationScreen';
@@ -439,7 +442,7 @@ const iosTabBarOptions = {
   showLabel: false,
 };
 
-const TabNavigator = createMaterialTopTabNavigator(
+const TabNavigator = createBottomTabNavigator(
   {
     Home: {
       screen: HomeStack,

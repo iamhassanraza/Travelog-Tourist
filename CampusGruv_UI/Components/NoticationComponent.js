@@ -10,7 +10,11 @@ import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 class NoticationComponent extends Component {
   render() {
     return (
-      <View style={{backgroundColor: this.props.unread ? '#E5E5E5' : 'white'}}>
+      <View
+        style={{
+          padding: 5,
+          backgroundColor: this.props.unread ? '#E5E5E5' : '#f9fdfe',
+        }}>
         <TouchableOpacity
           onPress={() => {
             if (this.props.activity.includes('post')) {
@@ -69,18 +73,12 @@ class NoticationComponent extends Component {
             <TimeAgo time={this.props.time} style={{fontSize: 8}} />
           </View>
         </TouchableOpacity>
-        <Divider
-          style={
-            {
-              //marginTop: '2.5%'
-            }
-          }></Divider>
       </View>
     );
   }
 }
 
-mapStateToProps = (state) => {
+mapStateToProps = state => {
   //this state will contain FULL redux store all the reducers data
 
   //use your required reducer data in props i.e reducer1
@@ -89,5 +87,8 @@ mapStateToProps = (state) => {
 };
 
 export default withNavigation(
-  connect(mapStateToProps, null)(NoticationComponent),
+  connect(
+    mapStateToProps,
+    null,
+  )(NoticationComponent),
 );

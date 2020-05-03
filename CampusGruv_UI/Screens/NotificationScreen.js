@@ -7,6 +7,7 @@ import {
   Platform,
   AsyncStorage,
   TouchableHighlightBase,
+  SafeAreaView,
 } from 'react-native';
 import NoticationComponent from '../Components/NoticationComponent';
 import {Header} from 'react-native-elements';
@@ -75,7 +76,7 @@ class NotificationScreen extends Component {
               <View style={{alignSelf: 'center'}}>
                 <Text
                   style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>
-                  Notifications
+                  Activity
                 </Text>
               </View>
             </View>
@@ -92,7 +93,7 @@ class NotificationScreen extends Component {
             }}>
             <View style={{alignSelf: 'center'}}>
               <Text style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>
-                Notifications
+                Activity
               </Text>
             </View>
           </View>

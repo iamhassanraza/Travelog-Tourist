@@ -31,7 +31,7 @@ mystore = createStore(CombinedReducers, composeEnhancer());
 const RN_REDUX = () => {
   return (
     <Provider store={mystore}>
-      {Platform.OS === 'ios' ? (
+      {/* {Platform.OS === 'ios' ? (
         <View
           style={{
             height: getStatusBarHeight(),
@@ -39,17 +39,18 @@ const RN_REDUX = () => {
           }}>
           <StatusBar translucent={true} barStyle="light-content" />
         </View>
-      ) : null}
+      ) : null} */}
 
-      <SafeAreaView style={{flex: 1}}>
-        <App />
-        {/* {Platform.OS === 'ios' ? (
-          <StatusBar barStyle="light-content" translucent={true} />
-        ) : null} */}
-      </SafeAreaView>
+      <App />
     </Provider>
   );
 };
 
 AppRegistry.registerComponent(appName, () => RN_REDUX);
 export default mystore;
+
+{
+  /* {Platform.OS === 'ios' ? (
+          <StatusBar barStyle="light-content" translucent={true} />
+        ) : null} */
+}

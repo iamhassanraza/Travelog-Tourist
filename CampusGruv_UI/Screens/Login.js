@@ -273,9 +273,9 @@ class Login extends React.Component {
               </View>
 
               {/* SIGN UP NAVIGATION */}
-              <View style={{marginTop: Platform.OS === 'ios' ? 200 : '15%'}}>
-                <View />
-                <View>
+              <View>
+                <View
+                  style={{marginTop: Platform.OS === 'ios' ? '30%' : '15%'}}>
                   <Text
                     style={{
                       color: 'white',
