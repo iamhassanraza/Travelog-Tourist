@@ -178,7 +178,6 @@ class Following extends Component {
           style={{
             flexDirection: 'row',
             alignItems: 'center',
-
             marginRight: '20%',
             marginLeft: '2%',
             borderColor: '#CCC',

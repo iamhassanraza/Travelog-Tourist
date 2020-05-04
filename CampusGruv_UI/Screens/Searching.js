@@ -206,14 +206,14 @@ class Searching extends React.PureComponent {
             width={820}
             speed={0.2}
             height={Dimensions.get('window').height * 1}>
-            <Rect x="10" y="10" rx="5" ry="5" width="185" height="220" />
-            <Rect x="200" y="10" rx="5" ry="5" width="200" height="280" />
-            <Rect x="10" y="240" rx="5" ry="5" width="185" height="250" />
-            <Rect x="200" y="300" rx="5" ry="5" width="200" height="280" />
-            <Rect x="10" y="500" rx="5" ry="5" width="185" height="250" />
-            <Rect x="200" y="590" rx="5" ry="5" width="200" height="280" />
-            {/* <Rect x="280" y="300" rx="5" ry="5" width="260" height="140" />
-                    <Rect x="550" y="160" rx="5" ry="5" width="260" height="280" /> */}
+            <Rect x="10" y="10" rx="5" ry="5" width="160" height="200" />
+            <Rect x="190" y="35" rx="5" ry="5" width="160" height="200" />
+            <Rect x="10" y="220" rx="5" ry="5" width="160" height="200" />
+            <Rect x="190" y="245" rx="5" ry="5" width="160" height="200" />
+            <Rect x="10" y="430" rx="5" ry="5" width="160" height="200" />
+            <Rect x="190" y="455" rx="5" ry="5" width="160" height="200" />
+            <Rect x="10" y="640" rx="5" ry="5" width="160" height="200" />
+            <Rect x="190" y="665" rx="5" ry="5" width="160" height="200" />
           </ContentLoader>
         </View>
       );
@@ -416,7 +416,7 @@ class Searching extends React.PureComponent {
               />
               <TextInput
                 placeholder="Search"
-                style={{height: '90%', width: '100%'}}
+                style={{height: '90%', width: '100%', paddingVertical: 0}}
                 value={this.state.search}
                 onChangeText={text => {
                   this.setState({search: text});

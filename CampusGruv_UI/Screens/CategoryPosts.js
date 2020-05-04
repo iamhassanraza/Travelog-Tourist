@@ -392,14 +392,14 @@ export default class CategoryPosts extends PureComponent {
             width={820}
             speed={0.2}
             height={Dimensions.get('window').height * 1}>
-            <Rect x="10" y="10" rx="5" ry="5" width="185" height="200" />
-            <Rect x="200" y="10" rx="5" ry="5" width="200" height="200" />
-            <Rect x="10" y="220" rx="5" ry="5" width="185" height="200" />
-            <Rect x="200" y="220" rx="5" ry="5" width="200" height="200" />
-            <Rect x="10" y="430" rx="5" ry="5" width="185" height="200" />
-            <Rect x="200" y="430" rx="5" ry="5" width="200" height="200" />
-            <Rect x="10" y="640" rx="5" ry="5" width="185" height="200" />
-            <Rect x="200" y="640" rx="5" ry="5" width="200" height="200" />
+            <Rect x="10" y="10" rx="5" ry="5" width="160" height="200" />
+            <Rect x="190" y="35" rx="5" ry="5" width="160" height="200" />
+            <Rect x="10" y="220" rx="5" ry="5" width="160" height="200" />
+            <Rect x="190" y="245" rx="5" ry="5" width="160" height="200" />
+            <Rect x="10" y="430" rx="5" ry="5" width="160" height="200" />
+            <Rect x="190" y="455" rx="5" ry="5" width="160" height="200" />
+            <Rect x="10" y="640" rx="5" ry="5" width="160" height="200" />
+            <Rect x="190" y="665" rx="5" ry="5" width="160" height="200" />
           </ContentLoader>
         </View>
       );

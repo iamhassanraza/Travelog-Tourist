@@ -105,7 +105,7 @@ class RenderCards extends PureComponent {
           {this.props.posts.length < this.props.totalPosts ? (
             <View
               style={{
-                backgroundColor: '#F0F0F0',
+                backgroundColor: '#f9fdfe',
                 paddingTop: 10,
                 paddingBottom: 10,
               }}>
