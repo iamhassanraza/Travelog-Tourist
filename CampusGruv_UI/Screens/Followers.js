@@ -247,6 +247,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     paddingTop: 0,
+    marginLeft: 5,
     paddingBottom: 0,
     width: 250,
   },

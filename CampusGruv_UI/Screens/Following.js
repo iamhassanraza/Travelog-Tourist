@@ -243,6 +243,7 @@ export default withNavigation(
 const styles = StyleSheet.create({
   searchInput: {
     paddingTop: 0,
+    marginLeft: 5,
     paddingBottom: 0,
     width: 250,
   },
