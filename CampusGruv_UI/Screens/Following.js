@@ -242,6 +242,8 @@ export default withNavigation(
 
 const styles = StyleSheet.create({
   searchInput: {
+    alignItems: 'center',
+    justifyContent: 'center',
     paddingTop: 0,
     marginLeft: 5,
     paddingBottom: 0,
