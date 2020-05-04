@@ -23,7 +23,7 @@ class PostCard extends Component {
         const ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
         this.setState({width: srcWidth * ratio, height: srcHeight * ratio});
       },
-      (error) => {
+      error => {
         () => console.log(error);
       },
     );
@@ -33,8 +33,17 @@ class PostCard extends Component {
     return (
       <TouchableWithoutFeedback
         style={{
-          margin: '2%',
+          marginVertical: 8,
+          marginHorizontal: 5,
           borderColor: 'red',
+          elevation: 3,
+          shadowOffset: {width: 2, height: 4},
+          shadowColor: 'rgba(0, 0, 0, 0.1)',
+          shadowOpacity: 0.5,
+          borderBottomLeftRadius: 7,
+          borderBottomRightRadius: 7,
+          borderTopRightRadius: 7,
+          borderTopLeftRadius: 7,
         }}
         onPress={() =>
           this.props.navigation.navigate('PostDetail', {
@@ -61,14 +70,15 @@ class PostCard extends Component {
             source={{uri: this.props.imageurl}}
             style={{
               width: '100%',
-              borderTopLeftRadius: 15,
-              borderTopRightRadius: 15,
-              height:200
+              borderTopLeftRadius: 7,
+              borderTopRightRadius: 7,
+              height: 150,
               // height: this.state.height < 300 ? this.state.height : 200,
             }}
-            resizeMode="cover"></Image>
+            resizeMode="cover"
+          />
 
-          <View
+          {/* <View
             style={{
               position: 'absolute',
               //  marginTop:"10%",
@@ -90,13 +100,13 @@ class PostCard extends Component {
               }}>
               {this.props.categoryName}
             </Text>
-          </View>
+          </View> */}
         </View>
         <View
           style={{
             backgroundColor: 'white',
-            borderBottomLeftRadius: 15,
-            borderBottomRightRadius: 15,
+            borderBottomLeftRadius: 7,
+            borderBottomRightRadius: 7,
             paddingLeft: '5%',
           }}>
           <View
@@ -104,8 +114,8 @@ class PostCard extends Component {
               //flex: 1,
               flexDirection: 'row',
             }}>
-            <View style={{}}>
-              <Text style={{}}>{this.props.title}</Text>
+            <View style={{paddingVertical: 5}}>
+              <Text style={{fontWeight: '600'}}>{this.props.title}</Text>
             </View>
           </View>
           <View
@@ -131,11 +141,15 @@ class PostCard extends Component {
                   borderWidth: 0.3,
                   height: 30,
                   borderRadius: 50,
-                }}></Image>
+                }}
+              />
             </View>
             <View style={{flex: 6, alignSelf: 'center'}}>
               <Text style={{color: 'grey'}}>
-                {this.props.first_name + ' ' + this.props.last_name}
+                {this.props.first_name +
+                  ' ' +
+                  this.props.last_name.charAt(0) +
+                  '.'}
               </Text>
             </View>
             <View

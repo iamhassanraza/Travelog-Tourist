@@ -363,7 +363,7 @@ class UserProfile extends React.Component {
 
   renderPost = () => {
     return (
-      <View style={{paddingTop: 10, backgroundColor: '#f9fdfe'}}>
+      <View style={{backgroundColor: '#f9fdfe'}}>
         <RenderCards
           posts={this.state.posts}
           loadMore={this.loadmore}
@@ -385,7 +385,7 @@ class UserProfile extends React.Component {
 
   renderLoading = () => {
     return (
-      <View>
+      <View style={{marginTop: 5}}>
         <ContentLoader
           height={450}
           width={820}
@@ -491,7 +491,12 @@ class UserProfile extends React.Component {
       <ScrollView style={{backgroundColor: '#f9fdfe'}}>
         {/* EDIT PROFILE BUTTON */}
         {postUserId === this.props.User.id ? (
-          <View style={{flexDirection: 'row', justifyContent: 'flex-end'}}>
+          <View
+            style={{
+              flexDirection: 'row',
+              backgroundColor: 'white',
+              justifyContent: 'flex-end',
+            }}>
             <TouchableOpacity
               style={{
                 marginTop: 5,
@@ -538,7 +543,7 @@ class UserProfile extends React.Component {
             </TouchableOpacity> */}
           </View>
         ) : this.state.isFollowing !== null ? (
-          <View>
+          <View style={{backgroundColor: 'white'}}>
             <TouchableOpacity
               style={{
                 marginTop: 5,
@@ -570,7 +575,12 @@ class UserProfile extends React.Component {
         )}
         {/* IMAGE and NAME  */}
         <View
-          style={{flexDirection: 'row', marginLeft: 10, alignItems: 'center'}}>
+          style={{
+            flexDirection: 'row',
+            backgroundColor: 'white',
+            paddingLeft: 10,
+            alignItems: 'center',
+          }}>
           <Image
             source={
               postUserDp === '' || !postUserDp
@@ -579,7 +589,15 @@ class UserProfile extends React.Component {
                     uri: postUserDp,
                   }
             }
-            style={{width: 80, height: 80, borderRadius: 50}}
+            style={{
+              width: 80,
+              height: 80,
+              borderRadius: 50,
+              elevation: 3,
+              shadowOffset: {width: 5, height: 5},
+              shadowColor: 'red',
+              shadowOpacity: 0.5,
+            }}
           />
           <View style={{marginLeft: 5}}>
             <Text style={{fontSize: 25, fontWeight: 'bold', color: '#727272'}}>
@@ -744,10 +762,12 @@ class UserProfile extends React.Component {
                   }}>
                   <Text
                     style={{
+                      paddingTop: 5,
                       fontSize: 20,
                       fontWeight: 'bold',
                       borderTopWidth: 2,
-                      borderTopColor: IconGrey,
+                      borderTopColor: 'rgba(196,196,196,0.5)',
+                      // borderTopColor: IconGrey,
                     }}>
                     Profile actions
                   </Text>
@@ -782,7 +802,13 @@ class UserProfile extends React.Component {
         </View>
 
         {/* FOLLORWERS */}
-        <View style={{flexDirection: 'row', marginLeft: 10, marginTop: 5}}>
+        <View
+          style={{
+            flexDirection: 'row',
+            backgroundColor: 'white',
+            paddingLeft: 10,
+            paddingTop: 5,
+          }}>
           <Text style={{color: '#727272', fontSize: 13, fontWeight: 'bold'}}>
             {this.state.total + '  '}
           </Text>
@@ -831,8 +857,9 @@ class UserProfile extends React.Component {
         <View
           style={{
             flexDirection: 'row',
-            marginTop: 10,
-            marginLeft: 5,
+            paddingVertical: 10,
+            paddingLeft: 5,
+            backgroundColor: 'white',
             justifyContent: 'space-between',
             alignItems: 'center',
           }}>

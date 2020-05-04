@@ -23,114 +23,114 @@ class RenderCards extends PureComponent {
       //console.log('col 1',column1Data[0])
       return (
         <>
-        <View
-          style={{
-            height: '100%',
-            flexDirection: 'row',
-            backgroundColor: '#f9fdfe',
-            flex:1
-          }}>
-          <SafeAreaView style={{flex: 1}}>
-            <FlatList
-              data={column1Data}
-              scrollEnabled={false}
-              showsVerticalScrollIndicator={false}
-              renderItem={({item}) => {
-                return (
-                  <PostCard
-                    categoryName={item.postCategory.description}
-                    categoryColor={item.postCategory.rgba_colors}
-                    postId={item.id}
-                    comments={item.comments}
-                    userdp = { item.users.profile_pic_url}
-                    description={item.description}
-                    first_name={item.users.first_name}
-                    last_name = {item.users.last_name}
-                    userId = {item.users.id}
-                    userWiseLike = {item.userWiseLike}
-                    userSavedPost = {item.userSavedPost}
-                    isFollowing = {item.isFollowing}
-                    title={item.title}
-                    views={item.view_count}
-                    imageurl={
-                      item.postDetail.length > 0
-                        ? item.postDetail[0].image_url
-                        : 'https://travelog-pk.herokuapp.com/images/default.png'
-                    }>
-                    {' '}
-                  </PostCard>
-                );
-              }}
-              keyExtractor={item => item.title}
-            />
-          </SafeAreaView>
-          <SafeAreaView style={{flex: 1}}>
-            <FlatList
-              data={column2Data}
-              scrollEnabled={false}
-              showsVerticalScrollIndicator={false}
-              renderItem={({item}) => {
-                return (
-                  <PostCard
-                    categoryName={item.postCategory.description}
-                    categoryColor={item.postCategory.rgba_colors}
-                    userdp = { item.users.profile_pic_url}
-                    postId={item.id}
-                    comments={item.comments}
-                    description={item.description}
-                    first_name={item.users.first_name}
-                    last_name = {item.users.last_name}
-                    userId = {item.users.id}
-                    userWiseLike = {item.userWiseLike}
-                    userSavedPost = {item.userSavedPost}
-                    isFollowing = {item.isFollowing}
-                    title={item.title}
-                    views={item.view_count}
-                    imageurl={
-                      item.postDetail.length > 0
-                        ? item.postDetail[0].image_url
-                        : 'https://travelog-pk.herokuapp.com/images/default.png'
-                    }>
-                    {' '}
-                  </PostCard>
-                );
-              }}
-              keyExtractor={item => item.title}
-            />
-          </SafeAreaView>
-        </View>
-        {
-          this.props.posts.length < this.props.totalPosts ? 
           <View
-                style={{
-                  backgroundColor: '#F0F0F0',
-                  paddingTop: 10,
-                  paddingBottom: 10,
-                }}>
-                {this.props.loadstate? (
-                  <ActivityIndicator
-                    size={40}
-                    color="#1192d1"></ActivityIndicator>
-                ) : (
-                  <Text
-                    style={{
-                      alignSelf: 'center',
-                      color: '#1192d1',
-                      backgroundColor: 'white',
-                      padding: '2%',
-                      borderColor: '#1192d1',
-                      borderWidth: 0.6,
-                      borderRadius: 4,
-                    }}
-                    onPress={() => {
-                      this.props.loadMore();
-                    }}>
-                    Load More Posts
-                  </Text>
-                )}
-              </View> : null
-        }
-      </>
+            style={{
+              height: '100%',
+              flexDirection: 'row',
+              backgroundColor: '#f9fdfe',
+              // paddingHorizontal: 10,
+              flex: 1,
+            }}>
+            <SafeAreaView style={{flex: 1}}>
+              <FlatList
+                style={{marginLeft: 5, marginRight: 2.5}}
+                data={column1Data}
+                scrollEnabled={false}
+                showsVerticalScrollIndicator={false}
+                renderItem={({item}) => {
+                  return (
+                    <PostCard
+                      categoryName={item.postCategory.description}
+                      categoryColor={item.postCategory.rgba_colors}
+                      postId={item.id}
+                      comments={item.comments}
+                      userdp={item.users.profile_pic_url}
+                      description={item.description}
+                      first_name={item.users.first_name}
+                      last_name={item.users.last_name}
+                      userId={item.users.id}
+                      userWiseLike={item.userWiseLike}
+                      userSavedPost={item.userSavedPost}
+                      isFollowing={item.isFollowing}
+                      title={item.title}
+                      views={item.view_count}
+                      imageurl={
+                        item.postDetail.length > 0
+                          ? item.postDetail[0].image_url
+                          : 'https://travelog-pk.herokuapp.com/images/default.png'
+                      }>
+                      {' '}
+                    </PostCard>
+                  );
+                }}
+                keyExtractor={item => item.title}
+              />
+            </SafeAreaView>
+            <SafeAreaView style={{flex: 1}}>
+              <FlatList
+                style={{marginRight: 5, marginLeft: 2.5, paddingTop: 25}}
+                data={column2Data}
+                scrollEnabled={false}
+                showsVerticalScrollIndicator={false}
+                renderItem={({item}) => {
+                  return (
+                    <PostCard
+                      categoryName={item.postCategory.description}
+                      categoryColor={item.postCategory.rgba_colors}
+                      userdp={item.users.profile_pic_url}
+                      postId={item.id}
+                      comments={item.comments}
+                      description={item.description}
+                      first_name={item.users.first_name}
+                      last_name={item.users.last_name}
+                      userId={item.users.id}
+                      userWiseLike={item.userWiseLike}
+                      userSavedPost={item.userSavedPost}
+                      isFollowing={item.isFollowing}
+                      title={item.title}
+                      views={item.view_count}
+                      imageurl={
+                        item.postDetail.length > 0
+                          ? item.postDetail[0].image_url
+                          : 'https://travelog-pk.herokuapp.com/images/default.png'
+                      }>
+                      {' '}
+                    </PostCard>
+                  );
+                }}
+                keyExtractor={item => item.title}
+              />
+            </SafeAreaView>
+          </View>
+          {this.props.posts.length < this.props.totalPosts ? (
+            <View
+              style={{
+                backgroundColor: '#F0F0F0',
+                paddingTop: 10,
+                paddingBottom: 10,
+              }}>
+              {this.props.loadstate ? (
+                <ActivityIndicator size={40} color="#1192d1" />
+              ) : (
+                <Text
+                  style={{
+                    alignSelf: 'center',
+                    color: '#1192d1',
+                    backgroundColor: 'white',
+                    padding: '2%',
+                    borderColor: '#1192d1',
+                    borderWidth: 0.6,
+                    borderRadius: 4,
+                  }}
+                  onPress={() => {
+                    this.props.loadMore();
+                  }}>
+                  Load More Posts
+                </Text>
+              )}
+            </View>
+          ) : null}
+        </>
       );
     } else {
       return (
