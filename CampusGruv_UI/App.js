@@ -175,13 +175,13 @@ const ProfileStack = createStackNavigator(
   {
     navigationOptions: props => {
       return {
-        tabBarVisible:
-          props.navigation.state.routes[props.navigation.state.index]
-            .routeName === 'Followers' ||
-          props.navigation.state.routes[props.navigation.state.index]
-            .routeName === 'Following'
-            ? false
-            : true,
+        // tabBarVisible:
+        //   props.navigation.state.routes[props.navigation.state.index]
+        //     .routeName === 'Followers' ||
+        //   props.navigation.state.routes[props.navigation.state.index]
+        //     .routeName === 'Following'
+        //     ? false
+        //     : true,
       };
     },
     initialRouteName: 'UserProfile',

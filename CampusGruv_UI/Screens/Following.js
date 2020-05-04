@@ -182,14 +182,14 @@ class Following extends Component {
             borderColor: '#CCC',
             borderWidth: 1,
             borderRadius: 15,
-            height: 40,
+            height: 30,
             marginTop: 10,
           }}>
           <SearchIcon
             name="search"
             style={{
               alignSelf: 'center',
-              fontSize: 25,
+              fontSize: 20,
               color: '#d3e0d7',
               paddingLeft: '2%',
             }}
@@ -242,7 +242,8 @@ export default withNavigation(
 
 const styles = StyleSheet.create({
   searchInput: {
-    padding: 10,
+    paddingTop: 0,
+    paddingBottom: 0,
     width: 250,
   },
 });

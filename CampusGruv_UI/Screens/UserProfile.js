@@ -852,7 +852,7 @@ class UserProfile extends React.Component {
             <Icon
               name="search"
               color="#C4C4C4"
-              size={20}
+              size={18}
               style={{paddingLeft: Platform.OS == 'ios' ? 5 : 3}}
             />
             <TextInput
@@ -860,9 +860,10 @@ class UserProfile extends React.Component {
                 width: '100%',
                 fontSize: 15,
                 color: '#ACACAC',
-                //SpaddingTop: 0,
+                paddingTop: 0,
+                paddingBottom: 0,
                 paddingLeft: Platform.OS == 'ios' ? 5 : 3,
-                height: Platform.OS == 'ios' ? 40 : 30,
+                height: Platform.OS == 'ios' ? 40 : 35,
               }}
               placeholder="Search"
               value={this.state.searchbox}
