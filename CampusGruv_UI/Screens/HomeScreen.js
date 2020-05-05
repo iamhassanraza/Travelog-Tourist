@@ -18,7 +18,6 @@ import {
 import Logo from '../Assets/Images/logo.png';
 import PostCard from '../Components/PostCard';
 import CrossIcon from 'react-native-vector-icons/Entypo';
-import ContentLoader, {Rect} from 'react-content-loader/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
 import Icon3 from 'react-native-vector-icons/Feather';
@@ -31,7 +30,17 @@ import MyHeader from '../Components/MyHeader';
 import io from 'socket.io-client';
 import {connect} from 'react-redux';
 import {connectSocket} from '../ReduxStore/Actions/index';
-
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from 'react-native-indicators';
 import NoCategory from '../Assets/Images/NoCategory.png';
 import NoFollower from '../Assets/Images/NoFollower.png';
 import SearchIcon from '../Assets/Images/SearchIcon.png';
@@ -618,22 +627,23 @@ class HomeScreen extends PureComponent {
       );
     } else {
       return (
-        <View style={{}}>
-          <ContentLoader
-            height={450}
-            //width={820}
-            speed={0.2}
-            height={Dimensions.get('window').height * 1}>
-            <Rect x="10" y="10" rx="5" ry="5" width="160" height="200" />
-            <Rect x="190" y="35" rx="5" ry="5" width="160" height="200" />
-            <Rect x="10" y="220" rx="5" ry="5" width="160" height="200" />
-            <Rect x="190" y="245" rx="5" ry="5" width="160" height="200" />
-            <Rect x="10" y="430" rx="5" ry="5" width="160" height="200" />
-            <Rect x="190" y="455" rx="5" ry="5" width="160" height="200" />
-            <Rect x="10" y="640" rx="5" ry="5" width="160" height="200" />
-            <Rect x="190" y="665" rx="5" ry="5" width="160" height="200" />
-          </ContentLoader>
-        </View>
+        <UIActivityIndicator color={ThemeBlue} />
+        // <View style={{}}>
+        //   <ContentLoader
+        //     height={450}
+        //     //width={820}
+        //     speed={0.2}
+        //     height={Dimensions.get('window').height * 1}>
+        //     <Rect x="10" y="10" rx="5" ry="5" width="160" height="200" />
+        //     <Rect x="190" y="35" rx="5" ry="5" width="160" height="200" />
+        //     <Rect x="10" y="220" rx="5" ry="5" width="160" height="200" />
+        //     <Rect x="190" y="245" rx="5" ry="5" width="160" height="200" />
+        //     <Rect x="10" y="430" rx="5" ry="5" width="160" height="200" />
+        //     <Rect x="190" y="455" rx="5" ry="5" width="160" height="200" />
+        //     <Rect x="10" y="640" rx="5" ry="5" width="160" height="200" />
+        //     <Rect x="190" y="665" rx="5" ry="5" width="160" height="200" />
+        //   </ContentLoader>
+        // </View>
       );
     }
   }

@@ -18,7 +18,6 @@ import {
 import Logo from '../Assets/Images/logo.png';
 import PostCard from '../Components/PostCard';
 import CrossIcon from 'react-native-vector-icons/Entypo';
-import ContentLoader, {Rect} from 'react-content-loader/native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
 import PeopleIcon from 'react-native-vector-icons/FontAwesome5';
@@ -27,7 +26,17 @@ import NoPosts from '../Components/NoPost';
 import {ThemeBlue} from '../Assets/Colors';
 import {Header} from 'react-native-elements';
 import MyHeader from '../Components/MyHeader';
-
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from 'react-native-indicators';
 import NoCategory from '../Assets/Images/NoCategory.png';
 import NoFollower from '../Assets/Images/NoFollower.png';
 import SearchIcon from '../Assets/Images/SearchIcon.png';
@@ -397,20 +406,7 @@ export default class FolllowersPosts extends PureComponent {
         </View>
       );
     } else {
-      return (
-        <View>
-          <ContentLoader height={800} width={820} speed={0.2}>
-            <Rect x="10" y="10" rx="5" ry="5" width="160" height="200" />
-            <Rect x="190" y="35" rx="5" ry="5" width="160" height="200" />
-            <Rect x="10" y="220" rx="5" ry="5" width="160" height="200" />
-            <Rect x="190" y="245" rx="5" ry="5" width="160" height="200" />
-            <Rect x="10" y="430" rx="5" ry="5" width="160" height="200" />
-            <Rect x="190" y="455" rx="5" ry="5" width="160" height="200" />
-            <Rect x="10" y="640" rx="5" ry="5" width="160" height="200" />
-            <Rect x="190" y="665" rx="5" ry="5" width="160" height="200" />
-          </ContentLoader>
-        </View>
-      );
+      return <UIActivityIndicator color={ThemeBlue} />;
     }
   }
 }

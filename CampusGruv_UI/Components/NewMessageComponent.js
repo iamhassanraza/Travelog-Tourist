@@ -9,7 +9,6 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
-import ContentLoader, {Rect} from 'react-content-loader/native';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 
 // import {withNavigation} from 'react-navigation';
@@ -78,7 +77,8 @@ class NewMessageComponent extends Component {
                   height: 40,
                   width: 40,
                   borderRadius: 50,
-                }}></Image>
+                }}
+              />
               <Text
                 style={{
                   fontSize: 18,

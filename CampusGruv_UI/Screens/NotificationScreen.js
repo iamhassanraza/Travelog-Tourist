@@ -12,7 +12,6 @@ import {
 import NoticationComponent from '../Components/NoticationComponent';
 import {Header} from 'react-native-elements';
 import {FlatList} from 'react-native-gesture-handler';
-import ContentLoader, {Rect, Circle} from 'react-content-loader/native';
 import {connect} from 'react-redux';
 import mystore from '../index';
 import {clearNoti} from '../ReduxStore/Actions/index';

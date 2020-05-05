@@ -12,9 +12,10 @@ import {
 import {Content, Container} from 'native-base';
 import {SearchBar} from 'react-native-elements';
 import AvatarUserStatus from '../Components/AvatarUserStatus';
-import ContentLoader, {Rect} from 'react-content-loader/native';
 import NewMessageComponent from '../Components/NewMessageComponent';
 import {connect} from 'react-redux';
+import {UIActivityIndicator} from 'react-native-indicators';
+import {ThemeBlue} from '../Assets/Colors';
 
 class SelectNewChat extends Component {
   constructor(props) {
@@ -101,23 +102,7 @@ class SelectNewChat extends Component {
               />
             </ScrollView>
           ) : (
-            <View>
-              <ContentLoader
-                height={450}
-                speed={0.2}
-                height={Dimensions.get('window').height * 1}>
-                <Rect x="10" y="10" rx="5" ry="5" width="85%" height="45" />
-                <Rect x="10" y="60" rx="5" ry="5" width="85%" height="45" />
-                <Rect x="10" y="110" rx="5" ry="5" width="85%" height="45" />
-                <Rect x="10" y="160" rx="5" ry="5" width="85%" height="45" />
-                <Rect x="10" y="210" rx="5" ry="5" width="85%" height="45" />
-                <Rect x="10" y="260" rx="5" ry="5" width="85%" height="45" />
-                <Rect x="10" y="310" rx="5" ry="5" width="85%" height="45" />
-                <Rect x="10" y="360" rx="5" ry="5" width="85%" height="45" />
-                {/* <Rect x="280" y="300" rx="5" ry="5" width="260" height="140" />
-                    <Rect x="550" y="160" rx="5" ry="5" width="260" height="280" /> */}
-              </ContentLoader>
-            </View>
+            <UIActivityIndicator color={ThemeBlue} />
           )}
         </Content>
       </Container>
