@@ -16,6 +16,7 @@ class MainTabNavigation extends React.Component {
   state = {
     unread: false,
     statusBarColor: ThemeBlue,
+    contentType: 'light-content',
   };
 
   async componentDidMount() {
@@ -47,8 +48,8 @@ class MainTabNavigation extends React.Component {
     });
   }
 
-  changeStatusBar = color => {
-    this.setState({statusBarColor: color});
+  changeStatusBar = obj => {
+    this.setState({statusBarColor: obj.color, contentType: obj.contentType});
   };
 
   render() {
@@ -60,7 +61,7 @@ class MainTabNavigation extends React.Component {
               height: getStatusBarHeight(),
               backgroundColor: this.state.statusBarColor,
             }}>
-            <StatusBar translucent={true} barStyle="light-content" />
+            <StatusBar translucent={true} barStyle={this.state.contentType} />
           </View>
         ) : null}
         <TabContainer

@@ -90,12 +90,27 @@ class PostDetail extends Component {
   };
 
   componentDidMount() {
-    this.props.screenProps.changeStatusBar('white');
+    const {navigation} = this.props;
+    this.willFocusListener = navigation.addListener('willFocus', async () => {
+      this.props.screenProps.changeStatusBar({
+        color: 'white',
+        contentType: 'default',
+      });
+    });
+
+    this.willBlurListener = navigation.addListener('willBlur', async () => {
+      this.props.screenProps.changeStatusBar({
+        color: ThemeBlue,
+        contentType: 'light-content',
+      });
+    });
+
     this.incrementView();
   }
 
   componentWillUnmount() {
-    this.props.screenProps.changeStatusBar(ThemeBlue);
+    this.willFocusListener.remove();
+    this.willBlurListener.remove();
   }
 
   incrementView = async () => {
@@ -728,7 +743,7 @@ class PostDetail extends Component {
     );
     return (
       <>
-        {Platform.OS === 'ios' ? <StatusBar barStyle="default" /> : null}
+        {/* {Platform.OS === 'ios' ? <StatusBar barStyle="default" /> : null} */}
         <Container style={{}}>
           {/* {Platform.OS === 'ios' ? <StatusBar barStyle="dark-content" /> : null} */}
           <Content
