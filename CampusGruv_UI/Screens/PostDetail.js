@@ -209,7 +209,7 @@ class PostDetail extends Component {
               })
             }>
             <Image
-              source={!userdp || userdp !== '' ? defaultAvatar : {uri: userdp}}
+              source={!userdp || userdp === '' ? defaultAvatar : {uri: userdp}}
               style={{width: 40, height: 40, borderRadius: 50}}
             />
             <Text style={{marginLeft: '7%', color: IconGrey}}>
@@ -402,7 +402,7 @@ class PostDetail extends Component {
         <Image
           source={{uri: image}}
           //resizeMode="center"
-          style={{width: '100%', height: 350}}
+          style={{width: '100%', height: Dimensions.get('window').height / 2}}
         />
       </View>
     );

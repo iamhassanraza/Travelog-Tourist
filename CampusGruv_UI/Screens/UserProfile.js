@@ -591,8 +591,8 @@ class UserProfile extends React.Component {
               height: 80,
               borderRadius: 50,
               elevation: 3,
-              shadowOffset: {width: 5, height: 5},
-              shadowColor: 'red',
+              shadowOffset: {width: 1, height: 2},
+              shadowColor: 'rgba(0, 0, 0, 0.1)',
               shadowOpacity: 0.5,
             }}
           />
@@ -762,7 +762,7 @@ class UserProfile extends React.Component {
                       paddingTop: 5,
                       fontSize: 20,
                       fontWeight: 'bold',
-                      borderTopWidth: 2,
+                      borderTopWidth: 3,
                       borderTopColor: 'rgba(196,196,196,0.5)',
                       // borderTopColor: IconGrey,
                     }}>
