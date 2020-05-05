@@ -12,6 +12,7 @@ import {
   Platform,
   TextInput,
   ScrollView,
+  StatusBar,
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import HeaderTitle from './Heading';
@@ -134,175 +135,180 @@ class Login extends React.Component {
 
   render() {
     return (
-      <ScrollView>
-        <ImageBackground
-          style={styles.container}
-          source={require('../Assets/Images/background.png')}
-          resizeMode="cover">
-          <View
-            style={{
-              width: screenwidth,
-              height: screenheight,
-              justifyContent: 'space-between',
-            }}>
-            <KeyboardAvoidingView behavior="padding" enabled>
-              {/* MAIN TITLE */}
-              <View
-                style={{
-                  justifyContent: 'center',
-                  marginTop: Platform.OS === 'ios' ? 30 : 0,
-                  height: '30%',
-                }}>
-                <HeaderTitle />
-              </View>
-
-              <View style={{marginTop: Platform.OS === 'ios' ? 30 : 0}}>
-                {/* EMAIL FIELD */}
+      <>
+        {Platform.OS === 'ios' ? (
+          <StatusBar translucent={true} barStyle="light-content" />
+        ) : null}
+        <ScrollView>
+          <ImageBackground
+            style={styles.container}
+            source={require('../Assets/Images/background.png')}
+            resizeMode="cover">
+            <View
+              style={{
+                width: screenwidth,
+                height: screenheight,
+                justifyContent: 'space-between',
+              }}>
+              <KeyboardAvoidingView behavior="padding" enabled>
+                {/* MAIN TITLE */}
                 <View
                   style={{
-                    width: '90%',
-                    marginLeft: '5%',
-                    //marginTop: -30,
-                    borderColor: '#C4C4C4',
-                    backgroundColor: 'white',
-                    borderWidth: 0.5,
-                    borderRadius: 10,
+                    justifyContent: 'center',
+                    marginTop: Platform.OS === 'ios' ? 30 : 0,
+                    height: '30%',
                   }}>
-                  <TextInput
+                  <HeaderTitle />
+                </View>
+
+                <View style={{marginTop: Platform.OS === 'ios' ? 30 : 0}}>
+                  {/* EMAIL FIELD */}
+                  <View
+                    style={{
+                      width: '90%',
+                      marginLeft: '5%',
+                      //marginTop: -30,
+                      borderColor: '#C4C4C4',
+                      backgroundColor: 'white',
+                      borderWidth: 0.5,
+                      borderRadius: 10,
+                    }}>
+                    <TextInput
+                      style={{
+                        width: '90%',
+                        height: Platform.OS == 'ios' ? 40 : 50,
+                        marginLeft: 10,
+                        fontSize: 20,
+                        color: '#ACACAC',
+                      }}
+                      placeholder="Email"
+                      value={this.state.email}
+                      onChangeText={email => this.setState({email})}
+                      keyboardType="email-address"
+                    />
+                  </View>
+                  {/* EMAIL ERROR TEXT */}
+                  {this.state.emailError ? (
+                    <Text style={{color: 'red', fontSize: 13, marginLeft: 20}}>
+                      Invalid email address
+                    </Text>
+                  ) : null}
+
+                  {/* PASSWORD FIELD */}
+                  <View
                     style={{
                       width: '90%',
                       height: Platform.OS == 'ios' ? 40 : 50,
-                      marginLeft: 10,
-                      fontSize: 20,
-                      color: '#ACACAC',
-                    }}
-                    placeholder="Email"
-                    value={this.state.email}
-                    onChangeText={email => this.setState({email})}
-                    keyboardType="email-address"
-                  />
-                </View>
-                {/* EMAIL ERROR TEXT */}
-                {this.state.emailError ? (
-                  <Text style={{color: 'red', fontSize: 13, marginLeft: 20}}>
-                    Invalid email address
-                  </Text>
-                ) : null}
-
-                {/* PASSWORD FIELD */}
-                <View
-                  style={{
-                    width: '90%',
-                    height: Platform.OS == 'ios' ? 40 : 50,
-                    marginLeft: '5%',
-                    marginTop: 20,
-                    borderColor: '#C4C4C4',
-                    backgroundColor: 'white',
-                    borderWidth: 0.5,
-                    borderRadius: 10,
-                  }}>
-                  <TextInput
-                    style={{
-                      width: '90%',
-                      height: Platform.OS == 'ios' ? 40 : 50,
-                      marginLeft: 10,
-                      fontSize: 20,
-                      color: '#ACACAC',
-                    }}
-                    placeholder="Password"
-                    value={this.state.password}
-                    onChangeText={password => this.setState({password})}
-                    secureTextEntry
-                  />
-                </View>
-                {/* PASSWORD ERROR TEXT */}
-                {this.state.passwordError ? (
-                  <Text style={{color: 'red', fontSize: 13, marginLeft: 20}}>
-                    Minimum 8 characters required
-                  </Text>
-                ) : null}
-                {/* LOG IN BUTTON */}
-                <View style={styles.butt}>
-                  <TouchableOpacity onPress={this.submitForm}>
-                    {this.state.Spinner ? (
-                      <View
-                        style={{
-                          flexDirection: 'row',
-                          justifyContent: 'center',
-                        }}>
+                      marginLeft: '5%',
+                      marginTop: 20,
+                      borderColor: '#C4C4C4',
+                      backgroundColor: 'white',
+                      borderWidth: 0.5,
+                      borderRadius: 10,
+                    }}>
+                    <TextInput
+                      style={{
+                        width: '90%',
+                        height: Platform.OS == 'ios' ? 40 : 50,
+                        marginLeft: 10,
+                        fontSize: 20,
+                        color: '#ACACAC',
+                      }}
+                      placeholder="Password"
+                      value={this.state.password}
+                      onChangeText={password => this.setState({password})}
+                      secureTextEntry
+                    />
+                  </View>
+                  {/* PASSWORD ERROR TEXT */}
+                  {this.state.passwordError ? (
+                    <Text style={{color: 'red', fontSize: 13, marginLeft: 20}}>
+                      Minimum 8 characters required
+                    </Text>
+                  ) : null}
+                  {/* LOG IN BUTTON */}
+                  <View style={styles.butt}>
+                    <TouchableOpacity onPress={this.submitForm}>
+                      {this.state.Spinner ? (
+                        <View
+                          style={{
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              color: 'white',
+                              fontWeight: 'bold',
+                              fontSize: 18,
+                            }}>
+                            Loading{' '}
+                          </Text>
+                          <BarIndicator
+                            style={{flex: 0}}
+                            count={3}
+                            size={20}
+                            color={'white'}
+                          />
+                        </View>
+                      ) : (
                         <Text
                           style={{
-                            color: 'white',
+                            fontSize: 16,
                             fontWeight: 'bold',
-                            fontSize: 18,
+                            textAlign: 'center',
+                            color: 'white',
                           }}>
-                          Loading{' '}
+                          Log in
                         </Text>
-                        <BarIndicator
-                          style={{flex: 0}}
-                          count={3}
-                          size={20}
-                          color={'white'}
-                        />
-                      </View>
-                    ) : (
-                      <Text
-                        style={{
-                          fontSize: 16,
-                          fontWeight: 'bold',
-                          textAlign: 'center',
-                          color: 'white',
-                        }}>
-                        Log in
-                      </Text>
-                    )}
-                  </TouchableOpacity>
-                </View>
-                <Text
-                  style={{
-                    color: 'white',
-                    textAlign: 'center',
-                    fontSize: 18,
-                    marginTop: Platform.OS === 'ios' ? 20 : 15,
-                  }}
-                  onPress={() => {
-                    this.props.navigation.navigate('ForgotPassword');
-                  }}>
-                  Forgot your login details ?
-                </Text>
-              </View>
-
-              {/* SIGN UP NAVIGATION */}
-              <View>
-                <View
-                  style={{marginTop: Platform.OS === 'ios' ? '30%' : '15%'}}>
+                      )}
+                    </TouchableOpacity>
+                  </View>
                   <Text
                     style={{
                       color: 'white',
                       textAlign: 'center',
                       fontSize: 18,
-                    }}>
-                    Don't have an account ?
-                  </Text>
-                  <Text
-                    style={{
-                      color: 'white',
-                      textAlign: 'center',
-                      fontSize: 18,
-                      marginTop: 10,
-                      fontWeight: 'bold',
+                      marginTop: Platform.OS === 'ios' ? 20 : 15,
                     }}
                     onPress={() => {
-                      this.props.navigation.navigate('SignUp');
+                      this.props.navigation.navigate('ForgotPassword');
                     }}>
-                    Sign Up
+                    Forgot your login details ?
                   </Text>
                 </View>
-              </View>
-            </KeyboardAvoidingView>
-          </View>
-        </ImageBackground>
-      </ScrollView>
+
+                {/* SIGN UP NAVIGATION */}
+                <View>
+                  <View
+                    style={{marginTop: Platform.OS === 'ios' ? '30%' : '15%'}}>
+                    <Text
+                      style={{
+                        color: 'white',
+                        textAlign: 'center',
+                        fontSize: 18,
+                      }}>
+                      Don't have an account ?
+                    </Text>
+                    <Text
+                      style={{
+                        color: 'white',
+                        textAlign: 'center',
+                        fontSize: 18,
+                        marginTop: 10,
+                        fontWeight: 'bold',
+                      }}
+                      onPress={() => {
+                        this.props.navigation.navigate('SignUp');
+                      }}>
+                      Sign Up
+                    </Text>
+                  </View>
+                </View>
+              </KeyboardAvoidingView>
+            </View>
+          </ImageBackground>
+        </ScrollView>
+      </>
     );
   }
 }

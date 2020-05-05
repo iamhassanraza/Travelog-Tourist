@@ -11,6 +11,7 @@ import {
   Platform,
   TextInput,
   AsyncStorage,
+  StatusBar,
 } from 'react-native';
 import HeaderTitle from './Heading';
 import Colors from '../Assets/Colors';
@@ -131,8 +132,8 @@ class Signup extends React.Component {
         }),
         headers: {'Content-Type': 'application/json'},
       })
-        .then((res) => res.json())
-        .then((response) => {
+        .then(res => res.json())
+        .then(response => {
           console.log('=====>>>', response);
 
           if (response) {
@@ -155,11 +156,11 @@ class Signup extends React.Component {
                   password: this.state.password,
                 }),
               })
-                .then((res) => {
+                .then(res => {
                   status = res.status;
                   return res.json();
                 })
-                .then(async (response) => {
+                .then(async response => {
                   if (status === 200) {
                     //good to go
                     // console.log(response,'============respines e =============')
@@ -188,7 +189,7 @@ class Signup extends React.Component {
                     alert(response.message.split(':')[1]);
                   }
                 })
-                .catch((error) => {
+                .catch(error => {
                   console.log(error);
                 });
 
@@ -200,7 +201,7 @@ class Signup extends React.Component {
             }
           }
         })
-        .catch((error) => {
+        .catch(error => {
           console.log(error);
         });
     }
@@ -210,6 +211,9 @@ class Signup extends React.Component {
     // const { navigate } = this.props.navigation;
     return (
       <Container style={{height: '100%'}}>
+        {Platform.OS === 'ios' ? (
+          <StatusBar translucent={true} barStyle="light-content" />
+        ) : null}
         <ImageBackground
           style={styles.container}
           source={require('../Assets/Images/background.png')}
@@ -255,7 +259,7 @@ class Signup extends React.Component {
                   }}
                   placeholder="First name"
                   value={this.state.first_name}
-                  onChangeText={(first_name) => this.setState({first_name})}
+                  onChangeText={first_name => this.setState({first_name})}
                 />
               </View>
               {/* First name ERROR TEXT */}
@@ -286,7 +290,7 @@ class Signup extends React.Component {
                   }}
                   placeholder="Last name"
                   value={this.state.last_name}
-                  onChangeText={(last_name) => this.setState({last_name})}
+                  onChangeText={last_name => this.setState({last_name})}
                 />
               </View>
               {/* Last name ERROR TEXT */}
@@ -316,7 +320,7 @@ class Signup extends React.Component {
                   }}
                   placeholder="Email"
                   value={this.state.email}
-                  onChangeText={(email) => this.setState({email})}
+                  onChangeText={email => this.setState({email})}
                   keyboardType="email-address"
                 />
               </View>
@@ -347,7 +351,7 @@ class Signup extends React.Component {
                   }}
                   placeholder="Password"
                   value={this.state.password}
-                  onChangeText={(password) => this.setState({password})}
+                  onChangeText={password => this.setState({password})}
                   secureTextEntry
                 />
               </View>
@@ -454,4 +458,7 @@ const styles = StyleSheet.create({
   },
 });
 
-export default connect(null, {CreateUserDetails})(Signup);
+export default connect(
+  null,
+  {CreateUserDetails},
+)(Signup);

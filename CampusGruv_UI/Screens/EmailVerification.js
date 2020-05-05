@@ -13,6 +13,7 @@ import {
   KeyboardAvoidingView,
   AsyncStorage,
   SafeAreaView,
+  StatusBar,
 } from 'react-native';
 import {BarIndicator} from 'react-native-indicators';
 import HeaderTitle from './Heading';
@@ -65,143 +66,147 @@ class EmailVerification extends React.Component {
 
   render() {
     return (
-      // <SafeAreaView style={{flex: 1}}>
+      <>
+        {Platform.OS === 'ios' ? (
+          <StatusBar translucent={true} barStyle="light-content" />
+        ) : null}
         <ImageBackground
-        style={styles.container}
-        source={require('../Assets/Images/background.png')}
-        resizeMode="cover">
-        <ScrollView style={{flex: 1}}>
-          <KeyboardAvoidingView positon="padding">
-            <View style={{flex: 0.5, marginTop: 50}}>
-              <HeaderTitle />
-            </View>
-
-            <View style={{flex: 1.5}}>
-              <Text
-                style={{
-                  width: '95%',
-                  marginLeft: '2.5%',
-                  textAlign: 'center',
-                  color: 'white',
-                  fontSize: 15,
-                  marginBottom: 10,
-                }}>
-                {' '}
-                A code has been sent to email{' '}
-                {this.props.navigation.getParam('email', 'no email')} ,kindly
-                check your email and enter the code below.
-              </Text>
-              <Text
-                style={{
-                  width: '95%',
-                  marginLeft: '2.5%',
-                  textAlign: 'center',
-                  color: 'white',
-                  fontSize: 25,
-                }}>
-                Enter Code
-              </Text>
-
-              <View
-                style={{
-                  width: '90%',
-                  marginLeft: '5%',
-                  marginTop: 10,
-                  borderColor: '#C4C4C4',
-                  backgroundColor: 'white',
-                  borderWidth: 0.5,
-                  borderRadius: 10,
-                }}>
-                <TextInput
-                  autoCapitalize="none"
-                  style={{
-                    width: '90%',
-                    fontSize: 20,
-                    color: '#ACACAC',
-                    paddingLeft: '30%',
-                    height: Platform.OS == 'ios' ? 40 : 50,
-                  }}
-                  onChangeText={(text) => this.setState({code: text})}
-                  value={this.state.code}
-                />
+          style={styles.container}
+          source={require('../Assets/Images/background.png')}
+          resizeMode="cover">
+          <ScrollView style={{flex: 1}}>
+            <KeyboardAvoidingView positon="padding">
+              <View style={{flex: 0.5, marginTop: 50}}>
+                <HeaderTitle />
               </View>
 
-              <TouchableOpacity onPress={() => this.checkOTP()}>
-                <View style={{marginBottom: 10}}>
-                  {this.state.spinner ? (
-                    <View
-                      style={{
-                        height: 40,
-                        width: '50%',
-                        marginLeft: '25%',
-                        borderRadius: 10,
-                        marginTop: 40,
-                        justifyContent: 'center',
-                        backgroundColor: 'transparent',
-                        borderColor: 'white',
-                        borderWidth: 0.6,
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                      }}>
-                      <Text
-                        style={{
-                          fontSize: 16,
-                          fontWeight: 'bold',
-                          textAlign: 'center',
-                          color: 'white',
-                        }}>
-                        Loading{' '}
-                      </Text>
-                      <BarIndicator
-                        style={{flex: 0}}
-                        count={3}
-                        size={20}
-                        color={'white'}
-                      />
-                    </View>
-                  ) : (
-                    <View
-                      style={{
-                        height: 40,
-                        width: '50%',
-                        marginLeft: '25%',
-                        borderRadius: 10,
-                        marginTop: 40,
-                        justifyContent: 'center',
-                        backgroundColor: 'transparent',
-                        borderColor: 'white',
-                        borderWidth: 0.6,
-                      }}>
-                      <Text
-                        style={{
-                          fontSize: 16,
-                          fontWeight: 'bold',
-                          textAlign: 'center',
-                          color: 'white',
-                        }}>
-                        Continue
-                      </Text>
-                    </View>
-                  )}
+              <View style={{flex: 1.5}}>
+                <Text
+                  style={{
+                    width: '95%',
+                    marginLeft: '2.5%',
+                    textAlign: 'center',
+                    color: 'white',
+                    fontSize: 15,
+                    marginBottom: 10,
+                  }}>
+                  {' '}
+                  A code has been sent to email{' '}
+                  {this.props.navigation.getParam('email', 'no email')} ,kindly
+                  check your email and enter the code below.
+                </Text>
+                <Text
+                  style={{
+                    width: '95%',
+                    marginLeft: '2.5%',
+                    textAlign: 'center',
+                    color: 'white',
+                    fontSize: 25,
+                  }}>
+                  Enter Code
+                </Text>
+
+                <View
+                  style={{
+                    width: '90%',
+                    marginLeft: '5%',
+                    marginTop: 10,
+                    borderColor: '#C4C4C4',
+                    backgroundColor: 'white',
+                    borderWidth: 0.5,
+                    borderRadius: 10,
+                  }}>
+                  <TextInput
+                    autoCapitalize="none"
+                    style={{
+                      width: '90%',
+                      fontSize: 20,
+                      color: '#ACACAC',
+                      paddingLeft: '30%',
+                      height: Platform.OS == 'ios' ? 40 : 50,
+                    }}
+                    onChangeText={text => this.setState({code: text})}
+                    value={this.state.code}
+                  />
                 </View>
-              </TouchableOpacity>
-            </View>
-          </KeyboardAvoidingView>
-        </ScrollView>
-        <LogoutButton
-          style={{
-            // marginBottom: 20
-            // alignSelf: 'center',
-            // position: 'absolute',
-            // bottom: 50,
-            paddingLeft: 5,
-            fontSize: 18,
-            color: 'white',
-            fontWeight: 'bold',
-          }}></LogoutButton>
-      </ImageBackground>
-      // </SafeAreaView>
+
+                <TouchableOpacity onPress={() => this.checkOTP()}>
+                  <View style={{marginBottom: 10}}>
+                    {this.state.spinner ? (
+                      <View
+                        style={{
+                          height: 40,
+                          width: '50%',
+                          marginLeft: '25%',
+                          borderRadius: 10,
+                          marginTop: 40,
+                          justifyContent: 'center',
+                          backgroundColor: 'transparent',
+                          borderColor: 'white',
+                          borderWidth: 0.6,
+                          flexDirection: 'row',
+                          justifyContent: 'center',
+                          alignItems: 'center',
+                        }}>
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                            color: 'white',
+                          }}>
+                          Loading{' '}
+                        </Text>
+                        <BarIndicator
+                          style={{flex: 0}}
+                          count={3}
+                          size={20}
+                          color={'white'}
+                        />
+                      </View>
+                    ) : (
+                      <View
+                        style={{
+                          height: 40,
+                          width: '50%',
+                          marginLeft: '25%',
+                          borderRadius: 10,
+                          marginTop: 40,
+                          justifyContent: 'center',
+                          backgroundColor: 'transparent',
+                          borderColor: 'white',
+                          borderWidth: 0.6,
+                        }}>
+                        <Text
+                          style={{
+                            fontSize: 16,
+                            fontWeight: 'bold',
+                            textAlign: 'center',
+                            color: 'white',
+                          }}>
+                          Continue
+                        </Text>
+                      </View>
+                    )}
+                  </View>
+                </TouchableOpacity>
+              </View>
+            </KeyboardAvoidingView>
+          </ScrollView>
+          <LogoutButton
+            style={{
+              // marginBottom: 20
+              // alignSelf: 'center',
+              // position: 'absolute',
+              // bottom: 50,
+              paddingLeft: 5,
+              fontSize: 18,
+              color: 'white',
+              fontWeight: 'bold',
+            }}
+          />
+        </ImageBackground>
+      </>
     );
   }
 }

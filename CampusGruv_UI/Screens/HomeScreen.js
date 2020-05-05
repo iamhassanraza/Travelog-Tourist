@@ -28,6 +28,8 @@ import {ThemeBlue} from '../Assets/Colors';
 import {Header} from 'react-native-elements';
 import MyHeader from '../Components/MyHeader';
 import io from 'socket.io-client';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
+
 import {connect} from 'react-redux';
 import {connectSocket} from '../ReduxStore/Actions/index';
 import {
@@ -488,21 +490,57 @@ class HomeScreen extends PureComponent {
     const catid = this.props.navigation.getParam('CategoryID', 'undefined');
     if (this.state.total > 0) {
       return (
-        <React.Fragment>
-          {/* <View style={{height: 60 }}>
+        <>
+          <React.Fragment>
+            {/* <View style={{height: 60 }}>
             <Button title={'Cencel filter'} onPress={()=>{ this.props.navigation.setParams({CategoryID:'undefined'})}}></Button>
           </View> */}
-          {this.props.navigation.getParam('CategoryID', 'undefined') ===
-          'undefined' ? (
-            this.state.FollowersPosts ? (
+            {this.props.navigation.getParam('CategoryID', 'undefined') ===
+            'undefined' ? (
+              this.state.FollowersPosts ? (
+                <View style={{backgroundColor: '#f9fdfe'}}>
+                  <Text
+                    onPress={async () => {
+                      await this.setState({
+                        posts: [],
+                        pageNo: 1,
+                        total: undefined,
+                        FollowersPosts: false,
+                      });
+                      this.fetchdata();
+                    }}
+                    style={{
+                      margin: 6,
+                      padding: 2,
+                      paddingLeft: 5,
+                      borderWidth: 1,
+                      borderColor: ThemeBlue,
+                      borderRadius: 6,
+                      fontWeight: 'bold',
+                      alignSelf: 'flex-end',
+                      fontSize: 15,
+                      color: ThemeBlue,
+                    }}>
+                    Clear Followers Post{' '}
+                    <CrossIcon
+                      name="circle-with-cross"
+                      size={15}
+                      style={{
+                        borderWidth: 1,
+                        alignSelf: 'center',
+                        color: ThemeBlue,
+                      }}
+                    />
+                  </Text>
+                </View>
+              ) : null
+            ) : (
               <View style={{backgroundColor: '#f9fdfe'}}>
                 <Text
                   onPress={async () => {
-                    await this.setState({
-                      posts: [],
-                      pageNo: 1,
-                      total: undefined,
-                      FollowersPosts: false,
+                    await this.setState({posts: [], total: undefined});
+                    await this.props.navigation.setParams({
+                      CategoryID: 'undefined',
                     });
                     this.fetchdata();
                   }}
@@ -518,7 +556,7 @@ class HomeScreen extends PureComponent {
                     fontSize: 15,
                     color: ThemeBlue,
                   }}>
-                  Clear Followers Post{' '}
+                  Clear Filter{' '}
                   <CrossIcon
                     name="circle-with-cross"
                     size={15}
@@ -530,58 +568,23 @@ class HomeScreen extends PureComponent {
                   />
                 </Text>
               </View>
-            ) : null
-          ) : (
-            <View style={{backgroundColor: '#f9fdfe'}}>
-              <Text
-                onPress={async () => {
-                  await this.setState({posts: [], total: undefined});
-                  await this.props.navigation.setParams({
-                    CategoryID: 'undefined',
-                  });
-                  this.fetchdata();
-                }}
-                style={{
-                  margin: 6,
-                  padding: 2,
-                  paddingLeft: 5,
-                  borderWidth: 1,
-                  borderColor: ThemeBlue,
-                  borderRadius: 6,
-                  fontWeight: 'bold',
-                  alignSelf: 'flex-end',
-                  fontSize: 15,
-                  color: ThemeBlue,
-                }}>
-                Clear Filter{' '}
-                <CrossIcon
-                  name="circle-with-cross"
-                  size={15}
-                  style={{
-                    borderWidth: 1,
-                    alignSelf: 'center',
-                    color: ThemeBlue,
-                  }}
-                />
-              </Text>
-            </View>
-          )}
+            )}
 
-          <ScrollView
-            refreshControl={
-              <RefreshControl
-                refreshing={this.state.refreshing}
-                onRefresh={this.onPageRefresh}
-              />
-            }>
-            <View style={{flex: 1}}>
-              <RenderCards
-                posts={this.state.posts}
-                totalPosts={this.state.total}
-                loadMore={this.loadmore}
-                loadstate={this.state.loadmore}
-              />
-              {/* <View
+            <ScrollView
+              refreshControl={
+                <RefreshControl
+                  refreshing={this.state.refreshing}
+                  onRefresh={this.onPageRefresh}
+                />
+              }>
+              <View style={{flex: 1}}>
+                <RenderCards
+                  posts={this.state.posts}
+                  totalPosts={this.state.total}
+                  loadMore={this.loadmore}
+                  loadstate={this.state.loadmore}
+                />
+                {/* <View
                 style={{
                   backgroundColor: '#F0F0F0',
                   paddingTop: 10,
@@ -610,9 +613,10 @@ class HomeScreen extends PureComponent {
                   // </Text>
                 )}
               </View> */}
-            </View>
-          </ScrollView>
-        </React.Fragment>
+              </View>
+            </ScrollView>
+          </React.Fragment>
+        </>
       );
     } else if (this.state.total === 0) {
       return (

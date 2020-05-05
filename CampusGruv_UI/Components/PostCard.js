@@ -115,7 +115,7 @@ class PostCard extends Component {
               flexDirection: 'row',
             }}>
             <View style={{paddingVertical: 5}}>
-              <Text style={{fontWeight: '600'}}>{this.props.title}</Text>
+              <Text style={{fontWeight: '400'}}>{this.props.title}</Text>
             </View>
           </View>
           <View

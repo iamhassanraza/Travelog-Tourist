@@ -10,10 +10,12 @@ import {
 } from '../ReduxStore/Actions/index';
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {ThemeBlue} from '../Assets/Colors';
+import {withNavigation} from 'react-navigation';
 
 class MainTabNavigation extends React.Component {
   state = {
     unread: false,
+    statusBarColor: ThemeBlue,
   };
 
   async componentDidMount() {
@@ -45,6 +47,10 @@ class MainTabNavigation extends React.Component {
     });
   }
 
+  changeStatusBar = color => {
+    this.setState({statusBarColor: color});
+  };
+
   render() {
     return (
       <>
@@ -52,13 +58,14 @@ class MainTabNavigation extends React.Component {
           <View
             style={{
               height: getStatusBarHeight(),
-              backgroundColor: ThemeBlue,
+              backgroundColor: this.state.statusBarColor,
             }}>
             <StatusBar translucent={true} barStyle="light-content" />
           </View>
         ) : null}
         <TabContainer
           screenProps={{
+            changeStatusBar: this.changeStatusBar,
             rootNavigation: this.props.navigation,
             Notifications: this.props.notifications,
             unreadMsgs: this.props.unreadMsgs,
@@ -81,7 +88,9 @@ mapStateToProps = state => {
   }; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
 };
 
-export default connect(
-  mapStateToProps,
-  {connectSocket, unreadMsg, unreadNoti},
-)(MainTabNavigation);
+export default withNavigation(
+  connect(
+    mapStateToProps,
+    {connectSocket, unreadMsg, unreadNoti},
+  )(MainTabNavigation),
+);

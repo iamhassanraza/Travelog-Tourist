@@ -90,7 +90,12 @@ class PostDetail extends Component {
   };
 
   componentDidMount() {
+    this.props.screenProps.changeStatusBar('white');
     this.incrementView();
+  }
+
+  componentWillUnmount() {
+    this.props.screenProps.changeStatusBar(ThemeBlue);
   }
 
   incrementView = async () => {
@@ -723,6 +728,7 @@ class PostDetail extends Component {
     );
     return (
       <>
+        {Platform.OS === 'ios' ? <StatusBar barStyle="default" /> : null}
         <Container style={{}}>
           {/* {Platform.OS === 'ios' ? <StatusBar barStyle="dark-content" /> : null} */}
           <Content

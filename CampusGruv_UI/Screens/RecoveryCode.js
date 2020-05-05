@@ -12,6 +12,7 @@ import {
   TouchableOpacity,
   KeyboardAvoidingView,
   AsyncStorage,
+  StatusBar,
 } from 'react-native';
 import HeaderTitle from './Heading';
 import Colors from '../Assets/Colors';
@@ -117,7 +118,7 @@ class RecoverCode extends React.Component {
                     paddingLeft: '30%',
                     height: Platform.OS == 'ios' ? 40 : 50,
                   }}
-                  onChangeText={(text) => this.setState({code: text})}
+                  onChangeText={text => this.setState({code: text})}
                   value={this.state.code}
                 />
               </View>

@@ -175,40 +175,42 @@ export default class CategoryList extends Component {
   render() {
     // console.log(this.state.Category_id);
     return (
-      <View style={{flex: 1, backgroundColor: '#f9fdfe'}}>
-        {this.state.loading ? (
-          <View
-            style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-            <ActivityIndicator
-              color="#1192d1"
-              size={50}
-              style={{marginBottom: '5%'}}
+      <>
+        <View style={{flex: 1, backgroundColor: '#f9fdfe'}}>
+          {this.state.loading ? (
+            <View
+              style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+              <ActivityIndicator
+                color="#1192d1"
+                size={50}
+                style={{marginBottom: '5%'}}
+              />
+              <Text>Loading Categories</Text>
+            </View>
+          ) : (
+            <FlatList
+              style={{margin: 10}}
+              numColumns={2}
+              data={this.state.Data}
+              keyExtractor={item => item.id}
+              showsHorizontalScrollIndicator={false}
+              renderItem={({item}) => {
+                console.log(item.id);
+                return (
+                  <Category
+                    description={item.description}
+                    color={item.rgba_colors}
+                    image={item.category_image}
+                    cat_id={item.id}
+                    onSelect1={this.selectCategory}
+                    // onSelect2={this.move}
+                  />
+                );
+              }}
             />
-            <Text>Loading Categories</Text>
-          </View>
-        ) : (
-          <FlatList
-            style={{margin: 10}}
-            numColumns={2}
-            data={this.state.Data}
-            keyExtractor={item => item.id}
-            showsHorizontalScrollIndicator={false}
-            renderItem={({item}) => {
-              console.log(item.id);
-              return (
-                <Category
-                  description={item.description}
-                  color={item.rgba_colors}
-                  image={item.category_image}
-                  cat_id={item.id}
-                  onSelect1={this.selectCategory}
-                  // onSelect2={this.move}
-                />
-              );
-            }}
-          />
-        )}
-      </View>
+          )}
+        </View>
+      </>
     );
   }
 }

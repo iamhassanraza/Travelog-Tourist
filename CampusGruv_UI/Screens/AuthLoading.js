@@ -9,7 +9,7 @@ import {
   ImageBackground,
   Text,
 } from 'react-native';
-import Colors from '../Assets/Colors';
+import Colors, {ThemeBlue} from '../Assets/Colors';
 import HeaderTitle from './Heading';
 
 import {connect} from 'react-redux';
@@ -26,7 +26,7 @@ import {
   UIActivityIndicator,
   WaveIndicator,
 } from 'react-native-indicators';
-
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 const screenwidth = Dimensions.get('window').width;
 const screenheight = Dimensions.get('window').height;
 
@@ -122,17 +122,22 @@ class AuthLoading extends React.Component {
   // Render any loading content that you like here
   render() {
     return (
-      <ImageBackground
-        style={styles.container}
-        source={require('../Assets/Images/background.png')}
-        resizeMode="cover">
-        <View style={{marginTop: '55%'}}>
-          <HeaderTitle />
-        </View>
-        <View style={{justifyContent: 'center'}}>
-          <DotIndicator count={3} color={'white'} />
-        </View>
-      </ImageBackground>
+      <>
+        {Platform.OS === 'ios' ? (
+          <StatusBar translucent={true} barStyle="light-content" />
+        ) : null}
+        <ImageBackground
+          style={styles.container}
+          source={require('../Assets/Images/background.png')}
+          resizeMode="cover">
+          <View style={{marginTop: '55%'}}>
+            <HeaderTitle />
+          </View>
+          <View style={{justifyContent: 'center'}}>
+            <DotIndicator count={3} color={'white'} />
+          </View>
+        </ImageBackground>
+      </>
     );
   }
 }
