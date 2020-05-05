@@ -145,7 +145,7 @@ class PostCard extends Component {
               />
             </View>
             <View style={{flex: 6, alignSelf: 'center'}}>
-              <Text style={{color: 'grey'}}>
+              <Text style={{color: 'grey', marginLeft: 2}}>
                 {this.props.first_name +
                   ' ' +
                   this.props.last_name.charAt(0) +
