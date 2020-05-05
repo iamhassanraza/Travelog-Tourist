@@ -17,7 +17,6 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import RenderCards from '../Components/RenderCards';
 import NoPosts from '../Components/NoPost';
 import {ThemeBlue} from '../Assets/Colors';
-import ContentLoader, {Rect} from 'react-content-loader/native';
 import {connect} from 'react-redux';
 import {CreateUserDetails} from '../ReduxStore/Actions/index';
 import Logo from '../Assets/Images/logo.png';
@@ -27,6 +26,17 @@ import Modal from 'react-native-modal';
 const IconGrey = '#b4b8bf';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from 'react-native-indicators';
 
 class UserProfile extends React.Component {
   static navigationOptions = props => {
@@ -384,7 +394,11 @@ class UserProfile extends React.Component {
   };
 
   renderLoading = () => {
-    return <UIActivityIndicator color={ThemeBlue} />;
+    return (
+      <View style={{height: 300}}>
+        <UIActivityIndicator color={ThemeBlue} />
+      </View>
+    );
   };
 
   blockUser = async user_id => {
