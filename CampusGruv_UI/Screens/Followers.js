@@ -174,7 +174,7 @@ class Followers extends Component {
         <BarIndicator count={4} color={ThemeBlue} />
       </View>
     ) : this.state.data.length ? (
-      <View>
+      <View style={{flex: 1, backgroundColor: '#f9fdfe'}}>
         <View
           style={{
             flexDirection: 'row',

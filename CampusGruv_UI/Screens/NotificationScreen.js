@@ -16,6 +16,18 @@ import ContentLoader, {Rect, Circle} from 'react-content-loader/native';
 import {connect} from 'react-redux';
 import mystore from '../index';
 import {clearNoti} from '../ReduxStore/Actions/index';
+import {
+  BallIndicator,
+  BarIndicator,
+  DotIndicator,
+  MaterialIndicator,
+  PacmanIndicator,
+  PulseIndicator,
+  SkypeIndicator,
+  UIActivityIndicator,
+  WaveIndicator,
+} from 'react-native-indicators';
+import {ThemeBlue} from '../Assets/Colors';
 
 class NotificationScreen extends Component {
   state = {
@@ -135,17 +147,18 @@ class NotificationScreen extends Component {
             )}
           />
         ) : (
-          <FlatList
-            vertical
-            data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-            renderItem={() => (
-              <ContentLoader height={70}>
-                <Circle cx="30" cy="40" r="30" />
-                <Rect x="80" y="17" rx="4" ry="4" width="300" height="13" />
-                <Rect x="80" y="40" rx="3" ry="3" width="250" height="10" />
-              </ContentLoader>
-            )}
-          />
+          <UIActivityIndicator color={ThemeBlue} />
+          // <FlatList
+          //   vertical
+          //   data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
+          //   renderItem={() => (
+          //     <ContentLoader height={70}>
+          //       <Circle cx="30" cy="40" r="30" />
+          //       <Rect x="80" y="17" rx="4" ry="4" width="300" height="13" />
+          //       <Rect x="80" y="40" rx="3" ry="3" width="250" height="10" />
+          //     </ContentLoader>
+          //   )}
+          // />
         )}
       </View>
     );

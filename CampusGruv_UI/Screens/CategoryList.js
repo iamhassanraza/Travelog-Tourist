@@ -175,7 +175,7 @@ export default class CategoryList extends Component {
   render() {
     // console.log(this.state.Category_id);
     return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, backgroundColor: '#f9fdfe'}}>
         {this.state.loading ? (
           <View
             style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>

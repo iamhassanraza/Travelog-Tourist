@@ -9,7 +9,7 @@ import {connect} from 'react-redux';
 import SearchInput, {createFilter} from 'react-native-search-filter';
 import SearchIcon from 'react-native-vector-icons/Feather';
 
-const KEYS_TO_FILTERS = ['id','first_name','last_name'];
+const KEYS_TO_FILTERS = ['id', 'first_name', 'last_name'];
 
 // import Ws from '@adonisjs/websocket-client'
 
@@ -19,15 +19,13 @@ class Inbox extends Component {
     this.state = {
       data: [],
       store: mystore,
-      searchTerm:''
+      searchTerm: '',
     };
   }
-
 
   searchUpdated(term) {
     this.setState({searchTerm: term});
   }
-
 
   fetchData = async () => {
     const Token = await AsyncStorage.getItem('TOKEN');
@@ -64,38 +62,36 @@ class Inbox extends Component {
     );
     return (
       <>
-        <View style={{flex: 1}}>
+        <View style={{flex: 1, backgroundColor: '#f9fdfe'}}>
           <ScrollView>
-          <View
-          style={{
-            flexDirection: 'row',
-            marginRight: '2%',
-            marginLeft: '2%',
-            borderColor: '#CCC',
-            borderWidth: 1,
-            borderRadius: 15,
-            height: 40,
-            marginTop: 10
-
-          }}>
-          <SearchIcon
-            name="search"
-            style={{
-              alignSelf: 'center',
-              fontSize: 25,
-              color: '#d3e0d7',
-              paddingLeft:"2%"
-            }}
-          />
-          <SearchInput
-            onChangeText={term => {
-              this.searchUpdated(term);
-            }}
-            style={styles.searchInput}
-            placeholder="Search"
-          >
-            </SearchInput>
-        </View>
+            <View
+              style={{
+                flexDirection: 'row',
+                marginRight: '2%',
+                marginLeft: '2%',
+                borderColor: '#CCC',
+                borderWidth: 1,
+                borderRadius: 15,
+                height: 40,
+                marginTop: 10,
+              }}>
+              <SearchIcon
+                name="search"
+                style={{
+                  alignSelf: 'center',
+                  fontSize: 25,
+                  color: '#d3e0d7',
+                  paddingLeft: '2%',
+                }}
+              />
+              <SearchInput
+                onChangeText={term => {
+                  this.searchUpdated(term);
+                }}
+                style={styles.searchInput}
+                placeholder="Search"
+              />
+            </View>
             <FlatList
               style={{marginTop: 10}}
               data={filtereddata}
@@ -136,13 +132,9 @@ export default connect(
   null,
 )(Inbox);
 
-
-
 const styles = StyleSheet.create({
- 
   searchInput: {
     padding: 10,
-    width:330
-    
+    width: 330,
   },
 });

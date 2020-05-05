@@ -522,7 +522,7 @@ class CreateNewPost extends Component {
   render() {
     return (
       <Container>
-        <Content>
+        <Content style={{backgroundColor: '#f9fdfe'}}>
           {/* <KeyboardAvoidingView
           style={{flex: 1}}
           keyboardVerticalOffset={80}

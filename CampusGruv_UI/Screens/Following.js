@@ -173,7 +173,7 @@ class Following extends Component {
         <BarIndicator count={4} color={ThemeBlue} />
       </View>
     ) : this.state.search.length ? (
-      <View>
+      <View style={{flex: 1, backgroundColor: '#f9fdfe'}}>
         <View
           style={{
             flexDirection: 'row',

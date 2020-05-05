@@ -16,7 +16,6 @@ import ContentLoader, {Rect} from 'react-content-loader/native';
 import NewMessageComponent from '../Components/NewMessageComponent';
 import {connect} from 'react-redux';
 
-
 class SelectNewChat extends Component {
   constructor(props) {
     super(props);
@@ -28,7 +27,7 @@ class SelectNewChat extends Component {
     };
   }
 
-  fetchUsers = async (text) => {
+  fetchUsers = async text => {
     this.setState({loadingUsers: true});
     const Token = await AsyncStorage.getItem('TOKEN');
     const Response = await fetch(
@@ -59,7 +58,7 @@ class SelectNewChat extends Component {
     }
   };
 
-  updateSearch = (e) => {
+  updateSearch = e => {
     this.setState({text: e});
     this.fetchUsers(e);
   };
@@ -67,7 +66,7 @@ class SelectNewChat extends Component {
   render() {
     return (
       <Container>
-        <Content>
+        <Content style={{backgroundColor: '#f9fdfe'}}>
           <SearchBar
             platform="ios"
             placeholder="Type Here..."
@@ -84,10 +83,10 @@ class SelectNewChat extends Component {
                 style={{}}
                 vertical
                 data={this.state.users}
-                keyExtractor={(item) => item.id}
+                keyExtractor={item => item.id}
                 showsHorizontalScrollIndicator={false}
                 renderItem={({item}) => {
-                  if(item.id !== this.props.User.id) {
+                  if (item.id !== this.props.User.id) {
                     return (
                       <NewMessageComponent
                         id={item.id}
@@ -96,7 +95,7 @@ class SelectNewChat extends Component {
                         last_name={item.last_name}
                         navigationProps={this.props.navigation}
                       />
-                    )
+                    );
                   }
                 }}
               />
@@ -126,8 +125,7 @@ class SelectNewChat extends Component {
   }
 }
 
-
-mapStateToProps = (state) => {
+mapStateToProps = state => {
   //this state will contain FULL redux store all the reducers data
 
   //use your required reducer data in props i.e reducer1
@@ -135,4 +133,7 @@ mapStateToProps = (state) => {
   return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
 };
 
-export default connect(mapStateToProps, null)(SelectNewChat);
+export default connect(
+  mapStateToProps,
+  null,
+)(SelectNewChat);

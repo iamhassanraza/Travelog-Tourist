@@ -367,7 +367,7 @@ export default class FolllowersPosts extends PureComponent {
           </Text>
         </View>  */}
           <ScrollView
-            style={{backgroundColor: '#F0F0F0'}}
+            style={{backgroundColor: '#f9fdfe'}}
             refreshControl={
               <RefreshControl
                 refreshing={this.state.refreshing}
@@ -387,7 +387,12 @@ export default class FolllowersPosts extends PureComponent {
       );
     } else if (this.state.total === 0) {
       return (
-        <View style={{paddingTop: '45%', height: '100%'}}>
+        <View
+          style={{
+            paddingTop: '45%',
+            height: '100%',
+            backgroundColor: '#f9fdfe',
+          }}>
           <NoPosts />
         </View>
       );

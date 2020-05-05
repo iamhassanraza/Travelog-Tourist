@@ -220,7 +220,10 @@ export default class AddNewPost extends Component {
   render() {
     return (
       <TouchableWithoutFeedback
-        style={{height: Dimensions.get('window').height}}>
+        style={{
+          height: Dimensions.get('window').height,
+          backgroundColor: '#f9fdfe',
+        }}>
         <KeyboardAvoidingView
           behavior="padding"
           keyboardVerticalOffset={100}
