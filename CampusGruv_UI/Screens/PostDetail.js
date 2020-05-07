@@ -477,14 +477,11 @@ class PostDetail extends Component {
     return (
       <View
         style={{
-          // marginBottom: Platform.OS == 'ios' ? 20 : 0,
+          marginBottom: Platform.OS == 'ios' ? 10 : 10,
           flexDirection: 'row',
-          // borderTopWidth: 0.3,
-          position: 'absolute',
-          bottom: 10,
+          backgroundColor: 'white',
           borderTopColor: 'grey',
           paddingTop: 5,
-          // paddingBottom: 5,
           alignItems: 'center',
         }}>
         <View style={{marginLeft: '2%', width: 30, height: 30}}>
