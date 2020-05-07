@@ -431,16 +431,16 @@ class Searching extends React.PureComponent {
               onPress={() => {
                 this.setState({selection: 'Feed'});
               }}>
-              <View>
+              <View
+                style={{
+                  borderBottomWidth: this.state.selection === 'Feed' ? 1.5 : 0,
+                  borderBottomColor: ThemeBlue,
+                }}>
                 <Text
                   style={{
                     fontWeight: '600',
                     fontSize: 16,
                     color: this.state.selection === 'Feed' ? ThemeBlue : 'grey',
-                    borderBottomWidth:
-                      this.state.selection === 'Feed' ? 1.5 : 0,
-                    borderBottomColor: ThemeBlue,
-                    marginBottom: 6,
                     marginTop: 8,
                   }}>
                   Feed
@@ -452,17 +452,17 @@ class Searching extends React.PureComponent {
               onPress={() => {
                 this.setState({selection: 'Users'});
               }}>
-              <View>
+              <View
+                style={{
+                  borderBottomWidth: this.state.selection === 'Users' ? 1.5 : 0,
+                  borderBottomColor: ThemeBlue,
+                }}>
                 <Text
                   style={{
                     fontWeight: '600',
                     fontSize: 16,
                     color:
                       this.state.selection === 'Users' ? ThemeBlue : 'grey',
-                    borderBottomWidth:
-                      this.state.selection === 'Users' ? 1.5 : 0,
-                    borderBottomColor: ThemeBlue,
-                    marginBottom: 6,
                     marginTop: 8,
                   }}>
                   Users
@@ -474,17 +474,20 @@ class Searching extends React.PureComponent {
               onPress={() => {
                 this.setState({selection: 'Campuses'});
               }}>
-              <View>
+              <View
+                style={{
+                  marginBottom: 6,
+                  borderBottomWidth:
+                    this.state.selection === 'Campuses' ? 1.5 : 0,
+                  borderBottomColor: ThemeBlue,
+                }}>
                 <Text
                   style={{
                     fontWeight: '600',
                     fontSize: 16,
                     color:
                       this.state.selection === 'Campuses' ? ThemeBlue : 'grey',
-                    borderBottomWidth:
-                      this.state.selection === 'Campuses' ? 1.5 : 0,
-                    borderBottomColor: ThemeBlue,
-                    marginBottom: 6,
+
                     marginTop: 8,
                   }}>
                   Campuses
