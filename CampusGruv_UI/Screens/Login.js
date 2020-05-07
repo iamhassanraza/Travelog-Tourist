@@ -280,7 +280,7 @@ class Login extends React.Component {
                 {/* SIGN UP NAVIGATION */}
                 <View>
                   <View
-                    style={{marginTop: Platform.OS === 'ios' ? '30%' : '15%'}}>
+                    style={{marginTop: Platform.OS === 'ios' ? '30%' : '25%'}}>
                     <Text
                       style={{
                         color: 'white',
@@ -327,7 +327,7 @@ const styles = StyleSheet.create({
   },
   container: {
     width: screenwidth,
-    height: screenheight / 1,
+    height: screenheight - 23,
     backgroundColor: Colors.overlayColor,
   },
   overlay: {

@@ -49,12 +49,12 @@ export default class FolllowersPosts extends PureComponent {
       header:
         //<MyHeader params={params} navigation={props.navigation} />
         Platform.OS == 'ios' ? (
-          <View style={{backgroundColor: '#1192d1'}}>
+          <View style={{backgroundColor: '#0C91CF'}}>
             <View
               style={{
                 height: 50,
                 flexDirection: 'row',
-                backgroundColor: '#1192d1',
+                backgroundColor: '#0C91CF',
                 alignItems: 'center',
               }}>
               <View
@@ -137,77 +137,164 @@ export default class FolllowersPosts extends PureComponent {
             </View>
           </View>
         ) : (
-          <View
-            style={{
-              height: 50,
-              flexDirection: 'row',
-              backgroundColor: '#1192d1',
-              alignItems: 'center',
-            }}>
+          <View style={{backgroundColor: '#0C91CF'}}>
             <View
-              style={{flexDirection: 'row', alignItems: 'center', flex: 10}}>
+              style={{
+                height: 50,
+                flexDirection: 'row',
+                backgroundColor: '#0C91CF',
+                alignItems: 'center',
+              }}>
               <View
                 style={{
-                  marginLeft: '2%',
                   flexDirection: 'row',
-                  alignSelf: 'center',
+                  alignItems: 'center',
+                  flex: 1,
                 }}>
+                <View
+                  style={{
+                    height: 25,
+                    position: 'absolute',
+                    left: 0,
+                    right: 0,
+                    justifyContent: 'center',
+                    flexDirection: 'row',
+                  }}>
+                  <Image
+                    source={Logo}
+                    style={{
+                      width: 150,
+                      alignSelf: 'flex-start',
+                      height: '100%',
+                    }}
+                    resizeMode="contain"
+                  />
+                </View>
+
                 <TouchableOpacity
-                  onPress={() => props.navigation.navigate('Searching')}>
+                  onPress={() => props.navigation.navigate('Searching')}
+                  style={{position: 'absolute', left: 8}}>
+                  {/* <Icon2 name="view-grid" color="#00527a" size={28} /> */}
                   <View
                     style={{
-                      height: 30,
-                      padding: 0,
-                      flexDirection: 'row',
-                      alignItems: 'center',
-                      width: 250,
-                      backgroundColor: '#F0F0F0',
-                      borderRadius: 10,
+                      height: 40,
+                      width: 40,
+                      justifyContent: 'center',
                     }}>
-                    <View style={{marginLeft: '2%'}}>
-                      <Icon name="search" color="#1192d1" size={20} />
-                    </View>
-                    <View style={{height: 20}}>
-                      <Image
-                        source={Logo}
-                        style={{
-                          width: 150,
-                          alignSelf: 'flex-start',
-                          height: '100%',
-                        }}
-                        resizeMode="contain"
-                      />
-                    </View>
-                  </View>
-                </TouchableOpacity>
-              </View>
-              <View style={{paddingLeft: '4%'}}>
-                <TouchableOpacity
-                  onPress={() => props.navigation.navigate('CategoryList')}>
-                  <View
-                    style={{height: 40, width: 40, justifyContent: 'center'}}>
                     <Image
-                      source={NoCategory}
-                      style={{height: 30, width: 30, borderWidth: 1}}
+                      source={SearchIcon}
+                      style={{height: 25, width: 30}}
                     />
                   </View>
                 </TouchableOpacity>
-              </View>
 
-              <View style={{paddingLeft: '2%'}}>
                 <TouchableOpacity
-                  onPress={() => props.navigation.navigate('HomeScreen')}>
+                  onPress={() => props.navigation.navigate('CategoryList')}
+                  style={{position: 'absolute', right: 50}}>
+                  {/* <Icon2 name="view-grid" color="#00527a" size={28} /> */}
                   <View
-                    style={{height: 40, width: 50, justifyContent: 'center'}}>
+                    style={{
+                      height: 40,
+                      width: 40,
+                      justifyContent: 'center',
+                    }}>
+                    <Image
+                      source={NoCategory}
+                      style={{height: 25, width: 30}}
+                    />
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => props.navigation.navigate('HomeScreen')}
+                  style={{position: 'absolute', right: 5}}>
+                  {/* <PeopleIcon name="users" color="#00527a" size={20} /> */}
+                  <View
+                    style={{
+                      height: 40,
+                      width: 40,
+                      justifyContent: 'center',
+                    }}>
                     <Image
                       source={YesFollower}
-                      style={{height: 30, width: 35, borderWidth: 1}}
+                      style={{height: 25, width: 30}}
                     />
                   </View>
                 </TouchableOpacity>
               </View>
             </View>
           </View>
+          // <View
+          //   style={{
+          //     height: 50,
+          //     flexDirection: 'row',
+          //     backgroundColor: '#0C91CF',
+          //     alignItems: 'center',
+          //   }}>
+          //   <View
+          //     style={{flexDirection: 'row', alignItems: 'center', flex: 10}}>
+          //     <View
+          //       style={{
+          //         marginLeft: '2%',
+          //         flexDirection: 'row',
+          //         alignSelf: 'center',
+          //       }}>
+          //       <TouchableOpacity
+          //         onPress={() => props.navigation.navigate('Searching')}>
+          //         <View
+          //           style={{
+          //             height: 30,
+          //             padding: 0,
+          //             flexDirection: 'row',
+          //             alignItems: 'center',
+          //             width: 250,
+          //             backgroundColor: '#F0F0F0',
+          //             borderRadius: 10,
+          //           }}>
+          //           <View style={{marginLeft: '2%'}}>
+          //             <Icon name="search" color="#0C91CF" size={20} />
+          //           </View>
+          //           <View style={{height: 20}}>
+          //             <Image
+          //               source={Logo}
+          //               style={{
+          //                 width: 150,
+          //                 alignSelf: 'flex-start',
+          //                 height: '100%',
+          //               }}
+          //               resizeMode="contain"
+          //             />
+          //           </View>
+          //         </View>
+          //       </TouchableOpacity>
+          //     </View>
+          //     <View style={{paddingLeft: '4%'}}>
+          //       <TouchableOpacity
+          //         onPress={() => props.navigation.navigate('CategoryList')}>
+          //         <View
+          //           style={{height: 40, width: 40, justifyContent: 'center'}}>
+          //           <Image
+          //             source={NoCategory}
+          //             style={{height: 30, width: 30, borderWidth: 1}}
+          //           />
+          //         </View>
+          //       </TouchableOpacity>
+          //     </View>
+
+          //     <View style={{paddingLeft: '2%'}}>
+          //       <TouchableOpacity
+          //         onPress={() => props.navigation.navigate('HomeScreen')}>
+          //         <View
+          //           style={{height: 40, width: 50, justifyContent: 'center'}}>
+          //           <Image
+          //             source={YesFollower}
+          //             style={{height: 30, width: 35, borderWidth: 1}}
+          //           />
+          //         </View>
+          //       </TouchableOpacity>
+          //     </View>
+          //   </View>
+          // </View>
         ),
     };
   };

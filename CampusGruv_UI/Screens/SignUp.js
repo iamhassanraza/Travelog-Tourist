@@ -218,7 +218,7 @@ class Signup extends React.Component {
           style={styles.container}
           source={require('../Assets/Images/background.png')}
           resizeMode="cover">
-          <Text
+          {/* <Text
             style={{
               color: 'white',
               fontSize: 16,
@@ -229,10 +229,22 @@ class Signup extends React.Component {
               this.props.navigation.goBack();
             }}>
             Back
-          </Text>
+          </Text> */}
           <Content style={{}}>
+            <Text
+              style={{
+                color: 'white',
+                fontSize: 16,
+                marginLeft: 10,
+                marginTop: Platform.OS == 'ios' ? 40 : 20,
+              }}
+              onPress={() => {
+                this.props.navigation.goBack();
+              }}>
+              Back
+            </Text>
             {/* MAIN TITLE */}
-            <View style={{justifyContent: 'center', height: '30%'}}>
+            <View style={{justifyContent: 'center', height: '20%'}}>
               <HeaderTitle />
             </View>
 

@@ -9,6 +9,7 @@ import {
   TextInput,
   AsyncStorage,
   Dimensions,
+  Image,
 } from 'react-native';
 import {ThemeBlue} from '../Assets/Colors';
 import AvatarUserStatus from '../Components/AvatarUserStatus';
@@ -36,6 +37,10 @@ import {
   UIActivityIndicator,
   WaveIndicator,
 } from 'react-native-indicators';
+import NoCategory from '../Assets/Images/NoCategory.png';
+import NoFollower from '../Assets/Images/NoFollower.png';
+import SearchIcon from '../Assets/Images/SearchIcon.png';
+import YesFollower from '../Assets/Images/YesFollower.png';
 
 class Searching extends React.PureComponent {
   state = {
@@ -193,7 +198,7 @@ class Searching extends React.PureComponent {
     if (this.state.loadingFeed === false) {
       return (
         <ScrollView
-          style={{backgroundColor: '#F0F0F0'}}
+          style={{backgroundColor: '#f9fdfe'}}
           refreshControl={
             <RefreshControl
               refreshing={this.state.refreshing}
@@ -216,7 +221,7 @@ class Searching extends React.PureComponent {
   renderUsers = () => {
     if (this.state.loadingUsers === false) {
       return (
-        <ScrollView style={{}}>
+        <ScrollView style={{backgroundColor: '#f9fdfe'}}>
           <FlatList
             style={{}}
             vertical
@@ -260,7 +265,7 @@ class Searching extends React.PureComponent {
     if (this.state.loadingCampuses === false) {
       return (
         <FlatList
-          style={{}}
+          style={{backgroundColor: '#f9fdfe'}}
           vertical
           data={this.state.Campuses}
           keyExtractor={item => item.id}
@@ -343,7 +348,7 @@ class Searching extends React.PureComponent {
 
   render() {
     return (
-      <View style={{backgroundColor: '#1192d1'}}>
+      <View style={{backgroundColor: '#0C91CF'}}>
         <View
           style={{
             backgroundColor: ThemeBlue,
@@ -353,6 +358,7 @@ class Searching extends React.PureComponent {
               backgroundColor: ThemeBlue,
               height: 50,
               flexDirection: 'row',
+              alignItems: 'center',
             }}>
             <View
               style={{
@@ -361,7 +367,6 @@ class Searching extends React.PureComponent {
                 width: '65%',
                 backgroundColor: 'white',
                 marginLeft: 10,
-                marginTop: 10,
                 borderRadius: 8,
               }}>
               <Icon
@@ -383,11 +388,39 @@ class Searching extends React.PureComponent {
                 }}
               />
             </View>
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('CategoryList')}
+              style={{position: 'absolute', right: 70}}>
+              {/* <Icon2 name="view-grid" color="#00527a" size={28} /> */}
+              <View
+                style={{
+                  height: 40,
+                  width: 40,
+                  justifyContent: 'center',
+                }}>
+                <Image source={NoCategory} style={{height: 25, width: 30}} />
+              </View>
+            </TouchableOpacity>
+
+            <TouchableOpacity
+              onPress={() => this.props.navigation.navigate('FollowersPosts')}
+              style={{position: 'absolute', right: 5}}>
+              {/* <PeopleIcon name="users" color="#00527a" size={20} /> */}
+              <View
+                style={{
+                  height: 40,
+                  width: 40,
+                  justifyContent: 'center',
+                }}>
+                <Image source={NoFollower} style={{height: 25, width: 30}} />
+              </View>
+            </TouchableOpacity>
           </View>
 
           <View
             style={{
               backgroundColor: 'white',
+              paddingVertical: 3,
               borderBottomWidth: 1,
               flexDirection: 'row',
               justifyContent: 'space-around',
@@ -401,9 +434,11 @@ class Searching extends React.PureComponent {
               <View>
                 <Text
                   style={{
-                    fontSize: 15,
+                    fontWeight: '600',
+                    fontSize: 16,
                     color: this.state.selection === 'Feed' ? ThemeBlue : 'grey',
-                    borderBottomWidth: this.state.selection === 'Feed' ? 1 : 0,
+                    borderBottomWidth:
+                      this.state.selection === 'Feed' ? 1.5 : 0,
                     borderBottomColor: ThemeBlue,
                     marginBottom: 6,
                     marginTop: 8,
@@ -420,10 +455,12 @@ class Searching extends React.PureComponent {
               <View>
                 <Text
                   style={{
-                    fontSize: 15,
+                    fontWeight: '600',
+                    fontSize: 16,
                     color:
                       this.state.selection === 'Users' ? ThemeBlue : 'grey',
-                    borderBottomWidth: this.state.selection === 'Users' ? 1 : 0,
+                    borderBottomWidth:
+                      this.state.selection === 'Users' ? 1.5 : 0,
                     borderBottomColor: ThemeBlue,
                     marginBottom: 6,
                     marginTop: 8,
@@ -440,11 +477,12 @@ class Searching extends React.PureComponent {
               <View>
                 <Text
                   style={{
-                    fontSize: 15,
+                    fontWeight: '600',
+                    fontSize: 16,
                     color:
                       this.state.selection === 'Campuses' ? ThemeBlue : 'grey',
                     borderBottomWidth:
-                      this.state.selection === 'Campuses' ? 1 : 0,
+                      this.state.selection === 'Campuses' ? 1.5 : 0,
                     borderBottomColor: ThemeBlue,
                     marginBottom: 6,
                     marginTop: 8,
@@ -457,7 +495,7 @@ class Searching extends React.PureComponent {
 
           <View
             style={{
-              backgroundColor: 'white',
+              backgroundColor: '#f9fdfe',
               height: Dimensions.get('window').height - 170,
             }}>
             {this.state.selection === 'Feed'

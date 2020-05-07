@@ -69,18 +69,18 @@ class Inbox extends Component {
                 flexDirection: 'row',
                 marginRight: '2%',
                 marginLeft: '2%',
-                borderColor: '#CCC',
+                borderColor: '#C4C4C4',
                 borderWidth: 1,
-                borderRadius: 15,
-                height: 40,
+                borderRadius: 9,
+                height: 30,
                 marginTop: 10,
               }}>
               <SearchIcon
                 name="search"
                 style={{
                   alignSelf: 'center',
-                  fontSize: 25,
-                  color: '#d3e0d7',
+                  fontSize: 20,
+                  color: '#C4C4C4',
                   paddingLeft: '2%',
                 }}
               />
@@ -134,7 +134,12 @@ export default connect(
 
 const styles = StyleSheet.create({
   searchInput: {
-    padding: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingTop: 0,
+    marginLeft: 5,
+    paddingBottom: 0,
+    color: '#C4C4C4',
     width: 330,
   },
 });

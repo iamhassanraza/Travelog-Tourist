@@ -31,15 +31,9 @@ mystore = createStore(CombinedReducers, composeEnhancer());
 const RN_REDUX = () => {
   return (
     <Provider store={mystore}>
-      {/* {Platform.OS === 'ios' ? (
-        <View
-          style={{
-            height: getStatusBarHeight(),
-            backgroundColor: ThemeBlue,
-          }}>
-          <StatusBar translucent={true} barStyle="light-content" />
-        </View>
-      ) : null} */}
+      {Platform.OS !== 'ios' ? (
+        <StatusBar backgroundColor={ThemeBlue} barStyle="light-content" />
+      ) : null}
 
       <App />
     </Provider>

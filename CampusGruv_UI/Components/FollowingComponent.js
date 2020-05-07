@@ -13,11 +13,11 @@ export default class FollowingComponent extends Component {
 
   Set = () => {
     // this.setState({status:,title:'following'})
-    this.setState((previousState) => {
+    this.setState(previousState => {
       return {status: !previousState.status, title: !previousState.title};
     });
   };
-  updateSearch = (search) => {
+  updateSearch = search => {
     this.setState({search});
   };
   render() {
@@ -87,7 +87,7 @@ export default class FollowingComponent extends Component {
             </TouchableOpacity>
           </View>
         </View>
-        <Divider></Divider>
+        <Divider />
       </View>
     );
   }

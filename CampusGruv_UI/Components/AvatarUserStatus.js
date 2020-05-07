@@ -70,7 +70,8 @@ class AvatarUserStatus extends Component {
         style={{
           flexDirection: 'row',
           alignItems: 'center',
-          marginTop: '1%',
+          marginTop: '2%',
+          paddingHorizontal: '2%',
         }}>
         <View style={{flex: 4}}>
           <TouchableWithoutFeedback

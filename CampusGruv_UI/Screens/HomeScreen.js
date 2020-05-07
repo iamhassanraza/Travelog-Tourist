@@ -54,12 +54,12 @@ class HomeScreen extends PureComponent {
       header:
         //<MyHeader params={params} navigation={props.navigation} />
         Platform.OS == 'ios' ? (
-          <View style={{backgroundColor: '#1192d1'}}>
+          <View style={{backgroundColor: '#0C91CF'}}>
             <View
               style={{
                 height: 50,
                 flexDirection: 'row',
-                backgroundColor: '#1192d1',
+                backgroundColor: '#0C91CF',
                 alignItems: 'center',
               }}>
               <View
@@ -142,75 +142,90 @@ class HomeScreen extends PureComponent {
             </View>
           </View>
         ) : (
-          <View
-            style={{
-              height: 50,
-              flexDirection: 'row',
-              backgroundColor: '#1192d1',
-              alignItems: 'center',
-            }}>
+          <View style={{backgroundColor: '#0C91CF'}}>
             <View
               style={{
+                height: 50,
                 flexDirection: 'row',
+                backgroundColor: '#0C91CF',
                 alignItems: 'center',
-                justifyContent: 'space-around',
-                flex: 10,
               }}>
-              <TouchableOpacity
-                style={{marginLeft: '2%'}}
-                onPress={() => props.navigation.navigate('Searching')}>
-                <View>
-                  <Image source={SearchIcon} style={{height: 25, width: 25}} />
-                </View>
-              </TouchableOpacity>
-
               <View
                 style={{
-                  marginLeft: '5%',
-                  height: 25,
                   flexDirection: 'row',
-                  alignSelf: 'center',
-                  justifyContent: 'center',
+                  alignItems: 'center',
+                  flex: 1,
                 }}>
-                <Image
-                  source={Logo}
+                <View
                   style={{
-                    width: 150,
-                    alignSelf: 'flex-start',
-                    height: '100%',
-                  }}
-                  resizeMode="contain"
-                />
-              </View>
-
-              <View style={{flexDirection: 'row', marginLeft: '5%'}}>
-                <View style={{paddingLeft: '4%'}}>
-                  <TouchableOpacity
-                    onPress={() => props.navigation.navigate('CategoryList')}>
-                    {/* <Icon2 name="view-grid" color="#00527a" size={28} /> */}
-                    <View
-                      style={{height: 40, width: 40, justifyContent: 'center'}}>
-                      <Image
-                        source={NoCategory}
-                        style={{height: 30, width: 30, borderWidth: 1}}
-                      />
-                    </View>
-                  </TouchableOpacity>
+                    height: 25,
+                    position: 'absolute',
+                    left: 0,
+                    right: 0,
+                    justifyContent: 'center',
+                    flexDirection: 'row',
+                  }}>
+                  <Image
+                    source={Logo}
+                    style={{
+                      width: 150,
+                      alignSelf: 'flex-start',
+                      height: '100%',
+                    }}
+                    resizeMode="contain"
+                  />
                 </View>
 
-                <View style={{paddingLeft: '2%'}}>
-                  <TouchableOpacity
-                    onPress={() => props.navigation.navigate('FollowersPosts')}>
-                    {/* <PeopleIcon name="users" color="#00527a" size={20} /> */}
-                    <View
-                      style={{height: 40, width: 50, justifyContent: 'center'}}>
-                      <Image
-                        source={NoFollower}
-                        style={{height: 30, width: 35, borderWidth: 1}}
-                      />
-                    </View>
-                  </TouchableOpacity>
-                </View>
+                <TouchableOpacity
+                  onPress={() => props.navigation.navigate('Searching')}
+                  style={{position: 'absolute', left: 8}}>
+                  {/* <Icon2 name="view-grid" color="#00527a" size={28} /> */}
+                  <View
+                    style={{
+                      height: 40,
+                      width: 40,
+                      justifyContent: 'center',
+                    }}>
+                    <Image
+                      source={SearchIcon}
+                      style={{height: 25, width: 30}}
+                    />
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => props.navigation.navigate('CategoryList')}
+                  style={{position: 'absolute', right: 50}}>
+                  {/* <Icon2 name="view-grid" color="#00527a" size={28} /> */}
+                  <View
+                    style={{
+                      height: 40,
+                      width: 40,
+                      justifyContent: 'center',
+                    }}>
+                    <Image
+                      source={NoCategory}
+                      style={{height: 25, width: 30}}
+                    />
+                  </View>
+                </TouchableOpacity>
+
+                <TouchableOpacity
+                  onPress={() => props.navigation.navigate('FollowersPosts')}
+                  style={{position: 'absolute', right: 5}}>
+                  {/* <PeopleIcon name="users" color="#00527a" size={20} /> */}
+                  <View
+                    style={{
+                      height: 40,
+                      width: 40,
+                      justifyContent: 'center',
+                    }}>
+                    <Image
+                      source={NoFollower}
+                      style={{height: 25, width: 30}}
+                    />
+                  </View>
+                </TouchableOpacity>
               </View>
             </View>
           </View>
@@ -593,16 +608,16 @@ class HomeScreen extends PureComponent {
                 {this.state.loadmore ? (
                   <ActivityIndicator
                     size={40}
-                    color="#1192d1"></ActivityIndicator>
+                    color="#0C91CF"></ActivityIndicator>
                 ) : (
                   null
                   // <Text
                   //   style={{
                   //     alignSelf: 'center',
-                  //     color: '#1192d1',
+                  //     color: '#0C91CF',
                   //     backgroundColor: 'white',
                   //     padding: '2%',
-                  //     borderColor: '#1192d1',
+                  //     borderColor: '#0C91CF',
                   //     borderWidth: 0.6,
                   //     borderRadius: 4,
                   //   }}

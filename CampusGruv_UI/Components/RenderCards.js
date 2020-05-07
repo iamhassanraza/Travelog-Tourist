@@ -108,15 +108,15 @@ class RenderCards extends PureComponent {
                 paddingBottom: 10,
               }}>
               {this.props.loadstate ? (
-                <ActivityIndicator size={40} color="#1192d1" />
+                <ActivityIndicator size={40} color="#0C91CF" />
               ) : (
                 <Text
                   style={{
                     alignSelf: 'center',
-                    color: '#1192d1',
+                    color: '#0C91CF',
                     backgroundColor: 'white',
                     padding: '2%',
-                    borderColor: '#1192d1',
+                    borderColor: '#0C91CF',
                     borderWidth: 0.6,
                     borderRadius: 4,
                   }}

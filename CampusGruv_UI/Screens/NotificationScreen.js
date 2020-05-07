@@ -76,11 +76,11 @@ class NotificationScreen extends Component {
     return (
       <View style={{flex: 1}}>
         {Platform.OS == 'ios' ? (
-          <View style={{backgroundColor: '#1192d1'}}>
+          <View style={{backgroundColor: '#0C91CF'}}>
             <View
               style={{
                 height: 50,
-                backgroundColor: '#1192d1',
+                backgroundColor: '#0C91CF',
                 flexDirection: 'row',
                 justifyContent: 'center',
               }}>
@@ -97,7 +97,7 @@ class NotificationScreen extends Component {
             style={{
               marginTop: 0,
               height: 50,
-              backgroundColor: '#1192d1',
+              backgroundColor: '#0C91CF',
               flexDirection: 'row',
               justifyContent: 'center',
               marginTop: Platform.OS == 'ios' ? 30 : 0,

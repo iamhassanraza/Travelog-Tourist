@@ -17,9 +17,8 @@ export default class MA extends Component {
       <View style={{flex: 1, borderWidth: 2, borderColor: 'red'}}>
         <ImageBackground
           source={BGIMAGE}
-          style={{width: '100%', height: '100%', backgroundColor: '#1192d1'}}>
-          <View behavior="height"
-            style={{ borderWidth: 3}}>
+          style={{width: '100%', height: '100%', backgroundColor: '#0C91CF'}}>
+          <View behavior="height" style={{borderWidth: 3}}>
             <View style={{}}>
               <Image
                 source={require('../Assets/Images/logo.png')}
@@ -27,70 +26,77 @@ export default class MA extends Component {
                 style={{width: 300, alignSelf: 'center'}}
               />
             </View>
-            <KeyboardAvoidingView behavior='height'>
-            <View
-              style={{ borderWidth: 3 }}>
-              <View style={{paddingBottom:20}}>
+            <KeyboardAvoidingView behavior="height">
+              <View style={{borderWidth: 3}}>
+                <View style={{paddingBottom: 20}}>
                   <TextInput
-                placeholder="Enter Email"
-                style={{
-                  width: '90%',
-                  height: 50,
-                  borderWidth: 1,
-                  backgroundColor: 'white',
-                  alignSelf: 'center',
-                  borderRadius: 20,
-                }}></TextInput>
-                  </View><View style={{paddingBottom:20}}>
+                    placeholder="Enter Email"
+                    style={{
+                      width: '90%',
+                      height: 50,
+                      borderWidth: 1,
+                      backgroundColor: 'white',
+                      alignSelf: 'center',
+                      borderRadius: 20,
+                    }}
+                  />
+                </View>
+                <View style={{paddingBottom: 20}}>
                   <TextInput
-                placeholder="Enter Email"
-                style={{
-                  width: '90%',
-                  height: 50,
-                  borderWidth: 1,
-                  backgroundColor: 'white',
-                  alignSelf: 'center',
-                  borderRadius: 20,
-                }}></TextInput>
-                  </View><View style={{paddingBottom:20}}>
+                    placeholder="Enter Email"
+                    style={{
+                      width: '90%',
+                      height: 50,
+                      borderWidth: 1,
+                      backgroundColor: 'white',
+                      alignSelf: 'center',
+                      borderRadius: 20,
+                    }}
+                  />
+                </View>
+                <View style={{paddingBottom: 20}}>
                   <TextInput
-                placeholder="Enter Email"
-                style={{
-                  width: '90%',
-                  height: 50,
-                  borderWidth: 1,
-                  backgroundColor: 'white',
-                  alignSelf: 'center',
-                  borderRadius: 20,
-                }}></TextInput>
-                  </View><View style={{paddingBottom:20}}>
+                    placeholder="Enter Email"
+                    style={{
+                      width: '90%',
+                      height: 50,
+                      borderWidth: 1,
+                      backgroundColor: 'white',
+                      alignSelf: 'center',
+                      borderRadius: 20,
+                    }}
+                  />
+                </View>
+                <View style={{paddingBottom: 20}}>
                   <TextInput
-                placeholder="Enter Email"
-                style={{
-                  width: '90%',
-                  height: 50,
-                  borderWidth: 1,
-                  backgroundColor: 'white',
-                  alignSelf: 'center',
-                  borderRadius: 20,
-                }}></TextInput>
-                  </View><View style={{paddingBottom:20}}>
+                    placeholder="Enter Email"
+                    style={{
+                      width: '90%',
+                      height: 50,
+                      borderWidth: 1,
+                      backgroundColor: 'white',
+                      alignSelf: 'center',
+                      borderRadius: 20,
+                    }}
+                  />
+                </View>
+                <View style={{paddingBottom: 20}}>
                   <TextInput
-                placeholder="Enter Email"
-                style={{
-                  width: '90%',
-                  height: 50,
-                  borderWidth: 1,
-                  backgroundColor: 'white',
-                  alignSelf: 'center',
-                  borderRadius: 20,
-                }}></TextInput>
-                  </View>
-                  
-            </View>
+                    placeholder="Enter Email"
+                    style={{
+                      width: '90%',
+                      height: 50,
+                      borderWidth: 1,
+                      backgroundColor: 'white',
+                      alignSelf: 'center',
+                      borderRadius: 20,
+                    }}
+                  />
+                </View>
+              </View>
             </KeyboardAvoidingView>
             <View style={{}}>
-              <Button title={'sigin up'}></Button>
+              <Button title={'sigin up'} />
             </View>
           </View>
         </ImageBackground>

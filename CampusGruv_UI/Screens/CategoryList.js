@@ -25,11 +25,11 @@ export default class CategoryList extends Component {
       header: (
         <View>
           {Platform.OS == 'ios' ? (
-            <View style={{backgroundColor: '#1192d1'}}>
+            <View style={{backgroundColor: '#0C91CF'}}>
               <View
                 style={{
                   height: 50,
-                  backgroundColor: '#1192d1',
+                  backgroundColor: '#0C91CF',
                   flexDirection: 'row',
                   justifyContent: 'center',
                 }}>
@@ -77,11 +77,11 @@ export default class CategoryList extends Component {
               </View>
             </View>
           ) : (
-            <View style={{backgroundColor: '#1192d1'}}>
+            <View style={{backgroundColor: '#0C91CF'}}>
               <View
                 style={{
                   height: 50,
-                  backgroundColor: '#1192d1',
+                  backgroundColor: '#0C91CF',
                   flexDirection: 'row',
                   justifyContent: 'center',
                 }}>
@@ -181,7 +181,7 @@ export default class CategoryList extends Component {
             <View
               style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
               <ActivityIndicator
-                color="#1192d1"
+                color="#0C91CF"
                 size={50}
                 style={{marginBottom: '5%'}}
               />
@@ -189,7 +189,7 @@ export default class CategoryList extends Component {
             </View>
           ) : (
             <FlatList
-              style={{margin: 10}}
+              style={{paddingHorizontal: 10}}
               numColumns={2}
               data={this.state.Data}
               keyExtractor={item => item.id}
@@ -203,7 +203,6 @@ export default class CategoryList extends Component {
                     image={item.category_image}
                     cat_id={item.id}
                     onSelect1={this.selectCategory}
-                    // onSelect2={this.move}
                   />
                 );
               }}

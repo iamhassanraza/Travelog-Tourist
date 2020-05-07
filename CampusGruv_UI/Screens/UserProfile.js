@@ -45,11 +45,11 @@ class UserProfile extends React.Component {
       header:
         params.otherUserId === null ||
         params.otherUserId === params.currentUserId ? (
-          <View style={{backgroundColor: '#1192d1'}}>
+          <View style={{backgroundColor: '#0C91CF'}}>
             <View
               style={{
                 height: 50,
-                backgroundColor: '#1192d1',
+                backgroundColor: '#0C91CF',
                 flexDirection: 'row',
                 justifyContent: 'center',
               }}>
@@ -73,7 +73,7 @@ class UserProfile extends React.Component {
                     //props.navigation.goBack()
                   }>
                   <MenuIcon
-                    name="more-vertical"
+                    name="menu"
                     color="white"
                     fontWeight="bold"
                     size={26}
@@ -83,11 +83,11 @@ class UserProfile extends React.Component {
             </View>
           </View>
         ) : (
-          <View style={{backgroundColor: '#1192d1'}}>
+          <View style={{backgroundColor: '#0C91CF'}}>
             <View
               style={{
                 height: 50,
-                backgroundColor: '#1192d1',
+                backgroundColor: '#0C91CF',
                 flexDirection: 'row',
                 justifyContent: 'center',
               }}>
@@ -125,7 +125,7 @@ class UserProfile extends React.Component {
                     //props.navigation.goBack()
                   }>
                   <MenuIcon
-                    name="more-vertical"
+                    name="more-horizontal"
                     color="white"
                     fontWeight="bold"
                     size={26}
@@ -498,7 +498,7 @@ class UserProfile extends React.Component {
               style={{
                 marginTop: 5,
                 alignSelf: 'flex-end',
-                padding: 5,
+                padding: 8,
               }}
               onPress={() => {
                 this.props.navigation.navigate('EditProfile');
@@ -506,47 +506,26 @@ class UserProfile extends React.Component {
               <Text
                 style={{
                   color: '#ACACAC',
-                  borderWidth: 0.5,
+                  borderWidth: 1,
                   padding: 5,
+                  fontSize: 12,
+                  fontWeight: 'bold',
                   alignSelf: 'center',
                   borderColor: '#ACACAC',
-                  borderRadius: 10,
+                  borderRadius: 8,
                 }}>
                 Edit Profile
               </Text>
             </TouchableOpacity>
-            {/* <TouchableOpacity
-              style={{
-                marginTop: 5,
-                alignSelf: 'flex-end',
-                padding: 2,
-              }}
-              onPress={async () => {
-                await AsyncStorage.clear();
-                this.props.screenProps.rootNavigation.navigate('Login');
-                console.log('Logged Out');
-              }}>
-              <Text
-                style={{
-                  color: '#ACACAC',
-                  borderWidth: 0.5,
-                  padding: 5,
-                  alignSelf: 'center',
-                  borderColor: '#ACACAC',
-                  borderRadius: 10,
-                }}>
-                Logout
-              </Text>
-            </TouchableOpacity> */}
           </View>
         ) : this.state.isFollowing !== null ? (
           <View style={{backgroundColor: 'white'}}>
             <TouchableOpacity
               style={{
-                marginTop: 5,
-                //marginRight: 1,
-                width: 80,
-                //borderWidth: 1,
+                backgroundColor: 'white',
+                marginTop: 8,
+                marginRight: 8,
+                //width: 80,
                 justifyContent: 'center',
                 alignSelf: 'flex-end',
                 flexDirection: 'row',
@@ -556,19 +535,20 @@ class UserProfile extends React.Component {
               }}>
               <Text
                 style={{
-                  color: this.state.isFollowing ? ThemeBlue : 'grey',
-                  borderWidth: 0.5,
-                  //width: '100%',
+                  color: this.state.isFollowing ? ThemeBlue : '#ACACAC',
+                  borderWidth: 1,
                   padding: 5,
-                  borderColor: this.state.isFollowing ? ThemeBlue : 'grey',
-                  borderRadius: 10,
+                  fontWeight: 'bold',
+                  fontSize: 12,
+                  borderColor: this.state.isFollowing ? ThemeBlue : '#ACACAC',
+                  borderRadius: 8,
                 }}>
-                {this.state.isFollowing ? 'Unfollow' : 'Follow'}
+                {this.state.isFollowing ? 'Following' : 'Follow'}
               </Text>
             </TouchableOpacity>
           </View>
         ) : (
-          <View style={{height: 40}} />
+          <View style={{height: 35, backgroundColor: 'white'}} />
         )}
         {/* IMAGE and NAME  */}
         <View
@@ -596,11 +576,11 @@ class UserProfile extends React.Component {
               shadowOpacity: 0.5,
             }}
           />
-          <View style={{marginLeft: 5}}>
+          <View style={{marginLeft: 10}}>
             <Text style={{fontSize: 25, fontWeight: 'bold', color: '#727272'}}>
               {postUserFirstName + ' ' + postUserLastName.charAt(0) + '.'}
             </Text>
-            <Text style={{fontSize: 13, color: '#727272'}}>
+            <Text style={{fontSize: 13, fontWeight: 'bold', color: '#727272'}}>
               {postUserCampus}
             </Text>
           </View>
@@ -873,7 +853,7 @@ class UserProfile extends React.Component {
               // paddingLeft: '2%',
               height: '75%',
             }}>
-            <Icon
+            <MenuIcon
               name="search"
               color="#C4C4C4"
               size={18}

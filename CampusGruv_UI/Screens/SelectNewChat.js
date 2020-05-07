@@ -16,6 +16,8 @@ import NewMessageComponent from '../Components/NewMessageComponent';
 import {connect} from 'react-redux';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {ThemeBlue} from '../Assets/Colors';
+import SearchIcon from 'react-native-vector-icons/Feather';
+import SearchInput, {createFilter} from 'react-native-search-filter';
 
 class SelectNewChat extends Component {
   constructor(props) {
@@ -26,6 +28,32 @@ class SelectNewChat extends Component {
       users: [],
       room_id: null,
     };
+  }
+
+  getFollowing = async () => {
+    const Token = await AsyncStorage.getItem('TOKEN');
+    const user_id = await AsyncStorage.getItem('USER_ID');
+    const Response = await fetch(
+      `${
+        require('../config').default.production
+      }api/v1/following/users?user_id=${this.props.User.id}`,
+      {
+        headers: {
+          Authorization: `Bearer ${Token}`,
+        },
+      },
+    );
+    const JsonResponse = await Response.json();
+    console.log(JsonResponse, 'resssss');
+    this.setState({
+      users: JsonResponse,
+      loadingUsers: false,
+    });
+  };
+
+  componentDidMount() {
+    this.getFollowing();
+    //this.fetchUsers('a');
   }
 
   fetchUsers = async text => {
@@ -68,8 +96,53 @@ class SelectNewChat extends Component {
     return (
       <Container>
         <Content style={{backgroundColor: '#f9fdfe'}}>
-          <SearchBar
-            platform="ios"
+          <View
+            style={{
+              flexDirection: 'row',
+              marginRight: '2%',
+              marginLeft: '2%',
+              borderColor: '#C4C4C4',
+              borderWidth: 1,
+              borderRadius: 9,
+              height: 30,
+              marginTop: 10,
+            }}>
+            <SearchIcon
+              name="search"
+              style={{
+                alignSelf: 'center',
+                fontSize: 20,
+                color: '#C4C4C4',
+                paddingLeft: '2%',
+              }}
+            />
+            <SearchInput
+              onChangeText={term => {
+                this.updateSearch(term);
+              }}
+              style={{
+                alignItems: 'center',
+                justifyContent: 'center',
+                paddingTop: 0,
+                marginLeft: 5,
+                paddingBottom: 0,
+                width: 250,
+                color: '#C4C4C4',
+              }}
+              placeholder="Search"
+            />
+          </View>
+          {/* <SearchBar
+            style={{
+              alignItems: 'center',
+              justifyContent: 'center',
+              paddingTop: 0,
+              marginLeft: 5,
+              paddingBottom: 0,
+              width: 250,
+              color: '#C4C4C4',
+            }}
+            //platform="ios"
             placeholder="Type Here..."
             onChangeText={this.updateSearch}
             value={this.state.text}
@@ -77,7 +150,7 @@ class SelectNewChat extends Component {
               this.setState({text: ''});
             }}
             clearIcon={false}
-          />
+          /> */}
           {!this.state.loadingUsers ? (
             <ScrollView style={{}}>
               <FlatList
@@ -102,7 +175,9 @@ class SelectNewChat extends Component {
               />
             </ScrollView>
           ) : (
-            <UIActivityIndicator color={ThemeBlue} />
+            <View style={{height: 500}}>
+              <UIActivityIndicator color={ThemeBlue} />
+            </View>
           )}
         </Content>
       </Container>

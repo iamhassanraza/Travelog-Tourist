@@ -43,11 +43,14 @@ class Following extends Component {
     return {
       header:
         Platform.OS === 'ios' ? (
-          <View style={{backgroundColor: '#1192d1'}}>
+          <View style={{backgroundColor: '#0C91CF'}}>
             <View
               style={{
+                shadowOffset: {height: 5, width: 0},
+                shadowColor: 'rgba(0,0,0,0.25)',
+                elevation: 5,
                 height: 50,
-                backgroundColor: '#1192d1',
+                backgroundColor: '#0C91CF',
                 flexDirection: 'row',
                 justifyContent: 'center',
               }}>
@@ -76,8 +79,11 @@ class Following extends Component {
         ) : (
           <View
             style={{
+              shadowOffset: {height: 5, width: 0},
+              shadowColor: 'rgba(0,0,0,0.25)',
+              elevation: 5,
               height: 50,
-              backgroundColor: '#1192d1',
+              backgroundColor: '#0C91CF',
               flexDirection: 'row',
               justifyContent: 'center',
             }}>
@@ -180,9 +186,9 @@ class Following extends Component {
             alignItems: 'center',
             marginRight: '20%',
             marginLeft: '2%',
-            borderColor: '#CCC',
+            borderColor: '#C4C4C4',
             borderWidth: 1,
-            borderRadius: 15,
+            borderRadius: 9,
             height: 30,
             marginTop: 10,
           }}>
@@ -191,7 +197,7 @@ class Following extends Component {
             style={{
               alignSelf: 'center',
               fontSize: 20,
-              color: '#d3e0d7',
+              color: '#C4C4C4',
               paddingLeft: '2%',
             }}
           />
@@ -249,5 +255,6 @@ const styles = StyleSheet.create({
     marginLeft: 5,
     paddingBottom: 0,
     width: 250,
+    color: '#C4C4C4',
   },
 });

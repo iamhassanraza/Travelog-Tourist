@@ -42,11 +42,11 @@ class CreateNewPost extends Component {
     const {params = {}} = props.navigation.state;
     return {
       header: (
-        <View style={{backgroundColor: '#1192d1'}}>
+        <View style={{backgroundColor: '#0C91CF'}}>
           <View
             style={{
               height: 50,
-              backgroundColor: '#1192d1',
+              backgroundColor: '#0C91CF',
               flexDirection: 'row',
               justifyContent: 'center',
             }}>

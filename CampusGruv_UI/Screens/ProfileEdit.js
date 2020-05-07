@@ -47,7 +47,7 @@ class ProfilePage extends React.Component {
           <View
             style={{
               height: 50,
-              backgroundColor: '#1192d1',
+              backgroundColor: '#0C91CF',
               flexDirection: 'row',
               justifyContent: 'center',
             }}>
@@ -83,7 +83,7 @@ class ProfilePage extends React.Component {
           <View
             style={{
               height: 50,
-              backgroundColor: '#1192d1',
+              backgroundColor: '#0C91CF',
               flexDirection: 'row',
               justifyContent: 'center',
             }}>
@@ -393,7 +393,7 @@ class ProfilePage extends React.Component {
           />
           <Icon
             name="pencil"
-            color={this.state.focused ? '#1192d1' : '#C4C4C4'}
+            color={this.state.focused ? '#0C91CF' : '#C4C4C4'}
             size={26}
             style={{width: '10%', marginTop: 15}}
           />
@@ -431,7 +431,7 @@ class ProfilePage extends React.Component {
           />
           <Icon
             name="pencil"
-            color={this.state.focused ? '#1192d1' : '#C4C4C4'}
+            color={this.state.focused ? '#0C91CF' : '#C4C4C4'}
             size={26}
             style={{width: '10%', marginTop: 15}}
           />

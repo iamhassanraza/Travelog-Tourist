@@ -34,11 +34,11 @@ export default class AddNewPost extends Component {
     const {params = {}} = props.navigation.state;
     return {
       header: (
-        <View style={{backgroundColor: '#1192d1'}}>
+        <View style={{backgroundColor: '#0C91CF'}}>
           <View
             style={{
               height: 50,
-              backgroundColor: '#1192d1',
+              backgroundColor: '#0C91CF',
               flexDirection: 'row',
               justifyContent: 'center',
             }}>
@@ -142,7 +142,11 @@ export default class AddNewPost extends Component {
             alignSelf: 'center',
             marginTop: Platform.OS == 'ios' ? '10%' : '10%',
             borderRadius: 10,
-
+            shadowOffset: {width: 0, height: 4},
+            shadowOpacity: 4,
+            shadowColor: 'rgba(0,0,0,0.25)',
+            borderRadius: 7,
+            elevation: 5,
             justifyContent: 'center',
           }}>
           <TouchableOpacity onPress={this.selectPhoto}>
@@ -170,7 +174,11 @@ export default class AddNewPost extends Component {
             backgroundColor: '#0C91CF',
             alignSelf: 'center',
             marginTop: Platform.OS == 'ios' ? '10%' : '10%',
-            borderRadius: 10,
+            shadowOffset: {width: 0, height: 4},
+            shadowOpacity: 4,
+            shadowColor: 'rgba(0,0,0,0.25)',
+            borderRadius: 7,
+            elevation: 5,
             justifyContent: 'center',
           }}>
           <TouchableOpacity onPress={this.selectPhoto}>
@@ -293,7 +301,7 @@ export default class AddNewPost extends Component {
                   borderRadius: 10,
                   height: 45,
                   justifyContent: 'center',
-                  backgroundColor: '#1192d1',
+                  backgroundColor: '#0C91CF',
                   alignSelf: 'center',
                   marginTop: Platform.OS == 'ios' ? 25 : 10,
                 }}>

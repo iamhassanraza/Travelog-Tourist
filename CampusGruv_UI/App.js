@@ -8,15 +8,10 @@ import {
   TouchableOpacity,
   Platform,
 } from 'react-native';
-// import HomeScreen from './Screens/HomeScreen'
 import 'react-native-gesture-handler';
-// import Screen1 from './Screens/CreatePost'
-// import Screen2 from './Screens/Screen1'
-import Screen3 from './Components/Post';
 import PostIcon from 'react-native-vector-icons/Foundation';
 import {Keyboard} from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import OptionsIcon from 'react-native-vector-icons/SimpleLineIcons';
 import PeopleIcon from 'react-native-vector-icons/FontAwesome5';
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
 import HomeIcon from 'react-native-vector-icons/Feather';
@@ -51,14 +46,10 @@ import Searching from './Screens/Searching';
 import RecoveryCode from './Screens/RecoveryCode';
 import ResetPassword from './Screens/ResetPassword';
 import UserSettings from './Screens/UserSettings';
-import {TouchableHighlight} from 'react-native-gesture-handler';
-import NoPost from './Components/NoPost';
 import EmailVerification from './Screens/EmailVerification';
 import Followers from './Screens/Followers';
 import Following from './Screens/Following';
-import {Header} from 'react-native-elements';
 import FollowersPosts from './Screens/FollowersPosts';
-import LogoutButton from './Components/LogoutButton';
 import InboxComponent from './Components/InboxComponent';
 import ReportPost from './Screens/ReportPost';
 import MainTabNavigation from './Screens/MainTabNavigation';
@@ -138,11 +129,11 @@ const ProfileStack = createStackNavigator(
       screen: UserSettings,
       navigationOptions: {
         header: props => (
-          <View style={{backgroundColor: '#1192d1'}}>
+          <View style={{backgroundColor: '#0C91CF'}}>
             <View
               style={{
                 height: 50,
-                backgroundColor: '#1192d1',
+                backgroundColor: '#0C91CF',
                 flexDirection: 'row',
                 justifyContent: 'center',
               }}>
@@ -236,13 +227,13 @@ const HomeStack = createStackNavigator(
     },
     defaultNavigationOptions: {
       header: props => (
-        <View style={{backgroundColor: '#1192d1'}}>
+        <View style={{backgroundColor: '#0C91CF'}}>
           <View
             style={{
               height: 50,
               flexDirection: 'row',
               alignItems: 'center',
-              backgroundColor: '#1192d1',
+              backgroundColor: '#0C91CF',
             }}>
             <View
               style={{flexDirection: 'row', alignItems: 'center', flex: 10}}>
@@ -265,7 +256,7 @@ const HomeStack = createStackNavigator(
                       borderRadius: 10,
                     }}>
                     <View style={{marginLeft: '2%'}}>
-                      <Icon name="search" color="#1192d1" size={20} />
+                      <Icon name="search" color="#0C91CF" size={20} />
                     </View>
                     <View style={{height: 20}}>
                       <Image
@@ -302,6 +293,18 @@ const HomeStack = createStackNavigator(
   },
 );
 
+const NotificationStack = createStackNavigator(
+  {
+    NotificationScreen,
+    PostDetail,
+  },
+  {
+    defaultNavigationOptions: {
+      header: null,
+    },
+  },
+);
+
 const MessageStack = createStackNavigator(
   {
     InboxComponent,
@@ -309,11 +312,11 @@ const MessageStack = createStackNavigator(
       screen: SelectNewChat,
       navigationOptions: {
         header: props => (
-          <View style={{backgroundColor: '#1192d1'}}>
+          <View style={{backgroundColor: '#0C91CF'}}>
             <View
               style={{
                 height: 50,
-                backgroundColor: '#1192d1',
+                backgroundColor: '#0C.91CF',
                 flexDirection: 'row',
                 justifyContent: 'center',
               }}>
@@ -346,18 +349,18 @@ const MessageStack = createStackNavigator(
       screen: inbox,
       navigationOptions: {
         header: props => (
-          <View style={{backgroundColor: '#1192d1'}}>
+          <View style={{backgroundColor: '#0C91CF'}}>
             <View
               style={{
                 height: 50,
-                backgroundColor: '#1192d1',
+                backgroundColor: '#0C91CF',
                 flexDirection: 'row',
                 justifyContent: 'center',
               }}>
               <View style={{alignSelf: 'center'}}>
                 <Text
                   style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
-                  Messages
+                  Activity
                 </Text>
               </View>
               <View
@@ -408,12 +411,12 @@ const androidTabBarOptions = {
     marginTop: -2,
   },
   indicatorStyle: {
-    backgroundColor: '#1192d1',
+    backgroundColor: '#0C91CF',
     height: 2,
   },
   upperCaseLabel: false,
   inactiveTintColor: 'grey',
-  activeTintColor: '#1192d1',
+  activeTintColor: '#0C91CF',
   showIcon: true,
   showLabel: false,
 };
@@ -432,12 +435,12 @@ const iosTabBarOptions = {
     marginTop: -2,
   },
   indicatorStyle: {
-    backgroundColor: '#1192d1',
+    backgroundColor: '#0C91CF',
     height: 2,
   },
   upperCaseLabel: false,
   inactiveTintColor: 'grey',
-  activeTintColor: '#1192d1',
+  activeTintColor: '#0C91CF',
   showIcon: true,
   showLabel: false,
 };
@@ -454,7 +457,7 @@ const TabNavigator = createBottomTabNavigator(
       },
     },
     Notifications: {
-      screen: NotificationScreen,
+      screen: NotificationStack,
       navigationOptions: props => {
         store = mystore;
         state = store.getState();
@@ -543,10 +546,10 @@ const TabNavigator = createBottomTabNavigator(
     tabBarPosition: 'bottom',
     swipeEnabled: false,
     defaultNavigationOptions: {
-      tabBarOnPress: ({navigation, defaultHandler}) => {
-        navigation.dispatch(StackActions.popToTop());
-        defaultHandler();
-      },
+      // tabBarOnPress: ({navigation, defaultHandler}) => {
+      //   navigation.dispatch(StackActions.popToTop());
+      //   defaultHandler();
+      // },
     },
     tabBarOptions: {
       style: {
@@ -561,12 +564,12 @@ const TabNavigator = createBottomTabNavigator(
         alignSelf: 'center',
       },
       indicatorStyle: {
-        backgroundColor: '#1192d1',
-        height: 2,
+        backgroundColor: '#0C91CF',
+        height: 0,
       },
       upperCaseLabel: false,
       inactiveTintColor: '#C4C4C4',
-      activeTintColor: '#1192d1',
+      activeTintColor: '#0C91CF',
       showIcon: true,
       showLabel: false,
     },
