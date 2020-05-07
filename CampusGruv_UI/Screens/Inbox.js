@@ -67,6 +67,7 @@ class Inbox extends Component {
             <View
               style={{
                 flexDirection: 'row',
+                alignItems: 'center',
                 marginRight: '2%',
                 marginLeft: '2%',
                 borderColor: '#C4C4C4',

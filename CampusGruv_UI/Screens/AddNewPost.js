@@ -20,6 +20,7 @@ import {
 import Icon from 'react-native-vector-icons/AntDesign';
 import {StackActions, NavigationActions} from 'react-navigation';
 import {Header} from 'react-native-elements';
+import {Container, Content, Input} from 'native-base';
 
 const options = {
   title: 'Select Photo',
@@ -227,101 +228,92 @@ export default class AddNewPost extends Component {
 
   render() {
     return (
-      <TouchableWithoutFeedback
-        style={{
-          height: Dimensions.get('window').height,
-          backgroundColor: '#f9fdfe',
-        }}>
-        <KeyboardAvoidingView
-          behavior="padding"
-          keyboardVerticalOffset={100}
-          style={{flex: 1}}>
-          <ScrollView>
-            {this.state.Images != null ? (
-              <ImageBackground
-                style={{
-                  height: 200,
-                  width: 200,
-                  marginTop: 20,
-                  marginBottom: 20,
-                  alignSelf: 'center',
-                }}
-                source={this.state.imageSource}
-              />
-            ) : null}
-
-            {this.state.Images ? this.renderDeleteIcon() : this.renderOptions()}
-
-            <Text
+      <Container>
+        <Content>
+          {this.state.Images != null ? (
+            <ImageBackground
               style={{
+                height: 200,
+                width: 200,
+                marginTop: 20,
+                marginBottom: 20,
                 alignSelf: 'center',
-                marginTop: Platform.OS == 'ios' ? '15%' : 20,
-                fontSize: 22,
-                color: 'grey',
-              }}>
-              Title
-            </Text>
-            <TextInput
-              style={{
-                marginTop: 10,
-                marginLeft: '5%',
-                width: '90%',
-                height: 45,
-                borderRadius: 7,
-                borderWidth: 1,
-                borderColor: '#B4B8BA',
               }}
-              placeholder=" Title"
-              value={this.state.title}
-              onChangeText={text => {
-                this.setState({title: text});
-              }}
+              source={this.state.imageSource}
             />
+          ) : null}
 
-            <TouchableOpacity
-              style={{alignItems: 'center', marginTop: '3%'}}
-              onPress={() => {
-                if (this.state.Images && this.state.title !== '') {
-                  this.setState({error: ''});
-                  this.props.navigation.navigate('CreatePost', {
-                    Images: this.state.Images,
-                    title: this.state.title,
-                    deleteItems: this.deleteItems,
-                  });
-                } else if (
-                  this.state.Images === undefined &&
-                  this.state.title === ''
-                ) {
-                  this.setState({error: 'Select image and title'});
-                }
+          {this.state.Images ? this.renderDeleteIcon() : this.renderOptions()}
+
+          <Text
+            style={{
+              alignSelf: 'center',
+              marginTop: Platform.OS == 'ios' ? '15%' : 20,
+              fontSize: 22,
+              color: 'grey',
+            }}>
+            Title
+          </Text>
+          <Input
+            style={{
+              marginTop: 10,
+              marginLeft: '5%',
+              width: '90%',
+              height: 35,
+              borderRadius: 7,
+              borderWidth: 1,
+              borderColor: '#B4B8BA',
+            }}
+            placeholder=" Title"
+            value={this.state.title}
+            onChangeText={text => {
+              this.setState({title: text});
+            }}
+          />
+
+          <TouchableOpacity
+            style={{alignItems: 'center', marginTop: '3%'}}
+            onPress={() => {
+              if (this.state.Images && this.state.title !== '') {
+                this.setState({error: ''});
+                this.props.navigation.navigate('CreatePost', {
+                  Images: this.state.Images,
+                  title: this.state.title,
+                  deleteItems: this.deleteItems,
+                });
+              } else if (
+                this.state.Images === undefined &&
+                this.state.title === ''
+              ) {
+                this.setState({error: 'Select image and title'});
+              }
+            }}>
+            <View
+              style={{
+                width: '90%',
+                borderRadius: 10,
+                height: 35,
+                justifyContent: 'center',
+                backgroundColor: '#0C91CF',
+                alignSelf: 'center',
+                marginTop: Platform.OS == 'ios' ? 25 : 10,
               }}>
-              <View
+              <Text
                 style={{
-                  width: '90%',
-                  borderRadius: 10,
-                  height: 45,
-                  justifyContent: 'center',
-                  backgroundColor: '#0C91CF',
+                  color: 'white',
                   alignSelf: 'center',
-                  marginTop: Platform.OS == 'ios' ? 25 : 10,
+                  fontSize: 20,
+                  fontWeight: 'bold',
                 }}>
-                <Text
-                  style={{
-                    color: 'white',
-                    alignSelf: 'center',
-                    fontSize: 20,
-                    fontWeight: 'bold',
-                  }}>
-                  NEXT
-                </Text>
-              </View>
-              {this.state.error === 'Select image and title' ? (
-                <Text style={{color: 'red'}}>{this.state.error}</Text>
-              ) : null}
-            </TouchableOpacity>
-          </ScrollView>
-        </KeyboardAvoidingView>
-      </TouchableWithoutFeedback>
+                NEXT
+              </Text>
+            </View>
+            {this.state.error === 'Select image and title' ? (
+              <Text style={{color: 'red'}}>{this.state.error}</Text>
+            ) : null}
+          </TouchableOpacity>
+        </Content>
+      </Container>
     );
   }
 }

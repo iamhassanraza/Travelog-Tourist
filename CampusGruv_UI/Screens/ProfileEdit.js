@@ -170,7 +170,10 @@ class ProfilePage extends React.Component {
         } else {
           await res.filter(campus => {
             if (campus.id === parseInt(campusId)) {
-              const cam = [...[campus], ...res];
+              const allcampuses = res.filter(
+                campus => campus.id !== parseInt(campusId),
+              );
+              const cam = [...[campus], ...allcampuses];
               console.log(campus, 'campus');
               this.setState({
                 selectedId: campus.id,
@@ -443,6 +446,7 @@ class ProfilePage extends React.Component {
   render() {
     let pickerItems = this.state.campuses[0]
       ? this.state.campuses.map((s, i) => {
+          // if (s.id !== this.state.selectedId)
           return <Picker.Item key={i} value={s.id} label={s.description} />;
         })
       : null;
@@ -457,7 +461,7 @@ class ProfilePage extends React.Component {
           textStyle={{color: 'black'}}
           customIndicator={<BarIndicator count={5} />}
         />
-        <ScrollView>
+        <Content>
           {/* EDIT PROFILE IMAGE */}
           <View
             style={{
@@ -566,7 +570,7 @@ class ProfilePage extends React.Component {
 
             {this.renderGradYear()}
           </View>
-        </ScrollView>
+        </Content>
       </Container>
     );
   }

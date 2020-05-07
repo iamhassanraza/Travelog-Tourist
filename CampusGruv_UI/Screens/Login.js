@@ -22,6 +22,7 @@ import {connect} from 'react-redux';
 import {CreateUserDetails} from '../ReduxStore/Actions/index';
 
 import {BarIndicator} from 'react-native-indicators';
+import {Container, Content} from 'native-base';
 
 const screenwidth = Dimensions.get('window').width;
 const screenheight = Dimensions.get('window').height;
@@ -139,29 +140,31 @@ class Login extends React.Component {
         {Platform.OS === 'ios' ? (
           <StatusBar translucent={true} barStyle="light-content" />
         ) : null}
-        <ScrollView>
+        <Container>
           <ImageBackground
             style={styles.container}
             source={require('../Assets/Images/background.png')}
             resizeMode="cover">
-            <View
-              style={{
-                width: screenwidth,
-                height: screenheight,
-                justifyContent: 'space-between',
-              }}>
-              <KeyboardAvoidingView behavior="padding" enabled>
+            <Content>
+              <View
+                style={{
+                  width: screenwidth,
+                  height: screenheight,
+                }}>
                 {/* MAIN TITLE */}
                 <View
                   style={{
                     justifyContent: 'center',
                     marginTop: Platform.OS === 'ios' ? 30 : 0,
-                    height: '30%',
+                    height: '20%',
                   }}>
                   <HeaderTitle />
                 </View>
 
-                <View style={{marginTop: Platform.OS === 'ios' ? 30 : 0}}>
+                <View
+                  style={{
+                    marginTop: Platform.OS === 'ios' ? 30 : 0,
+                  }}>
                   {/* EMAIL FIELD */}
                   <View
                     style={{
@@ -280,7 +283,9 @@ class Login extends React.Component {
                 {/* SIGN UP NAVIGATION */}
                 <View>
                   <View
-                    style={{marginTop: Platform.OS === 'ios' ? '30%' : '25%'}}>
+                    style={{
+                      marginTop: Platform.OS === 'ios' ? '45%' : '25%',
+                    }}>
                     <Text
                       style={{
                         color: 'white',
@@ -304,10 +309,10 @@ class Login extends React.Component {
                     </Text>
                   </View>
                 </View>
-              </KeyboardAvoidingView>
-            </View>
+              </View>
+            </Content>
           </ImageBackground>
-        </ScrollView>
+        </Container>
       </>
     );
   }
@@ -327,7 +332,7 @@ const styles = StyleSheet.create({
   },
   container: {
     width: screenwidth,
-    height: screenheight - 23,
+    height: screenheight,
     backgroundColor: Colors.overlayColor,
   },
   overlay: {

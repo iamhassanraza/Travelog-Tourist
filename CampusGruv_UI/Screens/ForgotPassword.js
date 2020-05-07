@@ -87,7 +87,7 @@ class ForgetPassword extends React.Component {
               color: 'white',
               fontSize: 16,
               margin: 10,
-              marginTop: Platform.OS == 'ios' ? 40 : 20,
+              marginTop: Platform.OS == 'ios' ? '15%' : 20,
             }}
             onPress={() => {
               this.props.navigation.goBack();
@@ -97,11 +97,11 @@ class ForgetPassword extends React.Component {
 
           <ScrollView style={{flex: 1}}>
             <KeyboardAvoidingView positon="padding">
-              <View style={{flex: 0.5, marginTop: -10}}>
+              <View style={{marginTop: '10%', height: '20%'}}>
                 <HeaderTitle />
               </View>
 
-              <View style={{flex: 1.5}}>
+              <View style={{}}>
                 <Text
                   style={{
                     width: '95%',
@@ -119,10 +119,10 @@ class ForgetPassword extends React.Component {
                   style={{
                     width: '90%',
                     marginLeft: '5%',
-                    marginTop: 20,
+                    marginTop: '10%',
                     borderColor: '#C4C4C4',
                     backgroundColor: 'white',
-                    borderWidth: 0.5,
+                    borderWidth: 1,
                     borderRadius: 10,
                   }}>
                   <TextInput
@@ -192,15 +192,15 @@ class ForgetPassword extends React.Component {
                     ) : (
                       <View
                         style={{
-                          height: 40,
+                          height: 35,
                           width: '50%',
-                          marginLeft: '25%',
+                          alignSelf: 'center',
                           borderRadius: 10,
                           marginTop: 40,
                           justifyContent: 'center',
                           backgroundColor: 'transparent',
                           borderColor: 'white',
-                          borderWidth: 0.6,
+                          borderWidth: 1,
                         }}>
                         <Text
                           style={{

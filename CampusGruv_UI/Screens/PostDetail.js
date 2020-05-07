@@ -480,6 +480,8 @@ class PostDetail extends Component {
           // marginBottom: Platform.OS == 'ios' ? 20 : 0,
           flexDirection: 'row',
           // borderTopWidth: 0.3,
+          position: 'absolute',
+          bottom: 10,
           borderTopColor: 'grey',
           paddingTop: 5,
           // paddingBottom: 5,
@@ -748,8 +750,7 @@ class PostDetail extends Component {
           {/* {Platform.OS === 'ios' ? <StatusBar barStyle="dark-content" /> : null} */}
           <Content
             style={{
-              marginBottom: Platform.OS === 'ios' ? 10 : 0,
-              marginTop: Platform.OS === 'ios' ? '-10%' : 0,
+              marginTop: Platform.OS === 'ios' ? '-9%' : 0,
             }}>
             {this.renderHeader(
               data.userAvatar,
@@ -778,6 +779,7 @@ class PostDetail extends Component {
                 </Text>
               </View>
             )}
+            {/* {this.renderAddComment(data.userAvatar, data.postId, data.userId)} */}
           </Content>
           {this.renderAddComment(data.userAvatar, data.postId, data.userId)}
         </Container>

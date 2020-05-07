@@ -20,6 +20,7 @@ import HeaderTitle from './Heading';
 import Colors from '../Assets/Colors';
 import {withNavigation} from 'react-navigation';
 import LogoutButton from '../Components/LogoutButton';
+import {Container, Content} from 'native-base';
 
 class EmailVerification extends React.Component {
   static navigationOptions = {
@@ -70,17 +71,18 @@ class EmailVerification extends React.Component {
         {Platform.OS === 'ios' ? (
           <StatusBar translucent={true} barStyle="light-content" />
         ) : null}
-        <ImageBackground
-          style={styles.container}
-          source={require('../Assets/Images/background.png')}
-          resizeMode="cover">
-          <ScrollView style={{flex: 1}}>
-            <KeyboardAvoidingView positon="padding">
-              <View style={{flex: 0.5, marginTop: 50}}>
+        <Container>
+          <ImageBackground
+            style={styles.container}
+            source={require('../Assets/Images/background.png')}
+            resizeMode="cover">
+            <Content>
+              {/* <ScrollView style={{flex: 1}}>
+              <KeyboardAvoidingView positon="padding"> */}
+              <View style={{marginTop: '25%', height: '10%'}}>
                 <HeaderTitle />
               </View>
-
-              <View style={{flex: 1.5}}>
+              <View style={{marginTop: '5%'}}>
                 <Text
                   style={{
                     width: '95%',
@@ -95,22 +97,12 @@ class EmailVerification extends React.Component {
                   {this.props.navigation.getParam('email', 'no email')} ,kindly
                   check your email and enter the code below.
                 </Text>
-                <Text
-                  style={{
-                    width: '95%',
-                    marginLeft: '2.5%',
-                    textAlign: 'center',
-                    color: 'white',
-                    fontSize: 25,
-                  }}>
-                  Enter Code
-                </Text>
 
                 <View
                   style={{
                     width: '90%',
                     marginLeft: '5%',
-                    marginTop: 10,
+                    marginTop: '8%',
                     borderColor: '#C4C4C4',
                     backgroundColor: 'white',
                     borderWidth: 0.5,
@@ -118,11 +110,12 @@ class EmailVerification extends React.Component {
                   }}>
                   <TextInput
                     autoCapitalize="none"
+                    placeholder="Email"
                     style={{
                       width: '90%',
                       fontSize: 20,
                       color: '#ACACAC',
-                      paddingLeft: '30%',
+                      paddingLeft: '8%',
                       height: Platform.OS == 'ios' ? 40 : 50,
                     }}
                     onChangeText={text => this.setState({code: text})}
@@ -167,15 +160,15 @@ class EmailVerification extends React.Component {
                     ) : (
                       <View
                         style={{
-                          height: 40,
-                          width: '50%',
-                          marginLeft: '25%',
+                          height: 35,
+                          width: '45%',
                           borderRadius: 10,
+                          alignSelf: 'center',
                           marginTop: 40,
                           justifyContent: 'center',
                           backgroundColor: 'transparent',
                           borderColor: 'white',
-                          borderWidth: 0.6,
+                          borderWidth: 1,
                         }}>
                         <Text
                           style={{
@@ -191,21 +184,19 @@ class EmailVerification extends React.Component {
                   </View>
                 </TouchableOpacity>
               </View>
-            </KeyboardAvoidingView>
-          </ScrollView>
-          <LogoutButton
-            style={{
-              // marginBottom: 20
-              // alignSelf: 'center',
-              // position: 'absolute',
-              // bottom: 50,
-              paddingLeft: 5,
-              fontSize: 18,
-              color: 'white',
-              fontWeight: 'bold',
-            }}
-          />
-        </ImageBackground>
+            </Content>
+            <View style={{position: 'absolute', bottom: 10, left: 10}}>
+              <LogoutButton
+                style={{
+                  paddingLeft: 5,
+                  fontSize: 18,
+                  color: 'white',
+                  fontWeight: 'bold',
+                }}
+              />
+            </View>
+          </ImageBackground>
+        </Container>
       </>
     );
   }

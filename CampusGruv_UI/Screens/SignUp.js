@@ -44,10 +44,12 @@ class Signup extends React.Component {
       last_name: '',
       email: '',
       password: '',
+      confirmPass: '',
       first_nameError: false,
       last_nameError: false,
       emailError: false,
       passwordError: false,
+      confirmPassError: false,
       spinner: false,
     };
   }
@@ -101,6 +103,14 @@ class Signup extends React.Component {
           setTimeout(() => this.setState({passwordError: false}), 1000);
         },
       );
+
+      return false;
+    }
+
+    if (this.state.password !== this.state.confirmPass) {
+      this.setState({confirmPassError: true}, () => {
+        setTimeout(() => this.setState({confirmPassError: false}), 1000);
+      });
 
       return false;
     }
@@ -331,6 +341,7 @@ class Signup extends React.Component {
                     color: '#ACACAC',
                   }}
                   placeholder="Email"
+                  autoCapitalize="none"
                   value={this.state.email}
                   onChangeText={email => this.setState({email})}
                   keyboardType="email-address"
@@ -371,6 +382,39 @@ class Signup extends React.Component {
               {this.state.passwordError ? (
                 <Text style={{color: 'red', fontSize: 13, marginLeft: 20}}>
                   Minimum 8 characters required
+                </Text>
+              ) : null}
+
+              {/* confirm password field */}
+
+              <View
+                style={{
+                  width: '90%',
+                  marginLeft: '5%',
+                  marginTop: 20,
+                  borderColor: '#C4C4C4',
+                  backgroundColor: 'white',
+                  borderWidth: 0.5,
+                  borderRadius: 10,
+                }}>
+                <TextInput
+                  style={{
+                    width: '90%',
+                    height: Platform.OS == 'ios' ? 40 : 50,
+                    marginLeft: 10,
+                    fontSize: 20,
+                    color: '#ACACAC',
+                  }}
+                  placeholder="Confirm password"
+                  value={this.state.confirmPass}
+                  onChangeText={confirmPass => this.setState({confirmPass})}
+                  secureTextEntry
+                />
+              </View>
+              {/*  confirm Password ERROR TEXT */}
+              {this.state.confirmPassError ? (
+                <Text style={{color: 'red', fontSize: 13, marginLeft: 20}}>
+                  Your passwords don't match
                 </Text>
               ) : null}
 
