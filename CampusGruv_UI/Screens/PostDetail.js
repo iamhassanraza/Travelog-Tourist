@@ -745,40 +745,45 @@ class PostDetail extends Component {
         {/* {Platform.OS === 'ios' ? <StatusBar barStyle="default" /> : null} */}
         <Container style={{}}>
           {/* {Platform.OS === 'ios' ? <StatusBar barStyle="dark-content" /> : null} */}
-          <Content
-            style={{
-              marginTop: Platform.OS === 'ios' ? '-9%' : 0,
-            }}>
-            {this.renderHeader(
-              data.userAvatar,
-              data.postId,
-              data.first_name,
-              data.last_name,
-              data.uri,
-              data.userId,
-              data.title,
-            )}
-            {this.renderImage(data.uri)}
-            {this.renderTitle(data.title, data.views)}
-            {this.renderDescription(data.description)}
-            {this.state.comments[0] ? (
-              this.renderAllComments(data.userAvatar, data.comments)
-            ) : (
-              <View style={{height: 80, justifyContent: 'center'}}>
-                <Text
-                  style={{
-                    color: 'grey',
-                    fontSize: 25,
-                    opacity: 0.5,
-                    alignSelf: 'center',
-                  }}>
-                  No comments yet!
-                </Text>
-              </View>
-            )}
-            {/* {this.renderAddComment(data.userAvatar, data.postId, data.userId)} */}
-          </Content>
-          {this.renderAddComment(data.userAvatar, data.postId, data.userId)}
+          <KeyboardAvoidingView
+            style={{flex: 1}}
+            behavior="padding"
+            keyboardVerticalOffset={15}>
+            <Content
+              style={{
+                marginTop: Platform.OS === 'ios' ? '-9%' : 0,
+              }}>
+              {this.renderHeader(
+                data.userAvatar,
+                data.postId,
+                data.first_name,
+                data.last_name,
+                data.uri,
+                data.userId,
+                data.title,
+              )}
+              {this.renderImage(data.uri)}
+              {this.renderTitle(data.title, data.views)}
+              {this.renderDescription(data.description)}
+              {this.state.comments[0] ? (
+                this.renderAllComments(data.userAvatar, data.comments)
+              ) : (
+                <View style={{height: 80, justifyContent: 'center'}}>
+                  <Text
+                    style={{
+                      color: 'grey',
+                      fontSize: 25,
+                      opacity: 0.5,
+                      alignSelf: 'center',
+                    }}>
+                    No comments yet!
+                  </Text>
+                </View>
+              )}
+              {/* {this.renderAddComment(data.userAvatar, data.postId, data.userId)} */}
+            </Content>
+            {this.renderAddComment(data.userAvatar, data.postId, data.userId)}
+          </KeyboardAvoidingView>
         </Container>
       </>
     );
