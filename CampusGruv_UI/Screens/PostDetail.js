@@ -744,7 +744,9 @@ class PostDetail extends Component {
       <>
         {/* {Platform.OS === 'ios' ? <StatusBar barStyle="default" /> : null} */}
         <Container style={{}}>
-          {/* {Platform.OS === 'ios' ? <StatusBar barStyle="dark-content" /> : null}  */}
+          {Platform.OS === 'android' ? (
+            <StatusBar barStyle="dark-content" backgroundColor="white" />
+          ) : null}
           {Platform.OS === 'ios' ? (
             <KeyboardAvoidingView
               style={{flex: 1}}
