@@ -608,6 +608,52 @@ class UserProfile extends React.Component {
                 style={{
                   backgroundColor: 'white',
                   flexDirection: 'row',
+                  justifyContent: 'center',
+                  width: '100%',
+                  paddingBottom: 20,
+                  borderTopRightRadius: 12,
+                  borderTopLeftRadius: 12,
+                }}>
+                <Icon
+                  name="cancel"
+                  onPress={() => this.setState({isModalVisible: false})}
+                  style={{
+                    position: 'absolute',
+                    top: 12,
+                    left: 10,
+                    fontSize: 20,
+                    color: IconGrey,
+                  }}
+                />
+                <View
+                  style={{
+                    alignItems: 'center',
+                    paddingTop: 3,
+                  }}>
+                  <View
+                    style={{
+                      alignSelf: 'center',
+                      borderTopWidth: 2,
+                      marginTop: 3,
+                      width: 50,
+                      borderTopColor: IconGrey,
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: 'bold',
+                      marginTop: 2,
+                    }}>
+                    More Options
+                  </Text>
+                  {/* </View> */}
+                </View>
+              </View>
+              {/* <View
+                style={{
+                  backgroundColor: 'white',
+                  flexDirection: 'row',
                   justifyContent: 'space-between',
                   paddingBottom: 30,
                   borderTopRightRadius: 23,
@@ -631,17 +677,25 @@ class UserProfile extends React.Component {
                     backgroundColor: 'white',
                     paddingTop: 3,
                   }}>
+                  <View
+                    style={{
+                      alignSelf: 'center',
+                      borderTopWidth: 2,
+                      marginTop: 3,
+                      width: 50,
+                      borderTopColor: IconGrey,
+                    }}
+                  />
                   <Text
                     style={{
                       fontSize: 20,
                       fontWeight: 'bold',
-                      borderTopWidth: 2,
-                      borderTopColor: IconGrey,
+                      marginTop: 2,
                     }}>
                     More Options
                   </Text>
                 </View>
-              </View>
+              </View> */}
 
               <View
                 style={{
@@ -692,9 +746,10 @@ class UserProfile extends React.Component {
               </View>
             </View>
           </Modal>
+        </View>
 
-          {/* THE OTHER MODAL GOES HERE */}
-
+        {/* THE OTHER MODAL GOES HERE */}
+        <View>
           <Modal
             style={{
               margin: 0,
@@ -714,40 +769,46 @@ class UserProfile extends React.Component {
                 style={{
                   backgroundColor: 'white',
                   flexDirection: 'row',
-                  justifyContent: 'space-between',
-                  paddingBottom: 30,
-                  borderTopRightRadius: 23,
-                  borderTopLeftRadius: 23,
+                  justifyContent: 'center',
+                  width: '100%',
+                  paddingBottom: 20,
+                  borderTopRightRadius: 12,
+                  borderTopLeftRadius: 12,
                 }}>
                 <Icon
                   name="cancel"
                   onPress={() => this.setState({otherModalVisible: false})}
                   style={{
-                    flex: 0.65,
-                    paddingLeft: 5,
+                    position: 'absolute',
+                    top: 12,
+                    left: 10,
                     fontSize: 20,
-                    paddingTop: 4,
                     color: IconGrey,
                   }}
                 />
                 <View
                   style={{
-                    flex: 10,
                     alignItems: 'center',
-                    backgroundColor: 'white',
                     paddingTop: 3,
                   }}>
+                  <View
+                    style={{
+                      alignSelf: 'center',
+                      borderTopWidth: 2,
+                      marginTop: 3,
+                      width: 50,
+                      borderTopColor: IconGrey,
+                    }}
+                  />
                   <Text
                     style={{
-                      paddingTop: 5,
                       fontSize: 20,
                       fontWeight: 'bold',
-                      borderTopWidth: 3,
-                      borderTopColor: 'rgba(196,196,196,0.5)',
-                      // borderTopColor: IconGrey,
+                      marginTop: 2,
                     }}>
-                    Profile actions
+                    More Options
                   </Text>
+                  {/* </View> */}
                 </View>
               </View>
 

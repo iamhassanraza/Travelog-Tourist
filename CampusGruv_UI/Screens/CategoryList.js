@@ -189,7 +189,7 @@ export default class CategoryList extends Component {
             </View>
           ) : (
             <FlatList
-              style={{paddingHorizontal: 10}}
+              style={{paddingHorizontal: 10, paddingVertical: 10}}
               numColumns={2}
               data={this.state.Data}
               keyExtractor={item => item.id}

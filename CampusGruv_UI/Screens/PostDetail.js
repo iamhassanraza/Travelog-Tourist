@@ -319,33 +319,45 @@ class PostDetail extends Component {
                     style={{
                       backgroundColor: 'white',
                       flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      paddingBottom: 30,
-                      borderTopRightRadius: 23,
-                      borderTopLeftRadius: 23,
+                      justifyContent: 'center',
+                      paddingBottom: 20,
+                      borderTopRightRadius: 12,
+                      borderTopLeftRadius: 12,
                     }}>
                     <CrossIcon
                       name="cancel"
                       onPress={() => this.setState({isModalVisible: false})}
                       style={{
-                        flex: 0.65,
-                        paddingLeft: 5,
+                        position: 'absolute',
+                        top: 12,
+                        left: 10,
                         fontSize: 20,
-                        paddingTop: 4,
                         color: IconGrey,
                       }}
                     />
                     <View
-                      style={{flex: 10, alignItems: 'center', paddingTop: 3}}>
+                      style={{
+                        alignItems: 'center',
+                        paddingTop: 3,
+                      }}>
+                      <View
+                        style={{
+                          alignSelf: 'center',
+                          borderTopWidth: 2,
+                          marginTop: 3,
+                          width: 50,
+                          borderTopColor: IconGrey,
+                        }}
+                      />
                       <Text
                         style={{
                           fontSize: 20,
                           fontWeight: 'bold',
-                          borderTopWidth: 2,
-                          borderTopColor: IconGrey,
+                          marginTop: 2,
                         }}>
                         More Options
                       </Text>
+                      {/* </View> */}
                     </View>
                   </View>
 
