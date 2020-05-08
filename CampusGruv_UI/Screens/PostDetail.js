@@ -477,7 +477,13 @@ class PostDetail extends Component {
     return (
       <View
         style={{
-          marginBottom: Platform.OS == 'ios' ? 10 : 10,
+          marginBottom:
+            Platform.OS == 'ios'
+              ? Dimensions.get('window').height > 800
+                ? 20
+                : 10
+              : 10,
+
           flexDirection: 'row',
           backgroundColor: 'white',
           borderTopColor: 'grey',
@@ -736,6 +742,7 @@ class PostDetail extends Component {
   };
   //style={{height: Dimensions.get('window').height-150}}
   render() {
+    console.log('height', Dimensions.get('window').height);
     const data = this.props.navigation.getParam(
       'PostData',
       'nothing to render',
@@ -751,7 +758,9 @@ class PostDetail extends Component {
             <KeyboardAvoidingView
               style={{flex: 1}}
               behavior="padding"
-              keyboardVerticalOffset={15}>
+              keyboardVerticalOffset={
+                Dimensions.get('window').height > 800 ? 30 : 15
+              }>
               <Content
                 style={{
                   marginTop: Platform.OS === 'ios' ? '-9%' : 0,
