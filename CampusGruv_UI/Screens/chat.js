@@ -180,7 +180,7 @@ class Chat extends React.Component {
             </Text>
             <View
               style={{
-                marginTop: 2,
+                marginTop: 1,
                 justifyContent: 'center',
                 maxWidth: 250,
                 paddingVertical: '1%',
