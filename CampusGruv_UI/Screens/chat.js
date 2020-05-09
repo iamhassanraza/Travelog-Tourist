@@ -166,7 +166,7 @@ class Chat extends React.Component {
               width: 30,
               marginBottom: 8,
               height: 30,
-              borderWidth: 1,
+              borderWidth: 0.3,
               alignSelf: 'flex-end',
               borderRadius: 50,
             }}
