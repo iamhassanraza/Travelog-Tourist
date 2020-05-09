@@ -60,7 +60,15 @@ export default class AddNewPost extends Component {
                   props.navigation.navigate('HomeScreen');
                   params.handleThis();
                 }}>
-                <Text style={{color: 'white', padding: 2}}>Close</Text>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontWeight: 'bold',
+                    fontSize: 15,
+                    padding: 2,
+                  }}>
+                  Close
+                </Text>
               </TouchableOpacity>
             </View>
           </View>
@@ -210,10 +218,15 @@ export default class AddNewPost extends Component {
 
   renderDeleteIcon = () => {
     return (
-      <View style={{justifyContent: 'center', alignItems: 'center'}}>
+      <View
+        style={{
+          justifyContent: 'center',
+          marginTop: '2%',
+          alignItems: 'center',
+        }}>
         <Icon
           name="delete"
-          style={{fontSize: 30, color: 'grey'}}
+          style={{fontSize: 20, color: 'grey'}}
           onPress={() => {
             this.setState({Images: undefined});
           }}
@@ -236,14 +249,13 @@ export default class AddNewPost extends Component {
               Dimensions.get('window').height > 800 ? -160 : -80
             }
             behavior="padding">
-            <Content>
+            <Content style={{backgroundColor: '#f9fdfe'}}>
               {this.state.Images != null ? (
                 <ImageBackground
                   style={{
-                    height: 200,
-                    width: 200,
-                    marginTop: 20,
-                    marginBottom: 20,
+                    height: Dimensions.get('window').height / 3,
+                    width: Dimensions.get('window').width - 80,
+                    marginTop: '10%',
                     alignSelf: 'center',
                   }}
                   source={this.state.imageSource}

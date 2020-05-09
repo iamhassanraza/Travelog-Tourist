@@ -18,6 +18,7 @@ import {withNavigation, StackActions} from 'react-navigation';
 import CategoryButton from '../Components/CategoryButton';
 import DatePicker from 'react-native-datepicker';
 import Icon from 'react-native-vector-icons/MaterialIcons';
+import BackIcon from 'react-native-vector-icons/Ionicons';
 import Spinner from 'react-native-loading-spinner-overlay';
 import RNFetchBlob from 'rn-fetch-blob';
 import {Container, Item, Content, Input} from 'native-base';
@@ -53,36 +54,31 @@ class CreateNewPost extends Component {
             <View
               style={{
                 position: 'absolute',
-                bottom: Platform.OS == 'ios' ? 5 : 5,
                 padding: 2,
                 alignSelf: 'center',
                 left: 8,
-                // marginTop: Platform.OS == 'ios' ? 40 : 0,
               }}>
               <TouchableOpacity
                 onPress={() => {
                   props.navigation.navigate('AddPost');
                 }}>
-                <Icon name="arrow-back" color="white" size={25} />
+                <BackIcon name="ios-arrow-back" color="white" size={25} />
               </TouchableOpacity>
             </View>
             <View
               style={{
                 alignSelf: 'center',
-                // marginTop: Platform.OS == 'ios' ? 10 : 0,
               }}>
-              <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
-                New post
+              <Text style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>
+                Details
               </Text>
             </View>
             <View
               style={{
                 position: 'absolute',
                 padding: 2,
-                bottom: Platform.OS == 'ios' ? 5 : 5,
                 alignSelf: 'center',
                 right: 8,
-                // marginTop: Platform.OS == 'ios' ? 40 : 0,
               }}>
               <TouchableOpacity
                 onPress={() => {
@@ -90,7 +86,13 @@ class CreateNewPost extends Component {
                   props.navigation.navigate('HomeScreen');
                   params.handleThis();
                 }}>
-                <Text style={{color: 'white', padding: 2, fontSize: 20}}>
+                <Text
+                  style={{
+                    color: 'white',
+                    padding: 2,
+                    fontWeight: 'bold',
+                    fontSize: 15,
+                  }}>
                   Close
                 </Text>
               </TouchableOpacity>
@@ -116,29 +118,6 @@ class CreateNewPost extends Component {
     DATA: undefined,
     loadingCategory: false,
   };
-
-  // getCategories = async () => {
-  //   const Token = await AsyncStorage.getItem('TOKEN');
-
-  //   const Response = await fetch(
-  //     `${require('../config').default.production}api/v1/post/categories`,
-  //     {
-  //       method: 'GET',
-  //       headers: {
-  //         'Content-Type': 'application/json',
-  //         Authorization: `Bearer ${Token}`,
-  //       },
-  //     },
-  //   );
-
-  //   const JsonResponse = await Response.json();
-
-  //   if (parseInt(Response.status) === 401) {
-  //     alert('Error');
-  //   } else if (parseInt(Response.status) === 200) {
-  //     console.log('API called Successfully');
-  //   }
-  // };
 
   componentDidMount = () => {
     this.getCategories();
@@ -239,11 +218,13 @@ class CreateNewPost extends Component {
       <View
         style={{
           width: Dimensions.get('window').width,
-          height: Dimensions.get('window').height / 3.1,
-          paddingTop: '2%',
+          //height: Dimensions.get('window').height / 4,
+          marginTop: 10,
           alignItems: 'center',
+          alignSelf: 'center',
         }}>
         <FlatList
+          style={{alignSelf: 'center'}}
           vertical
           numColumns={3}
           data={this.state.DATA}
@@ -256,13 +237,11 @@ class CreateNewPost extends Component {
               bgclr={
                 this.state.Category === item.id
                   ? `rgba(${item.rgba_colors}, 4)`
-                  : `rgba(${item.rgba_colors}, 0.55)`
+                  : `rgba(${item.rgba_colors}, 0.8)`
               }
-              bold={this.state.Category === item.id ? 'bold' : 'normal'}
-              fsize={this.state.Category === item.id ? 14 : 12}
-              // borderbottom= {this.state.Category === item.id ? 4 : 0}
+              shadow={this.state.Category === item.id ? true : false}
+              // bold={this.state.Category === item.id ? 'bold' : 'normal'}
               onSelect={this.changeState}
-              Elevation={this.state.Category === item.id ? 10 : null}
             />
           )}
         />
@@ -325,6 +304,7 @@ class CreateNewPost extends Component {
         }}>
         <Text style={{alignSelf: 'center', color: 'grey'}}>Set Price</Text>
         <TextInput
+          keyboardType="number-pad"
           placeholder="$ 0.00"
           style={{
             paddingLeft: '3%',
@@ -349,7 +329,7 @@ class CreateNewPost extends Component {
         style={{
           justifyContent: 'center',
           alignItems: 'center',
-          marginTop: 5,
+          marginTop: '5%',
           width: Dimensions.get('window').width,
         }}>
         <Text style={{fontSize: 17, color: 'grey', marginBottom: 7}}>
@@ -358,6 +338,7 @@ class CreateNewPost extends Component {
         <View style={{}}>
           <TextInput
             value={this.state.Description}
+            scrollEnabled={false}
             multiline={true}
             style={{
               color: 'grey',
@@ -481,7 +462,7 @@ class CreateNewPost extends Component {
 
     return (
       <TouchableOpacity
-        style={{alignItems: 'center', marginTop: '3%'}}
+        style={{alignItems: 'center', marginTop: '5%'}}
         onPress={() => {
           this.uploadPost();
           PicAndTitle();
@@ -522,12 +503,48 @@ class CreateNewPost extends Component {
   render() {
     return (
       <Container>
-        <Content style={{backgroundColor: '#f9fdfe'}}>
-          {/* <KeyboardAvoidingView
+        {Platform.OS === 'ios' ? (
+          <KeyboardAvoidingView
+            style={{flex: 1}}
+            keyboardVerticalOffset={50}
+            behavior="padding">
+            <Content style={{backgroundColor: '#f9fdfe'}}>
+              {/* <ScrollView> */}
+              <Spinner
+                visible={this.state.spinner}
+                textContent={'Uploading...'}
+                textStyle={{color: 'white'}}
+                customIndicator={<BarIndicator count={5} />}
+              />
+
+              <View style={{alignItems: 'center', marginTop: 20}}>
+                <Text style={{fontSize: 20, color: 'grey'}}>
+                  Select Category
+                </Text>
+              </View>
+
+              {this.state.DATA ? (
+                this.renderCategories()
+              ) : (
+                <View style={{marginTop: '10%', marginBottom: '10%'}}>
+                  <SkypeIndicator count={5} />
+                </View>
+              )}
+
+              {this.state.Category === 5 ? this.renderDatePicker() : null}
+              {this.state.Category === 7 ? this.renderPrice() : null}
+              {this.renderDescription()}
+              {this.renderShareButton()}
+              {/* </ScrollView> */}
+            </Content>
+          </KeyboardAvoidingView>
+        ) : (
+          <Content style={{backgroundColor: '#f9fdfe'}}>
+            {/* <KeyboardAvoidingView
           style={{flex: 1}}
           keyboardVerticalOffset={80}
           behavior="padding"> */}
-          <ScrollView>
+            {/* <ScrollView> */}
             <Spinner
               visible={this.state.spinner}
               textContent={'Uploading...'}
@@ -535,7 +552,7 @@ class CreateNewPost extends Component {
               customIndicator={<BarIndicator count={5} />}
             />
 
-            <View style={{alignItems: 'center', paddingTop: '5%'}}>
+            <View style={{alignItems: 'center', marginTop: 20}}>
               <Text style={{fontSize: 20, color: 'grey'}}>Select Category</Text>
             </View>
 
@@ -551,9 +568,10 @@ class CreateNewPost extends Component {
             {this.state.Category === 7 ? this.renderPrice() : null}
             {this.renderDescription()}
             {this.renderShareButton()}
-          </ScrollView>
-          {/* </KeyboardAvoidingView> */}
-        </Content>
+            {/* </ScrollView> */}
+            {/* </KeyboardAvoidingView> */}
+          </Content>
+        )}
       </Container>
     );
   }

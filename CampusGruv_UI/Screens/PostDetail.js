@@ -444,13 +444,14 @@ class PostDetail extends Component {
     return (
       <View
         style={{
+          marginTop: 5,
           marginLeft: '3%',
           marginRight: '3%',
           flexDirection: 'row',
           justifyContent: 'space-between',
         }}>
-        <View>
-          <Text style={{fontSize: 25, fontWeight: '400'}}>{title}</Text>
+        <View style={{width: '90%'}}>
+          <Text style={{fontSize: 20, fontWeight: '400'}}>{title}</Text>
         </View>
 
         <View style={{}}>
@@ -471,12 +472,11 @@ class PostDetail extends Component {
 
   renderDescription = description => {
     return (
-      <View style={{marginLeft: '3%', marginRight: '5%'}}>
+      <View style={{marginLeft: '3%', marginTop: 20, marginRight: '5%'}}>
         <Text
           style={{
             fontSize: 17,
             marginTop: '1%',
-            color: 'grey',
             marginBottom: 10,
           }}>
           {description}
@@ -566,12 +566,13 @@ class PostDetail extends Component {
   renderAllComments = dp => {
     //console.log('coments', this.state.comments)
     return (
-      <View style={{marginLeft: '4%'}}>
+      <View style={{marginLeft: '4%', marginTop: 10}}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text style={{color: 'grey', fontSize: 12}}>Comments</Text>
           <CrossIcon style={{}} name="expand-more" />
         </View>
         <FlatList
+          style={{marginTop: '1%'}}
           data={this.state.comments}
           scrollEnabled={false}
           showsVerticalScrollIndicator={false}
@@ -579,7 +580,12 @@ class PostDetail extends Component {
             return (
               <Comment
                 dp={item.user.profile_pic_url}
-                name={item.user.first_name}
+                name={
+                  item.user.first_name +
+                  ' ' +
+                  item.user.last_name.charAt('0') +
+                  '.'
+                }
                 //comment={new TextDecoder("utf-8").decode(item.description.data)}
                 //comment={bin2string(item.description.data)}
                 comment={item.description}
@@ -789,21 +795,21 @@ class PostDetail extends Component {
                 {this.renderImage(data.uri)}
                 {this.renderTitle(data.title, data.views)}
                 {this.renderDescription(data.description)}
-                {this.state.comments[0] ? (
-                  this.renderAllComments(data.userAvatar, data.comments)
-                ) : (
-                  <View style={{height: 80, justifyContent: 'center'}}>
-                    <Text
-                      style={{
-                        color: 'grey',
-                        fontSize: 25,
-                        opacity: 0.5,
-                        alignSelf: 'center',
-                      }}>
-                      No comments yet!
-                    </Text>
-                  </View>
-                )}
+                {this.state.comments[0]
+                  ? this.renderAllComments(data.userAvatar, data.comments)
+                  : null
+                // <View style={{height: 80, justifyContent: 'center'}}>
+                //   <Text
+                //     style={{
+                //       color: 'grey',
+                //       fontSize: 25,
+                //       opacity: 0.5,
+                //       alignSelf: 'center',
+                //     }}>
+                //     No comments yet!
+                //   </Text>
+                // </View>
+                }
                 {/* {this.renderAddComment(data.userAvatar, data.postId, data.userId)} */}
               </Content>
               {this.renderAddComment(data.userAvatar, data.postId, data.userId)}

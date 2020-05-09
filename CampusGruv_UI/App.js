@@ -104,7 +104,7 @@ const CreatePostStack = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'AddPost',
+    initialRouteName: 'CreatePost',
     navigationOptions: {
       tabBarVisible: false,
     },
@@ -322,7 +322,7 @@ const MessageStack = createStackNavigator(
               }}>
               <View style={{alignSelf: 'center'}}>
                 <Text
-                  style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
+                  style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>
                   New Message
                 </Text>
               </View>
@@ -359,7 +359,7 @@ const MessageStack = createStackNavigator(
               }}>
               <View style={{alignSelf: 'center'}}>
                 <Text
-                  style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
+                  style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>
                   Activity
                 </Text>
               </View>
@@ -463,6 +463,10 @@ const TabNavigator = createBottomTabNavigator(
         state = store.getState();
         //console.log('state', state);
         return {
+          tabBarOnPress: ({navigation, defaultHandler}) => {
+            navigation.dispatch(StackActions.popToTop());
+            defaultHandler();
+          },
           tabBarIcon: ({tintColor}) => {
             return (
               <IconBadge
@@ -491,6 +495,10 @@ const TabNavigator = createBottomTabNavigator(
     AddPost: {
       screen: CreatePostStack,
       navigationOptions: {
+        tabBarOnPress: ({navigation, defaultHandler}) => {
+          navigation.dispatch(StackActions.popToTop());
+          defaultHandler();
+        },
         initialRouteName: 'AddPost',
         tabBarIcon: ({tintColor}) => (
           <AddIcon name="diff-added" color={tintColor} style={{fontSize: 25}} />
@@ -504,6 +512,10 @@ const TabNavigator = createBottomTabNavigator(
         store = mystore;
         state = store.getState();
         return {
+          tabBarOnPress: ({navigation, defaultHandler}) => {
+            navigation.dispatch(StackActions.popToTop());
+            defaultHandler();
+          },
           tabBarIcon: ({tintColor}) => {
             return (
               <IconBadge
@@ -534,6 +546,10 @@ const TabNavigator = createBottomTabNavigator(
     Profile: {
       screen: ProfileStack,
       navigationOptions: {
+        tabBarOnPress: ({navigation, defaultHandler}) => {
+          navigation.dispatch(StackActions.popToTop());
+          defaultHandler();
+        },
         tabBarIcon: ({tintColor}) => (
           <ProfileIcon name="user" color={tintColor} style={{fontSize: 25}} />
         ),

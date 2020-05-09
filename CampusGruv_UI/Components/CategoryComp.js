@@ -11,10 +11,11 @@ export default class Category extends Component {
           justifyContent: 'center',
           alignItems: 'center',
           margin: 10,
-          borderBottomLeftRadius: 7,
-          borderBottomRightRadius: 7,
-          borderTopRightRadius: 7,
-          borderTopLeftRadius: 7,
+          shadowOffset: {width: 0, height: 4},
+          shadowOpacity: 4,
+          shadowColor: 'rgba(0,0,0,0.5)',
+          elevation: 4,
+          borderRadius: 7,
         }}>
         <TouchableWithoutFeedback
           onPress={() => {
@@ -23,14 +24,7 @@ export default class Category extends Component {
           }}>
           <View
             style={{
-              shadowOffset: {width: 0, height: 10},
-              shadowOpacity: 0.6,
-              shadowColor: 'rgba(0,0,0,0.1)',
-              elevation: 4,
-              borderBottomLeftRadius: 7,
-              borderBottomRightRadius: 7,
-              borderTopRightRadius: 7,
-              borderTopLeftRadius: 7,
+              borderRadius: 7,
               backgroundColor: 'rgba(0,0,0,.6)',
             }}>
             <Image
@@ -51,6 +45,7 @@ export default class Category extends Component {
                 color: 'white',
                 fontSize: 18,
                 fontWeight: 'bold',
+                top: 5,
                 position: 'absolute',
               }}>
               {this.props.description}

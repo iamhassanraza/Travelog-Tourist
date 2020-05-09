@@ -1,24 +1,38 @@
 import React, {Component} from 'react';
-import {Text, View,Dimensions} from 'react-native';
+import {Text, View, Dimensions} from 'react-native';
 import {Button} from 'react-native-elements';
-
 
 export default class CategoryButton extends Component {
   render() {
     return (
-      <View style={{width:"30%", marginLeft:"2.5%", marginBottom:"3%"}}>
+      <View
+        style={{
+          width: '27%',
+          height: 25,
+          alignSelf: 'center',
+          elevation: 5,
+          shadowColor: !this.props.shadow
+            ? 'rgba(0,0,0,0.25)'
+            : 'rgba(0,0,0,0.5)',
+          shadowOffset: {width: 2, height: 4},
+          shadowOpacity: 8,
+          margin: '3%',
+        }}>
         <Button
           onPress={() => {
             this.props.onSelect(this.props.cat_id);
           }}
           title={this.props.title}
-          titleStyle={{fontSize: this.props.fsize, fontWeight:this.props.bold}}
+          titleStyle={{
+            fontSize: 12.5,
+            fontWeight: 'bold',
+          }}
           buttonStyle={{
-            width:"100%",
-            height: 34,
+            borderRadius: 4,
+            padding: 0,
+            height: 25,
             backgroundColor: this.props.bgclr,
-            borderBottomWidth:this.props.borderbottom,
-            borderBottomColor:"rgba(5,5,5,0.5)",
+            borderBottomColor: 'rgba(5,5,5,0.5)',
             ...this.props.style,
           }}
         />
@@ -26,11 +40,8 @@ export default class CategoryButton extends Component {
           style={{
             borderTopColor: this.props.bgclr,
             borderBottomColor: this.props.bgclr,
-            borderBottomLeftRadius:5,
-            elevation: this.props.Elevation ? this.props.Elevation : 2,
-            borderWidth: 0.2,
-          }}>
-          </View>
+          }}
+        />
       </View>
     );
   }
