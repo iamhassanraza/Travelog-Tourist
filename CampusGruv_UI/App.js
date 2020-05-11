@@ -104,7 +104,7 @@ const CreatePostStack = createStackNavigator(
     },
   },
   {
-    initialRouteName: 'CreatePost',
+    initialRouteName: 'AddPost',
     navigationOptions: {
       tabBarVisible: false,
     },
