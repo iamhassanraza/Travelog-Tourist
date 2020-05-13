@@ -832,21 +832,21 @@ class PostDetail extends Component {
                 {this.renderImage(data.uri)}
                 {this.renderTitle(data.title, data.views)}
                 {this.renderDescription(data.description)}
-                {this.state.comments[0] ? (
-                  this.renderAllComments(data.userAvatar, data.comments)
-                ) : (
-                  <View style={{height: 80, justifyContent: 'center'}}>
-                    <Text
-                      style={{
-                        color: 'grey',
-                        fontSize: 25,
-                        opacity: 0.5,
-                        alignSelf: 'center',
-                      }}>
-                      No comments yet!
-                    </Text>
-                  </View>
-                )}
+                {this.state.comments[0]
+                  ? this.renderAllComments(data.userAvatar, data.comments)
+                  : null
+                    // <View style={{height: 80, justifyContent: 'center'}}>
+                    //   <Text
+                    //     style={{
+                    //       color: 'grey',
+                    //       fontSize: 25,
+                    //       opacity: 0.5,
+                    //       alignSelf: 'center',
+                    //     }}>
+                    //     No comments yet!
+                    //   </Text>
+                    // </View>
+                }
                 {/* {this.renderAddComment(data.userAvatar, data.postId, data.userId)} */}
               </Content>
               {this.renderAddComment(data.userAvatar, data.postId, data.userId)}

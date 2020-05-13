@@ -8,6 +8,7 @@ import {
   Dimensions,
   AsyncStorage,
   Image,
+  Platform,
 } from 'react-native';
 import {Icon, Input, Item} from 'native-base';
 import PostIcon from 'react-native-vector-icons/MaterialIcons';
@@ -66,81 +67,6 @@ class Chat extends React.Component {
       room_id: null,
     };
   }
-
-  customComposer = props => {
-    <View
-      style={{
-        marginBottom:
-          Platform.OS == 'ios'
-            ? Dimensions.get('window').height > 800
-              ? 20
-              : 10
-            : 10,
-        height: 50,
-        flexDirection: 'row',
-        backgroundColor: 'white',
-        borderTopColor: 'grey',
-        paddingTop: 5,
-        alignItems: 'center',
-      }}>
-      <View style={{marginLeft: '2%', width: 30, height: 30}}>
-        <Icon type="Feather" name="camera" style={{fontSize: 25}} />
-      </View>
-      <Item
-        style={{
-          marginLeft: 5,
-          borderBottomWidth: 0,
-          width: Dimensions.get('window').width - 100,
-        }}>
-        <Input
-          value={this.state.currentMessage}
-          getRef={input => {
-            this.commentInput = input;
-          }}
-          multiline={true}
-          placeholder="Add a comment"
-          style={{
-            borderWidth: 0.3,
-            padding: 2,
-            borderRadius: 10,
-            borderColor: 'grey',
-          }}
-          onChangeText={text => {
-            this.setState({
-              currentComment: text,
-            });
-          }}
-        />
-      </Item>
-      <View
-        style={{
-          width: 60,
-          height: 40,
-          paddingRight: '2%',
-          justifyContent: 'center',
-          alignItems: 'center',
-        }}>
-        <TouchableOpacity
-          onPress={() => {
-            //CALL API FOR COMMENT , USER ID ,POST ID , COMMENT DESCRIPTION
-            this.postComment(postId, userId);
-          }}>
-          <Text
-            style={{
-              fontSize: 18,
-              color:
-                this.state.currentComment === null ||
-                this.state.currentComment === ''
-                  ? '#e8d7d5'
-                  : ThemeBlue,
-              //paddingLeft: '2%',
-            }}>
-            Post
-          </Text>
-        </TouchableOpacity>
-      </View>
-    </View>;
-  };
 
   customMessage = props => {
     // console.log('message props', props);
