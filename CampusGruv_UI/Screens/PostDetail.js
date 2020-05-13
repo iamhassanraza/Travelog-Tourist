@@ -92,25 +92,17 @@ class PostDetail extends Component {
   componentDidMount() {
     const {navigation} = this.props;
     this.willFocusListener = navigation.addListener('willFocus', async () => {
-      Platform.OS === 'ios' ? (
-        this.props.screenProps.changeStatusBar({
-          color: 'white',
-          contentType: 'default',
-        })
-      ) : (
-        <StatusBar barStyle="dark-content" backgroundColor="white" />
-      );
+      this.props.screenProps.changeStatusBar({
+        color: 'white',
+        contentType: 'default',
+      });
     });
 
     this.willBlurListener = navigation.addListener('willBlur', async () => {
-      Platform.OS === 'ios' ? (
-        this.props.screenProps.changeStatusBar({
-          color: ThemeBlue,
-          contentType: 'light-content',
-        })
-      ) : (
-        <StatusBar barStyle="light-content" backgroundColor={ThemeBlue} />
-      );
+      this.props.screenProps.changeStatusBar({
+        color: ThemeBlue,
+        contentType: 'light-content',
+      });
     });
 
     this.incrementView();
@@ -777,9 +769,9 @@ class PostDetail extends Component {
       <>
         {/* {Platform.OS === 'ios' ? <StatusBar barStyle="default" /> : null} */}
         <Container style={{}}>
-          {/* // {Platform.OS === 'android' ? (
-          //   <StatusBar barStyle="dark-content" backgroundColor="white" />
-          // ) : null} */}
+          {Platform.OS === 'android' ? (
+            <StatusBar barStyle="dark-content" backgroundColor="white" />
+          ) : null}
           {Platform.OS === 'ios' ? (
             <KeyboardAvoidingView
               style={{flex: 1}}
