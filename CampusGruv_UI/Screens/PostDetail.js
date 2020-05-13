@@ -92,17 +92,25 @@ class PostDetail extends Component {
   componentDidMount() {
     const {navigation} = this.props;
     this.willFocusListener = navigation.addListener('willFocus', async () => {
-      this.props.screenProps.changeStatusBar({
-        color: 'white',
-        contentType: 'default',
-      });
+      Platform.OS === 'ios' ? (
+        this.props.screenProps.changeStatusBar({
+          color: 'white',
+          contentType: 'default',
+        })
+      ) : (
+        <StatusBar barStyle="dark-content" backgroundColor="white" />
+      );
     });
 
     this.willBlurListener = navigation.addListener('willBlur', async () => {
-      this.props.screenProps.changeStatusBar({
-        color: ThemeBlue,
-        contentType: 'light-content',
-      });
+      Platform.OS === 'ios' ? (
+        this.props.screenProps.changeStatusBar({
+          color: ThemeBlue,
+          contentType: 'light-content',
+        })
+      ) : (
+        <StatusBar barStyle="light-content" backgroundColor={ThemeBlue} />
+      );
     });
 
     this.incrementView();
@@ -769,9 +777,9 @@ class PostDetail extends Component {
       <>
         {/* {Platform.OS === 'ios' ? <StatusBar barStyle="default" /> : null} */}
         <Container style={{}}>
-          {Platform.OS === 'android' ? (
-            <StatusBar barStyle="dark-content" backgroundColor="white" />
-          ) : null}
+          {/* // {Platform.OS === 'android' ? (
+          //   <StatusBar barStyle="dark-content" backgroundColor="white" />
+          // ) : null} */}
           {Platform.OS === 'ios' ? (
             <KeyboardAvoidingView
               style={{flex: 1}}
@@ -835,17 +843,17 @@ class PostDetail extends Component {
                 {this.state.comments[0]
                   ? this.renderAllComments(data.userAvatar, data.comments)
                   : null
-                    // <View style={{height: 80, justifyContent: 'center'}}>
-                    //   <Text
-                    //     style={{
-                    //       color: 'grey',
-                    //       fontSize: 25,
-                    //       opacity: 0.5,
-                    //       alignSelf: 'center',
-                    //     }}>
-                    //     No comments yet!
-                    //   </Text>
-                    // </View>
+                // <View style={{height: 80, justifyContent: 'center'}}>
+                //   <Text
+                //     style={{
+                //       color: 'grey',
+                //       fontSize: 25,
+                //       opacity: 0.5,
+                //       alignSelf: 'center',
+                //     }}>
+                //     No comments yet!
+                //   </Text>
+                // </View>
                 }
                 {/* {this.renderAddComment(data.userAvatar, data.postId, data.userId)} */}
               </Content>
