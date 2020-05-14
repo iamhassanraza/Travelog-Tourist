@@ -264,16 +264,15 @@ class Chat extends React.Component {
             backgroundColor: '#f9fdfe',
           },
         }}
-        compos
+        containerStyle={{}}
         alwaysShowSend={true}
         renderMessage={props => this.customMessage(props)}
         textInputProps={{
           borderRadius: 10,
-          placeholder: 'message...',
+          placeholder: 'send a message',
           borderWidth: 1,
           borderColor: 'grey',
-          marginTop: 10,
-          justifyContent: 'center',
+          // marginTop: 10,
           paddingLeft: '2%',
           paddingRight: '2%',
           fontSize: 16,
