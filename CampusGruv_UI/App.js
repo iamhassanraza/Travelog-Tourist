@@ -297,6 +297,7 @@ const NotificationStack = createStackNavigator(
   {
     NotificationScreen,
     PostDetail,
+    UserProfile,
   },
   {
     defaultNavigationOptions: {

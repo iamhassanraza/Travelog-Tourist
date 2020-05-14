@@ -264,7 +264,6 @@ class Chat extends React.Component {
             backgroundColor: '#f9fdfe',
           },
         }}
-        compos
         alwaysShowSend={true}
         renderMessage={props => this.customMessage(props)}
         textInputProps={{
@@ -278,6 +277,8 @@ class Chat extends React.Component {
           paddingRight: '2%',
           fontSize: 16,
           backgroundColor: 'white',
+          paddingTop: 0,
+          paddingBottom: 0,
         }}
         renderActions={() => (
           <Icon
