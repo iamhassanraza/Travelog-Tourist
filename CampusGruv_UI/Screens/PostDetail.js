@@ -632,6 +632,7 @@ class PostDetail extends Component {
           ...JsonResponse,
           user: {
             first_name: this.props.User.first_name,
+            last_name: this.props.User.last_name,
             profile_pic_url: this.props.User.profile_pic_url,
           },
         });
