@@ -10,6 +10,7 @@ import {SearchBar, Avatar, Divider} from 'react-native-elements';
 import {withNavigation} from 'react-navigation';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 import TimeAgo from 'react-native-timeago';
+import FastImage from 'react-native-fast-image';
 
 class InboxComponent extends Component {
   state = {
@@ -59,7 +60,7 @@ class InboxComponent extends Component {
               flexDirection: 'row',
               justifyContent: 'space-between',
             }}>
-            <Avatar
+            {/* <Avatar
               size="small"
               rounded
               source={
@@ -70,6 +71,16 @@ class InboxComponent extends Component {
                     }
               }
               size={40}
+            /> */}
+            <FastImage
+              source={
+                this.props.uri === '' || !this.props.uri
+                  ? defaultAvatar
+                  : {
+                      uri: this.props.uri,
+                    }
+              }
+              style={{height: 40, width: 40, borderRadius: 50}}
             />
             <View
               style={{

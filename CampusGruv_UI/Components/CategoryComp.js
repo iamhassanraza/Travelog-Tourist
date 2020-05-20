@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {Text, View, Image, TouchableOpacity, Button} from 'react-native';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
+import FastImage from 'react-native-fast-image';
 
 export default class Category extends Component {
   render() {
@@ -27,7 +28,7 @@ export default class Category extends Component {
               borderRadius: 7,
               backgroundColor: 'rgba(0,0,0,.6)',
             }}>
-            <Image
+            <FastImage
               source={{uri: this.props.image}}
               style={{
                 borderBottomLeftRadius: 7,

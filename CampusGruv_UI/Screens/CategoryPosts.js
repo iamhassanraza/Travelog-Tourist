@@ -41,6 +41,7 @@ import {
 import YesCategory from '../Assets/Images/YesCategory.png';
 import NoFollower from '../Assets/Images/NoFollower.png';
 import SearchIcon from '../Assets/Images/SearchIcon.png';
+import FastImage from 'react-native-fast-image';
 
 export default class CategoryPosts extends PureComponent {
   static navigationOptions = props => {
@@ -80,7 +81,7 @@ export default class CategoryPosts extends PureComponent {
                     // alignSelf: 'center',
                     // justifyContent: 'center',
                   }}>
-                  <Image
+                  <FastImage
                     source={Logo}
                     style={{
                       width: 150,
@@ -101,7 +102,7 @@ export default class CategoryPosts extends PureComponent {
                       width: 40,
                       justifyContent: 'center',
                     }}>
-                    <Image
+                    <FastImage
                       source={SearchIcon}
                       style={{height: 25, width: 30}}
                     />
@@ -118,7 +119,7 @@ export default class CategoryPosts extends PureComponent {
                       width: 40,
                       justifyContent: 'center',
                     }}>
-                    <Image
+                    <FastImage
                       source={YesCategory}
                       style={{height: 25, width: 30}}
                     />
@@ -135,7 +136,7 @@ export default class CategoryPosts extends PureComponent {
                       width: 40,
                       justifyContent: 'center',
                     }}>
-                    <Image
+                    <FastImage
                       source={NoFollower}
                       style={{height: 25, width: 30}}
                     />
@@ -176,7 +177,7 @@ export default class CategoryPosts extends PureComponent {
                     // alignSelf: 'center',
                     // justifyContent: 'center',
                   }}>
-                  <Image
+                  <FastImage
                     source={Logo}
                     style={{
                       width: 150,
@@ -197,7 +198,7 @@ export default class CategoryPosts extends PureComponent {
                       width: 40,
                       justifyContent: 'center',
                     }}>
-                    <Image
+                    <FastImage
                       source={SearchIcon}
                       style={{height: 25, width: 30}}
                     />
@@ -214,7 +215,7 @@ export default class CategoryPosts extends PureComponent {
                       width: 40,
                       justifyContent: 'center',
                     }}>
-                    <Image
+                    <FastImage
                       source={YesCategory}
                       style={{height: 25, width: 30}}
                     />
@@ -231,7 +232,7 @@ export default class CategoryPosts extends PureComponent {
                       width: 40,
                       justifyContent: 'center',
                     }}>
-                    <Image
+                    <FastImage
                       source={NoFollower}
                       style={{height: 25, width: 30}}
                     />

@@ -9,6 +9,7 @@ import {
 import {connect} from 'react-redux';
 
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
+import FastImage from 'react-native-fast-image';
 
 class AvatarUserStatus extends Component {
   state = {
@@ -87,7 +88,7 @@ class AvatarUserStatus extends Component {
                 });
             }}>
             <View style={{flexDirection: 'row', padding: '1%'}}>
-              <Image
+              <FastImage
                 source={
                   this.props.pic === '' || !this.props.pic
                     ? defaultAvatar

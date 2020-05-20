@@ -4,6 +4,7 @@ import ViewsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {withNavigation} from 'react-navigation';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
+import FastImage from 'react-native-fast-image';
 
 class PostCard extends Component {
   state = {
@@ -66,16 +67,18 @@ class PostCard extends Component {
           })
         }>
         <View style={{}}>
-          <Image
-            source={{uri: this.props.imageurl}}
+          <FastImage
             style={{
               width: '100%',
               borderTopLeftRadius: 7,
               borderTopRightRadius: 7,
               height: 150,
-              // height: this.state.height < 300 ? this.state.height : 200,
+              // height: this.state.height < 300 ? this.state.height : 200
             }}
-            resizeMode="cover"
+            source={{
+              uri: this.props.imageurl,
+              priority: FastImage.priority.normal,
+            }}
           />
 
           {/* <View
@@ -124,19 +127,19 @@ class PostCard extends Component {
           </View>
           <View
             style={{
-              //flex: 1,
               marginTop: '1%',
               paddingBottom: '3%',
               flexDirection: 'row',
               alignItems: 'center',
             }}>
             <View style={{flex: 2}}>
-              <Image
+              <FastImage
                 source={
                   this.props.userdp === '' || !this.props.userdp
                     ? defaultAvatar
                     : {
                         uri: this.props.userdp,
+                        priority: FastImage.priority.high,
                       }
                 }
                 style={{

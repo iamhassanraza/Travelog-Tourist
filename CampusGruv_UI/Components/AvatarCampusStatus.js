@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Text, View, Image, AsyncStorage} from 'react-native';
 import {ThemeBlue} from '../Assets/Colors';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import FastImage from 'react-native-fast-image';
 
 export default class AvatarCampusStatus extends Component {
   state = {
@@ -18,7 +19,7 @@ export default class AvatarCampusStatus extends Component {
           paddingHorizontal: '2%',
         }}>
         <View style={{flexDirection: 'row', flex: 4, alignItems: 'center'}}>
-          <Image
+          <FastImage
             source={this.props.pic}
             style={{height: 40, width: 40, borderRadius: 50}}
           />

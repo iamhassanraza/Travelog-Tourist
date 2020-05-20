@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Text, View, Image} from 'react-native';
 import TextEncoding from 'text-encoding';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
+import FastImage from 'react-native-fast-image';
 
 // Props dp,name,comment
 
@@ -17,7 +18,7 @@ export default class Comment extends Component {
             alignItems: 'center',
             flexDirection: 'row',
           }}>
-          <Image
+          <FastImage
             source={
               this.props.dp === '' || !this.props.dp
                 ? defaultAvatar

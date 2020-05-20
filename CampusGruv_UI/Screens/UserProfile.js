@@ -37,6 +37,7 @@ import {
   UIActivityIndicator,
   WaveIndicator,
 } from 'react-native-indicators';
+import FastImage from 'react-native-fast-image';
 
 class UserProfile extends React.Component {
   static navigationOptions = props => {
@@ -54,7 +55,7 @@ class UserProfile extends React.Component {
                 justifyContent: 'center',
               }}>
               <View style={{alignSelf: 'center'}}>
-                <Image
+                <FastImage
                   source={Logo}
                   style={{width: 150, alignSelf: 'flex-start', height: '90%'}}
                   resizeMode="contain"
@@ -92,7 +93,7 @@ class UserProfile extends React.Component {
                 justifyContent: 'center',
               }}>
               <View style={{alignSelf: 'center'}}>
-                <Image
+                <FastImage
                   source={Logo}
                   style={{width: 150, alignSelf: 'flex-start', height: '100%'}}
                   resizeMode="contain"
@@ -558,12 +559,13 @@ class UserProfile extends React.Component {
             paddingLeft: 10,
             alignItems: 'center',
           }}>
-          <Image
+          <FastImage
             source={
               postUserDp === '' || !postUserDp
                 ? defaultAvatar
                 : {
                     uri: postUserDp,
+                    priority: FastImage.priority.normal,
                   }
             }
             style={{

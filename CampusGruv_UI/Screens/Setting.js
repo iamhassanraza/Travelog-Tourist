@@ -3,6 +3,7 @@ import {Text, View, Image} from 'react-native';
 import {Avatar, Icon} from 'react-native-elements';
 import SettingComponent from '../Components/SettingComponent';
 import {FlatList} from 'react-native-gesture-handler';
+import FastImage from 'react-native-fast-image';
 
 export default class Setting extends Component {
   state = {
@@ -30,7 +31,7 @@ export default class Setting extends Component {
             horizontal={true}
             renderItem={({item}) => {
               return (
-                <Image
+                <FastImage
                   source={{uri: item.avatar_url}}
                   style={{
                     width: 30,

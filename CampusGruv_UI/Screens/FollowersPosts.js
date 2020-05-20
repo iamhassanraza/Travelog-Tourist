@@ -41,6 +41,7 @@ import NoCategory from '../Assets/Images/NoCategory.png';
 import NoFollower from '../Assets/Images/NoFollower.png';
 import SearchIcon from '../Assets/Images/SearchIcon.png';
 import YesFollower from '../Assets/Images/YesFollower.png';
+import FastImage from 'react-native-fast-image';
 
 export default class FolllowersPosts extends PureComponent {
   static navigationOptions = props => {
@@ -72,7 +73,7 @@ export default class FolllowersPosts extends PureComponent {
                     justifyContent: 'center',
                     flexDirection: 'row',
                   }}>
-                  <Image
+                  <FastImage
                     source={Logo}
                     style={{
                       width: 150,
@@ -93,7 +94,7 @@ export default class FolllowersPosts extends PureComponent {
                       width: 40,
                       justifyContent: 'center',
                     }}>
-                    <Image
+                    <FastImage
                       source={SearchIcon}
                       style={{height: 25, width: 30}}
                     />
@@ -110,7 +111,7 @@ export default class FolllowersPosts extends PureComponent {
                       width: 40,
                       justifyContent: 'center',
                     }}>
-                    <Image
+                    <FastImage
                       source={NoCategory}
                       style={{height: 25, width: 30}}
                     />
@@ -127,7 +128,7 @@ export default class FolllowersPosts extends PureComponent {
                       width: 40,
                       justifyContent: 'center',
                     }}>
-                    <Image
+                    <FastImage
                       source={YesFollower}
                       style={{height: 25, width: 30}}
                     />
@@ -160,7 +161,7 @@ export default class FolllowersPosts extends PureComponent {
                     justifyContent: 'center',
                     flexDirection: 'row',
                   }}>
-                  <Image
+                  <FastImage
                     source={Logo}
                     style={{
                       width: 150,
@@ -181,7 +182,7 @@ export default class FolllowersPosts extends PureComponent {
                       width: 40,
                       justifyContent: 'center',
                     }}>
-                    <Image
+                    <FastImage
                       source={SearchIcon}
                       style={{height: 25, width: 30}}
                     />
@@ -198,7 +199,7 @@ export default class FolllowersPosts extends PureComponent {
                       width: 40,
                       justifyContent: 'center',
                     }}>
-                    <Image
+                    <FastImage
                       source={NoCategory}
                       style={{height: 25, width: 30}}
                     />
@@ -215,7 +216,7 @@ export default class FolllowersPosts extends PureComponent {
                       width: 40,
                       justifyContent: 'center',
                     }}>
-                    <Image
+                    <FastImage
                       source={YesFollower}
                       style={{height: 25, width: 30}}
                     />

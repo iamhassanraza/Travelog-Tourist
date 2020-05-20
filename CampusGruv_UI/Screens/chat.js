@@ -19,6 +19,7 @@ import {CreateUserDetails} from '../ReduxStore/Actions/index';
 import {ThemeBlue} from '../Assets/Colors';
 import TimeAgo from 'react-native-timeago';
 import ImagePicker from 'react-native-image-picker';
+import FastImage from 'react-native-fast-image';
 
 class Chat extends React.Component {
   static navigationOptions = props => {
@@ -125,7 +126,7 @@ class Chat extends React.Component {
               </Text>
             </View>
             {this.state.imageSource ? (
-              <Image
+              <FastImage
                 source={this.state.imageSource}
                 style={{width: 200, marginTop: 10, height: 150}}
               />

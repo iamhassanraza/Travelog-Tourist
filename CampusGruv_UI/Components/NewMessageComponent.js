@@ -10,6 +10,7 @@ import {
   Dimensions,
 } from 'react-native';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
+import FastImage from 'react-native-fast-image';
 
 // import {withNavigation} from 'react-navigation';
 
@@ -64,7 +65,7 @@ class NewMessageComponent extends Component {
               })
             }>
             <View style={{flexDirection: 'row', padding: '1%'}}>
-              <Image
+              <FastImage
                 source={
                   this.props.profile_pic_url === '' ||
                   !this.props.profile_pic_url

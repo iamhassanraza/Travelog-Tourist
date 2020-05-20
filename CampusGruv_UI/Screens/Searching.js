@@ -41,6 +41,7 @@ import NoCategory from '../Assets/Images/NoCategory.png';
 import NoFollower from '../Assets/Images/NoFollower.png';
 import SearchIcon from '../Assets/Images/SearchIcon.png';
 import YesFollower from '../Assets/Images/YesFollower.png';
+import FastImage from 'react-native-fast-image';
 
 class Searching extends React.PureComponent {
   state = {
@@ -398,7 +399,10 @@ class Searching extends React.PureComponent {
                   width: 40,
                   justifyContent: 'center',
                 }}>
-                <Image source={NoCategory} style={{height: 25, width: 30}} />
+                <FastImage
+                  source={NoCategory}
+                  style={{height: 25, width: 30}}
+                />
               </View>
             </TouchableOpacity>
 
@@ -412,7 +416,10 @@ class Searching extends React.PureComponent {
                   width: 40,
                   justifyContent: 'center',
                 }}>
-                <Image source={NoFollower} style={{height: 25, width: 30}} />
+                <FastImage
+                  source={NoFollower}
+                  style={{height: 25, width: 30}}
+                />
               </View>
             </TouchableOpacity>
           </View>

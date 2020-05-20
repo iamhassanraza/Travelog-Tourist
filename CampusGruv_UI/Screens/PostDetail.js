@@ -46,6 +46,7 @@ import NoLike from '../Assets/Images/NoLike.png';
 import NoSave from '../Assets/Images/NoSave.png';
 import YesLike from '../Assets/Images/YesLike.png';
 import YesSave from '../Assets/Images/YesSave.png';
+import FastImage from 'react-native-fast-image';
 
 const IconGrey = '#b4b8bf';
 
@@ -228,7 +229,7 @@ class PostDetail extends Component {
                 userFollowing: this.state.userFollowing,
               })
             }>
-            <Image
+            <FastImage
               source={!userdp || userdp === '' ? defaultAvatar : {uri: userdp}}
               style={{width: 40, height: 40, borderRadius: 50}}
             />
@@ -263,7 +264,7 @@ class PostDetail extends Component {
               this.likePost(postId, userId);
             }}>
             <View style={{height: 40, width: 40, justifyContent: 'center'}}>
-              <Image
+              <FastImage
                 source={this.state.liked ? YesLike : NoLike}
                 style={{height: 25, width: 28}}
               />
@@ -275,7 +276,7 @@ class PostDetail extends Component {
               this.savePost(postId);
             }}>
             <View style={{height: 40, width: 40, justifyContent: 'center'}}>
-              <Image
+              <FastImage
                 source={this.state.saved ? YesSave : NoSave}
                 style={{height: 25, width: 25}}
               />
@@ -431,7 +432,7 @@ class PostDetail extends Component {
     console.log(image, 'image', this.props.height);
     return (
       <View style={{}}>
-        <Image
+        <FastImage
           source={{uri: image}}
           //resizeMode="center"
           style={{width: '100%', height: Dimensions.get('window').height / 2}}
@@ -503,7 +504,7 @@ class PostDetail extends Component {
           alignItems: 'center',
         }}>
         <View style={{marginLeft: '2%', width: 30, height: 30}}>
-          <Image
+          <FastImage
             source={{uri: this.props.User.profile_pic_url}}
             style={{width: '100%', borderRadius: 50, height: '100%'}}
           />

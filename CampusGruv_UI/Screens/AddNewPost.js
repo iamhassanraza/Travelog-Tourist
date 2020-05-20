@@ -3,6 +3,7 @@ import {
   Text,
   KeyboardAvoidingView,
   View,
+  Image,
   ImageBackground,
   TouchableOpacity,
   TextInput,
@@ -21,6 +22,7 @@ import Icon from 'react-native-vector-icons/AntDesign';
 import {StackActions, NavigationActions} from 'react-navigation';
 import {Header} from 'react-native-elements';
 import {Container, Content, Input} from 'native-base';
+import FastImage from 'react-native-fast-image';
 
 const options = {
   title: 'Select Photo',
@@ -159,7 +161,7 @@ export default class AddNewPost extends Component {
             justifyContent: 'center',
           }}>
           <TouchableOpacity onPress={this.selectPhoto}>
-            <ImageBackground
+            <FastImage
               source={require('../Assets/Images/picture.png')}
               style={{width: 100, height: 100, alignSelf: 'center'}}
             />
@@ -191,7 +193,7 @@ export default class AddNewPost extends Component {
             justifyContent: 'center',
           }}>
           <TouchableOpacity onPress={this.selectPhoto}>
-            <ImageBackground
+            <FastImage
               source={require('../Assets/Images/photo-camera.png')}
               style={{
                 width: 100,

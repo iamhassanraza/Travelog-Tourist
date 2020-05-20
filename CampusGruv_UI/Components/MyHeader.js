@@ -5,6 +5,7 @@ import Logo from '../Assets/Images/logo.png';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/MaterialCommunityIcons';
 import PeopleIcon from 'react-native-vector-icons/FontAwesome5';
+import FastImage from 'react-native-fast-image';
 export default class MyHeader extends Component {
   render() {
     const leftComponent = (
@@ -32,7 +33,7 @@ export default class MyHeader extends Component {
                 <Icon name="search" color="#0C91CF" size={20} />
               </View>
               <View style={{height: 20}}>
-                <Image
+                <FastImage
                   source={Logo}
                   style={{width: 150, alignSelf: 'flex-start', height: '100%'}}
                   resizeMode="contain"

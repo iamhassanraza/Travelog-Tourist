@@ -35,6 +35,7 @@ import {
   UIActivityIndicator,
   WaveIndicator,
 } from 'react-native-indicators';
+import FastImage from 'react-native-fast-image';
 
 //cam_id === 'nahi_hai'
 class ProfilePage extends React.Component {
@@ -469,7 +470,7 @@ class ProfilePage extends React.Component {
               justifyContent: 'center',
               marginTop: 20,
             }}>
-            <Image
+            <FastImage
               source={{
                 uri:
                   this.state.imageUri !== ''

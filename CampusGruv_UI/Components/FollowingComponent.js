@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import {Text, View, TouchableOpacity} from 'react-native';
 import {Avatar, Divider, SearchBar} from 'react-native-elements';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
+import FastImage from 'react-native-fast-image';
 
 export default class FollowingComponent extends Component {
   state = {
@@ -32,9 +33,7 @@ export default class FollowingComponent extends Component {
           }}>
           <TouchableOpacity>
             <View style={{flexDirection: 'row', alignItems: 'center'}}>
-              <Avatar
-                rounded
-                size="small"
+              <FastImage
                 source={
                   this.props.uri === '' || !this.props.uri
                     ? defaultAvatar
@@ -42,6 +41,7 @@ export default class FollowingComponent extends Component {
                         uri: this.props.uri,
                       }
                 }
+                style={{height: 40, width: 40, borderRadius: 50}}
               />
               <Text
                 style={{

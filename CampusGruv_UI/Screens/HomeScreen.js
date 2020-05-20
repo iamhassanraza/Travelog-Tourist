@@ -46,6 +46,7 @@ import {
 import NoCategory from '../Assets/Images/NoCategory.png';
 import NoFollower from '../Assets/Images/NoFollower.png';
 import SearchIcon from '../Assets/Images/SearchIcon.png';
+import FastImage from 'react-native-fast-image';
 
 class HomeScreen extends PureComponent {
   static navigationOptions = props => {
@@ -77,7 +78,7 @@ class HomeScreen extends PureComponent {
                     justifyContent: 'center',
                     flexDirection: 'row',
                   }}>
-                  <Image
+                  <FastImage
                     source={Logo}
                     style={{
                       width: 150,
@@ -98,7 +99,7 @@ class HomeScreen extends PureComponent {
                       width: 40,
                       justifyContent: 'center',
                     }}>
-                    <Image
+                    <FastImage
                       source={SearchIcon}
                       style={{height: 25, width: 30}}
                     />
@@ -115,7 +116,7 @@ class HomeScreen extends PureComponent {
                       width: 40,
                       justifyContent: 'center',
                     }}>
-                    <Image
+                    <FastImage
                       source={NoCategory}
                       style={{height: 25, width: 30}}
                     />
@@ -132,7 +133,7 @@ class HomeScreen extends PureComponent {
                       width: 40,
                       justifyContent: 'center',
                     }}>
-                    <Image
+                    <FastImage
                       source={NoFollower}
                       style={{height: 25, width: 30}}
                     />
@@ -165,7 +166,7 @@ class HomeScreen extends PureComponent {
                     justifyContent: 'center',
                     flexDirection: 'row',
                   }}>
-                  <Image
+                  <FastImage
                     source={Logo}
                     style={{
                       width: 150,
@@ -186,7 +187,7 @@ class HomeScreen extends PureComponent {
                       width: 40,
                       justifyContent: 'center',
                     }}>
-                    <Image
+                    <FastImage
                       source={SearchIcon}
                       style={{height: 25, width: 30}}
                     />
@@ -203,7 +204,7 @@ class HomeScreen extends PureComponent {
                       width: 40,
                       justifyContent: 'center',
                     }}>
-                    <Image
+                    <FastImage
                       source={NoCategory}
                       style={{height: 25, width: 30}}
                     />
@@ -220,7 +221,7 @@ class HomeScreen extends PureComponent {
                       width: 40,
                       justifyContent: 'center',
                     }}>
-                    <Image
+                    <FastImage
                       source={NoFollower}
                       style={{height: 25, width: 30}}
                     />

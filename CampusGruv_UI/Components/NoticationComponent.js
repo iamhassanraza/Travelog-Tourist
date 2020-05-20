@@ -6,6 +6,7 @@ import TimeAgo from 'react-native-timeago';
 import {withNavigation} from 'react-navigation';
 import {connect} from 'react-redux';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
+import FastImage from 'react-native-fast-image';
 
 class NoticationComponent extends Component {
   render() {
@@ -53,9 +54,7 @@ class NoticationComponent extends Component {
             alignItems: 'center',
           }}>
           <View style={{flexDirection: 'row', width: '12%'}}>
-            <Avatar
-              size="small"
-              rounded
+            <FastImage
               source={
                 this.props.uri === '' || !this.props.uri
                   ? defaultAvatar
@@ -63,6 +62,7 @@ class NoticationComponent extends Component {
                       uri: this.props.uri,
                     }
               }
+              style={{height: 40, width: 40, borderRadius: 50}}
             />
           </View>
 
