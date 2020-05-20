@@ -77,7 +77,6 @@ class PostCard extends Component {
             }}
             source={{
               uri: this.props.imageurl,
-              priority: FastImage.priority.normal,
             }}
           />
 
@@ -139,7 +138,6 @@ class PostCard extends Component {
                     ? defaultAvatar
                     : {
                         uri: this.props.userdp,
-                        priority: FastImage.priority.high,
                       }
                 }
                 style={{
