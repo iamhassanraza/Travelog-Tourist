@@ -42,7 +42,6 @@ class InputView extends React.Component {
               borderBottomColor: '#C4C4C4',
               borderBottomWidth: 0.5,
               fontSize: 20,
-              color: '#ACACAC',
             }}
             placeholder={this.props.ph}
             onChangeText={text => {

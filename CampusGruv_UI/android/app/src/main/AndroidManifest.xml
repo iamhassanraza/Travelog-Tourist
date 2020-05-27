@@ -29,11 +29,11 @@
           <action android:name="android.intent.action.MAIN" />
           <category android:name="android.intent.category.LAUNCHER" />
         </intent-filter>
-        <intent-filter android:label="filter_react_native">
+        <intent-filter android:label="Campusgruv">
           <action android:name="android.intent.action.VIEW" />
           <category android:name="android.intent.category.DEFAULT" />
           <category android:name="android.intent.category.BROWSABLE" />
-          <data android:scheme="peopleapp" android:host="App"/>
+          <data android:scheme="https" android:host="campusgruv.com"/>
         </intent-filter>
       </activity>
       <activity android:name="com.facebook.react.devsupport.DevSettingsActivity" />

@@ -411,14 +411,14 @@ class PostDetail extends Component {
                     </Text>
                   </View> */}
 
-                  {/* <View style={styles.modalOptions}>
-                    <Icon name="share-variant" style={styles.optionIcon}></Icon>
+                  <View style={styles.modalOptions}>
+                    <Icon name="share-variant" style={styles.optionIcon} />
                     <Text
                       onPress={() => alert('Share Post')}
                       style={styles.TextWithNavigation}>
                       Share Post
                     </Text>
-                  </View> */}
+                  </View>
                 </View>
               </Modal>
             </View>
