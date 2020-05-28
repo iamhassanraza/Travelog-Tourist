@@ -123,6 +123,10 @@ class CreateNewPost extends Component {
     this.getCategories();
     this.setState({
       Images: this.props.navigation.getParam('Images', 'nothing to render'),
+      imageName: this.props.navigation.getParam(
+        'imageName',
+        'nothing to render',
+      ),
       Title: this.props.navigation.getParam('title', 'nothing to render'),
     });
     //set navigation params
@@ -485,7 +489,7 @@ class CreateNewPost extends Component {
   createFormData = (images, body) => {
     const data = new FormData();
     data.append('post_detail_images', {
-      name: images.fileName,
+      name: this.state.imageName,
       type: images.type,
       uri:
         Platform.OS === 'android'

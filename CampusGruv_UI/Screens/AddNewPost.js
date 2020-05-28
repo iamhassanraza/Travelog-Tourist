@@ -124,11 +124,26 @@ export default class AddNewPost extends Component {
             alert('Uploaded file is too large \n(allowed file size is 10MB)');
           } else {
             this.state.imgCount++;
-            this.setState({
-              Images: response,
-              imageSource: source,
-            });
-            //setImagess(Imagess.concat(response.fileName));
+            if (
+              typeof response.fileName === 'undefined' ||
+              response.fileName === null
+            ) {
+              // on iOS, using camera returns undefined fileName and camera roll returns  null. This fixes that issue, so API can work.
+              var getFilename = response.uri.split('/');
+              imgName = getFilename[getFilename.length - 1];
+              console.log(response, 'uri uri');
+              this.setState({
+                imageName: imgName,
+                Images: response,
+                imageSource: source,
+              });
+            } else {
+              this.setState({
+                imageName: response.fileName,
+                Images: response,
+                imageSource: source,
+              });
+            }
           }
         }
       },
@@ -301,6 +316,7 @@ export default class AddNewPost extends Component {
                     this.setState({error: ''});
                     this.props.navigation.navigate('CreatePost', {
                       Images: this.state.Images,
+                      imageName: this.state.imageName,
                       title: this.state.title,
                       deleteItems: this.deleteItems,
                     });
@@ -392,6 +408,7 @@ export default class AddNewPost extends Component {
                   this.setState({error: ''});
                   this.props.navigation.navigate('CreatePost', {
                     Images: this.state.Images,
+                    imageName: this.state.imageName,
                     title: this.state.title,
                     deleteItems: this.deleteItems,
                   });

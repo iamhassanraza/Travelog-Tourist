@@ -243,11 +243,26 @@ class ProfilePage extends React.Component {
           } else if (response.fileSize > allowedImgSize) {
             alert('Uploaded file is too large \n(allowed file size is 10MB)');
           } else {
-            console.log(response, 'uri uri');
-            this.setState({
-              imageUri: response,
-              imageURL: response.uri,
-            });
+            if (
+              typeof response.fileName === 'undefined' ||
+              response.fileName === null
+            ) {
+              // on iOS, using camera returns undefined fileName and camera roll returns  null. This fixes that issue, so API can work.
+              var getFilename = response.uri.split('/');
+              imgName = getFilename[getFilename.length - 1];
+              console.log(response, 'uri uri');
+              this.setState({
+                imageName: imgName,
+                imageUri: response,
+                imageURL: response.uri,
+              });
+            } else {
+              this.setState({
+                imageName: response.fileName,
+                imageUri: response,
+                imageURL: response.uri,
+              });
+            }
           }
         }
       },
@@ -258,7 +273,8 @@ class ProfilePage extends React.Component {
     const data = new FormData();
     if (this.state.imageUri !== '') {
       data.append('profile_pic', {
-        name: images.fileName,
+        // name: images.fileName,
+        name: this.state.imageName,
         type: images.type,
         uri:
           Platform.OS === 'android'
@@ -317,7 +333,7 @@ class ProfilePage extends React.Component {
 
   renderDatePicker = () => {
     return (
-      <View style={{flexDirection: 'row', marginTop: '5%'}}>
+      <View style={{flexDirection: 'row', marginTop: '3%'}}>
         <Text
           style={{
             fontSize: 20,
@@ -332,9 +348,6 @@ class ProfilePage extends React.Component {
         <DatePicker
           style={{
             width: '70%',
-            color: '#ACACAC',
-            justifyContent: 'center',
-            alignSelf: 'center',
           }}
           date={this.state.date}
           mode="date"
@@ -351,7 +364,13 @@ class ProfilePage extends React.Component {
               right: 0,
               top: 4,
             },
+            placeholderText: {
+              fontSize: 16,
+              color: 'black',
+            },
             dateInput: {
+              alignItems: 'flex-start',
+              marginLeft: 0,
               borderLeftWidth: 0,
               borderRightWidth: 0,
               borderTopWidth: 0,
@@ -389,7 +408,6 @@ class ProfilePage extends React.Component {
               borderBottomColor: '#C4C4C4',
               borderBottomWidth: 0.5,
               fontSize: 20,
-              color: '#ACACAC',
             }}
             value={this.state.phone}
             placeholder="XXX-XXX-XXXXX"
@@ -427,7 +445,6 @@ class ProfilePage extends React.Component {
               borderBottomColor: '#C4C4C4',
               borderBottomWidth: 0.5,
               fontSize: 20,
-              color: '#ACACAC',
             }}
             placeholder="2020"
             value={this.state.gradutationYear}
@@ -502,7 +519,14 @@ class ProfilePage extends React.Component {
 
           {/* OPTIONS */}
 
-          <View style={{borderBottomColor: '#C4C4C4', marginTop: 10}}>
+          <View
+            style={{
+              borderTopColor: '#C4C4C4',
+              borderTopWidth: 0.5,
+              paddingBottom: 40,
+              backgroundColor: '#f9fdfe',
+              marginTop: Dimensions.get('window').height > 800 ? 50 : 10,
+            }}>
             <InputView
               name="Name"
               ph="Enter name"
@@ -531,6 +555,7 @@ class ProfilePage extends React.Component {
                   borderBottomColor: '#C4C4C4',
                 }}>
                 <Picker
+                  textStyle={{paddingLeft: 0}}
                   selectedValue={this.state.selectedId}
                   onValueChange={itemValue => {
                     if (itemValue !== 'select campus') {
