@@ -525,7 +525,7 @@ class ProfilePage extends React.Component {
               borderTopWidth: 0.5,
               paddingBottom: 40,
               backgroundColor: '#f9fdfe',
-              marginTop: Dimensions.get('window').height > 800 ? 50 : 10,
+              marginTop: Dimensions.get('window').height > 800 ? 50 : 20,
             }}>
             <InputView
               name="Name"
