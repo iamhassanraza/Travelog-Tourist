@@ -32,7 +32,7 @@ export default class UserSettings extends Component {
 
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, backgroundColor: '#f9fdfe'}}>
         <View
           style={{
             flexDirection: 'row',
@@ -40,74 +40,13 @@ export default class UserSettings extends Component {
             marginTop: '3%',
             marginBottom: '2%',
           }}>
-          <AccPic img={i1}></AccPic>
-          <AccPic img={i2}></AccPic>
-          <AccPic img={i3}></AccPic>
-
-          <View style={{margin: '2%'}}>
-            <IconFeather
-              onPress={this.toggleModal}
-              name="more-horizontal"
-              size={30}
-              style={{
-                color: 'grey',
-                borderWidth: 1,
-                borderRadius: 50,
-                borderColor: 'grey',
-              }}></IconFeather>
-
-            <View>
-              <Modal
-                style={{margin: 0}}
-                isVisible={this.state.isModalVisible}
-                onBackdropPress={() => this.setState({isModalVisible: false})}>
-                <View style={{flex: 1, justifyContent: 'flex-end'}}>
-                  <View
-                    style={{
-                      backgroundColor: 'white',
-                      flexDirection: 'row',
-                      justifyContent: 'space-between',
-                      paddingBottom: 30,
-                      borderTopRightRadius: 23,
-                      borderTopLeftRadius: 23,
-                    }}>
-                    <CrossIcon
-                      name="cancel"
-                      onPress={() => this.setState({isModalVisible: false})}
-                      style={{
-                        flex: 0.65,
-                        paddingLeft: 5,
-                        fontSize: 20,
-                        paddingTop: 4,
-                        color: 'grey',
-                      }}></CrossIcon>
-                    <View
-                      style={{flex: 10, alignItems: 'center', paddingTop: 3}}>
-                      <Text
-                        style={{
-                          fontSize: 20,
-                          fontWeight: 'bold',
-                          borderTopWidth: 2,
-                          marginLeft: '-7%',
-                          borderTopColor: 'grey',
-                        }}>
-                        Accounts
-                      </Text>
-                    </View>
-                  </View>
-                  <View style={{backgroundColor: 'white'}}>
-                    <AccPic img={i1} name="Dancers of Pitt"></AccPic>
-                    <AccPic img={i2} name="Kyle A."></AccPic>
-                    <AccPic img={i3} name="Pitt Biology Club"></AccPic>
-                  </View>
-                </View>
-              </Modal>
-            </View>
-          </View>
+          <AccPic img={i1} />
+          <AccPic img={i2} />
+          <AccPic img={i3} />
         </View>
 
         <View>
-          <View
+          {/* <View
             style={{flexDirection: 'row', marginLeft: '2%', marginTop: '3%'}}>
             <Icon
               name="account-circle-outline"
@@ -116,7 +55,8 @@ export default class UserSettings extends Component {
                 alignSelf: 'center',
                 paddingLeft: -1,
                 fontSize: 35,
-              }}></Icon>
+              }}
+            />
             <Text
               style={{
                 flex: 8,
@@ -126,18 +66,19 @@ export default class UserSettings extends Component {
               }}>
               Account
             </Text>
-          </View>
+          </View> */}
 
           <View
             style={{flexDirection: 'row', marginLeft: '2%', marginTop: '3%'}}>
-            <IconFA
-              name="organization"
+            <IconFeather
+              name="users"
               style={{
                 flex: 1,
                 alignSelf: 'center',
                 paddingLeft: '2%',
                 fontSize: 30,
-              }}></IconFA>
+              }}
+            />
             <Text
               style={{
                 flex: 8,
@@ -157,7 +98,8 @@ export default class UserSettings extends Component {
                 alignSelf: 'center',
                 paddingLeft: '2%',
                 fontSize: 35,
-              }}></Icon>
+              }}
+            />
             <Text style={{flex: 8, alignSelf: 'center', fontSize: 19}}>
               Notifications
             </Text>
@@ -172,7 +114,8 @@ export default class UserSettings extends Component {
                 alignSelf: 'center',
                 paddingLeft: '2%',
                 fontSize: 35,
-              }}></Icon>
+              }}
+            />
             <Text style={{flex: 8, alignSelf: 'center', fontSize: 19}}>
               Help & Support
             </Text>
@@ -180,14 +123,15 @@ export default class UserSettings extends Component {
 
           <View
             style={{flexDirection: 'row', marginLeft: '2%', marginTop: '3%'}}>
-            <Icon
-              name="exclamation"
+            <IconFeather
+              name="info"
               style={{
                 flex: 1,
                 alignSelf: 'center',
                 paddingLeft: '2%',
                 fontSize: 35,
-              }}></Icon>
+              }}
+            />
             <Text style={{flex: 8, alignSelf: 'center', fontSize: 19}}>
               About
             </Text>
@@ -215,13 +159,13 @@ export default class UserSettings extends Component {
                 style={{
                   paddingLeft: '2%',
                   fontSize: 30,
-                }}></IconFeather>
+                }}
+              />
               <Text style={{fontSize: 19, paddingLeft: 5, paddingRight: 5}}>
                 Log Out
               </Text>
             </TouchableOpacity>
           </View>
-          {/* <LogoutButton style={{fontSize: 19, paddingLeft: 5, paddingRight: 5}}/> */}
         </View>
       </View>
     );

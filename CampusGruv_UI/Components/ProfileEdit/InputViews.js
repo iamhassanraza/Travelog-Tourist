@@ -30,6 +30,7 @@ class InputView extends React.Component {
             {this.props.name}
           </Text>
           <TextInput
+            multiline={this.props.multiline}
             onFocus={() => {
               this.setState({focused: true});
             }}

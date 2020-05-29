@@ -146,6 +146,8 @@ class ProfilePage extends React.Component {
         this.props.User.dob === null ? '' : this.props.User.dob.split('T')[0],
     });
     this.setState({major: this.props.User.major});
+    this.setState({website: this.props.User?.website});
+    this.setState({bio: this.props.User?.bio});
     this.setState({name: this.props.User.first_name});
     this.setState({phone: this.props.User.contact_no});
     this.setState({gradutationYear: this.props.User.graduate_year});
@@ -306,6 +308,8 @@ class ProfilePage extends React.Component {
         body: this.createFormData(this.state.imageUri, {
           campus_id: this.state.selectedId,
           dob: this.state.dob,
+          bio: this.state.bio,
+          website: this.state.website,
           major: this.state.major,
           first_name: this.state.name,
           contact_no: this.state.phone,
@@ -574,6 +578,24 @@ class ProfilePage extends React.Component {
                 style={{width: '10%', marginTop: 15}}
               />
             </View>
+            <InputView
+              multiline={true}
+              name="Bio"
+              ph="enter bio"
+              value={this.state.bio}
+              changestate={text => {
+                this.setState({bio: text});
+              }}
+            />
+            <InputView
+              multiline={true}
+              name="Website"
+              ph="enter your website"
+              value={this.state.website}
+              changestate={text => {
+                this.setState({website: text});
+              }}
+            />
             <InputView
               name="Major"
               ph="Major"

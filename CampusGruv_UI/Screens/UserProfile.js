@@ -74,7 +74,7 @@ class UserProfile extends React.Component {
                     //props.navigation.goBack()
                   }>
                   <MenuIcon
-                    name="menu"
+                    name="settings"
                     color="white"
                     fontWeight="bold"
                     size={26}
@@ -189,7 +189,7 @@ class UserProfile extends React.Component {
         otherUserId: this.state.otherUserId,
         currentUserId: this.props.User.id,
         handleThis: () => this.toggleModal(),
-        handleOtherThis: () => this.toggleOtherModal(),
+        handleOtherThis: () => this.props.navigation.navigate('UserSettings'),
       });
       this.fetchdata(userNavId ? userNavId : this.props.User.id);
       console.log('will focus');
@@ -217,10 +217,6 @@ class UserProfile extends React.Component {
 
   toggleModal = () => {
     this.setState({isModalVisible: !this.state.isModalVisible});
-  };
-
-  toggleOtherModal = () => {
-    this.setState({otherModalVisible: !this.state.otherModalVisible});
   };
 
   fetchFollowData = async id => {
@@ -744,97 +740,6 @@ class UserProfile extends React.Component {
                     paddingBottom: 20,
                   }}>
                   Block user
-                </Text>
-              </View>
-            </View>
-          </Modal>
-        </View>
-
-        {/* THE OTHER MODAL GOES HERE */}
-        <View>
-          <Modal
-            style={{
-              margin: 0,
-              //backgroundColor: 'white',
-              flexDirection: 'row',
-              // alignItems: 'flex-end',
-            }}
-            isVisible={this.state.otherModalVisible}
-            onBackdropPress={() => this.setState({otherModalVisible: false})}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'flex-end',
-                alignItems: 'center',
-              }}>
-              <View
-                style={{
-                  backgroundColor: 'white',
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  width: '100%',
-                  paddingBottom: 20,
-                  borderTopRightRadius: 12,
-                  borderTopLeftRadius: 12,
-                }}>
-                <Icon
-                  name="cancel"
-                  onPress={() => this.setState({otherModalVisible: false})}
-                  style={{
-                    position: 'absolute',
-                    top: 12,
-                    left: 10,
-                    fontSize: 20,
-                    color: IconGrey,
-                  }}
-                />
-                <View
-                  style={{
-                    alignItems: 'center',
-                    paddingTop: 3,
-                  }}>
-                  <View
-                    style={{
-                      alignSelf: 'center',
-                      borderTopWidth: 2,
-                      marginTop: 3,
-                      width: 50,
-                      borderTopColor: IconGrey,
-                    }}
-                  />
-                  <Text
-                    style={{
-                      fontSize: 20,
-                      fontWeight: 'bold',
-                      marginTop: 2,
-                    }}>
-                    More Options
-                  </Text>
-                  {/* </View> */}
-                </View>
-              </View>
-
-              <View
-                style={{
-                  width: '100%',
-                  backgroundColor: 'white',
-                }}>
-                <Text
-                  onPress={async () => {
-                    this.setState({otherModalVisible: false});
-                    await AsyncStorage.clear();
-                    this.props.screenProps.rootNavigation.navigate('Login');
-                    console.log('Logged Out');
-                  }}
-                  style={{
-                    color: 'black',
-                    backgroundColor: 'white',
-                    textAlign: 'center',
-                    width: '100%',
-                    fontSize: 17,
-                    paddingBottom: 40,
-                  }}>
-                  Logout
                 </Text>
               </View>
             </View>
