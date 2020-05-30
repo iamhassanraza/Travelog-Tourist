@@ -407,6 +407,7 @@ export default class CategoryPosts extends PureComponent {
                 totalPosts={this.state.total}
                 loadMore={this.loadmore}
                 loadstate={this.state.loadmore}
+                hideCategory={true}
               />
             </View>
           </ScrollView>

@@ -79,30 +79,28 @@ class PostCard extends Component {
               uri: this.props.imageurl,
             }}
           />
-
-          {/* <View
-            style={{
-              position: 'absolute',
-              //  marginTop:"10%",
-              //  marginLeft:"45%",
-              right: 5,
-              top: 10,
-              borderRadius: 5,
-              backgroundColor: `rgba(${this.props.categoryColor},0.8)`,
-            }}>
-            <Text
+          {!this.props.hideCategory ? (
+            <View
               style={{
-                color: 'white',
-                fontWeight: 'bold',
-                fontSize: 12,
-                justifyContent: 'center',
-                alignItems: 'center',
-                padding: 3,
-                // backgroundColor:`rgba(${this.props.categoryColor},0.8)`,
+                position: 'absolute',
+                right: 5,
+                top: 10,
+                borderRadius: 5,
+                backgroundColor: `rgba(${this.props.categoryColor},0.8)`,
               }}>
-              {this.props.categoryName}
-            </Text>
-          </View> */}
+              <Text
+                style={{
+                  color: 'white',
+                  fontWeight: 'bold',
+                  fontSize: 12,
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  padding: 3,
+                }}>
+                {this.props.categoryName}
+              </Text>
+            </View>
+          ) : null}
         </View>
         <View
           style={{

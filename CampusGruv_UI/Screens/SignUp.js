@@ -245,6 +245,7 @@ class Signup extends React.Component {
               style={{
                 color: 'white',
                 fontSize: 16,
+                fontWeight: 'bold',
                 marginLeft: 10,
                 marginTop: Platform.OS == 'ios' ? 40 : 20,
               }}

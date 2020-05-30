@@ -38,6 +38,7 @@ class RenderCards extends PureComponent {
                 renderItem={({item}) => {
                   return (
                     <PostCard
+                      hideCategory={this.props.hideCategory ?? false}
                       categoryName={item.postCategory.description}
                       categoryColor={item.postCategory.rgba_colors}
                       postId={item.id}
@@ -73,6 +74,7 @@ class RenderCards extends PureComponent {
                 renderItem={({item}) => {
                   return (
                     <PostCard
+                      hideCategory={this.props.hideCategory ?? false}
                       categoryName={item.postCategory.description}
                       categoryColor={item.postCategory.rgba_colors}
                       userdp={item.users.profile_pic_url}
