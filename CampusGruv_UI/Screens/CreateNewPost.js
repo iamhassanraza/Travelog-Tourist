@@ -69,7 +69,7 @@ class CreateNewPost extends Component {
               style={{
                 alignSelf: 'center',
               }}>
-              <Text style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>
+              <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
                 Details
               </Text>
             </View>
@@ -212,7 +212,7 @@ class CreateNewPost extends Component {
     if (parseInt(Response.status) === 401) {
       alert('Error');
     } else if (parseInt(Response.status) === 200) {
-      console.log('API called Successfully');
+      console.log('API called Successfully', JsonResponse);
       this.setState({DATA: JsonResponse});
     }
   };
@@ -307,22 +307,30 @@ class CreateNewPost extends Component {
           marginRight: '5%',
         }}>
         <Text style={{alignSelf: 'center', color: 'grey'}}>Set Price</Text>
-        <TextInput
-          keyboardType="number-pad"
-          placeholder="$ 0.00"
+        <View
           style={{
-            paddingLeft: '3%',
+            flexDirection: 'row',
+            paddingHorizontal: 5,
             marginLeft: '3%',
+            alignItems: 'center',
             width: 100,
-            height: 40,
+            height: 30,
             borderRadius: 9,
             borderWidth: 0.5,
             borderColor: 'grey',
-          }}
-          onChangeText={text => {
-            this.changePriceState(text);
-          }}
-        />
+          }}>
+          <Text style={{color: 'grey'}}>$</Text>
+          <TextInput
+            keyboardType="number-pad"
+            placeholder="0.00"
+            style={{
+              marginLeft: 2,
+            }}
+            onChangeText={text => {
+              this.changePriceState(text);
+            }}
+          />
+        </View>
       </View>
     );
   };
@@ -475,12 +483,15 @@ class CreateNewPost extends Component {
           style={{
             width: '90%',
             borderRadius: 5,
-            height: 30,
+            height: 35,
             justifyContent: 'center',
             backgroundColor: '#0C91CF',
             alignSelf: 'center',
           }}>
-          <Text style={{color: 'white', alignSelf: 'center'}}>Share</Text>
+          <Text
+            style={{color: 'white', fontWeight: 'bold', alignSelf: 'center'}}>
+            Share
+          </Text>
         </View>
       </TouchableOpacity>
     );
@@ -535,7 +546,7 @@ class CreateNewPost extends Component {
                 </View>
               )}
 
-              {this.state.Category === 5 ? this.renderDatePicker() : null}
+              {this.state.Category === 6 ? this.renderDatePicker() : null}
               {this.state.Category === 7 ? this.renderPrice() : null}
               {this.renderDescription()}
               {this.renderShareButton()}

@@ -9,15 +9,13 @@ import {
   TextInput,
   Button,
   Dimensions,
+  ScrollView,
   Platform,
   StatusBar,
 } from 'react-native';
 import ImagePicker from 'react-native-image-picker';
 // import RNFetchBlob from 'react-native-fetch-blob';
-import {
-  ScrollView,
-  TouchableWithoutFeedback,
-} from 'react-native-gesture-handler';
+
 import Icon from 'react-native-vector-icons/AntDesign';
 import {StackActions, NavigationActions} from 'react-navigation';
 import {Header} from 'react-native-elements';
@@ -46,7 +44,7 @@ export default class AddNewPost extends Component {
               justifyContent: 'center',
             }}>
             <View style={{alignSelf: 'center'}}>
-              <Text style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>
+              <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
                 New Post
               </Text>
             </View>
@@ -263,7 +261,7 @@ export default class AddNewPost extends Component {
           <KeyboardAvoidingView
             style={{flex: 1}}
             keyboardVerticalOffset={
-              Dimensions.get('window').height > 800 ? -160 : -80
+              Dimensions.get('window').height > 800 ? -250 : -170
             }
             behavior="padding">
             <Content style={{backgroundColor: '#f9fdfe'}}>

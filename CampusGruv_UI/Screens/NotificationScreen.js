@@ -86,7 +86,7 @@ class NotificationScreen extends Component {
               }}>
               <View style={{alignSelf: 'center'}}>
                 <Text
-                  style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>
+                  style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
                   Activity
                 </Text>
               </View>
@@ -103,7 +103,7 @@ class NotificationScreen extends Component {
               marginTop: Platform.OS == 'ios' ? 30 : 0,
             }}>
             <View style={{alignSelf: 'center'}}>
-              <Text style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>
+              <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
                 Activity
               </Text>
             </View>
