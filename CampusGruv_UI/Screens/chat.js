@@ -246,16 +246,70 @@ class Chat extends React.Component {
             alert('Uploaded file is too large \n(allowed file size is 10MB)');
           } else {
             this.state.imgCount++;
-            this.setState({
-              Images: response,
-              imageSource: source,
-            });
-            //setImagess(Imagess.concat(response.fileName));
+            if (
+              typeof response.fileName === 'undefined' ||
+              response.fileName === null
+            ) {
+              // on iOS, using camera returns undefined fileName and camera roll returns  null. This fixes that issue, so API can work.
+              var getFilename = response.uri.split('/');
+              imgName = getFilename[getFilename.length - 1];
+              console.log(response, 'uri uri');
+              this.setState({
+                imageName: imgName,
+                Images: response,
+                imageSource: source,
+              });
+            } else {
+              this.setState({
+                imageName: response.fileName,
+                Images: response,
+                imageSource: source,
+              });
+            }
           }
         }
       },
     );
   };
+
+  // selectPhoto = () => {
+  //   ImagePicker.showImagePicker(
+  //     {
+  //       maxWidth: 1000,
+  //       maxHeight: 1000,
+  //       storageOptions: {
+  //         skipBackup: true,
+  //         path: 'images',
+  //         cameraRoll: true,
+  //         waitUntilSaved: true,
+  //       },
+  //     },
+  //     response => {
+  //       if (response.didCancel) {
+  //       } else if (response.error) {
+  //       } else {
+  //         const source = {uri: response.uri};
+  //         const fileTypes = /jpeg|jpg|png|gif/;
+  //         const allowedImgSize = 1024 * 1024 * 10;
+  //         console.log('response image: ', response);
+  //         if (!fileTypes.test(response.type)) {
+  //           alert(
+  //             'Uploaded file is not a valid image. \n(allowed file types: jpeg, jpg, png, gif)',
+  //           );
+  //         } else if (response.fileSize > allowedImgSize) {
+  //           alert('Uploaded file is too large \n(allowed file size is 2MB)');
+  //         } else {
+  //           this.state.imgCount++;
+  //           this.setState({
+  //             Images: response,
+  //             imageSource: source,
+  //           });
+  //           //setImagess(Imagess.concat(response.fileName));
+  //         }
+  //       }
+  //     },
+  // //   );
+  // };
 
   render() {
     return (
