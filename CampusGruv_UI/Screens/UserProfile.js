@@ -126,7 +126,7 @@ class UserProfile extends React.Component {
                     //props.navigation.goBack()
                   }>
                   <MenuIcon
-                    name="more-horizontal"
+                    name="menu"
                     color="white"
                     fontWeight="bold"
                     size={26}
@@ -553,6 +553,7 @@ class UserProfile extends React.Component {
             flexDirection: 'row',
             backgroundColor: 'white',
             paddingLeft: 10,
+            marginTop: 5,
             alignItems: 'center',
           }}>
           <FastImage

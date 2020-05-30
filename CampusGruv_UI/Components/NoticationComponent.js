@@ -67,7 +67,9 @@ class NoticationComponent extends Component {
           </View>
 
           <View style={{width: '75%', flexDirection: 'row'}}>
-            <Text style={{fontSize: 16}}>{this.props.activity} </Text>
+            <Text style={{fontSize: 16, marginLeft: 2}}>
+              {this.props.activity}{' '}
+            </Text>
           </View>
           <View style={{width: '13%'}}>
             <TimeAgo time={this.props.time} style={{fontSize: 8}} />

@@ -42,12 +42,6 @@ class AuthLoading extends React.Component {
           : alert('No Internet Connection! Restart the App');
       }
     });
-
-    // Unsubscribe
-    //  unsubscribe();
-
-    // this._bootstrapAsync();
-    // this.props.CreateUserDetails({name:'hassan',id:'asndas'})
   }
 
   fetchUser = async () => {

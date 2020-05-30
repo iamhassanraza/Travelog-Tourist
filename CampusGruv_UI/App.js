@@ -139,7 +139,7 @@ const ProfileStack = createStackNavigator(
               }}>
               <View style={{alignSelf: 'center'}}>
                 <Text
-                  style={{color: 'white', fontSize: 25, fontWeight: 'bold'}}>
+                  style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
                   Settings
                 </Text>
               </View>
@@ -323,7 +323,7 @@ const MessageStack = createStackNavigator(
               }}>
               <View style={{alignSelf: 'center'}}>
                 <Text
-                  style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>
+                  style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
                   New Message
                 </Text>
               </View>
@@ -360,8 +360,8 @@ const MessageStack = createStackNavigator(
               }}>
               <View style={{alignSelf: 'center'}}>
                 <Text
-                  style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>
-                  Activity
+                  style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
+                  Messages
                 </Text>
               </View>
               <View
