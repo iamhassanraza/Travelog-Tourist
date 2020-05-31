@@ -125,9 +125,9 @@ class Chat extends React.Component {
                 {props.currentMessage.text}
               </Text>
             </View>
-            {this.state.imageSource ? (
+            {props.currentMessage.image ? (
               <FastImage
-                source={this.state.imageSource}
+                source={props.currentMessage.image}
                 style={{width: 200, marginTop: 10, height: 150}}
               />
             ) : null}

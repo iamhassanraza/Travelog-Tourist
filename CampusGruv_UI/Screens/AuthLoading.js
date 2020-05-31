@@ -5,6 +5,7 @@ import {
   Dimensions,
   StatusBar,
   StyleSheet,
+  Linking,
   View,
   ImageBackground,
   Text,
@@ -31,8 +32,26 @@ const screenwidth = Dimensions.get('window').width;
 const screenheight = Dimensions.get('window').height;
 
 class AuthLoading extends React.Component {
-  componentDidMount() {
+  componentWillUnmount() {
+    Linking.removeEventListener('url', this.handleOpenURL);
+  }
+
+  // handleOpenURL(event) {
+  //   console.log(event.url);
+  //   const route = e.url.replace('campusgruv://post', '');
+  //   console.log('route');
+  //   // do something with the url, in our case navigate(route)
+  // }
+
+  async componentDidMount() {
     // Subscribe
+    const initialUrl = await Linking.getInitialURL();
+    console.log('initial url', initialUrl);
+    if (initialUrl !== null) {
+      const route = initialUrl.replace(/.*?:\/\/post\//g, '');
+      console.log('initial url', route);
+    }
+    //Linking.addEventListener('url', this.handleOpenURL);
     const unsubscribe = NetInfo.addEventListener(state => {
       console.log('Connection type', state.type);
       console.log('Is connected?', state.isConnected);

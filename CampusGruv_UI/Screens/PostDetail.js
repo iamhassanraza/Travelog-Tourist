@@ -160,16 +160,17 @@ class PostDetail extends Component {
     );
   };
 
-  sharePost = (first_name, postTitle) => {
+  sharePost = (first_name, postId) => {
     let text = `Checkout this post by ${first_name}: \n`;
-    if (Platform.OS === 'android')
-      text = text.concat(`${require('../config').default.production}Android`);
-    else text = text.concat('http://itunes.apple.com/app/id1453977874');
+    let url = `campusgruv://post/${postId}`;
+    // if (Platform.OS === 'android')
+    //   text = text.concat(`${require('../config').default.production}Android`);
+    // else text = text.concat('http://itunes.apple.com/app/id1453977874');
 
     const options = {
       title: 'share via',
       message: text,
-      //url: `app://`,
+      url: url,
     };
     Share.open(options)
       .then(res => {
@@ -414,7 +415,7 @@ class PostDetail extends Component {
                   <View style={styles.modalOptions}>
                     <Icon name="share-variant" style={styles.optionIcon} />
                     <Text
-                      onPress={() => alert('Share Post')}
+                      onPress={() => this.sharePost(first_name, postId)}
                       style={styles.TextWithNavigation}>
                       Share Post
                     </Text>
