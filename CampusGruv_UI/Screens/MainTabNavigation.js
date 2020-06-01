@@ -66,6 +66,7 @@ class MainTabNavigation extends React.Component {
         ) : null}
         <TabContainer
           screenProps={{
+            postDetail: this.props.navigation.getParam('postDetail', null),
             changeStatusBar: this.changeStatusBar,
             rootNavigation: this.props.navigation,
             Notifications: this.props.notifications,

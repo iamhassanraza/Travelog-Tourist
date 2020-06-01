@@ -10,7 +10,7 @@ import {
   Image,
   Platform,
 } from 'react-native';
-import {Icon, Input, Item} from 'native-base';
+import {Icon, Input, Item, Container} from 'native-base';
 import PostIcon from 'react-native-vector-icons/MaterialIcons';
 //import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
 import io from 'socket.io-client';
@@ -20,6 +20,7 @@ import {ThemeBlue} from '../Assets/Colors';
 import TimeAgo from 'react-native-timeago';
 import ImagePicker from 'react-native-image-picker';
 import FastImage from 'react-native-fast-image';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 class Chat extends React.Component {
   static navigationOptions = props => {
@@ -66,6 +67,9 @@ class Chat extends React.Component {
       connected: false,
       currentMessage: '',
       room_id: null,
+      pageNo: 1,
+      loadMore: false,
+      refreshing: false,
     };
   }
 
@@ -105,30 +109,39 @@ class Chat extends React.Component {
                 props.currentMessage.user.name.split(' ')[1].charAt('0') +
                 '.'}
             </Text>
-            <View
-              style={{
-                marginTop: 1,
-                justifyContent: 'center',
-                maxWidth: 250,
-                paddingVertical: '1%',
-              }}>
-              <Text
+            {props.currentMessage.message_type === 'text' ? (
+              <View
                 style={{
-                  textAlign: 'center',
-                  borderRadius: 8,
-                  borderColor: ThemeBlue,
-                  borderWidth: 1,
-                  fontSize: 14,
-                  paddingVertical: 2,
-                  paddingHorizontal: '2%',
+                  marginTop: 1,
+                  justifyContent: 'center',
+                  maxWidth: 250,
+                  minWidth: 20,
+                  paddingVertical: '1%',
                 }}>
-                {props.currentMessage.text}
-              </Text>
-            </View>
-            {props.currentMessage.image ? (
+                <Text
+                  style={{
+                    textAlign:
+                      props.currentMessage.text.length < 10 ? 'center' : 'auto',
+                    borderRadius: 8,
+                    borderColor: ThemeBlue,
+                    borderWidth: 1,
+                    fontSize: 14,
+                    paddingVertical: 2,
+                    paddingHorizontal: 3,
+                  }}>
+                  {props.currentMessage.text}
+                </Text>
+              </View>
+            ) : null}
+            {props.currentMessage.message_type === 'image' ? (
               <FastImage
-                source={props.currentMessage.image}
-                style={{width: 200, marginTop: 10, height: 150}}
+                source={{uri: props.currentMessage.text}}
+                style={{
+                  width: 200,
+                  marginTop: 5,
+                  borderRadius: 10,
+                  height: 200,
+                }}
               />
             ) : null}
             <Text style={{marginLeft: '1%', marginTop: 2, color: 'grey'}}>
@@ -150,6 +163,7 @@ class Chat extends React.Component {
       return {
         _id: m.id,
         text: m.message,
+        message_type: m.message_type,
         created_at: m.created_at,
         user: {
           _id: m.user_id,
@@ -160,22 +174,45 @@ class Chat extends React.Component {
     });
   };
 
-  async componentDidMount() {
-    AppState.addEventListener('change', this._handleAppStateChange);
-    this.props.socket.emit('joinRoom', {
-      room_id: `${this.props.navigation.getParam('room_id', null)}`,
-    });
+  OnjoinRoom = () => {
     this.props.socket.on('joinRoom', async msgs => {
-      // console.log('room joined', msgs);
+      console.log('room joined', msgs.length);
       if (msgs !== null) {
         var tempArray = await this.mapMessages(msgs);
+        if (tempArray.length === 40) {
+          this.setState({loadMore: true});
+        }
       } else {
         tempArray = [];
       }
-      this.setState(previousState => ({
-        messages: GiftedChat.append(previousState.messages, tempArray),
-      }));
+      if (this.state.pageNo > 1) {
+        console.log('if ran');
+        this.setState(previousState => ({
+          messages: GiftedChat.prepend(previousState.messages, tempArray),
+          refreshing: false,
+        }));
+      } else {
+        console.log('else ran');
+        this.setState(previousState => ({
+          messages: GiftedChat.append(previousState.messages, tempArray),
+          refreshing: false,
+        }));
+      }
     });
+  };
+
+  joinRoom = pageNo => {
+    this.props.socket.emit('joinRoom', {
+      room_id: `${this.props.navigation.getParam('room_id', null)}`,
+      page_no: this.state.pageNo,
+    });
+  };
+
+  async componentDidMount() {
+    this.joinRoom(this.state.pageNo);
+
+    this.OnjoinRoom();
+
     this.props.socket.on('disconnect', () => {
       console.log('disconnected');
       this.setState({
@@ -189,6 +226,7 @@ class Chat extends React.Component {
       console.log(msg, 'msg msg msg');
       if (msg[0].room_id === this.props.navigation.getParam('room_id', null)) {
         const tempArray = await this.mapMessages(msg);
+        this.setState({imageSource: false});
         this.setState(previousState => ({
           messages: GiftedChat.append(previousState.messages, tempArray),
         }));
@@ -210,6 +248,7 @@ class Chat extends React.Component {
         created_at: m.createdAt,
         user_id: m.user._id,
         message: m.text,
+        message_type: 'text',
         profile_pic_url: m.user.avatar,
         name: m.user.name,
         room_id: this.props.navigation.getParam('room_id', null),
@@ -236,8 +275,8 @@ class Chat extends React.Component {
         } else {
           const source = {uri: response.uri};
           const fileTypes = /jpeg|jpg|png|gif/;
-          const allowedImgSize = 1024 * 1024 * 10;
-          // console.log('response image: ', response);
+          const allowedImgSize = 1024 * 1024 * 3;
+          console.log('response image: ', response);
           if (!fileTypes.test(response.type)) {
             alert(
               'Uploaded file is not a valid image. \n(allowed file types: jpeg, jpg, png, gif)',
@@ -253,13 +292,51 @@ class Chat extends React.Component {
               // on iOS, using camera returns undefined fileName and camera roll returns  null. This fixes that issue, so API can work.
               var getFilename = response.uri.split('/');
               imgName = getFilename[getFilename.length - 1];
-              console.log(response, 'uri uri');
+              //send message
+              const tempArray = [
+                {
+                  created_at: new Date(),
+                  user_id: this.props.User.id,
+                  message: response.data,
+                  image_name: imgName,
+                  image_type: response.type,
+                  message_type: 'image',
+                  profile_pic_url: this.props.User.profile_pic_url,
+                  name:
+                    this.props.User.first_name +
+                    ' ' +
+                    this.props.User.last_name,
+                  room_id: this.props.navigation.getParam('room_id', null),
+                },
+              ];
+
+              this.props.socket.emit('message', tempArray[0]);
+
               this.setState({
                 imageName: imgName,
                 Images: response,
                 imageSource: source,
               });
             } else {
+              const tempArray = [
+                {
+                  created_at: new Date(),
+                  user_id: this.props.User.id,
+                  message: response.data,
+                  image_name: imgName,
+                  image_type: response.type,
+                  message_type: 'image',
+                  profile_pic_url: this.props.User.profile_pic_url,
+                  name:
+                    this.props.User.first_name +
+                    ' ' +
+                    this.props.User.last_name,
+                  room_id: this.props.navigation.getParam('room_id', null),
+                },
+              ];
+
+              this.props.socket.emit('message', tempArray[0]);
+
               this.setState({
                 imageName: response.fileName,
                 Images: response,
@@ -272,92 +349,101 @@ class Chat extends React.Component {
     );
   };
 
-  // selectPhoto = () => {
-  //   ImagePicker.showImagePicker(
-  //     {
-  //       maxWidth: 1000,
-  //       maxHeight: 1000,
-  //       storageOptions: {
-  //         skipBackup: true,
-  //         path: 'images',
-  //         cameraRoll: true,
-  //         waitUntilSaved: true,
-  //       },
-  //     },
-  //     response => {
-  //       if (response.didCancel) {
-  //       } else if (response.error) {
-  //       } else {
-  //         const source = {uri: response.uri};
-  //         const fileTypes = /jpeg|jpg|png|gif/;
-  //         const allowedImgSize = 1024 * 1024 * 10;
-  //         console.log('response image: ', response);
-  //         if (!fileTypes.test(response.type)) {
-  //           alert(
-  //             'Uploaded file is not a valid image. \n(allowed file types: jpeg, jpg, png, gif)',
-  //           );
-  //         } else if (response.fileSize > allowedImgSize) {
-  //           alert('Uploaded file is too large \n(allowed file size is 2MB)');
-  //         } else {
-  //           this.state.imgCount++;
-  //           this.setState({
-  //             Images: response,
-  //             imageSource: source,
-  //           });
-  //           //setImagess(Imagess.concat(response.fileName));
-  //         }
-  //       }
-  //     },
-  // //   );
-  // };
+  renderLoading = () => {
+    if (this.state.imageSource)
+      return (
+        <View
+          style={{height: 100, justifyContent: 'center', alignItems: 'center'}}>
+          <UIActivityIndicator color={ThemeBlue} />
+        </View>
+      );
+    else return null;
+  };
+
+  isCloseToTop({layoutMeasurement, contentOffset, contentSize}) {
+    const paddingToTop = 80;
+    return (
+      contentSize.height - layoutMeasurement.height - paddingToTop <=
+      contentOffset.y
+    );
+  }
 
   render() {
     return (
-      <GiftedChat
-        listViewProps={{
-          style: {
-            backgroundColor: '#f9fdfe',
-          },
-        }}
-        alwaysShowSend={true}
-        renderMessage={props => this.customMessage(props)}
-        textInputProps={{
-          borderRadius: 10,
-          placeholder: 'send a message',
-          borderWidth: 1,
-          borderColor: 'grey',
-          // marginTop: 10,
-          paddingLeft: '2%',
-          paddingRight: '2%',
-          fontSize: 16,
-          backgroundColor: 'white',
-        }}
-        renderActions={() => (
-          <Icon
-            onPress={() => this.selectPhoto()}
-            type="Feather"
-            name="camera"
-            style={{
-              color: 'grey',
-              marginLeft: '3%',
-              marginBottom: 2,
-              fontSize: 32,
-            }}
-          />
-        )}
-        messages={this.state.messages}
-        showUserAvatar={true}
-        onSend={messages => this.onSend(messages)}
-        user={{
-          _id: this.props.User.id,
-          name:
-            this.props.User.first_name +
-            ' ' +
-            this.props.User.last_name.charAt('0') +
-            '.',
-          avatar: this.props.User.profile_pic_url,
-        }}
-      />
+      <View style={{flex: 1}}>
+        <GiftedChat
+          listViewProps={{
+            scrollEventThrottle: 400,
+            onScroll: async ({nativeEvent}) => {
+              if (this.isCloseToTop(nativeEvent) && this.state.loadMore) {
+                const pageNo = this.state.pageNo + 1;
+                this.setState(
+                  {
+                    refreshing: true,
+                    pageNo: pageNo,
+                    loadMore: false,
+                  },
+                  () => {
+                    //load earlier messages
+                    this.props.socket.emit('joinRoom', {
+                      room_id: `${this.props.navigation.getParam(
+                        'room_id',
+                        null,
+                      )}`,
+                      page_no: this.state.pageNo,
+                    });
+                  },
+                );
+                console.log('load messages m on top');
+              }
+            },
+            style: {
+              backgroundColor: '#f9fdfe',
+            },
+          }}
+          renderFooter={this.renderLoading}
+          loadEarlier={this.state.refreshing}
+          renderLoading={this.renderLoading}
+          alwaysShowSend={true}
+          renderMessage={props => this.customMessage(props)}
+          textInputProps={{
+            borderRadius: 10,
+            placeholder: 'send a message',
+            borderWidth: 1,
+            borderColor: 'grey',
+            // marginTop: 10,
+            paddingLeft: '2%',
+            paddingRight: '2%',
+            fontSize: 16,
+            backgroundColor: 'white',
+          }}
+          renderActions={() => (
+            <Icon
+              onPress={this.selectPhoto}
+              type="Feather"
+              name="camera"
+              style={{
+                color: 'grey',
+                marginLeft: '3%',
+                marginBottom: 2,
+                fontSize: 32,
+              }}
+            />
+          )}
+          messages={this.state.messages}
+          showUserAvatar={true}
+          onSend={messages => this.onSend(messages)}
+          user={{
+            _id: this.props.User.id,
+            name:
+              this.props.User.first_name +
+              ' ' +
+              this.props.User.last_name.charAt('0') +
+              '.',
+            avatar: this.props.User.profile_pic_url,
+          }}
+        />
+      </View>
     );
   }
 }

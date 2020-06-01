@@ -92,7 +92,11 @@ class InboxComponent extends Component {
               <Text style={{fontWeight: '700', color: '#181a1a'}}>
                 {this.props.title}
               </Text>
-              <Text style={{color: 'grey'}}>{this.props.subtitle}</Text>
+              <Text numberOfLines={2} style={{color: 'grey'}}>
+                {this.props.subtitle.includes('http')
+                  ? 'sent a message'
+                  : this.props.subtitle}
+              </Text>
             </View>
             <View style={{marginBottom: 10, alignSelf: 'center'}}>
               <Text style={{color: 'grey', fontSize: 10}}>

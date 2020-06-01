@@ -566,7 +566,7 @@ class PostDetail extends Component {
   };
 
   renderAllComments = dp => {
-    //console.log('coments', this.state.comments)
+    console.log('coments', this.state.comments);
     return (
       <View style={{marginLeft: '4%', marginTop: 10}}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -768,6 +768,7 @@ class PostDetail extends Component {
       'PostData',
       'nothing to render',
     );
+    console.log('data', data);
     return (
       <>
         {/* {Platform.OS === 'ios' ? <StatusBar barStyle="default" /> : null} */}

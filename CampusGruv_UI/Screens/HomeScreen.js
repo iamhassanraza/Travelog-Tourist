@@ -390,6 +390,7 @@ class HomeScreen extends PureComponent {
   };
 
   fetchdata = async () => {
+    console.log('fetch');
     if (
       this.props.navigation.getParam('CategoryID', 'undefined') === 'undefined'
     ) {
@@ -464,6 +465,28 @@ class HomeScreen extends PureComponent {
 
   async componentDidMount() {
     const {navigation} = this.props;
+    if (this.props.screenProps.postDetail) {
+      const postDetail = this.props.screenProps.postDetail[0];
+      console.log('nav prpsssssss', postDetail);
+      navigation.navigate('PostDetail', {
+        PostData: {
+          uri: postDetail.postDetail[0].image_url,
+          title: postDetail.title,
+          postId: postDetail.id,
+          likeStatus: postDetail.userWiseLike[0] ? true : false,
+          saveStatus: postDetail.userSavedPost[0] ? true : false,
+          isFollowing: postDetail.isFollowing,
+          userAvatar: postDetail.userdp,
+          userId: postDetail.users.id,
+          first_name: postDetail.users.first_name,
+          last_name: postDetail.users.last_name,
+          description: postDetail.description,
+          comments: postDetail.comments,
+          views: postDetail.view_count,
+        },
+      });
+      console.log('here');
+    }
     this.focusListener = navigation.addListener('willFocus', () => {
       // The screen is focused
       this.setState({
@@ -498,7 +521,6 @@ class HomeScreen extends PureComponent {
 
   componentWillUnmount() {
     // Remove the event listener
-
     this.focusListener.remove();
   }
 

@@ -32,6 +32,10 @@ const screenwidth = Dimensions.get('window').width;
 const screenheight = Dimensions.get('window').height;
 
 class AuthLoading extends React.Component {
+  state = {
+    postDetail: undefined,
+  };
+
   componentWillUnmount() {
     Linking.removeEventListener('url', this.handleOpenURL);
   }
@@ -48,13 +52,30 @@ class AuthLoading extends React.Component {
     const initialUrl = await Linking.getInitialURL();
     console.log('initial url', initialUrl);
     if (initialUrl !== null) {
+      this.setState({postNav: true});
       const route = initialUrl.replace(/.*?:\/\/post\//g, '');
       console.log('initial url', route);
+      let Token = await AsyncStorage.getItem('TOKEN');
+      let USER = await AsyncStorage.getItem('USER_ID');
+      var response = await fetch(
+        `${
+          require('../config').default.production
+        }api/v1/get/post?post_id=${route}`,
+        {
+          headers: {
+            Authorization: `Bearer ${Token}`,
+          },
+        },
+      );
+      let JsonResponse = await response.json();
+      this.setState({postDetail: JsonResponse});
+      console.log(JsonResponse, 'Post details lamo');
     }
     //Linking.addEventListener('url', this.handleOpenURL);
     const unsubscribe = NetInfo.addEventListener(state => {
       console.log('Connection type', state.type);
       console.log('Is connected?', state.isConnected);
+
       {
         state.isConnected
           ? this._bootstrapAsync()
@@ -104,7 +125,12 @@ class AuthLoading extends React.Component {
         } else if (isverified === '1' && campus_id === 'nahi_hai') {
           this.props.navigation.navigate('EditProfile');
         } else if (isverified === '1' && campus_id !== 'nahi_hai') {
-          this.props.navigation.navigate('App');
+          console.log('post nav', this.state.postNav);
+          this.state.postNav
+            ? this.props.navigation.navigate('App', {
+                postDetail: this.state.postDetail,
+              })
+            : this.props.navigation.navigate('App');
         }
       } else {
         console.log('else ran');
