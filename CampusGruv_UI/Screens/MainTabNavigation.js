@@ -22,7 +22,7 @@ import {withNavigation} from 'react-navigation';
 class MainTabNavigation extends React.Component {
   state = {
     unread: false,
-    postDetail: undefined,
+    postDetail: this.props.navigation.getParam('postDetail'),
     statusBarColor: ThemeBlue,
     contentType: 'light-content',
   };
@@ -82,6 +82,7 @@ class MainTabNavigation extends React.Component {
   };
 
   render() {
+    console.log('props post', this.state.postDetail);
     return (
       <>
         {Platform.OS === 'ios' ? (
@@ -95,10 +96,7 @@ class MainTabNavigation extends React.Component {
         ) : null}
         <TabContainer
           screenProps={{
-            postDetail: this.props.navigation.getParam(
-              'postDetail',
-              this.state.postDetail,
-            ),
+            postDetail: this.state.postDetail,
             changeStatusBar: this.changeStatusBar,
             rootNavigation: this.props.navigation,
             Notifications: this.props.notifications,
