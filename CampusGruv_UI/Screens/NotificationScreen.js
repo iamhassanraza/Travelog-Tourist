@@ -67,6 +67,7 @@ class NotificationScreen extends Component {
       },
     );
     const JsonResponse = await Response.json();
+    console.log('notis', JsonResponse);
     this.setState({
       notification: JsonResponse.data,
       loading: false,

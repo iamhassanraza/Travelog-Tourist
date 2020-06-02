@@ -256,21 +256,111 @@ export default class AddNewPost extends Component {
 
   render() {
     return (
-      <Container>
+      // <Container>
+      <>
         {Platform.OS === 'ios' ? (
-          <KeyboardAvoidingView
-            style={{flex: 1}}
-            keyboardVerticalOffset={
-              Dimensions.get('window').height > 800 ? -250 : -170
-            }
-            behavior="padding">
-            <Content style={{backgroundColor: '#f9fdfe'}}>
+          <ScrollView style={{}}>
+            <KeyboardAvoidingView
+              style={{flex: 1}}
+              keyboardVerticalOffset={
+                Dimensions.get('window').height > 800 ? 120 : 100
+              }
+              behavior="position">
+              {/* <Content style={{backgroundColor: '#f9fdfe'}}> */}
               {this.state.Images != null ? (
                 <ImageBackground
                   style={{
                     height: Dimensions.get('window').height / 3,
                     width: Dimensions.get('window').width - 80,
                     marginTop: '10%',
+                    alignSelf: 'center',
+                  }}
+                  source={this.state.imageSource}
+                />
+              ) : null}
+              {this.state.Images
+                ? this.renderDeleteIcon()
+                : this.renderOptions()}
+              <Text
+                style={{
+                  alignSelf: 'center',
+                  marginTop: Platform.OS == 'ios' ? '15%' : 20,
+                  fontSize: 22,
+                  color: 'grey',
+                }}>
+                Title
+              </Text>
+              <Input
+                style={{
+                  marginTop: 10,
+                  marginLeft: '5%',
+                  width: '90%',
+                  height: 35,
+                  borderRadius: 7,
+                  borderWidth: 1,
+                  borderColor: '#B4B8BA',
+                }}
+                placeholder=" Title"
+                value={this.state.title}
+                onChangeText={text => {
+                  this.setState({title: text});
+                }}
+              />
+              <TouchableOpacity
+                style={{alignItems: 'center', marginTop: '3%'}}
+                onPress={() => {
+                  if (this.state.Images && this.state.title !== '') {
+                    this.setState({error: ''});
+                    this.props.navigation.navigate('CreatePost', {
+                      Images: this.state.Images,
+                      imageName: this.state.imageName,
+                      title: this.state.title,
+                      deleteItems: this.deleteItems,
+                    });
+                  } else if (
+                    this.state.Images === undefined &&
+                    this.state.title === ''
+                  ) {
+                    this.setState({error: 'Select image and title'});
+                  }
+                }}>
+                <View
+                  style={{
+                    width: '90%',
+                    borderRadius: 10,
+                    height: 35,
+                    justifyContent: 'center',
+                    backgroundColor: '#0C91CF',
+                    alignSelf: 'center',
+                    marginTop: Platform.OS == 'ios' ? 25 : 10,
+                  }}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      alignSelf: 'center',
+                      fontSize: 20,
+                      fontWeight: 'bold',
+                    }}>
+                    NEXT
+                  </Text>
+                </View>
+                {this.state.error === 'Select image and title' ? (
+                  <Text style={{color: 'red'}}>{this.state.error}</Text>
+                ) : null}
+              </TouchableOpacity>
+              {/* </Content> */}
+            </KeyboardAvoidingView>
+          </ScrollView>
+        ) : (
+          <Container>
+            <Content>
+              {this.state.Images != null ? (
+                <ImageBackground
+                  style={{
+                    height: 200,
+                    width: 200,
+                    marginTop: 20,
+                    marginBottom: 20,
                     alignSelf: 'center',
                   }}
                   source={this.state.imageSource}
@@ -295,6 +385,11 @@ export default class AddNewPost extends Component {
                   marginTop: 10,
                   marginLeft: '5%',
                   width: '90%',
+                  alignItems: 'center',
+                  textAlignVertical: 'center',
+                  paddingTop: 0,
+                  paddingBottom: 0,
+                  justifyContent: 'center',
                   height: 35,
                   borderRadius: 7,
                   borderWidth: 1,
@@ -350,100 +445,9 @@ export default class AddNewPost extends Component {
                 ) : null}
               </TouchableOpacity>
             </Content>
-          </KeyboardAvoidingView>
-        ) : (
-          <Content>
-            {this.state.Images != null ? (
-              <ImageBackground
-                style={{
-                  height: 200,
-                  width: 200,
-                  marginTop: 20,
-                  marginBottom: 20,
-                  alignSelf: 'center',
-                }}
-                source={this.state.imageSource}
-              />
-            ) : null}
-
-            {this.state.Images ? this.renderDeleteIcon() : this.renderOptions()}
-
-            <Text
-              style={{
-                alignSelf: 'center',
-                marginTop: Platform.OS == 'ios' ? '15%' : 20,
-                fontSize: 22,
-                color: 'grey',
-              }}>
-              Title
-            </Text>
-            <Input
-              style={{
-                marginTop: 10,
-                marginLeft: '5%',
-                width: '90%',
-                alignItems: 'center',
-                textAlignVertical: 'center',
-                paddingTop: 0,
-                paddingBottom: 0,
-                justifyContent: 'center',
-                height: 35,
-                borderRadius: 7,
-                borderWidth: 1,
-                borderColor: '#B4B8BA',
-              }}
-              placeholder=" Title"
-              value={this.state.title}
-              onChangeText={text => {
-                this.setState({title: text});
-              }}
-            />
-
-            <TouchableOpacity
-              style={{alignItems: 'center', marginTop: '3%'}}
-              onPress={() => {
-                if (this.state.Images && this.state.title !== '') {
-                  this.setState({error: ''});
-                  this.props.navigation.navigate('CreatePost', {
-                    Images: this.state.Images,
-                    imageName: this.state.imageName,
-                    title: this.state.title,
-                    deleteItems: this.deleteItems,
-                  });
-                } else if (
-                  this.state.Images === undefined &&
-                  this.state.title === ''
-                ) {
-                  this.setState({error: 'Select image and title'});
-                }
-              }}>
-              <View
-                style={{
-                  width: '90%',
-                  borderRadius: 10,
-                  height: 35,
-                  justifyContent: 'center',
-                  backgroundColor: '#0C91CF',
-                  alignSelf: 'center',
-                  marginTop: Platform.OS == 'ios' ? 25 : 10,
-                }}>
-                <Text
-                  style={{
-                    color: 'white',
-                    alignSelf: 'center',
-                    fontSize: 20,
-                    fontWeight: 'bold',
-                  }}>
-                  NEXT
-                </Text>
-              </View>
-              {this.state.error === 'Select image and title' ? (
-                <Text style={{color: 'red'}}>{this.state.error}</Text>
-              ) : null}
-            </TouchableOpacity>
-          </Content>
+          </Container>
         )}
-      </Container>
+      </>
     );
   }
 }

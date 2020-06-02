@@ -70,8 +70,13 @@ class Chat extends React.Component {
       pageNo: 1,
       loadMore: false,
       refreshing: false,
+      imageLoading: true,
     };
   }
+
+  imageloaded = () => {
+    this.setState({imageLoading: false});
+  };
 
   customMessage = props => {
     // console.log('message props', props);
@@ -91,7 +96,7 @@ class Chat extends React.Component {
             //alignItems: 'center',
             flexDirection: 'row',
           }}>
-          <Image
+          <FastImage
             source={{uri: props.currentMessage.user.avatar}}
             style={{
               width: 30,
@@ -135,8 +140,15 @@ class Chat extends React.Component {
             ) : null}
             {props.currentMessage.message_type === 'image' ? (
               <FastImage
-                source={{uri: props.currentMessage.text}}
+                onLoad={this.imageloaded}
+                source={{
+                  uri: props.currentMessage.text,
+                  priority: FastImage.priority.high,
+                }}
                 style={{
+                  borderWidth: this.state.imageloading ? 0.8 : 0,
+                  borderColor: 'grey',
+                  backgroundColor: this.state.imageloading ? 'none' : 'grey',
                   width: 200,
                   marginTop: 5,
                   borderRadius: 10,
@@ -323,7 +335,7 @@ class Chat extends React.Component {
                   created_at: new Date(),
                   user_id: this.props.User.id,
                   message: response.data,
-                  image_name: imgName,
+                  image_name: response.fileName,
                   image_type: response.type,
                   message_type: 'image',
                   profile_pic_url: this.props.User.profile_pic_url,
