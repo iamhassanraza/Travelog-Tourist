@@ -25,6 +25,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CrossIcon from 'react-native-vector-icons/MaterialIcons';
 import IconFeather from 'react-native-vector-icons/Feather';
 import BackIcon from 'react-native-vector-icons/Ionicons';
+import EvilIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {ThemeBlue} from '../Assets/Colors';
 import Modal from 'react-native-modal';
 import ViewsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
@@ -322,7 +323,7 @@ class PostDetail extends Component {
                       backgroundColor: 'white',
                       flexDirection: 'row',
                       justifyContent: 'center',
-                      paddingBottom: 20,
+                      paddingBottom: 30,
                       borderTopRightRadius: 12,
                       borderTopLeftRadius: 12,
                     }}>
@@ -364,10 +365,7 @@ class PostDetail extends Component {
                   </View>
 
                   <View style={styles.modalOptions}>
-                    <Icon
-                      name="flag-variant-outline"
-                      style={styles.optionIcon}
-                    />
+                    <IconFeather name="flag" style={styles.optionIcon} />
                     <Text
                       onPress={() => {
                         this.setState({isModalVisible: false});
@@ -566,7 +564,7 @@ class PostDetail extends Component {
   };
 
   renderAllComments = dp => {
-    //console.log('coments', this.state.comments)
+    console.log('coments', this.state.comments);
     return (
       <View style={{marginLeft: '4%', marginTop: 10}}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -768,6 +766,7 @@ class PostDetail extends Component {
       'PostData',
       'nothing to render',
     );
+    console.log('data', data);
     return (
       <>
         {/* {Platform.OS === 'ios' ? <StatusBar barStyle="default" /> : null} */}
