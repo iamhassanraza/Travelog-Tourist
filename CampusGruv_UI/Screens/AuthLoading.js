@@ -32,9 +32,9 @@ const screenwidth = Dimensions.get('window').width;
 const screenheight = Dimensions.get('window').height;
 
 class AuthLoading extends React.Component {
-  componentWillUnmount() {
-    Linking.removeEventListener('url', this.handleOpenURL);
-  }
+  // componentWillUnmount() {
+  //   Linking.removeEventListener('url', this.handleOpenURL);
+  // }
 
   // handleOpenURL(event) {
   //   console.log(event.url);
@@ -45,10 +45,10 @@ class AuthLoading extends React.Component {
 
   async componentDidMount() {
     // Subscribe
-    const initialUrl = await Linking.getInitialURL();
+    const initialUrl = Linking.getInitialURL();
     console.log('initial url', initialUrl);
-    if (initialUrl !== null) {
-      const route = initialUrl.replace(/.*?:\/\/post\//g, '');
+    if (!initialUrl) {
+      const route = await initialUrl.replace(/.*?:\/\/post\//g, '');
       console.log('initial url', route);
     }
     //Linking.addEventListener('url', this.handleOpenURL);
