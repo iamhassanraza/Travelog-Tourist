@@ -57,7 +57,7 @@ import IconBadge from 'react-native-icon-badge';
 import mystore from './index';
 import {clearNoti} from './ReduxStore/Actions/index';
 import CategoryPosts from './Screens/CategoryPosts';
-
+import CreateOrganization from './Screens/CreateOrganization'
 // const state = mystore.getState();
 
 const AuthNavigator = createStackNavigator({
@@ -613,9 +613,12 @@ const RootStackNavigator = createSwitchNavigator(
     EmailVerification: {
       screen: EmailVerification,
     },
+    create: {
+      screen: CreateOrganization,
+    },
   },
   {
-    initialRouteName: 'AuthLoading',
+    initialRouteName: 'create',
   },
 );
 
