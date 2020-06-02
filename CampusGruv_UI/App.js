@@ -346,6 +346,7 @@ const MessageStack = createStackNavigator(
         ),
       },
     },
+
     inbox: {
       screen: inbox,
       navigationOptions: {

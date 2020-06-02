@@ -1,5 +1,12 @@
 import React from 'react';
-import {Text, View, AsyncStorage, StatusBar, SafeAreaView} from 'react-native';
+import {
+  Text,
+  View,
+  AsyncStorage,
+  Linking,
+  StatusBar,
+  SafeAreaView,
+} from 'react-native';
 import {TabContainer} from '../App';
 import io from 'socket.io-client';
 import {connect} from 'react-redux';
@@ -15,6 +22,7 @@ import {withNavigation} from 'react-navigation';
 class MainTabNavigation extends React.Component {
   state = {
     unread: false,
+    postDetail: undefined,
     statusBarColor: ThemeBlue,
     contentType: 'light-content',
   };
@@ -46,7 +54,28 @@ class MainTabNavigation extends React.Component {
       console.log('noti', noti);
       this.props.unreadNoti();
     });
+
+    Linking.addEventListener('url', this.handleOpenURL);
   }
+
+  handleOpenURL = async event => {
+    const route = event.url.replace(/.*?:\/\/post\//g, '');
+    console.log('route', route);
+    let Token = await AsyncStorage.getItem('TOKEN');
+    var response = await fetch(
+      `${
+        require('../config').default.production
+      }api/v1/get/post?post_id=${route}`,
+      {
+        headers: {
+          Authorization: `Bearer ${Token}`,
+        },
+      },
+    );
+    let JsonResponse = await response.json();
+    console.log('response', JsonResponse);
+    this.setState({postDetail: JsonResponse});
+  };
 
   changeStatusBar = obj => {
     this.setState({statusBarColor: obj.color, contentType: obj.contentType});
@@ -66,7 +95,10 @@ class MainTabNavigation extends React.Component {
         ) : null}
         <TabContainer
           screenProps={{
-            postDetail: this.props.navigation.getParam('postDetail', null),
+            postDetail: this.props.navigation.getParam(
+              'postDetail',
+              this.state.postDetail,
+            ),
             changeStatusBar: this.changeStatusBar,
             rootNavigation: this.props.navigation,
             Notifications: this.props.notifications,

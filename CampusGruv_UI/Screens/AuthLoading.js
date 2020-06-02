@@ -40,18 +40,11 @@ class AuthLoading extends React.Component {
     Linking.removeEventListener('url', this.handleOpenURL);
   }
 
-  // handleOpenURL(event) {
-  //   console.log(event.url);
-  //   const route = e.url.replace('campusgruv://post', '');
-  //   console.log('route');
-  //   // do something with the url, in our case navigate(route)
-  // }
-
   async componentDidMount() {
     // Subscribe
-    const initialUrl = Linking.getInitialURL();
+    const initialUrl = await Linking.getInitialURL();
     console.log('initial url', initialUrl);
-    if (initialUrl !== null) {
+    if (initialUrl) {
       this.setState({postNav: true});
       const route = initialUrl.replace(/.*?:\/\/post\//g, '');
       console.log('initial url', route);
@@ -71,7 +64,7 @@ class AuthLoading extends React.Component {
       this.setState({postDetail: JsonResponse});
       console.log(JsonResponse, 'Post details lamo');
     }
-    //Linking.addEventListener('url', this.handleOpenURL);
+
     const unsubscribe = NetInfo.addEventListener(state => {
       console.log('Connection type', state.type);
       console.log('Is connected?', state.isConnected);
