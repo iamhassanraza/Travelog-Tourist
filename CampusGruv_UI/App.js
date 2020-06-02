@@ -613,12 +613,12 @@ const RootStackNavigator = createSwitchNavigator(
     EmailVerification: {
       screen: EmailVerification,
     },
-    create: {
-      screen: CreateOrganization,
-    },
+    // create: {
+    //   screen: CreateOrganization,
+    // },
   },
   {
-    initialRouteName: 'create',
+    initialRouteName: 'AuthLoading',
   },
 );
 
