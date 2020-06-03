@@ -553,7 +553,7 @@ class UserProfile extends React.Component {
             flexDirection: 'row',
             backgroundColor: 'white',
             paddingLeft: 10,
-            marginTop: 5,
+            paddingTop: 5,
             alignItems: 'center',
           }}>
           <FastImage
