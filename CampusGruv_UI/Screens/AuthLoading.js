@@ -48,7 +48,6 @@ class AuthLoading extends React.Component {
   // }
 
   async componentDidMount() {
-    // Subscribe
     const initialUrl = await Linking.getInitialURL();
     console.log('initial url', initialUrl);
     if (initialUrl) {
@@ -72,27 +71,6 @@ class AuthLoading extends React.Component {
       console.log(JsonResponse, 'Post details lamo');
     }
 
-    // if (initialUrl !== null || initialUrl !== '') {
-    //   console.log('if ran');
-    //   this.setState({postNav: true});
-    //   const route = initialUrl.replace(/.*?:\/\/post\//g, '');
-    //   console.log('initial url', route);
-    //   let Token = await AsyncStorage.getItem('TOKEN');
-    //   let USER = await AsyncStorage.getItem('USER_ID');
-    //   var response = await fetch(
-    //     `${
-    //       require('../config').default.production
-    //     }api/v1/get/post?post_id=${route}`,
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${Token}`,
-    //       },
-    //     },
-    //   );
-    //   let JsonResponse = await response.json();
-    //   this.setState({postDetail: JsonResponse});
-    //   console.log(JsonResponse, 'Post details lamo');
-    // }
     //Linking.addEventListener('url', this.handleOpenURL);
     const unsubscribe = NetInfo.addEventListener(state => {
       console.log('Connection type', state.type);

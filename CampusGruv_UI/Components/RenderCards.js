@@ -18,7 +18,7 @@ class RenderCards extends PureComponent {
     if (this.props.posts) {
       const column1Data = this.props.posts.filter((item, i) => i % 2 === 0);
       const column2Data = this.props.posts.filter((item, i) => i % 2 === 1);
-      //console.log('col 1',column1Data[0])
+      // console.log('col 1', column1Data[0]);
       return (
         <>
           <View
