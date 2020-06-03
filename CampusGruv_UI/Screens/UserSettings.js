@@ -68,6 +68,7 @@ export default class UserSettings extends Component {
             </Text>
           </View> */}
 
+          <TouchableOpacity onPress={()=> {this.props.navigation.navigate('CreateOrganization', null);}}>
           <View
             style={{flexDirection: 'row', marginLeft: '2%', marginTop: '3%'}}>
             <IconFeather
@@ -88,6 +89,7 @@ export default class UserSettings extends Component {
               Create Organization Account
             </Text>
           </View>
+          </TouchableOpacity>
 
           <View
             style={{flexDirection: 'row', marginLeft: '2%', marginTop: '3%'}}>

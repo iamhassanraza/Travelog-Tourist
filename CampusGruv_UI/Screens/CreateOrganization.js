@@ -9,6 +9,75 @@ import img from '../Assets/Images/lahore.jpg'
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 
 export default class CreateOrganization extends Component {
+
+    static navigationOptions = props => {
+        tabBarVisibile = false;
+        const {params = {}} = props.navigation.state;
+        return {
+          header:
+            
+              <View
+                style={{
+                  height: 50,
+                  backgroundColor: '#0C91CF',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                }}>
+                <View
+                  style={{
+                    position: 'absolute',
+                    padding: 2,
+                    alignSelf: 'center',
+                    left: 8,
+                  }}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      props.navigation.navigate('UserSettings');
+                    }}>
+                    <Text
+                      style={{
+                        color: 'white',
+                        padding: 2,
+                      }}>
+                      Back
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+                <View style={{alignSelf: 'center'}}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontSize: 18,
+                      fontWeight: 'bold',
+                    }}>
+                    Create Organization Account
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    position: 'absolute',
+                    padding: 2,
+                    alignSelf: 'center',
+                    right: 8,
+                  }}>
+                  <TouchableOpacity onPress={() => alert("API call")}>
+                    <Text
+                      style={{
+                        color: 'white',
+                        padding: 2,
+                      }}>
+                      Done
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              </View>
+            
+        };
+      };
+    
+
+
+
   state = {
     imageUri: '',
     campuses: [],
@@ -25,6 +94,7 @@ export default class CreateOrganization extends Component {
     imageName: '',
     imageURL: '',
   };
+
 
 
   uploadProfilePicture = () => {

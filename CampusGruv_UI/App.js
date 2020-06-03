@@ -111,6 +111,8 @@ const CreatePostStack = createStackNavigator(
   },
 );
 
+
+
 const ProfileStack = createStackNavigator(
   {
     UserProfile: {
@@ -162,6 +164,10 @@ const ProfileStack = createStackNavigator(
         ),
       },
     },
+    CreateOrganization: {
+      screen: CreateOrganization,
+    }
+ 
   },
   {
     navigationOptions: props => {
