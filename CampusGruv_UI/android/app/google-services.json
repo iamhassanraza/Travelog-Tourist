@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "875384440210",
+    "firebase_url": "https://campusgruv-f8a0e.firebaseio.com",
+    "project_id": "campusgruv-f8a0e",
+    "storage_bucket": "campusgruv-f8a0e.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:875384440210:android:87fe029f3888c1cd29ad4b",
+        "android_client_info": {
+          "package_name": "com.campusgruv_ui"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "875384440210-h2cfhnajk5t5qe0qnc90p8hogds77138.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyD8ew18_adanPpINgxYtDz1MO00JzEPaYk"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "875384440210-h2cfhnajk5t5qe0qnc90p8hogds77138.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

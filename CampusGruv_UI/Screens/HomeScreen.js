@@ -467,7 +467,6 @@ class HomeScreen extends PureComponent {
     const {navigation} = this.props;
     if (this.props.screenProps.postDetail) {
       const postDetail = this.props.screenProps.postDetail[0];
-      console.log('nav prpsssssss', postDetail);
       navigation.navigate('PostDetail', {
         PostData: {
           uri: postDetail.postDetail[0].image_url,
@@ -476,7 +475,7 @@ class HomeScreen extends PureComponent {
           likeStatus: postDetail.userWiseLike[0] ? true : false,
           saveStatus: postDetail.userSavedPost[0] ? true : false,
           isFollowing: postDetail.isFollowing,
-          userAvatar: postDetail.userdp,
+          userAvatar: postDetail.users.profile_pic_url,
           userId: postDetail.users.id,
           first_name: postDetail.users.first_name,
           last_name: postDetail.users.last_name,
@@ -485,7 +484,7 @@ class HomeScreen extends PureComponent {
           views: postDetail.view_count,
         },
       });
-      console.log('here');
+      this.props.screenProps.clearPostDetail();
     }
     this.focusListener = navigation.addListener('willFocus', () => {
       // The screen is focused
@@ -525,6 +524,28 @@ class HomeScreen extends PureComponent {
   }
 
   render() {
+    if (this.props.screenProps.postDetail) {
+      const postDetail = this.props.screenProps.postDetail[0];
+      this.props.navigation.navigate('PostDetail', {
+        PostData: {
+          uri: postDetail.postDetail[0].image_url,
+          title: postDetail.title,
+          postId: postDetail.id,
+          likeStatus: postDetail.userWiseLike[0] ? true : false,
+          saveStatus: postDetail.userSavedPost[0] ? true : false,
+          isFollowing: postDetail.isFollowing,
+          userAvatar: postDetail.users.profile_pic_url,
+          userId: postDetail.users.id,
+          first_name: postDetail.users.first_name,
+          last_name: postDetail.users.last_name,
+          description: postDetail.description,
+          comments: postDetail.comments,
+          views: postDetail.view_count,
+        },
+      });
+      this.props.screenProps.clearPostDetail();
+    }
+
     const catid = this.props.navigation.getParam('CategoryID', 'undefined');
     if (this.state.total > 0) {
       return (

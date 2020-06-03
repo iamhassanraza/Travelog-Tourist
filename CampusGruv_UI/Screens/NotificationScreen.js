@@ -67,7 +67,6 @@ class NotificationScreen extends Component {
       },
     );
     const JsonResponse = await Response.json();
-    console.log('notis', JsonResponse);
     this.setState({
       notification: JsonResponse.data,
       loading: false,
@@ -75,7 +74,7 @@ class NotificationScreen extends Component {
   };
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, backgroundColor: '#f9fdfe'}}>
         {Platform.OS == 'ios' ? (
           <View style={{backgroundColor: '#0C91CF'}}>
             <View
@@ -148,17 +147,6 @@ class NotificationScreen extends Component {
           />
         ) : (
           <UIActivityIndicator color={ThemeBlue} />
-          // <FlatList
-          //   vertical
-          //   data={[1, 2, 3, 4, 5, 6, 7, 8, 9, 10]}
-          //   renderItem={() => (
-          //     <ContentLoader height={70}>
-          //       <Circle cx="30" cy="40" r="30" />
-          //       <Rect x="80" y="17" rx="4" ry="4" width="300" height="13" />
-          //       <Rect x="80" y="40" rx="3" ry="3" width="250" height="10" />
-          //     </ContentLoader>
-          //   )}
-          // />
         )}
       </View>
     );

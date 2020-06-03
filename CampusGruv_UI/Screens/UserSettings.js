@@ -18,13 +18,17 @@ import Modal from 'react-native-modal';
 import CrossIcon from 'react-native-vector-icons/MaterialIcons';
 import LogoutButton from '../Components/LogoutButton';
 import {NavigationActions} from 'react-navigation';
+import FastImage from 'react-native-fast-image';
 
 export default class UserSettings extends Component {
   state = {
     isModalVisible: false,
+    accounts: [
+      {pic: i1, orgName: 'Students'},
+      {pic: i2, orgName: 'Teachers Council'},
+      {pic: i3, orgName: 'Outsiders'},
+    ],
   };
-
-  accounts = [{pic: i1}, {pic: i2}, {pic: i3}];
 
   toggleModal = () => {
     this.setState({isModalVisible: !this.state.isModalVisible});
@@ -35,14 +39,34 @@ export default class UserSettings extends Component {
       <View style={{flex: 1, backgroundColor: '#f9fdfe'}}>
         <View
           style={{
-            flexDirection: 'row',
             marginLeft: '3%',
             marginTop: '3%',
-            marginBottom: '2%',
           }}>
-          <AccPic img={i1} />
+          {/* <AccPic img={i1} />
           <AccPic img={i2} />
-          <AccPic img={i3} />
+          <AccPic img={i3} /> */}
+
+          <FlatList
+            horizontal
+            data={this.state.accounts}
+            keyExtractor={item => item.orgName}
+            showsHorizontalScrollIndicator={false}
+            renderItem={({item}) => {
+              return (
+                <TouchableOpacity>
+                  <View style={{paddingHorizontal: 3, alignItems: 'center'}}>
+                    <FastImage
+                      source={item.pic}
+                      style={{height: 40, width: 40, borderRadius: 50}}
+                    />
+                    <Text style={{fontSize: 12, color: 'grey'}}>
+                      {item.orgName}
+                    </Text>
+                  </View>
+                </TouchableOpacity>
+              );
+            }}
+          />
         </View>
 
         <View>
@@ -68,26 +92,31 @@ export default class UserSettings extends Component {
             </Text>
           </View> */}
 
-          <View
-            style={{flexDirection: 'row', marginLeft: '2%', marginTop: '3%'}}>
-            <IconFeather
-              name="users"
-              style={{
-                flex: 1,
-                alignSelf: 'center',
-                paddingLeft: '2%',
-                fontSize: 30,
-              }}
-            />
-            <Text
-              style={{
-                flex: 8,
-                alignSelf: 'center',
-                fontSize: 19,
-              }}>
-              Create Organization Account
-            </Text>
-          </View>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate('CreateOrganization', null);
+            }}>
+            <View
+              style={{flexDirection: 'row', marginLeft: '2%', marginTop: '3%'}}>
+              <IconFeather
+                name="users"
+                style={{
+                  flex: 1,
+                  alignSelf: 'center',
+                  paddingLeft: '2%',
+                  fontSize: 30,
+                }}
+              />
+              <Text
+                style={{
+                  flex: 8,
+                  alignSelf: 'center',
+                  fontSize: 19,
+                }}>
+                Create Organization Account
+              </Text>
+            </View>
+          </TouchableOpacity>
 
           <View
             style={{flexDirection: 'row', marginLeft: '2%', marginTop: '3%'}}>
