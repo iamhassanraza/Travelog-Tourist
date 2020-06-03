@@ -81,6 +81,10 @@ class MainTabNavigation extends React.Component {
     this.setState({statusBarColor: obj.color, contentType: obj.contentType});
   };
 
+  clearPostDetail = () => {
+    this.setState({postDetail: null});
+  };
+
   render() {
     console.log('props post', this.state.postDetail);
     return (
@@ -96,6 +100,7 @@ class MainTabNavigation extends React.Component {
         ) : null}
         <TabContainer
           screenProps={{
+            clearPostDetail: this.clearPostDetail,
             postDetail: this.state.postDetail,
             changeStatusBar: this.changeStatusBar,
             rootNavigation: this.props.navigation,
