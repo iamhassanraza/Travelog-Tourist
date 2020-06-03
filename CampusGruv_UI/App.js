@@ -57,7 +57,7 @@ import IconBadge from 'react-native-icon-badge';
 import mystore from './index';
 import {clearNoti} from './ReduxStore/Actions/index';
 import CategoryPosts from './Screens/CategoryPosts';
-import CreateOrganization from './Screens/CreateOrganization'
+import CreateOrganization from './Screens/CreateOrganization';
 // const state = mystore.getState();
 
 const AuthNavigator = createStackNavigator({
@@ -306,6 +306,15 @@ const NotificationStack = createStackNavigator(
     UserProfile,
   },
   {
+    navigationOptions: props => {
+      return {
+        tabBarVisible:
+          props.navigation.state.routes[props.navigation.state.index]
+            .routeName === 'PostDetail'
+            ? false
+            : true,
+      };
+    },
     defaultNavigationOptions: {
       header: null,
     },

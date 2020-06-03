@@ -17,6 +17,7 @@ import {
   Platform,
   StatusBar,
   SafeAreaView,
+  Keyboard,
 } from 'react-native';
 import {ThemeConsumer, Header} from 'react-native-elements';
 import {Container, Item, Content, Input} from 'native-base';
@@ -603,7 +604,10 @@ class PostDetail extends Component {
     if (this.state.currentComment !== null || this.state.currentComment != '') {
       const Token = await AsyncStorage.getItem('TOKEN');
       const userId = await AsyncStorage.getItem('USER_ID');
-      console.log('postid ------', postId);
+      console.log('postid ------', postId, userId, postUserId),
+        userId,
+        postUserId,
+        this.state.currentComment;
       const Response = await fetch(
         `${require('../config').default.production}api/v1/comment/create`,
         {
@@ -620,13 +624,13 @@ class PostDetail extends Component {
           },
         },
       );
-
+      console.log('response', Response);
       const JsonResponse = await Response.json();
       console.log(JsonResponse, 'res');
       if (parseInt(Response.status) === 400) {
         alert(JsonResponse.message);
       } else if (parseInt(Response.status) === 200) {
-        // alert('comment created');
+        Keyboard.dismiss();
         const comments = this.state.comments;
         comments.push({
           ...JsonResponse,
@@ -636,17 +640,17 @@ class PostDetail extends Component {
             profile_pic_url: this.props.User.profile_pic_url,
           },
         });
-        await this.setState({
+        this.setState({
           comments: comments,
           currentComment: '',
         });
       } else {
         // alert("comment can't be empty");
-        console.log('Semething wrong');
+        console.log('Something wrong');
       }
     } else {
       // alert("comment can't be empty");
-      console.log('Semething wrong');
+      console.log('Something wrong');
     }
   };
 
