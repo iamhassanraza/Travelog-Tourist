@@ -12,6 +12,7 @@ import {
 } from 'react-native';
 import Colors, {ThemeBlue} from '../Assets/Colors';
 import HeaderTitle from './Heading';
+import messaging from '@react-native-firebase/messaging';
 
 import {connect} from 'react-redux';
 import {CreateUserDetails} from '../ReduxStore/Actions/index';
@@ -48,28 +49,28 @@ class AuthLoading extends React.Component {
   // }
 
   async componentDidMount() {
-    const initialUrl = await Linking.getInitialURL();
-    console.log('initial url', initialUrl);
-    if (initialUrl) {
-      this.setState({postNav: true});
-      const route = initialUrl.replace(/.*?:\/\/post\//g, '');
-      console.log('initial url', route);
-      let Token = await AsyncStorage.getItem('TOKEN');
-      let USER = await AsyncStorage.getItem('USER_ID');
-      var response = await fetch(
-        `${
-          require('../config').default.production
-        }api/v1/get/post?post_id=${route}`,
-        {
-          headers: {
-            Authorization: `Bearer ${Token}`,
-          },
-        },
-      );
-      let JsonResponse = await response.json();
-      this.setState({postDetail: JsonResponse});
-      console.log(JsonResponse, 'Post details lamo');
-    }
+    // const initialUrl = await Linking.getInitialURL();
+    // console.log('initial url', initialUrl);
+    // if (initialUrl) {
+    //   this.setState({postNav: true});
+    //   const route = initialUrl.replace(/.*?:\/\/post\//g, '');
+    //   console.log('initial url', route);
+    //   let Token = await AsyncStorage.getItem('TOKEN');
+    //   let USER = await AsyncStorage.getItem('USER_ID');
+    //   var response = await fetch(
+    //     `${
+    //       require('../config').default.production
+    //     }api/v1/get/post?post_id=${route}`,
+    //     {
+    //       headers: {
+    //         Authorization: `Bearer ${Token}`,
+    //       },
+    //     },
+    //   );
+    //   let JsonResponse = await response.json();
+    //   this.setState({postDetail: JsonResponse});
+    //   console.log(JsonResponse, 'Post details lamo');
+    // }
 
     //Linking.addEventListener('url', this.handleOpenURL);
     const unsubscribe = NetInfo.addEventListener(state => {
@@ -99,6 +100,7 @@ class AuthLoading extends React.Component {
     );
     let JsonResponse = await response.json();
     console.log(JsonResponse, 'POPOP');
+
     this.props.CreateUserDetails(JsonResponse);
   };
 
@@ -125,7 +127,6 @@ class AuthLoading extends React.Component {
         } else if (isverified === '1' && campus_id === 'nahi_hai') {
           this.props.navigation.navigate('EditProfile');
         } else if (isverified === '1' && campus_id !== 'nahi_hai') {
-          console.log('post nav', this.state.postNav);
           this.state.postNav
             ? this.props.navigation.navigate('App', {
                 postDetail: this.state.postDetail,
@@ -139,23 +140,6 @@ class AuthLoading extends React.Component {
     } catch (e) {
       alert(e + '. Check connectivity');
     }
-
-    // This will switch to the App screen or Auth screen and this loading
-    // // screen will be unmounted and thrown away.
-    // if(userToken && campus_id !== 'nahi_hai')
-    // {
-    //   this.props.navigation.navigate('App')
-    // }
-    // else if(userToken && campus_id === 'nahi_hai')
-    // {
-    //   this.props.navigation.navigate('EditProfile')
-
-    // }
-    // else{
-    //   this.props.navigation.navigate('Auth')
-    // }
-
-    // this.props.navigation.navigate(userToken && campus_id !== '' ? 'App' : 'Auth');
   };
 
   // Render any loading content that you like here

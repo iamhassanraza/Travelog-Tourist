@@ -184,17 +184,17 @@ class EmailVerification extends React.Component {
                   </View>
                 </TouchableOpacity>
               </View>
+              <View style={{position: 'absolute', bottom: 10, left: 10}}>
+                <LogoutButton
+                  style={{
+                    paddingLeft: 5,
+                    fontSize: 18,
+                    color: 'white',
+                    fontWeight: 'bold',
+                  }}
+                />
+              </View>
             </Content>
-            <View style={{position: 'absolute', bottom: 10, left: 10}}>
-              <LogoutButton
-                style={{
-                  paddingLeft: 5,
-                  fontSize: 18,
-                  color: 'white',
-                  fontWeight: 'bold',
-                }}
-              />
-            </View>
           </ImageBackground>
         </Container>
       </>

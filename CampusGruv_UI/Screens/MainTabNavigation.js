@@ -18,6 +18,7 @@ import {
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {ThemeBlue} from '../Assets/Colors';
 import {withNavigation} from 'react-navigation';
+import messaging from '@react-native-firebase/messaging';
 
 class MainTabNavigation extends React.Component {
   state = {
@@ -55,8 +56,77 @@ class MainTabNavigation extends React.Component {
       this.props.unreadNoti();
     });
 
+    this.checkPermissions().then(permission => {
+      console.log('indidmount', permission);
+
+      messaging().onNotificationOpenedApp(remoteMessage => {
+        console.log(
+          'Notification caused app to open from background state:',
+          remoteMessage.notification,
+        );
+        //navigation.navigate(remoteMessage.data.type);
+      });
+
+      this.getRegistrationToken(Token);
+
+      messaging()
+        .getInitialNotification()
+        .then(remoteMessage => {
+          if (remoteMessage) {
+            console.log(
+              'Notification caused app to open from quit state:',
+              remoteMessage.notification,
+            );
+            // setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
+          }
+        });
+    });
+
     Linking.addEventListener('url', this.handleOpenURL);
   }
+
+  getRegistrationToken = async userToken => {
+    messaging()
+      .getToken()
+      .then(async fcmToken => {
+        console.log('fcm', fcmToken);
+        if (fcmToken) {
+          // user has a device token
+          var response = await fetch(
+            `${require('../config').default.production}api/v1/user/update/fcm`,
+            {
+              method: 'POST',
+              body: JSON.stringify({
+                fcm_token: fcmToken,
+              }),
+              headers: {
+                Authorization: `Bearer ${userToken}`,
+              },
+            },
+          );
+          console.log('response', await response.json());
+        } else {
+          alert('error occured fetching token');
+          // user doesn't have a device token yet
+        }
+      });
+  };
+
+  checkPermissions = async () => {
+    const enabled = await messaging().hasPermission();
+    if (enabled) {
+      // user has permissions
+      return true;
+    } else {
+      try {
+        const permission = await messaging().requestPermission();
+
+        return permission; // User has authorised
+      } catch (error) {
+        return false; // User has rejected permissions
+      }
+    }
+  };
 
   handleOpenURL = async event => {
     const route = event.url.replace(/.*?:\/\/post\//g, '');
@@ -73,7 +143,6 @@ class MainTabNavigation extends React.Component {
       },
     );
     let JsonResponse = await response.json();
-    console.log('response', JsonResponse);
     this.setState({postDetail: JsonResponse});
   };
 
@@ -86,7 +155,6 @@ class MainTabNavigation extends React.Component {
   };
 
   render() {
-    console.log('props post', this.state.postDetail);
     return (
       <>
         {Platform.OS === 'ios' ? (
