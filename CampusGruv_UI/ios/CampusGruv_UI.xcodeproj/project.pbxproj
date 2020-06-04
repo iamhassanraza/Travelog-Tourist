@@ -82,6 +82,7 @@
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* CampusGruv_UITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CampusGruv_UITests.m; sourceTree = "<group>"; };
 		04599EA32487D79000007E3A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		046B14D62488E9F700009BC2 /* CampusGrüv.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "CampusGrüv.entitlements"; path = "CampusGruv_UI/CampusGrüv.entitlements"; sourceTree = "<group>"; };
 		0CD447A03F1C4F4CB85481CB /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* CampusGrüv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CampusGrüv.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		13B07FAF1A68108700A75B9A /* AppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = AppDelegate.h; path = CampusGruv_UI/AppDelegate.h; sourceTree = "<group>"; };
@@ -242,6 +243,7 @@
 		13B07FAE1A68108700A75B9A /* CampusGruv_UI */ = {
 			isa = PBXGroup;
 			children = (
+				046B14D62488E9F700009BC2 /* CampusGrüv.entitlements */,
 				04599EA32487D79000007E3A /* GoogleService-Info.plist */,
 				008F07F21AC5B25A0029DE68 /* main.jsbundle */,
 				13B07FAF1A68108700A75B9A /* AppDelegate.h */,
@@ -845,6 +847,7 @@
 			baseConfigurationReference = 900109A8175E14910DB53FB1 /* Pods-CampusGruv_UI.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "CampusGruv_UI/CampusGrüv.entitlements";
 				CURRENT_PROJECT_VERSION = 1.17;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 8DBSTH96YC;
@@ -868,6 +871,7 @@
 			baseConfigurationReference = 3795F781C85327B3A5BB857D /* Pods-CampusGruv_UI.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = "CampusGruv_UI/CampusGrüv.entitlements";
 				CURRENT_PROJECT_VERSION = 1.17;
 				DEVELOPMENT_TEAM = 8DBSTH96YC;
 				INFOPLIST_FILE = CampusGruv_UI/Info.plist;
