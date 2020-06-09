@@ -578,7 +578,7 @@ class ProfilePage extends React.Component {
                 style={{width: '10%', marginTop: 15}}
               />
             </View>
-            <InputView
+            {/* <InputView
               multiline={true}
               name="Bio"
               ph="enter bio"
@@ -595,7 +595,7 @@ class ProfilePage extends React.Component {
               changestate={text => {
                 this.setState({website: text});
               }}
-            />
+            /> */}
             <InputView
               name="Major"
               ph="Major"

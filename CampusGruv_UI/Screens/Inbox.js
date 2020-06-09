@@ -39,7 +39,6 @@ class Inbox extends Component {
       },
     );
     const JsonResponse = await Response.json();
-    console.log('inbox data', JsonResponse);
     this.setState({
       data: JsonResponse,
     });

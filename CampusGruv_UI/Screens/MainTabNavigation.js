@@ -89,8 +89,9 @@ class MainTabNavigation extends React.Component {
     messaging()
       .getToken()
       .then(async fcmToken => {
-        console.log('fcm', fcmToken);
         if (fcmToken) {
+          console.log('fcm', fcmToken);
+
           // user has a device token
           var response = await fetch(
             `${require('../config').default.production}api/v1/user/update/fcm`,
@@ -100,6 +101,7 @@ class MainTabNavigation extends React.Component {
                 fcm_token: fcmToken,
               }),
               headers: {
+                'Content-Type': 'application/json',
                 Authorization: `Bearer ${userToken}`,
               },
             },

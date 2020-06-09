@@ -164,7 +164,7 @@ class PostDetail extends Component {
 
   sharePost = (first_name, postId) => {
     let text = `Checkout this post by ${first_name}: \n`;
-    let url = `campusgruv://post/${postId}`;
+    let url = `https://www.campusgruv.com/post/${postId}`;
     // if (Platform.OS === 'android')
     //   text = text.concat(`${require('../config').default.production}Android`);
     // else text = text.concat('http://itunes.apple.com/app/id1453977874');

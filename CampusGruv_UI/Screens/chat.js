@@ -191,6 +191,7 @@ class Chat extends React.Component {
       console.log('room joined', msgs.length);
       if (msgs !== null) {
         var tempArray = await this.mapMessages(msgs);
+        console.log('last msg', tempArray[0]);
         if (tempArray.length === 40) {
           this.setState({loadMore: true});
         }

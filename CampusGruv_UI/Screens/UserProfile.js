@@ -332,7 +332,6 @@ class UserProfile extends React.Component {
         },
       );
       const jsonresponse = await response.json();
-      console.log('json xyz == >', jsonresponse);
       this.setState({
         spinner: false,
         posts: jsonresponse.data,
