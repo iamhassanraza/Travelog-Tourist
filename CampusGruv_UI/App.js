@@ -111,8 +111,6 @@ const CreatePostStack = createStackNavigator(
   },
 );
 
-
-
 const ProfileStack = createStackNavigator(
   {
     UserProfile: {
@@ -166,8 +164,7 @@ const ProfileStack = createStackNavigator(
     },
     CreateOrganization: {
       screen: CreateOrganization,
-    }
- 
+    },
   },
   {
     navigationOptions: props => {
@@ -642,43 +639,14 @@ const AppContainer = createAppContainer(RootStackNavigator);
 class App extends Component {
   constructor(props) {
     super(props);
-    this.keyboardWillShow = this.keyboardWillShow.bind(this);
-    this.keyboardWillHide = this.keyboardWillHide.bind(this);
+
     this.state = {
       isVisible: true,
     };
   }
 
-  UNSAFE_componentWillMount() {
-    this.keyboardWillShowSub = Keyboard.addListener(
-      'keyboardDidShow',
-      this.keyboardWillShow,
-    );
-    this.keyboardWillHideSub = Keyboard.addListener(
-      'keyboardDidHide',
-      this.keyboardWillHide,
-    );
-  }
-
-  componentWillUnmount() {
-    this.keyboardWillShowSub.remove();
-    this.keyboardWillHideSub.remove();
-  }
-
-  keyboardWillShow = event => {
-    this.setState({
-      isVisible: false,
-    });
-  };
-
-  keyboardWillHide = event => {
-    this.setState({
-      isVisible: true,
-    });
-  };
-
   render() {
-    return <AppContainer />;
+    return <AppContainer screenProps={{url: this.props.url}} />;
   }
 }
 

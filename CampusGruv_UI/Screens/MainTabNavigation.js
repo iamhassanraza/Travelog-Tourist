@@ -131,7 +131,7 @@ class MainTabNavigation extends React.Component {
   };
 
   handleOpenURL = async event => {
-    const route = event.url.replace(/.*?:\/\/post\//g, '');
+    const route = event.url.replace('https://www.campusgruv.com/post/', '');
     console.log('route', route);
     let Token = await AsyncStorage.getItem('TOKEN');
     var response = await fetch(
@@ -145,7 +145,7 @@ class MainTabNavigation extends React.Component {
       },
     );
     let JsonResponse = await response.json();
-    this.setState({postDetail: JsonResponse});
+    if (JsonResponse.length > 0) this.setState({postDetail: JsonResponse});
   };
 
   changeStatusBar = obj => {

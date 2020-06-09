@@ -49,28 +49,33 @@ class AuthLoading extends React.Component {
   // }
 
   async componentDidMount() {
-    // const initialUrl = await Linking.getInitialURL();
-    // console.log('initial url', initialUrl);
-    // if (initialUrl) {
-    //   this.setState({postNav: true});
-    //   const route = initialUrl.replace(/.*?:\/\/post\//g, '');
-    //   console.log('initial url', route);
-    //   let Token = await AsyncStorage.getItem('TOKEN');
-    //   let USER = await AsyncStorage.getItem('USER_ID');
-    //   var response = await fetch(
-    //     `${
-    //       require('../config').default.production
-    //     }api/v1/get/post?post_id=${route}`,
-    //     {
-    //       headers: {
-    //         Authorization: `Bearer ${Token}`,
-    //       },
-    //     },
-    //   );
-    //   let JsonResponse = await response.json();
-    //   this.setState({postDetail: JsonResponse});
-    //   console.log(JsonResponse, 'Post details lamo');
-    // }
+    var initialUrl = null;
+    if (Platform.OS === 'android') {
+      initialUrl = this.props.screenProps.url;
+    } else {
+      initialUrl = await Linking.getInitialURL();
+    }
+    console.log('initial url', initialUrl);
+    if (initialUrl) {
+      this.setState({postNav: true});
+      const route = initialUrl.replace('https://www.campusgruv.com/post/', '');
+      console.log('initial route', route);
+      let Token = await AsyncStorage.getItem('TOKEN');
+      let USER = await AsyncStorage.getItem('USER_ID');
+      var response = await fetch(
+        `${
+          require('../config').default.production
+        }api/v1/get/post?post_id=${route}`,
+        {
+          headers: {
+            Authorization: `Bearer ${Token}`,
+          },
+        },
+      );
+      let JsonResponse = await response.json();
+      if (JsonResponse.length > 0) this.setState({postDetail: JsonResponse});
+      console.log(JsonResponse, 'Post details lamo');
+    }
 
     //Linking.addEventListener('url', this.handleOpenURL);
     const unsubscribe = NetInfo.addEventListener(state => {

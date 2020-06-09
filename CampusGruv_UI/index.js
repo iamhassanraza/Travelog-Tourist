@@ -28,23 +28,17 @@ if (__DEV__) {
 
 mystore = createStore(CombinedReducers, composeEnhancer());
 
-const RN_REDUX = () => {
+const RN_REDUX = props => {
   return (
     <Provider store={mystore}>
       {Platform.OS !== 'ios' ? (
         <StatusBar backgroundColor={ThemeBlue} barStyle="light-content" />
       ) : null}
 
-      <App />
+      <App url={props.data} />
     </Provider>
   );
 };
 
 AppRegistry.registerComponent(appName, () => RN_REDUX);
 export default mystore;
-
-{
-  /* {Platform.OS === 'ios' ? (
-          <StatusBar barStyle="light-content" translucent={true} />
-        ) : null} */
-}
