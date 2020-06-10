@@ -34,19 +34,12 @@ const screenheight = Dimensions.get('window').height;
 
 class AuthLoading extends React.Component {
   state = {
-    postDetail: undefined,
+    postDetail: [],
   };
 
   componentWillUnmount() {
     Linking.removeEventListener('url', this.handleOpenURL);
   }
-
-  // handleOpenURL(event) {
-  //   console.log(event.url);
-  //   const route = e.url.replace('campusgruv://post', '');
-  //   console.log('route');
-  //   // do something with the url, in our case navigate(route)
-  // }
 
   async componentDidMount() {
     var initialUrl = null;
@@ -57,7 +50,6 @@ class AuthLoading extends React.Component {
     }
     console.log('initial url', initialUrl);
     if (initialUrl) {
-      this.setState({postNav: true});
       const route = initialUrl.replace('https://www.campusgruv.com/post/', '');
       console.log('initial route', route);
       let Token = await AsyncStorage.getItem('TOKEN');
@@ -73,7 +65,7 @@ class AuthLoading extends React.Component {
         },
       );
       let JsonResponse = await response.json();
-      if (JsonResponse.length > 0) this.setState({postDetail: JsonResponse});
+      this.setState({postDetail: JsonResponse});
       console.log(JsonResponse, 'Post details lamo');
     }
 
@@ -132,7 +124,9 @@ class AuthLoading extends React.Component {
         } else if (isverified === '1' && campus_id === 'nahi_hai') {
           this.props.navigation.navigate('EditProfile');
         } else if (isverified === '1' && campus_id !== 'nahi_hai') {
-          this.state.postNav
+          const postDetail = this.state.postDetail;
+          console.log('postDetail', postDetail);
+          postDetail.length > 0
             ? this.props.navigation.navigate('App', {
                 postDetail: this.state.postDetail,
               })
