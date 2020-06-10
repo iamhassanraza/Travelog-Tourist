@@ -473,6 +473,7 @@ const TabNavigator = createBottomTabNavigator(
     Notifications: {
       screen: NotificationStack,
       navigationOptions: props => {
+        if (props.screenProps.PostDetail) props.navigation.navigate('Home');
         store = mystore;
         state = store.getState();
         //console.log('state', state);
@@ -523,6 +524,7 @@ const TabNavigator = createBottomTabNavigator(
     messages: {
       screen: MessageStack,
       navigationOptions: props => {
+        if (props.screenProps.PostDetail) props.navigation.navigate('Home');
         store = mystore;
         state = store.getState();
         return {
