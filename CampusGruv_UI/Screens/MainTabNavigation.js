@@ -131,7 +131,12 @@ class MainTabNavigation extends React.Component {
   };
 
   handleOpenURL = async event => {
-    const route = event.url.replace('https://www.campusgruv.com/post/', '');
+    const route = event.url.replace(
+      Platform.OS === 'android'
+        ? 'https://www.campusgruv.com/post/'
+        : 'campusgruv://post/',
+      '',
+    );
     console.log('route', route);
     let Token = await AsyncStorage.getItem('TOKEN');
     var response = await fetch(

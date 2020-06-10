@@ -50,7 +50,12 @@ class AuthLoading extends React.Component {
     }
     console.log('initial url', initialUrl);
     if (initialUrl) {
-      const route = initialUrl.replace('https://www.campusgruv.com/post/', '');
+      const route = initialUrl.replace(
+        Platform.OS === 'android'
+          ? 'https://www.campusgruv.com/post/'
+          : 'campusgruv://post/',
+        '',
+      );
       console.log('initial route', route);
       let Token = await AsyncStorage.getItem('TOKEN');
       let USER = await AsyncStorage.getItem('USER_ID');
