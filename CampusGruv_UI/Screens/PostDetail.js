@@ -168,8 +168,7 @@ class PostDetail extends Component {
       Platform.OS === 'android'
         ? `https://www.campusgruv.com/post/${postId}`
         : `campusgruv://post/${postId}`;
-    if (Platform.OS === 'android') text = text.concat(url);
-    else text = text.concat(url);
+    if (Platform.OS === 'ios') text = text.concat(url);
 
     const options = {
       title: 'share via',

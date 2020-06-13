@@ -59,15 +59,14 @@ class MainTabNavigation extends React.Component {
     this.checkPermissions().then(permission => {
       console.log('indidmount', permission);
 
+      this.getRegistrationToken(Token);
+
       messaging().onNotificationOpenedApp(remoteMessage => {
         console.log(
           'Notification caused app to open from background state:',
           remoteMessage.notification,
         );
-        //navigation.navigate(remoteMessage.data.type);
       });
-
-      this.getRegistrationToken(Token);
 
       messaging()
         .getInitialNotification()
@@ -77,7 +76,6 @@ class MainTabNavigation extends React.Component {
               'Notification caused app to open from quit state:',
               remoteMessage.notification,
             );
-            // setInitialRoute(remoteMessage.data.type); // e.g. "Settings"
           }
         });
     });

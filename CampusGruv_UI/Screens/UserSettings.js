@@ -180,8 +180,24 @@ export default class UserSettings extends Component {
               style={{flexDirection: 'row', alignItems: 'center'}}
               onPress={async () => {
                 await AsyncStorage.clear();
+                var response = await fetch(
+                  `${
+                    require('../config').default.production
+                  }api/v1/user/update/fcm`,
+                  {
+                    method: 'POST',
+                    body: JSON.stringify({
+                      fcm_token: null,
+                    }),
+                    headers: {
+                      'Content-Type': 'application/json',
+                      Authorization: `Bearer ${userToken}`,
+                    },
+                  },
+                );
+                console.log('response', await response.json());
+
                 this.props.screenProps.rootNavigation.navigate('Login');
-                console.log('Logged Out');
               }}>
               <IconFeather
                 name="log-out"
