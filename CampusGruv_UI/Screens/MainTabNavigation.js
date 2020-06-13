@@ -64,7 +64,7 @@ class MainTabNavigation extends React.Component {
       messaging().onNotificationOpenedApp(remoteMessage => {
         console.log(
           'Notification caused app to open from background state:',
-          remoteMessage.notification,
+          remoteMessage,
         );
       });
 
@@ -74,7 +74,7 @@ class MainTabNavigation extends React.Component {
           if (remoteMessage) {
             console.log(
               'Notification caused app to open from quit state:',
-              remoteMessage.notification,
+              remoteMessage,
             );
           }
         });

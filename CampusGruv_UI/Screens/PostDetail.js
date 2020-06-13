@@ -566,7 +566,6 @@ class PostDetail extends Component {
   };
 
   renderAllComments = dp => {
-    console.log('coments', this.state.comments);
     return (
       <View style={{marginLeft: '4%', marginTop: 10}}>
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
@@ -601,7 +600,6 @@ class PostDetail extends Component {
   };
 
   postComment = async (postId, postUserId) => {
-    console.log('hello jee', this.state.currentComment);
     if (this.state.currentComment !== null || this.state.currentComment != '') {
       const Token = await AsyncStorage.getItem('TOKEN');
       const userId = await AsyncStorage.getItem('USER_ID');
@@ -766,12 +764,10 @@ class PostDetail extends Component {
   };
   //style={{height: Dimensions.get('window').height-150}}
   render() {
-    console.log('height', Dimensions.get('window').height);
     const data = this.props.navigation.getParam(
       'PostData',
       'nothing to render',
     );
-    console.log('data', data);
     return (
       <>
         {/* {Platform.OS === 'ios' ? <StatusBar barStyle="default" /> : null} */}
