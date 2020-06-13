@@ -180,6 +180,8 @@ export default class UserSettings extends Component {
               style={{flexDirection: 'row', alignItems: 'center'}}
               onPress={async () => {
                 await AsyncStorage.clear();
+                const Token = await AsyncStorage.getItem('TOKEN');
+
                 var response = await fetch(
                   `${
                     require('../config').default.production
@@ -191,7 +193,7 @@ export default class UserSettings extends Component {
                     }),
                     headers: {
                       'Content-Type': 'application/json',
-                      Authorization: `Bearer ${userToken}`,
+                      Authorization: `Bearer ${Token}`,
                     },
                   },
                 );
