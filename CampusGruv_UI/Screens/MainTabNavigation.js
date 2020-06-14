@@ -34,7 +34,7 @@ class MainTabNavigation extends React.Component {
 
     this.props.socket.on('connect', () => {
       console.log('hello jee connection established');
-      this.socket.emit('isLoggedIn');
+      this.props.socket.emit('isLoggedIn');
     });
 
     this.props.socket.on('isLoggedIn', res => {

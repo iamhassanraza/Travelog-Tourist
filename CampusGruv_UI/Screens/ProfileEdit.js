@@ -36,6 +36,7 @@ import {
   WaveIndicator,
 } from 'react-native-indicators';
 import FastImage from 'react-native-fast-image';
+import {ThemeBlue} from '../Assets/Colors';
 
 //cam_id === 'nahi_hai'
 class ProfilePage extends React.Component {
@@ -480,8 +481,8 @@ class ProfilePage extends React.Component {
         <Spinner
           visible={this.state.Spinner}
           textContent={'Uploading...'}
-          textStyle={{color: 'black'}}
-          customIndicator={<BarIndicator count={5} />}
+          textStyle={{color: ThemeBlue}}
+          customIndicator={<UIActivityIndicator count={5} />}
         />
         <Content>
           {/* EDIT PROFILE IMAGE */}

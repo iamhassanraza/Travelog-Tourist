@@ -26,10 +26,16 @@ class InputView extends React.Component {
 
         <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
           <Text
-            style={{fontSize: 20, marginTop: 15, marginLeft: 10, width: '25%'}}>
+            style={{
+              fontSize: this.props.fontSize ?? 20,
+              marginTop: 15,
+              marginLeft: 10,
+              width: this.props.width ?? '25%',
+            }}>
             {this.props.name}
           </Text>
           <TextInput
+            autoCapitalize="none"
             multiline={this.props.multiline}
             onFocus={() => {
               this.setState({focused: true});

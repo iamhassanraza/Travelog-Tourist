@@ -1,82 +1,89 @@
 import React, {Component} from 'react';
-import {Text, View, Dimensions, Image, TouchableOpacity} from 'react-native';
+import {
+  Text,
+  View,
+  Dimensions,
+  Image,
+  TouchableOpacity,
+  AsyncStorage,
+} from 'react-native';
 import InputView from '../Components/ProfileEdit/InputViews';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import {Container, Item, Picker, Content, Input} from 'native-base';
 import FastImage from 'react-native-fast-image';
 import ImagePicker from 'react-native-image-picker';
-import img from '../Assets/Images/lahore.jpg'
+import img from '../Assets/Images/lahore.jpg';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
+import Spinner from 'react-native-loading-spinner-overlay';
+import {UIActivityIndicator} from 'react-native-indicators';
+import {ThemeBlue} from '../Assets/Colors';
+import {connect} from 'react-redux';
+import {CreateUserDetails} from '../ReduxStore/Actions/index';
 
-export default class CreateOrganization extends Component {
-
-    static navigationOptions = props => {
-        tabBarVisibile = false;
-        const {params = {}} = props.navigation.state;
-        return {
-          header:
-            
-              <View
+class CreateOrganization extends Component {
+  static navigationOptions = props => {
+    tabBarVisibile = false;
+    const {params = {}} = props.navigation.state;
+    return {
+      header: (
+        <View
+          style={{
+            height: 50,
+            backgroundColor: '#0C91CF',
+            flexDirection: 'row',
+            justifyContent: 'center',
+          }}>
+          <View
+            style={{
+              position: 'absolute',
+              padding: 2,
+              alignSelf: 'center',
+              left: 8,
+            }}>
+            <TouchableOpacity
+              onPress={() => {
+                props.navigation.navigate('UserSettings');
+              }}>
+              <Text
                 style={{
-                  height: 50,
-                  backgroundColor: '#0C91CF',
-                  flexDirection: 'row',
-                  justifyContent: 'center',
+                  color: 'white',
+                  padding: 2,
                 }}>
-                <View
-                  style={{
-                    position: 'absolute',
-                    padding: 2,
-                    alignSelf: 'center',
-                    left: 8,
-                  }}>
-                  <TouchableOpacity
-                    onPress={() => {
-                      props.navigation.navigate('UserSettings');
-                    }}>
-                    <Text
-                      style={{
-                        color: 'white',
-                        padding: 2,
-                      }}>
-                      Back
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-                <View style={{alignSelf: 'center'}}>
-                  <Text
-                    style={{
-                      color: 'white',
-                      fontSize: 18,
-                      fontWeight: 'bold',
-                    }}>
-                    Create Organization Account
-                  </Text>
-                </View>
-                <View
-                  style={{
-                    position: 'absolute',
-                    padding: 2,
-                    alignSelf: 'center',
-                    right: 8,
-                  }}>
-                  <TouchableOpacity onPress={() => alert("API call")}>
-                    <Text
-                      style={{
-                        color: 'white',
-                        padding: 2,
-                      }}>
-                      Done
-                    </Text>
-                  </TouchableOpacity>
-                </View>
-              </View>
-            
-        };
-      };
-    
-
-
+                Back
+              </Text>
+            </TouchableOpacity>
+          </View>
+          <View style={{alignSelf: 'center'}}>
+            <Text
+              style={{
+                color: 'white',
+                fontSize: 18,
+                fontWeight: 'bold',
+              }}>
+              Create Organization Account
+            </Text>
+          </View>
+          <View
+            style={{
+              position: 'absolute',
+              padding: 2,
+              alignSelf: 'center',
+              right: 8,
+            }}>
+            <TouchableOpacity onPress={() => params.handleThis()}>
+              <Text
+                style={{
+                  color: 'white',
+                  padding: 2,
+                }}>
+                Done
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      ),
+    };
+  };
 
   state = {
     imageUri: '',
@@ -94,8 +101,6 @@ export default class CreateOrganization extends Component {
     imageName: '',
     imageURL: '',
   };
-
-
 
   uploadProfilePicture = () => {
     ImagePicker.showImagePicker(
@@ -151,11 +156,53 @@ export default class CreateOrganization extends Component {
     );
   };
 
+  componentDidMount() {
+    this.props.navigation.setParams({
+      handleThis: () => {
+        if (
+          this.state.organizationName &&
+          this.state.imageUri &&
+          this.state.organizationWebsite
+        ) {
+          this.createOrganization();
+        } else alert('All fields except members are required');
+      },
+    });
+  }
+
+  createOrganization = async () => {
+    this.setState({Spinner: true});
+    const Token = await AsyncStorage.getItem('TOKEN');
+    //const Campusid = await AsyncStorage.getItem('CAMPUS_ID');
+
+    let response = await fetch(
+      `${require('../config').default.production}api/v1/create/organization`,
+      {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'multipart/form-data',
+          Authorization: `Bearer ${Token}`,
+        },
+        body: this.createFormData(this.state.imageUri, {
+          campus_id: this.props.User.campus_id,
+          email: this.state.organizationEmail,
+          website: this.state.organizationWebsite,
+          name: this.state.organizationName,
+        }),
+      },
+    );
+    console.log('reponse', response);
+
+    const postMasterResponse = await response.json();
+    console.log('reponse', postMasterResponse);
+    this.setState({Spinner: false});
+    this.props.navigation.navigate('HomeScreen');
+  };
+
   createFormData = (images, body) => {
     const data = new FormData();
     if (this.state.imageUri !== '') {
-      data.append('profile_pic', {
-        // name: images.fileName,
+      data.append('image', {
         name: this.state.imageName,
         type: images.type,
         uri:
@@ -172,7 +219,6 @@ export default class CreateOrganization extends Component {
     return data;
   };
 
-
   render() {
     let pickerItems = this.state.campuses[0]
       ? this.state.campuses.map((s, i) => {
@@ -182,6 +228,12 @@ export default class CreateOrganization extends Component {
       : null;
     return (
       <Container>
+        <Spinner
+          visible={this.state.Spinner}
+          textContent={'Uploading...'}
+          textStyle={{color: 'black'}}
+          customIndicator={<UIActivityIndicator color={'black'} size={50} />}
+        />
         <Content>
           {/* EDIT PROFILE IMAGE */}
           <View
@@ -191,12 +243,16 @@ export default class CreateOrganization extends Component {
               marginTop: 20,
             }}>
             <FastImage
-              source={this.state.imageUri === '' ? defaultAvatar : {
-                uri:
-                  this.state.imageUri !== ''
-                    ? this.state.imageUri.uri
-                    : null,
-              }}
+              source={
+                this.state.imageUri === ''
+                  ? defaultAvatar
+                  : {
+                      uri:
+                        this.state.imageUri !== ''
+                          ? this.state.imageUri.uri
+                          : null,
+                    }
+              }
               style={{
                 width: 120,
                 height: 120,
@@ -221,7 +277,6 @@ export default class CreateOrganization extends Component {
           </TouchableOpacity>
 
           <View>
-          
             <View
               style={{
                 borderTopColor: '#C4C4C4',
@@ -231,15 +286,16 @@ export default class CreateOrganization extends Component {
                 marginTop: Dimensions.get('window').height > 800 ? 50 : 20,
               }}>
               <InputView
+                width="30%"
+                fontSize={18}
                 name="Organization"
-                ph="Enter Organization"
+                ph="enter organization"
                 value={this.state.organizationName}
                 changestate={text => {
                   this.setState({organizationName: text});
                 }}
               />
-              {/* <InputView name='Campus' ph='University of Pittsburgh'/> */}
-              <View
+              {/* <View
                 style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Text
                   style={{
@@ -276,7 +332,7 @@ export default class CreateOrganization extends Component {
                   size={26}
                   style={{width: '10%', marginTop: 15}}
                 />
-              </View>
+              </View> */}
               <InputView
                 multiline={true}
                 name="Email"
@@ -310,3 +366,16 @@ export default class CreateOrganization extends Component {
     );
   }
 }
+
+mapStateToProps = state => {
+  //this state will contain FULL redux store all the reducers data
+
+  //use your required reducer data in props i.e reducer1
+
+  return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+};
+
+export default connect(
+  mapStateToProps,
+  {CreateUserDetails},
+)(CreateOrganization);

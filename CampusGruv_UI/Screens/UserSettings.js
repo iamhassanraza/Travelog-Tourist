@@ -42,11 +42,8 @@ export default class UserSettings extends Component {
             marginLeft: '3%',
             marginTop: '3%',
           }}>
-          {/* <AccPic img={i1} />
-          <AccPic img={i2} />
-          <AccPic img={i3} /> */}
-
           <FlatList
+            style={{height: 70}}
             horizontal
             data={this.state.accounts}
             keyExtractor={item => item.orgName}
@@ -54,12 +51,19 @@ export default class UserSettings extends Component {
             renderItem={({item}) => {
               return (
                 <TouchableOpacity>
-                  <View style={{paddingHorizontal: 3, alignItems: 'center'}}>
+                  <View style={{paddingHorizontal: 5, alignItems: 'center'}}>
                     <FastImage
                       source={item.pic}
-                      style={{height: 40, width: 40, borderRadius: 50}}
+                      style={{height: 50, width: 50, borderRadius: 50}}
                     />
-                    <Text style={{fontSize: 12, color: 'grey'}}>
+                    <Text
+                      numberOfLines={1}
+                      style={{
+                        marginTop: 2,
+                        width: 50,
+                        fontSize: 12,
+                        color: 'grey',
+                      }}>
                       {item.orgName}
                     </Text>
                   </View>
