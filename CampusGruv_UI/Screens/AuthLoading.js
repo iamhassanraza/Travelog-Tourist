@@ -13,9 +13,10 @@ import {
 import Colors, {ThemeBlue} from '../Assets/Colors';
 import HeaderTitle from './Heading';
 import messaging from '@react-native-firebase/messaging';
+import io from 'socket.io-client';
 
 import {connect} from 'react-redux';
-import {CreateUserDetails} from '../ReduxStore/Actions/index';
+import {CreateUserDetails, connectSocket} from '../ReduxStore/Actions/index';
 import NetInfo from '@react-native-community/netinfo';
 import {
   BallIndicator,
@@ -129,13 +130,21 @@ class AuthLoading extends React.Component {
         } else if (isverified === '1' && campus_id === 'nahi_hai') {
           this.props.navigation.navigate('EditProfile');
         } else if (isverified === '1' && campus_id !== 'nahi_hai') {
-          const postDetail = this.state.postDetail;
-          console.log('postDetail', postDetail);
-          postDetail.length > 0
-            ? this.props.navigation.navigate('App', {
-                postDetail: this.state.postDetail,
-              })
-            : this.props.navigation.navigate('App');
+          this.socket = io(`${require('../config').default.pro_chat}`, {
+            query: `token=${userToken}`,
+            transports: ['websocket'],
+          });
+          this.socket.on('connect', () => {
+            console.log('hello jee connection established');
+            this.props.connectSocket(this.socket);
+            this.socket.emit('isLoggedIn');
+            const postDetail = this.state.postDetail;
+            postDetail.length > 0
+              ? this.props.navigation.navigate('App', {
+                  postDetail: this.state.postDetail,
+                })
+              : this.props.navigation.navigate('App');
+          });
         }
       } else {
         console.log('else ran');
@@ -174,12 +183,12 @@ mapStateToProps = state => {
 
   //use your required reducer data in props i.e reducer1
 
-  return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+  return {User: state.User, socket: state.socket}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
 };
 
 export default connect(
   mapStateToProps,
-  {CreateUserDetails},
+  {CreateUserDetails, connectSocket},
 )(AuthLoading);
 
 const styles = StyleSheet.create({

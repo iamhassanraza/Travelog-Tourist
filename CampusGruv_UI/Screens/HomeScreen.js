@@ -485,6 +485,13 @@ class HomeScreen extends PureComponent {
         },
       });
       this.props.screenProps.clearPostDetail();
+    } else if (this.props.screenProps.chatDetail) {
+      const chatDetail = this.props.screenProps.chatDetail;
+      this.props.navigation.navigate('chat', {
+        room_id: chatDetail.room_id,
+        name: jsonMessage.sender_name,
+      });
+      this.props.screenProps.clearChatDetail();
     }
     this.focusListener = navigation.addListener('willFocus', () => {
       // The screen is focused
@@ -544,6 +551,13 @@ class HomeScreen extends PureComponent {
         },
       });
       this.props.screenProps.clearPostDetail();
+    } else if (this.props.screenProps.chatDetail) {
+      const chatDetail = this.props.screenProps.chatDetail;
+      this.props.navigation.navigate('chat', {
+        room_id: chatDetail.room_id,
+        name: jsonMessage.sender_name,
+      });
+      this.props.screenProps.clearChatDetail();
     }
 
     const catid = this.props.navigation.getParam('CategoryID', 'undefined');

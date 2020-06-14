@@ -31,27 +31,23 @@ class MainTabNavigation extends React.Component {
   async componentDidMount() {
     //Socket connection goes here
     const Token = await AsyncStorage.getItem('TOKEN');
-    this.socket = io(`${require('../config').default.pro_chat}`, {
-      query: `token=${Token}`,
-      transports: ['websocket'],
-    });
 
-    this.socket.on('connect', () => {
+    this.props.socket.on('connect', () => {
       console.log('hello jee connection established');
-      this.props.connectSocket(this.socket);
       this.socket.emit('isLoggedIn');
     });
-    this.socket.on('isLoggedIn', res => {
+
+    this.props.socket.on('isLoggedIn', res => {
       //console.log(res,'res')
     });
-    this.socket.on('connect_error', err => {
+    this.props.socket.on('connect_error', err => {
       console.log('hello jee error established', err);
     });
-    this.socket.on('user_message', msg => {
+    this.props.socket.on('user_message', msg => {
       console.log('msg received', msg);
       this.props.unreadMsg();
     });
-    this.socket.on('notification', noti => {
+    this.props.socket.on('notification', noti => {
       console.log('noti', noti);
       this.props.unreadNoti();
     });
@@ -62,20 +58,48 @@ class MainTabNavigation extends React.Component {
       this.getRegistrationToken(Token);
 
       messaging().onNotificationOpenedApp(remoteMessage => {
+        jsonMessage = JSON.parse(remoteMessage.data.info);
         console.log(
           'Notification caused app to open from background state:',
-          remoteMessage,
+          jsonMessage,
         );
+        if (
+          jsonMessage.notification_type === 'liked' ||
+          jsonMessage.notification_type === 'commented'
+        ) {
+          this.fetchPostData(jsonMessage.post_id);
+        } else if (jsonMessage.notification_type === 'message') {
+          console.log('message received');
+          this.setState({
+            chatDetail: {
+              room_id: jsonMessage.room_id,
+            },
+          });
+        }
       });
 
       messaging()
         .getInitialNotification()
-        .then(remoteMessage => {
+        .then(async remoteMessage => {
           if (remoteMessage) {
+            jsonMessage = JSON.parse(remoteMessage.data.info);
             console.log(
               'Notification caused app to open from quit state:',
-              remoteMessage,
+              jsonMessage,
             );
+            if (
+              jsonMessage.notification_type === 'liked' ||
+              jsonMessage.notification_type === 'commented'
+            ) {
+              this.fetchPostData(jsonMessage.post_id);
+            } else if (jsonMessage.notification_type === 'message') {
+              console.log('message received');
+              this.setState({
+                chatDetail: {
+                  room_id: jsonMessage.room_id,
+                },
+              });
+            }
           }
         });
     });
@@ -135,7 +159,10 @@ class MainTabNavigation extends React.Component {
         : 'campusgruv://post/',
       '',
     );
-    console.log('route', route);
+    this.fetchPostData(route);
+  };
+
+  fetchPostData = async route => {
     let Token = await AsyncStorage.getItem('TOKEN');
     var response = await fetch(
       `${
@@ -148,11 +175,16 @@ class MainTabNavigation extends React.Component {
       },
     );
     let JsonResponse = await response.json();
+    console.log('response of the post', JsonResponse);
     if (JsonResponse.length > 0) this.setState({postDetail: JsonResponse});
   };
 
   changeStatusBar = obj => {
     this.setState({statusBarColor: obj.color, contentType: obj.contentType});
+  };
+
+  clearChatDetail = () => {
+    this.setState({chatDetail: null});
   };
 
   clearPostDetail = () => {
@@ -173,6 +205,8 @@ class MainTabNavigation extends React.Component {
         ) : null}
         <TabContainer
           screenProps={{
+            chatDetail: this.state.chatDetail,
+            clearChatDetail: this.clearChatDetail,
             clearPostDetail: this.clearPostDetail,
             postDetail: this.state.postDetail,
             changeStatusBar: this.changeStatusBar,

@@ -96,7 +96,6 @@ class Inbox extends Component {
               style={{marginTop: 10}}
               data={filtereddata}
               renderItem={({item}) => {
-                console.log('item', item.id, this.props.User.id);
                 if (item.id !== this.props.User.id)
                   return (
                     <InboxComponent

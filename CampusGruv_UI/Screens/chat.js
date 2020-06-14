@@ -79,7 +79,6 @@ class Chat extends React.Component {
   };
 
   customMessage = props => {
-    // console.log('message props', props);
     return (
       <View
         style={{
@@ -188,10 +187,8 @@ class Chat extends React.Component {
 
   OnjoinRoom = () => {
     this.props.socket.on('joinRoom', async msgs => {
-      console.log('room joined', msgs.length);
       if (msgs !== null) {
         var tempArray = await this.mapMessages(msgs);
-        console.log('last msg', tempArray[0]);
         if (tempArray.length === 40) {
           this.setState({loadMore: true});
         }
@@ -199,13 +196,11 @@ class Chat extends React.Component {
         tempArray = [];
       }
       if (this.state.pageNo > 1) {
-        console.log('if ran');
         this.setState(previousState => ({
           messages: GiftedChat.prepend(previousState.messages, tempArray),
           refreshing: false,
         }));
       } else {
-        console.log('else ran');
         this.setState(previousState => ({
           messages: GiftedChat.append(previousState.messages, tempArray),
           refreshing: false,
@@ -236,7 +231,6 @@ class Chat extends React.Component {
       console.log('hello jee error established');
     });
     this.props.socket.on('message', async msg => {
-      console.log(msg, 'msg msg msg');
       if (msg[0].room_id === this.props.navigation.getParam('room_id', null)) {
         const tempArray = await this.mapMessages(msg);
         this.setState({imageSource: false});
@@ -255,7 +249,6 @@ class Chat extends React.Component {
   }
 
   onSend = async (messages = []) => {
-    console.log('sent', messages);
     const tempArray = messages.map(m => {
       return {
         created_at: m.createdAt,
@@ -289,7 +282,6 @@ class Chat extends React.Component {
           const source = {uri: response.uri};
           const fileTypes = /jpeg|jpg|png|gif/;
           const allowedImgSize = 1024 * 1024 * 3;
-          console.log('response image: ', response);
           if (!fileTypes.test(response.type)) {
             alert(
               'Uploaded file is not a valid image. \n(allowed file types: jpeg, jpg, png, gif)',
@@ -407,7 +399,6 @@ class Chat extends React.Component {
                     });
                   },
                 );
-                console.log('load messages m on top');
               }
             },
             style: {

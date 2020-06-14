@@ -101,7 +101,7 @@ class PostDetail extends Component {
       });
     });
 
-    this.willBlurListener = navigation.addListener('willBlur', async () => {
+    this.willBlurListener = navigation.addListener('didBlur', async () => {
       this.props.screenProps.changeStatusBar({
         color: ThemeBlue,
         contentType: 'light-content',
@@ -430,7 +430,6 @@ class PostDetail extends Component {
   };
 
   renderImage = image => {
-    console.log(image, 'image', this.props.height);
     return (
       <View style={{}}>
         <FastImage
@@ -603,10 +602,7 @@ class PostDetail extends Component {
     if (this.state.currentComment !== null || this.state.currentComment != '') {
       const Token = await AsyncStorage.getItem('TOKEN');
       const userId = await AsyncStorage.getItem('USER_ID');
-      console.log('postid ------', postId, userId, postUserId),
-        userId,
-        postUserId,
-        this.state.currentComment;
+      userId, postUserId, this.state.currentComment;
       const Response = await fetch(
         `${require('../config').default.production}api/v1/comment/create`,
         {
@@ -623,9 +619,7 @@ class PostDetail extends Component {
           },
         },
       );
-      console.log('response', Response);
       const JsonResponse = await Response.json();
-      console.log(JsonResponse, 'res');
       if (parseInt(Response.status) === 400) {
         alert(JsonResponse.message);
       } else if (parseInt(Response.status) === 200) {
@@ -659,8 +653,6 @@ class PostDetail extends Component {
     }));
     const Token = await AsyncStorage.getItem('TOKEN');
     const userId = await AsyncStorage.getItem('USER_ID');
-    console.log('hello jeeeeeee user id', userId);
-    console.log('post id is -----', postId);
     var Response = null;
     if (this.state.liked) {
       Response = await fetch(
@@ -696,7 +688,6 @@ class PostDetail extends Component {
       );
     }
     const JsonResponse = await Response.json();
-    console.log(JsonResponse);
     if (parseInt(Response.status) === 400) {
       console.log('400');
       // alert(JsonResponse.message);
@@ -715,8 +706,6 @@ class PostDetail extends Component {
     }));
     const Token = await AsyncStorage.getItem('TOKEN');
     const userId = await AsyncStorage.getItem('USER_ID');
-    console.log('hello jeeeeeee user id', userId);
-    console.log('post id is -----', postId);
     var Response = null;
     if (this.state.saved) {
       Response = await fetch(
@@ -746,7 +735,6 @@ class PostDetail extends Component {
       );
     }
     const JsonResponse = await Response.json();
-    console.log(JsonResponse);
     if (parseInt(Response.status) === 400) {
       console.log('400');
       // alert(JsonResponse.message);
@@ -800,20 +788,7 @@ class PostDetail extends Component {
                 {this.renderDescription(data.description)}
                 {this.state.comments[0]
                   ? this.renderAllComments(data.userAvatar, data.comments)
-                  : null
-                // <View style={{height: 80, justifyContent: 'center'}}>
-                //   <Text
-                //     style={{
-                //       color: 'grey',
-                //       fontSize: 25,
-                //       opacity: 0.5,
-                //       alignSelf: 'center',
-                //     }}>
-                //     No comments yet!
-                //   </Text>
-                // </View>
-                }
-                {/* {this.renderAddComment(data.userAvatar, data.postId, data.userId)} */}
+                  : null}
               </Content>
               {this.renderAddComment(data.userAvatar, data.postId, data.userId)}
             </KeyboardAvoidingView>
@@ -837,20 +812,7 @@ class PostDetail extends Component {
                 {this.renderDescription(data.description)}
                 {this.state.comments[0]
                   ? this.renderAllComments(data.userAvatar, data.comments)
-                  : null
-                // <View style={{height: 80, justifyContent: 'center'}}>
-                //   <Text
-                //     style={{
-                //       color: 'grey',
-                //       fontSize: 25,
-                //       opacity: 0.5,
-                //       alignSelf: 'center',
-                //     }}>
-                //     No comments yet!
-                //   </Text>
-                // </View>
-                }
-                {/* {this.renderAddComment(data.userAvatar, data.postId, data.userId)} */}
+                  : null}
               </Content>
               {this.renderAddComment(data.userAvatar, data.postId, data.userId)}
             </>

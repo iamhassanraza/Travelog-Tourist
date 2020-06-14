@@ -452,17 +452,6 @@ class CreateNewPost extends Component {
       this.setState({spinner: false, Description: ''});
 
       this.props.navigation.navigate('HomeScreen', null);
-      //  this.props.navigation.push('PostDetail', {
-      //     PostData: {
-      //       uri: imageResponse.image_url,
-      //       title: postMasterResponse.title,
-      //       userAvatar: 'Api needed',
-      //       username: 'API NEEDED',
-      //       description: postMasterResponse.description,
-      //     }
-      //   }
-
-      //  )
     }
   };
 

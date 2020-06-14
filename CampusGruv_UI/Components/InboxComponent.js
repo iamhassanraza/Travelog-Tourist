@@ -60,18 +60,6 @@ class InboxComponent extends Component {
               flexDirection: 'row',
               justifyContent: 'space-between',
             }}>
-            {/* <Avatar
-              size="small"
-              rounded
-              source={
-                this.props.uri === '' || !this.props.uri
-                  ? defaultAvatar
-                  : {
-                      uri: this.props.uri,
-                    }
-              }
-              size={40}
-            /> */}
             <FastImage
               source={
                 this.props.uri === '' || !this.props.uri
