@@ -91,6 +91,9 @@ class AuthLoading extends React.Component {
   fetchUser = async () => {
     let Token = await AsyncStorage.getItem('TOKEN');
     let USER = await AsyncStorage.getItem('USER_ID');
+    let accountType = await AsyncStorage.getItem('accountType');
+    let selected = await AsyncStorage.getItem('selected');
+    console.log('hey there', accountType, selected);
     var response = await fetch(
       `${
         require('../config').default.production

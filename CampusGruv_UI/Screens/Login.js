@@ -113,7 +113,8 @@ class Login extends React.Component {
               response.email_verified.toString(),
             );
             await AsyncStorage.setItem('USER_ID', response.id.toString());
-
+            await AsyncStorage.setItem('selected', response.id.toString());
+            await AsyncStorage.setItem('accountType', 'user');
             if (response.campus_id === null) {
               await AsyncStorage.setItem('CAMPUS_ID', 'nahi_hai');
             } else {
