@@ -19,16 +19,38 @@ import CrossIcon from 'react-native-vector-icons/MaterialIcons';
 import LogoutButton from '../Components/LogoutButton';
 import {NavigationActions} from 'react-navigation';
 import FastImage from 'react-native-fast-image';
+import {connect} from 'react-redux';
+import {CreateUserDetails} from '../ReduxStore/Actions/index';
 
-export default class UserSettings extends Component {
+class UserSettings extends Component {
   state = {
     isModalVisible: false,
-    accounts: [
-      {pic: i1, orgName: 'Students'},
-      {pic: i2, orgName: 'Teachers Council'},
-      {pic: i3, orgName: 'Outsiders'},
-    ],
+    selected: 'user',
   };
+
+  async componentDidMount() {
+    let Token = await AsyncStorage.getItem('TOKEN');
+    let selected = await AsyncStorage.getItem('selected');
+    let accountType = await AsyncStorage.getItem('accountType');
+
+    if (accountType === 'user') {
+      this.setState({selected: 'user'});
+    } else {
+      this.setState({selected: selected});
+    }
+
+    var response = await fetch(
+      `${require('../config').default.production}api/v1/user/organizations`,
+      {
+        headers: {
+          Authorization: `Bearer ${Token}`,
+        },
+      },
+    );
+    let JsonResponse = await response.json();
+    console.log(JsonResponse, 'POPOP');
+    this.setState({organizations: JsonResponse});
+  }
 
   toggleModal = () => {
     this.setState({isModalVisible: !this.state.isModalVisible});
@@ -39,32 +61,84 @@ export default class UserSettings extends Component {
       <View style={{flex: 1, backgroundColor: '#f9fdfe'}}>
         <View
           style={{
+            flexDirection: 'row',
+            alignItems: 'center',
             marginLeft: '3%',
             marginTop: '3%',
           }}>
+          <TouchableOpacity
+            disabled={this.state.selected === 'user'}
+            onPress={() => {
+              console.log('switch to main acount');
+            }}
+            style={{width: 90, height: 70, alignItems: 'center'}}>
+            <IconFeather
+              color={this.state.selected === 'user' ? 'black' : 'grey'}
+              size={50}
+              name="arrow-left-circle"
+            />
+            <Text
+              numberOfLines={1}
+              style={{
+                fontSize: 12,
+                marginTop: 1,
+                color: this.state.selected === 'user' ? 'black' : 'grey',
+                textAlign: 'center',
+              }}>
+              Main account
+            </Text>
+          </TouchableOpacity>
           <FlatList
             style={{height: 70}}
             horizontal
-            data={this.state.accounts}
+            data={this.state.organizations}
             keyExtractor={item => item.orgName}
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => {
               return (
-                <TouchableOpacity>
+                <TouchableOpacity
+                  onPress={() => {
+                    this.setState(
+                      {selected: item.organizations.id},
+                      async () => {
+                        await AsyncStorage.setItem(
+                          'selected',
+                          item.organizations.id.toString(),
+                        );
+                        await AsyncStorage.setItem('accountType', 'org');
+                        this.props.screenProps.rootNavigation.navigate(
+                          'AuthLoading',
+                        );
+                      },
+                    );
+                  }}>
                   <View style={{paddingHorizontal: 5, alignItems: 'center'}}>
                     <FastImage
-                      source={item.pic}
-                      style={{height: 50, width: 50, borderRadius: 50}}
+                      source={{uri: item.organizations.image}}
+                      style={{
+                        height: 50,
+                        borderWidth:
+                          this.state.selected === item.organizations.id
+                            ? 2
+                            : 0.5,
+                        borderColor: 'grey',
+                        width: 50,
+                        borderRadius: 50,
+                      }}
                     />
                     <Text
                       numberOfLines={1}
                       style={{
+                        textAlign: 'center',
                         marginTop: 2,
-                        width: 50,
+                        width: 60,
                         fontSize: 12,
-                        color: 'grey',
+                        color:
+                          this.state.selected === item.organizations.id
+                            ? 'black'
+                            : 'grey',
                       }}>
-                      {item.orgName}
+                      {item.organizations.name}
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -222,3 +296,16 @@ export default class UserSettings extends Component {
     );
   }
 }
+
+mapStateToProps = state => {
+  //this state will contain FULL redux store all the reducers data
+
+  //use your required reducer data in props i.e reducer1
+
+  return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+};
+
+export default connect(
+  mapStateToProps,
+  {CreateUserDetails},
+)(UserSettings);
