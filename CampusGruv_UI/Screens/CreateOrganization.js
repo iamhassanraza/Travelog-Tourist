@@ -351,14 +351,15 @@ class CreateOrganization extends Component {
                   this.setState({organizationWebsite: text});
                 }}
               />
+              <TouchableOpacity onPress={()=> this.props.navigation.navigate('AddMembers')}>
               <InputView
                 name="Members"
                 ph="Add Users"
-                value={this.state.organizationMembers}
                 changestate={text => {
-                  this.setState({organizationMembers: text});
+                  this.props.navigation.navigate('AddMembers', {searched:text})
                 }}
               />
+              </TouchableOpacity>
             </View>
           </View>
         </Content>

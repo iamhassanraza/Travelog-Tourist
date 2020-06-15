@@ -58,6 +58,7 @@ import mystore from './index';
 import {clearNoti} from './ReduxStore/Actions/index';
 import CategoryPosts from './Screens/CategoryPosts';
 import CreateOrganization from './Screens/CreateOrganization';
+import AddMembers from './Screens/AddMembers'
 // const state = mystore.getState();
 
 const AuthNavigator = createStackNavigator({
@@ -164,6 +165,12 @@ const ProfileStack = createStackNavigator(
     },
     CreateOrganization: {
       screen: CreateOrganization,
+    },
+    AddMembers: {
+      screen: AddMembers,
+      navigationOptions: {
+        header: null,
+      },
     },
   },
   {
