@@ -63,7 +63,7 @@ class AuthLoading extends React.Component {
       var response = await fetch(
         `${
           require('../config').default.production
-        }api/v1/get/post?post_id=${route}`,
+        }api/v1/get/post?post_id=${route}&user_id=${this.props.User.id}`,
         {
           headers: {
             Authorization: `Bearer ${Token}`,
@@ -97,7 +97,7 @@ class AuthLoading extends React.Component {
     var response = await fetch(
       `${
         require('../config').default.production
-      }api/v1/get/user?user_id=${USER}`,
+      }api/v1/get/user?user_id=${selected}`,
       {
         headers: {
           Authorization: `Bearer ${Token}`,

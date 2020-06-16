@@ -52,14 +52,15 @@ class NotificationScreen extends Component {
 
   getNoti = async () => {
     const Token = await AsyncStorage.getItem('TOKEN');
-    const user_id = await AsyncStorage.getItem('USER_ID');
     this.setState({
       loading: true,
     });
     const Response = await fetch(
       `${
         require('../config').default.production
-      }api/v1/user/notifications?user_id=${user_id}&page=${this.state.pageNo}`,
+      }api/v1/user/notifications?user_id=${this.props.User.id}&page=${
+        this.state.pageNo
+      }`,
       {
         headers: {
           Authorization: `Bearer ${Token}`,
@@ -158,7 +159,7 @@ mapStateToProps = state => {
 
   //use your required reducer data in props i.e reducer1
 
-  return {Notifications: state.Notifications}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+  return {Notifications: state.Notifications, User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
 };
 
 export default connect(mapStateToProps)(NotificationScreen);

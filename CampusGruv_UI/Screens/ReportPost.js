@@ -10,8 +10,10 @@ import {Container, Header, Content, Item, Input, Button} from 'native-base';
 import Icon from 'react-native-vector-icons/Ionicons';
 import ReportIcon from 'react-native-vector-icons/Octicons';
 import {ThemeBlue} from '../Assets/Colors';
+import {withNavigation} from 'react-navigation';
+import {connect} from 'react-redux';
 
-export default class ReportPost extends Component {
+class ReportPost extends Component {
   state = {
     reason: '',
     postId: undefined,
@@ -33,6 +35,7 @@ export default class ReportPost extends Component {
           Authorization: `Bearer ${Token}`,
         },
         body: JSON.stringify({
+          user_id: this.props.User.id,
           post_id: this.state.post_id,
           reason: this.state.reason,
           description: this.state.description,
@@ -66,7 +69,8 @@ export default class ReportPost extends Component {
                 marginLeft: '4%',
                 fontSize: 30,
                 fontWeight: 'bold',
-              }}></Icon>
+              }}
+            />
           </TouchableOpacity>
 
           <ReportIcon
@@ -77,7 +81,8 @@ export default class ReportPost extends Component {
               alignSelf: 'center',
               fontSize: 60,
               fontWeight: 'bold',
-            }}></ReportIcon>
+            }}
+          />
           <Text
             style={{
               color: '#f54952',
@@ -334,7 +339,7 @@ export default class ReportPost extends Component {
             }}>
             <Item style={{width: '80%', alignSelf: 'center'}}>
               <Input
-                onChangeText={(text) => {
+                onChangeText={text => {
                   this.setState({description: text});
                 }}
                 placeholder="This post contains ..."
@@ -374,3 +379,18 @@ export default class ReportPost extends Component {
     );
   }
 }
+
+mapStateToProps = state => {
+  //this state will contain FULL redux store all the reducers data
+
+  //use your required reducer data in props i.e reducer1
+
+  return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+};
+
+export default withNavigation(
+  connect(
+    mapStateToProps,
+    null,
+  )(ReportPost),
+);

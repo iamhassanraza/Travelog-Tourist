@@ -256,19 +256,36 @@ class UserProfile extends React.Component {
         return {pageNo: previousState.pageNo + 1, loadmore: true};
       },
       async () => {
+        let Response = null;
+
         const Token = await AsyncStorage.getItem('TOKEN');
-        const Response = await fetch(
-          `${
-            require('../config').default.production
-          }api/v1/search/user?type=post&user_id=${userId}&page=${
-            this.state.pageNo
-          }`,
-          {
-            headers: {
-              Authorization: `Bearer ${Token}`,
+        if (this.state.active === 'posts') {
+          Response = await fetch(
+            `${
+              require('../config').default.production
+            }api/v1/search/user?type=post&user_id=${userId}&page=${
+              this.state.pageNo
+            }`,
+            {
+              headers: {
+                Authorization: `Bearer ${Token}`,
+              },
             },
-          },
-        );
+          );
+        } else {
+          Response = await fetch(
+            `${
+              require('../config').default.production
+            }api/v1/fetch/saved/posts?page=${this.state.pageNo}&user_id=${
+              this.props.User.id
+            }`,
+            {
+              headers: {
+                Authorization: `Bearer ${Token}`,
+              },
+            },
+          );
+        }
 
         const JsonResponse = await Response.json();
         if (parseInt(Response.status) === 401) {
@@ -316,7 +333,6 @@ class UserProfile extends React.Component {
   fetchdata = async userId => {
     this.setState({spinner: true});
     if (this.state.active === 'posts') {
-      // const userId = await AsyncStorage.getItem('USER_ID');
       const Token = await AsyncStorage.getItem('TOKEN');
 
       const response = await fetch(
@@ -345,7 +361,11 @@ class UserProfile extends React.Component {
     } else {
       const Token = await AsyncStorage.getItem('TOKEN');
       const response = await fetch(
-        `${require('../config').default.production}api/v1/fetch/saved/posts`,
+        `${
+          require('../config').default.production
+        }api/v1/fetch/saved/posts?page=${this.state.pageNo}&user_id=${
+          this.props.User.id
+        }`,
         {
           headers: {
             Authorization: `Bearer ${Token}`,
@@ -859,7 +879,7 @@ class UserProfile extends React.Component {
               }}>
               <Text
                 onPress={() => {
-                  this.setState({active: 'posts'}, () => {
+                  this.setState({active: 'posts', total: 0, pageNo: 1}, () => {
                     this.fetchdata(postUserId);
                   });
                 }}
@@ -881,7 +901,7 @@ class UserProfile extends React.Component {
               />
               <Text
                 onPress={() => {
-                  this.setState({active: 'saves'}, () => {
+                  this.setState({active: 'saves', total: 0, pageNo: 1}, () => {
                     this.fetchdata(postUserId);
                   });
                 }}

@@ -187,7 +187,8 @@ class CreateOrganization extends Component {
           campus_id: this.props.User.campus_id,
           email: this.state.organizationEmail,
           website: this.state.organizationWebsite,
-          name: this.state.organizationName,
+          first_name: this.state.organizationName,
+          last_name: '',
         }),
       },
     );
@@ -202,7 +203,7 @@ class CreateOrganization extends Component {
   createFormData = (images, body) => {
     const data = new FormData();
     if (this.state.imageUri !== '') {
-      data.append('image', {
+      data.append('profile_pic', {
         name: this.state.imageName,
         type: images.type,
         uri:
@@ -230,8 +231,7 @@ class CreateOrganization extends Component {
       <Container>
         <Spinner
           visible={this.state.Spinner}
-          textContent={'Uploading...'}
-          textStyle={{color: 'black'}}
+          textStyle={{color: ThemeBlue}}
           customIndicator={<UIActivityIndicator color={'black'} size={50} />}
         />
         <Content>

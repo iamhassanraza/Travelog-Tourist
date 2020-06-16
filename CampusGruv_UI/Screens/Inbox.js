@@ -29,7 +29,6 @@ class Inbox extends Component {
 
   fetchData = async () => {
     const Token = await AsyncStorage.getItem('TOKEN');
-    const user_id = await AsyncStorage.getItem('USER_ID');
     const Response = await fetch(
       `${require('../config').default.production}api/v1/chat/history`,
       {

@@ -135,7 +135,6 @@ class Searching extends React.PureComponent {
     if (parseInt(Response.status) === 400) {
       this.setState({error: true, totalUsers: 0});
     } else if (parseInt(Response.status) === 200) {
-      // console.log("YE USERS AGAYE :::::::::::===========================:::::",JsonResponse.data)
       if (JsonResponse.total > 0) {
         this.setState({
           Users: JsonResponse.data,

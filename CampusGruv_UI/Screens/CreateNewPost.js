@@ -22,6 +22,7 @@ import BackIcon from 'react-native-vector-icons/Ionicons';
 import Spinner from 'react-native-loading-spinner-overlay';
 import RNFetchBlob from 'rn-fetch-blob';
 import {Container, Item, Content, Input} from 'native-base';
+import {connect} from 'react-redux';
 
 import {
   BallIndicator,
@@ -409,7 +410,6 @@ class CreateNewPost extends Component {
     } else {
       this.setState({spinner: true});
       const Token = await AsyncStorage.getItem('TOKEN');
-      const user_id = await AsyncStorage.getItem('USER_ID');
 
       let response = await fetch(
         `${require('../config').default.production}api/v1/post/create`,
@@ -420,7 +420,8 @@ class CreateNewPost extends Component {
             Authorization: `Bearer ${Token}`,
           },
           body: JSON.stringify({
-            user_id: user_id,
+            user_id: this.props.User.id,
+            campus_id: this.props.User.campus_id,
             category_id: this.state.Category,
             title: this.state.Title,
             description: this.state.Description,
@@ -438,7 +439,7 @@ class CreateNewPost extends Component {
             Authorization: `Bearer ${Token}`,
           },
           body: this.createFormData(this.state.Images, {
-            user_id: user_id,
+            user_id: this.props.User.id,
             post_id: postMasterResponse.id,
           }),
         },
@@ -581,4 +582,17 @@ class CreateNewPost extends Component {
   }
 }
 
-export default withNavigation(CreateNewPost);
+mapStateToProps = state => {
+  //this state will contain FULL redux store all the reducers data
+
+  //use your required reducer data in props i.e reducer1
+
+  return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+};
+
+export default withNavigation(
+  connect(
+    mapStateToProps,
+    null,
+  )(CreateNewPost),
+);

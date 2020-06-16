@@ -32,11 +32,10 @@ class UserSettings extends Component {
     let Token = await AsyncStorage.getItem('TOKEN');
     let selected = await AsyncStorage.getItem('selected');
     let accountType = await AsyncStorage.getItem('accountType');
-
     if (accountType === 'user') {
       this.setState({selected: 'user'});
     } else {
-      this.setState({selected: selected});
+      this.setState({selected: Number(selected)});
     }
 
     var response = await fetch(
@@ -48,7 +47,7 @@ class UserSettings extends Component {
       },
     );
     let JsonResponse = await response.json();
-    console.log(JsonResponse, 'POPOP');
+    console.log(JsonResponse, 'POPOPOPOOOOOOOOOOOOPOPOPOPOPOPOOOOOOOOP');
     this.setState({organizations: JsonResponse});
   }
 
@@ -69,6 +68,12 @@ class UserSettings extends Component {
           <TouchableOpacity
             disabled={this.state.selected === 'user'}
             onPress={() => {
+              this.setState({selected: 'user'}, async () => {
+                USER = await AsyncStorage.getItem('USER_ID');
+                await AsyncStorage.setItem('selected', USER);
+                await AsyncStorage.setItem('accountType', 'user');
+                this.props.screenProps.rootNavigation.navigate('AuthLoading');
+              });
               console.log('switch to main acount');
             }}
             style={{width: 90, height: 70, alignItems: 'center'}}>
@@ -81,7 +86,7 @@ class UserSettings extends Component {
               numberOfLines={1}
               style={{
                 fontSize: 12,
-                marginTop: 1,
+                marginTop: 0.5,
                 color: this.state.selected === 'user' ? 'black' : 'grey',
                 textAlign: 'center',
               }}>
@@ -114,7 +119,7 @@ class UserSettings extends Component {
                   }}>
                   <View style={{paddingHorizontal: 5, alignItems: 'center'}}>
                     <FastImage
-                      source={{uri: item.organizations.image}}
+                      source={{uri: item.organizations.profile_pic_url}}
                       style={{
                         height: 50,
                         borderWidth:
@@ -138,7 +143,7 @@ class UserSettings extends Component {
                             ? 'black'
                             : 'grey',
                       }}>
-                      {item.organizations.name}
+                      {item.organizations.first_name}
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -257,7 +262,6 @@ class UserSettings extends Component {
             <TouchableOpacity
               style={{flexDirection: 'row', alignItems: 'center'}}
               onPress={async () => {
-                await AsyncStorage.clear();
                 const Token = await AsyncStorage.getItem('TOKEN');
 
                 var response = await fetch(
@@ -267,7 +271,7 @@ class UserSettings extends Component {
                   {
                     method: 'POST',
                     body: JSON.stringify({
-                      fcm_token: null,
+                      fcm_token: '',
                     }),
                     headers: {
                       'Content-Type': 'application/json',
@@ -276,6 +280,8 @@ class UserSettings extends Component {
                   },
                 );
                 console.log('response', await response.json());
+
+                await AsyncStorage.clear();
 
                 this.props.screenProps.rootNavigation.navigate('Login');
               }}>
