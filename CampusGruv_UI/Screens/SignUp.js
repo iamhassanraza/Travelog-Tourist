@@ -176,6 +176,7 @@ class Signup extends React.Component {
                     // console.log(response,'============respines e =============')
                     this.props.CreateUserDetails(response);
                     await AsyncStorage.setItem('TOKEN', response.token);
+                    await AsyncStorage.setItem('USERTOKEN', response.token);
                     await AsyncStorage.setItem('email', response.email);
                     await AsyncStorage.setItem(
                       'USER_ID',

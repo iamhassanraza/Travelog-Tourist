@@ -21,6 +21,9 @@ import {NavigationActions} from 'react-navigation';
 import FastImage from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import {CreateUserDetails} from '../ReduxStore/Actions/index';
+import Spinner from 'react-native-loading-spinner-overlay';
+import {UIActivityIndicator} from 'react-native-indicators';
+import {ThemeBlue} from '../Assets/Colors';
 
 class UserSettings extends Component {
   state = {
@@ -29,7 +32,7 @@ class UserSettings extends Component {
   };
 
   async componentDidMount() {
-    let Token = await AsyncStorage.getItem('TOKEN');
+    let Token = await AsyncStorage.getItem('USERTOKEN');
     let selected = await AsyncStorage.getItem('selected');
     let accountType = await AsyncStorage.getItem('accountType');
     if (accountType === 'user') {
@@ -58,6 +61,11 @@ class UserSettings extends Component {
   render() {
     return (
       <View style={{flex: 1, backgroundColor: '#f9fdfe'}}>
+        <Spinner
+          visible={this.state.spinner}
+          textStyle={{color: ThemeBlue}}
+          customIndicator={<UIActivityIndicator color={ThemeBlue} />}
+        />
         <View
           style={{
             flexDirection: 'row',
@@ -69,7 +77,9 @@ class UserSettings extends Component {
             disabled={this.state.selected === 'user'}
             onPress={() => {
               this.setState({selected: 'user'}, async () => {
-                USER = await AsyncStorage.getItem('USER_ID');
+                var USER = await AsyncStorage.getItem('USER_ID');
+                var userToken = await AsyncStorage.getItem('USERTOKEN');
+                await AsyncStorage.setItem('TOKEN', userToken);
                 await AsyncStorage.setItem('selected', USER);
                 await AsyncStorage.setItem('accountType', 'user');
                 this.props.screenProps.rootNavigation.navigate('AuthLoading');
@@ -104,8 +114,27 @@ class UserSettings extends Component {
                 <TouchableOpacity
                   onPress={() => {
                     this.setState(
-                      {selected: item.organizations.id},
+                      {selected: item.organizations.id, spinner: true},
                       async () => {
+                        const Token = await AsyncStorage.getItem('USERTOKEN');
+                        var response = await fetch(
+                          `${
+                            require('../config').default.production
+                          }api/v1/organization/token?organization_id=${
+                            item.organizations.id
+                          }`,
+                          {
+                            headers: {
+                              Authorization: `Bearer ${Token}`,
+                            },
+                          },
+                        );
+                        const JsonResponse = await response.json();
+                        await AsyncStorage.setItem(
+                          'TOKEN',
+                          JsonResponse.token.token,
+                        );
+                        this.setState({spinner: false});
                         await AsyncStorage.setItem(
                           'selected',
                           item.organizations.id.toString(),
