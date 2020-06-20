@@ -22,7 +22,6 @@ class AvatarUserStatus extends Component {
       followed: !prevState.followed,
     }));
     const Token = await AsyncStorage.getItem('TOKEN');
-    const userId = await AsyncStorage.getItem('USER_ID');
     const id = this.props.id;
     var Response = null;
     console.log('followed ==========> ', this.state.followed, id);

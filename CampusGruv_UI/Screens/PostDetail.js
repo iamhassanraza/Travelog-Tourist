@@ -163,17 +163,18 @@ class PostDetail extends Component {
   };
 
   sharePost = (first_name, postId) => {
-    let text = `Checkout this post by ${first_name}: \n`;
     let url =
       Platform.OS === 'android'
         ? `https://www.campusgruv.com/post/${postId}`
         : `campusgruv://post/${postId}`;
-    if (Platform.OS === 'ios') text = text.concat(url);
+    let text = `Checkout this post by ${first_name}: \n for android: https://www.campusgruv.com/post/${postId} \n for iOS: campusgruv://post/${postId}`;
+
+    // if (Platform.OS === 'ios') text = text.concat(url);
 
     const options = {
       title: 'share via',
       message: text,
-      url: url,
+      // url: url,
     };
     Share.open(options)
       .then(res => {
@@ -543,7 +544,6 @@ class PostDetail extends Component {
           }}>
           <TouchableOpacity
             onPress={() => {
-              //CALL API FOR COMMENT , USER ID ,POST ID , COMMENT DESCRIPTION
               this.postComment(postId, userId);
             }}>
             <Text
@@ -601,15 +601,13 @@ class PostDetail extends Component {
   postComment = async (postId, postUserId) => {
     if (this.state.currentComment !== null || this.state.currentComment != '') {
       const Token = await AsyncStorage.getItem('TOKEN');
-      const userId = await AsyncStorage.getItem('USER_ID');
-      userId, postUserId, this.state.currentComment;
       const Response = await fetch(
         `${require('../config').default.production}api/v1/comment/create`,
         {
           method: 'POST',
           body: JSON.stringify({
             post_id: postId,
-            user_id: userId,
+            user_id: this.props.User.id,
             post_created_by: postUserId,
             description: this.state.currentComment,
           }),
@@ -652,7 +650,6 @@ class PostDetail extends Component {
       liked: !prevState.liked,
     }));
     const Token = await AsyncStorage.getItem('TOKEN');
-    const userId = await AsyncStorage.getItem('USER_ID');
     var Response = null;
     if (this.state.liked) {
       Response = await fetch(
@@ -660,7 +657,7 @@ class PostDetail extends Component {
         {
           method: 'POST',
           body: JSON.stringify({
-            user_id: userId,
+            user_id: this.props.User.id,
             post_id: postId,
             post_created_by: postUserId,
           }),
@@ -676,7 +673,7 @@ class PostDetail extends Component {
         {
           method: 'POST',
           body: JSON.stringify({
-            user_id: userId,
+            user_id: this.props.User.id,
             post_id: postId,
             post_created_by: postUserId,
           }),
@@ -705,13 +702,12 @@ class PostDetail extends Component {
       saved: !prevState.saved,
     }));
     const Token = await AsyncStorage.getItem('TOKEN');
-    const userId = await AsyncStorage.getItem('USER_ID');
     var Response = null;
     if (this.state.saved) {
       Response = await fetch(
         `${
           require('../config').default.production
-        }api/v1/user/save/post?post_id=${postId}`,
+        }api/v1/user/save/post?post_id=${postId}&user_id=${this.props.User.id}`,
         {
           method: 'GET',
           headers: {
@@ -724,7 +720,9 @@ class PostDetail extends Component {
       Response = await fetch(
         `${
           require('../config').default.production
-        }api/v1/user/unsave/post?post_id=${postId}`,
+        }api/v1/user/unsave/post?post_id=${postId}&user_id=${
+          this.props.User.id
+        }`,
         {
           method: 'GET',
           headers: {

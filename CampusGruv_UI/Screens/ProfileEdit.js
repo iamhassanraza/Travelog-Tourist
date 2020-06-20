@@ -296,28 +296,32 @@ class ProfilePage extends React.Component {
   UpdateProfile = async () => {
     this.setState({Spinner: true});
     const Token = await AsyncStorage.getItem('TOKEN');
+    let response = null;
     //const Campusid = await AsyncStorage.getItem('CAMPUS_ID');
-
-    let response = await fetch(
-      `${require('../config').default.production}api/v1/edit/profile`,
-      {
-        method: 'PATCH',
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          Authorization: `Bearer ${Token}`,
+    if (this.props.User.account_type_id === 1) {
+      response = await fetch(
+        `${require('../config').default.production}api/v1/edit/profile`,
+        {
+          method: 'PATCH',
+          headers: {
+            'Content-Type': 'multipart/form-data',
+            Authorization: `Bearer ${Token}`,
+          },
+          body: this.createFormData(this.state.imageUri, {
+            campus_id: this.state.selectedId,
+            dob: this.state.dob,
+            bio: this.state.bio,
+            website: this.state.website,
+            major: this.state.major,
+            first_name: this.state.name,
+            contact_no: this.state.phone,
+            graduate_year: this.state.gradutationYear,
+          }),
         },
-        body: this.createFormData(this.state.imageUri, {
-          campus_id: this.state.selectedId,
-          dob: this.state.dob,
-          bio: this.state.bio,
-          website: this.state.website,
-          major: this.state.major,
-          first_name: this.state.name,
-          contact_no: this.state.phone,
-          graduate_year: this.state.gradutationYear,
-        }),
-      },
-    );
+      );
+    } else {
+      alert('update ord profile');
+    }
 
     const postMasterResponse = await response.json();
     this.setState({Spinner: false});
@@ -330,9 +334,7 @@ class ProfilePage extends React.Component {
     this.state.currentCampus === 'nahi_hai'
       ? this.props.navigation.navigate('AuthLoading')
       : this.props.navigation.navigate('HomeScreen');
-    // AsyncStorage.getItem('CAMPUS_ID') === 'nahi_hai'
-    // ? this.props.navigation.navigate('App')
-    // : this.props.navigation.navigate('HomeScreen');
+
     console.log(postMasterResponse, 'patch request');
   };
 
@@ -474,15 +476,12 @@ class ProfilePage extends React.Component {
         })
       : null;
 
-    // console.log(this.state.imageUri,'==================major============')
-    //const { navigate } = this.props.navigation;
     return (
       <Container>
         <Spinner
           visible={this.state.Spinner}
-          textContent={'Uploading...'}
           textStyle={{color: ThemeBlue}}
-          customIndicator={<UIActivityIndicator count={5} />}
+          customIndicator={<UIActivityIndicator color={ThemeBlue} />}
         />
         <Content>
           {/* EDIT PROFILE IMAGE */}

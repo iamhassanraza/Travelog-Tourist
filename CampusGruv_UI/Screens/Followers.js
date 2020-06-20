@@ -145,7 +145,6 @@ class Followers extends Component {
 
   getFollower = async () => {
     const Token = await AsyncStorage.getItem('TOKEN');
-    const user_id = await AsyncStorage.getItem('USER_ID');
     const Response = await fetch(
       `${
         require('../config').default.production

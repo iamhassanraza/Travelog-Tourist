@@ -167,7 +167,7 @@ class MainTabNavigation extends React.Component {
     var response = await fetch(
       `${
         require('../config').default.production
-      }api/v1/get/post?post_id=${route}`,
+      }api/v1/get/post?post_id=${route}&user_id=${this.props.User.id}`,
       {
         headers: {
           Authorization: `Bearer ${Token}`,
@@ -229,6 +229,7 @@ mapStateToProps = state => {
     socket: state.socket,
     unreadMsgs: state.UnreadMsgs,
     notifications: state.Notifications,
+    User: state.User,
   }; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
 };
 

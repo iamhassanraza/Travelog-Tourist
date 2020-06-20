@@ -106,6 +106,7 @@ class Login extends React.Component {
             console.log(response);
             this.props.CreateUserDetails(response);
             await AsyncStorage.setItem('TOKEN', response.token);
+            await AsyncStorage.setItem('USERTOKEN', response.token);
             await AsyncStorage.setItem('email', response.email);
             console.log(response.email_verified.toString());
             await AsyncStorage.setItem(

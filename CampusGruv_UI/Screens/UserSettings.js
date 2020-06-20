@@ -21,6 +21,10 @@ import {NavigationActions} from 'react-navigation';
 import FastImage from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import {CreateUserDetails} from '../ReduxStore/Actions/index';
+import Spinner from 'react-native-loading-spinner-overlay';
+import {UIActivityIndicator} from 'react-native-indicators';
+import {ThemeBlue} from '../Assets/Colors';
+import switchImg from '../Assets/Images/switch.png';
 
 class UserSettings extends Component {
   state = {
@@ -29,14 +33,13 @@ class UserSettings extends Component {
   };
 
   async componentDidMount() {
-    let Token = await AsyncStorage.getItem('TOKEN');
+    let Token = await AsyncStorage.getItem('USERTOKEN');
     let selected = await AsyncStorage.getItem('selected');
     let accountType = await AsyncStorage.getItem('accountType');
-
     if (accountType === 'user') {
       this.setState({selected: 'user'});
     } else {
-      this.setState({selected: selected});
+      this.setState({selected: Number(selected)});
     }
 
     var response = await fetch(
@@ -48,7 +51,7 @@ class UserSettings extends Component {
       },
     );
     let JsonResponse = await response.json();
-    console.log(JsonResponse, 'POPOP');
+    console.log(JsonResponse, 'POPOPOPOOOOOOOOOOOOPOPOPOPOPOPOOOOOOOOP');
     this.setState({organizations: JsonResponse});
   }
 
@@ -57,11 +60,19 @@ class UserSettings extends Component {
   };
 
   render() {
+    let accountType = AsyncStorage.getItem('accountType');
+
     return (
       <View style={{flex: 1, backgroundColor: '#f9fdfe'}}>
+        <Spinner
+          visible={this.state.spinner}
+          textStyle={{color: ThemeBlue}}
+          customIndicator={<UIActivityIndicator color={ThemeBlue} />}
+        />
         <View
           style={{
             flexDirection: 'row',
+            justifyContent: 'center',
             alignItems: 'center',
             marginLeft: '3%',
             marginTop: '3%',
@@ -69,19 +80,54 @@ class UserSettings extends Component {
           <TouchableOpacity
             disabled={this.state.selected === 'user'}
             onPress={() => {
+              this.setState({selected: 'user'}, async () => {
+                var USER = await AsyncStorage.getItem('USER_ID');
+                var userToken = await AsyncStorage.getItem('USERTOKEN');
+                var currentToken = await AsyncStorage.getItem('TOKEN');
+                console.log('socket', this.props.socket);
+
+                await this.props.socket.emit('account_switched');
+                var res = await fetch(
+                  `${
+                    require('../config').default.production
+                  }api/v1/user/logout`,
+                  {
+                    method: 'GET',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      Authorization: `Bearer ${currentToken}`,
+                    },
+                  },
+                );
+                console.log('response', await res.json());
+                await AsyncStorage.setItem('TOKEN', userToken);
+                await AsyncStorage.setItem('selected', USER);
+                await AsyncStorage.setItem('accountType', 'user');
+                this.props.screenProps.rootNavigation.navigate('AuthLoading');
+              });
               console.log('switch to main acount');
             }}
-            style={{width: 90, height: 70, alignItems: 'center'}}>
-            <IconFeather
-              color={this.state.selected === 'user' ? 'black' : 'grey'}
-              size={50}
-              name="arrow-left-circle"
+            style={{
+              width: 90,
+              alignSelf: 'center',
+              height: 70,
+              alignItems: 'center',
+            }}>
+            <FastImage
+              style={{
+                height: 50,
+                borderWidth: 2,
+                borderColor: this.state.selected === 'user' ? 'black' : 'grey',
+                width: 50,
+                borderRadius: 50,
+              }}
+              source={switchImg}
             />
             <Text
               numberOfLines={1}
               style={{
                 fontSize: 12,
-                marginTop: 1,
+                marginTop: 2,
                 color: this.state.selected === 'user' ? 'black' : 'grey',
                 textAlign: 'center',
               }}>
@@ -99,8 +145,46 @@ class UserSettings extends Component {
                 <TouchableOpacity
                   onPress={() => {
                     this.setState(
-                      {selected: item.organizations.id},
+                      {selected: item.organizations.id, spinner: true},
                       async () => {
+                        const Token = await AsyncStorage.getItem('USERTOKEN');
+                        const currentToken = await AsyncStorage.getItem(
+                          'TOKEN',
+                        );
+                        console.log('socket', this.props.socket);
+                        await this.props.socket.emit('account_switched');
+                        var res = await fetch(
+                          `${
+                            require('../config').default.production
+                          }api/v1/user/logout`,
+                          {
+                            method: 'GET',
+                            headers: {
+                              'Content-Type': 'application/json',
+                              Authorization: `Bearer ${currentToken}`,
+                            },
+                          },
+                        );
+                        console.log('response', await res.json());
+
+                        var response = await fetch(
+                          `${
+                            require('../config').default.production
+                          }api/v1/organization/token?organization_id=${
+                            item.organizations.id
+                          }`,
+                          {
+                            headers: {
+                              Authorization: `Bearer ${Token}`,
+                            },
+                          },
+                        );
+                        const JsonResponse = await response.json();
+                        await AsyncStorage.setItem(
+                          'TOKEN',
+                          JsonResponse.token.token,
+                        );
+                        this.setState({spinner: false});
                         await AsyncStorage.setItem(
                           'selected',
                           item.organizations.id.toString(),
@@ -114,14 +198,14 @@ class UserSettings extends Component {
                   }}>
                   <View style={{paddingHorizontal: 5, alignItems: 'center'}}>
                     <FastImage
-                      source={{uri: item.organizations.image}}
+                      source={{uri: item.organizations.profile_pic_url}}
                       style={{
                         height: 50,
-                        borderWidth:
+                        borderWidth: 2,
+                        borderColor:
                           this.state.selected === item.organizations.id
-                            ? 2
-                            : 0.5,
-                        borderColor: 'grey',
+                            ? 'black'
+                            : 'grey',
                         width: 50,
                         borderRadius: 50,
                       }}
@@ -138,7 +222,7 @@ class UserSettings extends Component {
                             ? 'black'
                             : 'grey',
                       }}>
-                      {item.organizations.name}
+                      {item.organizations.first_name}
                     </Text>
                   </View>
                 </TouchableOpacity>
@@ -169,32 +253,37 @@ class UserSettings extends Component {
               Account
             </Text>
           </View> */}
-
-          <TouchableOpacity
-            onPress={() => {
-              this.props.navigation.navigate('CreateOrganization', null);
-            }}>
-            <View
-              style={{flexDirection: 'row', marginLeft: '2%', marginTop: '3%'}}>
-              <IconFeather
-                name="users"
+          {accountType === 'org' ? (
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate('CreateOrganization', null);
+              }}>
+              <View
                 style={{
-                  flex: 1,
-                  alignSelf: 'center',
-                  paddingLeft: '2%',
-                  fontSize: 30,
-                }}
-              />
-              <Text
-                style={{
-                  flex: 8,
-                  alignSelf: 'center',
-                  fontSize: 19,
+                  flexDirection: 'row',
+                  marginLeft: '2%',
+                  marginTop: '3%',
                 }}>
-                Create Organization Account
-              </Text>
-            </View>
-          </TouchableOpacity>
+                <IconFeather
+                  name="users"
+                  style={{
+                    flex: 1,
+                    alignSelf: 'center',
+                    paddingLeft: '2%',
+                    fontSize: 30,
+                  }}
+                />
+                <Text
+                  style={{
+                    flex: 8,
+                    alignSelf: 'center',
+                    fontSize: 19,
+                  }}>
+                  Create Organization Account
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ) : null}
 
           <View
             style={{flexDirection: 'row', marginLeft: '2%', marginTop: '3%'}}>
@@ -257,18 +346,14 @@ class UserSettings extends Component {
             <TouchableOpacity
               style={{flexDirection: 'row', alignItems: 'center'}}
               onPress={async () => {
-                await AsyncStorage.clear();
                 const Token = await AsyncStorage.getItem('TOKEN');
 
                 var response = await fetch(
                   `${
                     require('../config').default.production
-                  }api/v1/user/update/fcm`,
+                  }api/v1/user/logout`,
                   {
-                    method: 'POST',
-                    body: JSON.stringify({
-                      fcm_token: null,
-                    }),
+                    method: 'GET',
                     headers: {
                       'Content-Type': 'application/json',
                       Authorization: `Bearer ${Token}`,
@@ -276,6 +361,8 @@ class UserSettings extends Component {
                   },
                 );
                 console.log('response', await response.json());
+
+                await AsyncStorage.clear();
 
                 this.props.screenProps.rootNavigation.navigate('Login');
               }}>
@@ -302,7 +389,7 @@ mapStateToProps = state => {
 
   //use your required reducer data in props i.e reducer1
 
-  return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+  return {User: state.User, socket: state.socket}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
 };
 
 export default connect(
