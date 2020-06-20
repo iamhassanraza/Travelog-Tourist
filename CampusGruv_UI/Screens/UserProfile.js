@@ -824,6 +824,8 @@ class UserProfile extends React.Component {
             flexDirection: 'row',
             paddingVertical: 10,
             paddingLeft: 5,
+            borderBottomWidth: 0.5,
+            borderBottomColor: 'silver',
             backgroundColor: 'white',
             justifyContent: 'space-between',
             alignItems: 'center',

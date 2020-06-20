@@ -24,6 +24,7 @@ import {CreateUserDetails} from '../ReduxStore/Actions/index';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {UIActivityIndicator} from 'react-native-indicators';
 import {ThemeBlue} from '../Assets/Colors';
+import switchImg from '../Assets/Images/switch.png';
 
 class UserSettings extends Component {
   state = {
@@ -59,6 +60,8 @@ class UserSettings extends Component {
   };
 
   render() {
+    let accountType = AsyncStorage.getItem('accountType');
+
     return (
       <View style={{flex: 1, backgroundColor: '#f9fdfe'}}>
         <Spinner
@@ -69,6 +72,7 @@ class UserSettings extends Component {
         <View
           style={{
             flexDirection: 'row',
+            justifyContent: 'center',
             alignItems: 'center',
             marginLeft: '3%',
             marginTop: '3%',
@@ -79,6 +83,23 @@ class UserSettings extends Component {
               this.setState({selected: 'user'}, async () => {
                 var USER = await AsyncStorage.getItem('USER_ID');
                 var userToken = await AsyncStorage.getItem('USERTOKEN');
+                var currentToken = await AsyncStorage.getItem('TOKEN');
+                console.log('socket', this.props.socket);
+
+                await this.props.socket.emit('account_switched');
+                var res = await fetch(
+                  `${
+                    require('../config').default.production
+                  }api/v1/user/logout`,
+                  {
+                    method: 'GET',
+                    headers: {
+                      'Content-Type': 'application/json',
+                      Authorization: `Bearer ${currentToken}`,
+                    },
+                  },
+                );
+                console.log('response', await res.json());
                 await AsyncStorage.setItem('TOKEN', userToken);
                 await AsyncStorage.setItem('selected', USER);
                 await AsyncStorage.setItem('accountType', 'user');
@@ -86,17 +107,27 @@ class UserSettings extends Component {
               });
               console.log('switch to main acount');
             }}
-            style={{width: 90, height: 70, alignItems: 'center'}}>
-            <IconFeather
-              color={this.state.selected === 'user' ? 'black' : 'grey'}
-              size={50}
-              name="arrow-left-circle"
+            style={{
+              width: 90,
+              alignSelf: 'center',
+              height: 70,
+              alignItems: 'center',
+            }}>
+            <FastImage
+              style={{
+                height: 50,
+                borderWidth: 2,
+                borderColor: this.state.selected === 'user' ? 'black' : 'grey',
+                width: 50,
+                borderRadius: 50,
+              }}
+              source={switchImg}
             />
             <Text
               numberOfLines={1}
               style={{
                 fontSize: 12,
-                marginTop: 0.5,
+                marginTop: 2,
                 color: this.state.selected === 'user' ? 'black' : 'grey',
                 textAlign: 'center',
               }}>
@@ -117,6 +148,25 @@ class UserSettings extends Component {
                       {selected: item.organizations.id, spinner: true},
                       async () => {
                         const Token = await AsyncStorage.getItem('USERTOKEN');
+                        const currentToken = await AsyncStorage.getItem(
+                          'TOKEN',
+                        );
+                        console.log('socket', this.props.socket);
+                        await this.props.socket.emit('account_switched');
+                        var res = await fetch(
+                          `${
+                            require('../config').default.production
+                          }api/v1/user/logout`,
+                          {
+                            method: 'GET',
+                            headers: {
+                              'Content-Type': 'application/json',
+                              Authorization: `Bearer ${currentToken}`,
+                            },
+                          },
+                        );
+                        console.log('response', await res.json());
+
                         var response = await fetch(
                           `${
                             require('../config').default.production
@@ -151,11 +201,11 @@ class UserSettings extends Component {
                       source={{uri: item.organizations.profile_pic_url}}
                       style={{
                         height: 50,
-                        borderWidth:
+                        borderWidth: 2,
+                        borderColor:
                           this.state.selected === item.organizations.id
-                            ? 2
-                            : 0.5,
-                        borderColor: 'grey',
+                            ? 'black'
+                            : 'grey',
                         width: 50,
                         borderRadius: 50,
                       }}
@@ -203,32 +253,37 @@ class UserSettings extends Component {
               Account
             </Text>
           </View> */}
-
-          <TouchableOpacity
-            onPress={() => {
-              this.props.navigation.navigate('CreateOrganization', null);
-            }}>
-            <View
-              style={{flexDirection: 'row', marginLeft: '2%', marginTop: '3%'}}>
-              <IconFeather
-                name="users"
+          {accountType === 'org' ? (
+            <TouchableOpacity
+              onPress={() => {
+                this.props.navigation.navigate('CreateOrganization', null);
+              }}>
+              <View
                 style={{
-                  flex: 1,
-                  alignSelf: 'center',
-                  paddingLeft: '2%',
-                  fontSize: 30,
-                }}
-              />
-              <Text
-                style={{
-                  flex: 8,
-                  alignSelf: 'center',
-                  fontSize: 19,
+                  flexDirection: 'row',
+                  marginLeft: '2%',
+                  marginTop: '3%',
                 }}>
-                Create Organization Account
-              </Text>
-            </View>
-          </TouchableOpacity>
+                <IconFeather
+                  name="users"
+                  style={{
+                    flex: 1,
+                    alignSelf: 'center',
+                    paddingLeft: '2%',
+                    fontSize: 30,
+                  }}
+                />
+                <Text
+                  style={{
+                    flex: 8,
+                    alignSelf: 'center',
+                    fontSize: 19,
+                  }}>
+                  Create Organization Account
+                </Text>
+              </View>
+            </TouchableOpacity>
+          ) : null}
 
           <View
             style={{flexDirection: 'row', marginLeft: '2%', marginTop: '3%'}}>
@@ -296,12 +351,9 @@ class UserSettings extends Component {
                 var response = await fetch(
                   `${
                     require('../config').default.production
-                  }api/v1/user/update/fcm`,
+                  }api/v1/user/logout`,
                   {
-                    method: 'POST',
-                    body: JSON.stringify({
-                      fcm_token: '',
-                    }),
+                    method: 'GET',
                     headers: {
                       'Content-Type': 'application/json',
                       Authorization: `Bearer ${Token}`,
@@ -337,7 +389,7 @@ mapStateToProps = state => {
 
   //use your required reducer data in props i.e reducer1
 
-  return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+  return {User: state.User, socket: state.socket}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
 };
 
 export default connect(

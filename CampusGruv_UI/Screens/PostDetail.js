@@ -163,17 +163,18 @@ class PostDetail extends Component {
   };
 
   sharePost = (first_name, postId) => {
-    let text = `Checkout this post by ${first_name}: \n`;
     let url =
       Platform.OS === 'android'
         ? `https://www.campusgruv.com/post/${postId}`
         : `campusgruv://post/${postId}`;
-    if (Platform.OS === 'ios') text = text.concat(url);
+    let text = `Checkout this post by ${first_name}: \n for android: https://www.campusgruv.com/post/${postId} \n for iOS: campusgruv://post/${postId}`;
+
+    // if (Platform.OS === 'ios') text = text.concat(url);
 
     const options = {
       title: 'share via',
       message: text,
-      url: url,
+      // url: url,
     };
     Share.open(options)
       .then(res => {

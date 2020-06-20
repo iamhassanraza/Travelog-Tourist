@@ -221,12 +221,12 @@ class Chat extends React.Component {
 
     this.OnjoinRoom();
 
-    this.props.socket.on('disconnect', () => {
-      console.log('disconnected');
-      this.setState({
-        messages: [],
-      });
-    });
+    // this.props.socket.on('disconnect', () => {
+    //   console.log('disconnected');
+    //   this.setState({
+    //     messages: [],
+    //   });
+    // });
     this.props.socket.on('error', () => {
       console.log('hello jee error established');
     });

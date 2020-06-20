@@ -34,6 +34,7 @@ class NotificationScreen extends Component {
     pageNo: 1,
     loading: false,
     store: mystore,
+    onEndReachedCalledDuringMomentum: true,
   };
 
   componentDidMount() {
@@ -49,6 +50,44 @@ class NotificationScreen extends Component {
     });
   }
   //${require('../config').default.production}
+
+  loadMore = ({distanceFromEnd}) => {
+    if (
+      !this.onEndReachedCalledDuringMomentum &&
+      this.state.notification.length < this.state.total
+    ) {
+      const pageNo = this.state.pageNo;
+      this.setState(
+        {
+          endReached: true,
+          onEndReachedCalledDuringMomentum: true,
+          pageNo: pageNo + 1,
+        },
+        async () => {
+          const Token = await AsyncStorage.getItem('TOKEN');
+
+          const Response = await fetch(
+            `${
+              require('../config').default.production
+            }api/v1/user/notifications?user_id=${this.props.User.id}&page=${
+              this.state.pageNo
+            }`,
+            {
+              headers: {
+                Authorization: `Bearer ${Token}`,
+              },
+            },
+          );
+          const JsonResponse = await Response.json();
+          console.log('lolol', JsonResponse);
+          this.setState(prevState => ({
+            notification: [...prevState.notification, ...JsonResponse.data],
+            endReached: false,
+          }));
+        },
+      );
+    }
+  };
 
   getNoti = async () => {
     const Token = await AsyncStorage.getItem('TOKEN');
@@ -70,20 +109,40 @@ class NotificationScreen extends Component {
     const JsonResponse = await Response.json();
     this.setState({
       notification: JsonResponse.data,
+      total: JsonResponse.total,
       loading: false,
     });
   };
   render() {
     return (
-      <View style={{flex: 1, backgroundColor: '#f9fdfe'}}>
-        {Platform.OS == 'ios' ? (
-          <View style={{backgroundColor: '#0C91CF'}}>
+      <>
+        <View style={{height: '100%', flex: 1, backgroundColor: '#f9fdfe'}}>
+          {Platform.OS == 'ios' ? (
+            <View style={{backgroundColor: '#0C91CF'}}>
+              <View
+                style={{
+                  height: 50,
+                  backgroundColor: '#0C91CF',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                }}>
+                <View style={{alignSelf: 'center'}}>
+                  <Text
+                    style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
+                    Activity
+                  </Text>
+                </View>
+              </View>
+            </View>
+          ) : (
             <View
               style={{
+                marginTop: 0,
                 height: 50,
                 backgroundColor: '#0C91CF',
                 flexDirection: 'row',
                 justifyContent: 'center',
+                marginTop: Platform.OS == 'ios' ? 30 : 0,
               }}>
               <View style={{alignSelf: 'center'}}>
                 <Text
@@ -92,64 +151,67 @@ class NotificationScreen extends Component {
                 </Text>
               </View>
             </View>
-          </View>
-        ) : (
-          <View
-            style={{
-              marginTop: 0,
-              height: 50,
-              backgroundColor: '#0C91CF',
-              flexDirection: 'row',
-              justifyContent: 'center',
-              marginTop: Platform.OS == 'ios' ? 30 : 0,
-            }}>
-            <View style={{alignSelf: 'center'}}>
-              <Text style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
-                Activity
-              </Text>
-            </View>
-          </View>
-        )}
-        {/* {this.state.notification[0] ? */
-        !this.state.loading ? (
-          <FlatList
-            vertical
-            data={this.state.notification}
-            keyExtractor={item => item.id}
-            showsHorizontalScrollIndicator={false}
-            renderItem={({item, index}) => (
-              <NoticationComponent
-                userdp={item.userNotification.profile_pic_url}
-                postId={item.posts !== null ? item.posts.id : null}
-                comments={item.comments}
-                description={
-                  item.posts !== null ? item.posts.description : null
-                }
-                first_name={item.userNotification.first_name}
-                last_name={item.userNotification.last_name}
-                userId={item.userNotification.id}
-                userWiseLike={item.userWiseLike}
-                userCampus={item.userNotification.campus.description}
-                userSavedPost={item.userSavedPost}
-                isFollowing={item.isFollowing}
-                title={item.posts !== null ? item.posts.title : null}
-                views={item.posts !== null ? item.posts.view_count : null}
-                imageurl={
-                  item.postDetail.length > 0
-                    ? item.postDetail[0].image_url
-                    : 'https://travelog-pk.herokuapp.com/images/default.png'
-                }
-                uri={item.userNotification.profile_pic_url}
-                unread={index <= this.props.Notifications.qty ? true : false}
-                time={new Date(item.created_at.replace(' ', 'T'))}
-                activity={item.notification_message}
+          )}
+          {/* {this.state.notification[0] ? */
+          !this.state.loading ? (
+            <View style={{flex: 1}}>
+              <FlatList
+                onEndReached={this.loadMore}
+                onEndReachedThreshold={0.5}
+                onMomentumScrollBegin={() => {
+                  this.setState({onEndReachedCalledDuringMomentum: false});
+                }}
+                vertical
+                data={this.state.notification}
+                keyExtractor={item => item.id}
+                showsHorizontalScrollIndicator={false}
+                renderItem={({item, index}) => (
+                  <NoticationComponent
+                    userdp={item.userNotification.profile_pic_url}
+                    postId={item.posts !== null ? item.posts.id : null}
+                    comments={item.comments}
+                    description={
+                      item.posts !== null ? item.posts.description : null
+                    }
+                    first_name={item.userNotification.first_name}
+                    last_name={item.userNotification.last_name}
+                    userId={item.userNotification.id}
+                    userWiseLike={item.userWiseLike}
+                    userCampus={item.userNotification.campus.description}
+                    userSavedPost={item.userSavedPost}
+                    isFollowing={item.isFollowing}
+                    title={item.posts !== null ? item.posts.title : null}
+                    views={item.posts !== null ? item.posts.view_count : null}
+                    imageurl={
+                      item.postDetail.length > 0
+                        ? item.postDetail[0].image_url
+                        : 'https://travelog-pk.herokuapp.com/images/default.png'
+                    }
+                    uri={item.userNotification.profile_pic_url}
+                    unread={
+                      index <= this.props.Notifications.qty ? true : false
+                    }
+                    time={new Date(item.created_at.replace(' ', 'T'))}
+                    activity={item.notification_message}
+                  />
+                )}
               />
-            )}
-          />
-        ) : (
-          <UIActivityIndicator color={ThemeBlue} />
-        )}
-      </View>
+            </View>
+          ) : (
+            <UIActivityIndicator color={ThemeBlue} />
+          )}
+          {this.state.endReached ? (
+            <View
+              style={{
+                height: 80,
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <UIActivityIndicator color={ThemeBlue} />
+            </View>
+          ) : null}
+        </View>
+      </>
     );
   }
 }
