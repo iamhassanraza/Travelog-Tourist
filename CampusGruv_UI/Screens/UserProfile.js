@@ -483,6 +483,8 @@ class UserProfile extends React.Component {
   };
 
   render() {
+    let accountType = AsyncStorage.getItem('accountType');
+
     const {navigate} = this.props.navigation;
     navId = this.props.navigation.getParam('id', null);
     const postUserId = this.state.otherUserId
@@ -516,8 +518,9 @@ class UserProfile extends React.Component {
                 alignSelf: 'flex-end',
                 padding: 8,
               }}
-              onPress={() => {
-                this.props.navigation.navigate('EditProfile');
+              onPress={async () => {
+                let accountType = await AsyncStorage.getItem('accountType')
+                { accountType==="user" ? this.props.navigation.navigate('EditProfile'): this.props.navigation.navigate('EditOrganization')}
               }}>
               <Text
                 style={{
