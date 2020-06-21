@@ -167,7 +167,7 @@ class EditOrganization extends Component {
       handleThis: () => {
         if (
           this.state.organizationName &&
-          this.state.imageUri &&
+          this.state.organizationEmail &&
           this.state.organizationWebsite
         ) {
           this.editOrganization();

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View} from 'react-native';
+import {Text, View,AsyncStorage} from 'react-native';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 import FastImage from 'react-native-fast-image';
 import {ThemeBlue} from '../Assets/Colors';
@@ -25,17 +25,21 @@ addMember = async () => {
       Response = await fetch(
         `${
           require('../config').default.production
-        }api/v1/user/follow?user_id=${id}`,
+        }api/v1/organization/addmembers`,
         {
-          method: 'GET',
+          method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             Authorization: `Bearer ${Token}`,
           },
+          body: JSON.stringify({
+            member_id:this.props.id,
+            organization_id: this.props.org_id
+          }),
         },
       );
     } else {
-      console.log('Already Added');
+      alert('Already Added');
     }
     const JsonResponse = await Response.json();
     if (parseInt(Response.status) === 400) {
