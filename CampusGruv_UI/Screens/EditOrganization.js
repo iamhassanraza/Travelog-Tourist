@@ -42,7 +42,7 @@ class EditOrganization extends Component {
             }}>
             <TouchableOpacity
               onPress={() => {
-                props.navigation.navigate('UserSettings');
+                props.navigation.navigate('UserProfile');
               }}>
               <Text
                 style={{
