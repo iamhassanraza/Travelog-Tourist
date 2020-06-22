@@ -239,7 +239,11 @@ class PostDetail extends Component {
               style={{width: 40, height: 40, borderRadius: 50}}
             />
             <Text style={{marginLeft: '7%', color: IconGrey}}>
-              {first_name + ' ' + last_name.charAt(0) + '.'}
+              {first_name +
+                ' ' +
+                (last_name === '' || !last_name
+                  ? ''
+                  : last_name.charAt(0) + '.')}
             </Text>
           </TouchableOpacity>
         </View>
@@ -583,8 +587,9 @@ class PostDetail extends Component {
                 name={
                   item.user.first_name +
                   ' ' +
-                  item.user.last_name.charAt('0') +
-                  '.'
+                  (item.user.last_name === '' || !item.user.last_name
+                    ? ''
+                    : item.user.last_name.charAt('0') + '.')
                 }
                 //comment={new TextDecoder("utf-8").decode(item.description.data)}
                 //comment={bin2string(item.description.data)}

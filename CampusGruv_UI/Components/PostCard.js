@@ -156,8 +156,9 @@ class PostCard extends Component {
               <Text style={{color: 'grey', marginLeft: 2}}>
                 {this.props.first_name +
                   ' ' +
-                  this.props.last_name.charAt(0) +
-                  '.'}
+                  (this.props.last_name === '' || !this.props.last_name
+                    ? ''
+                    : this.props.last_name.charAt(0) + '.')}
               </Text>
             </View>
             <View

@@ -519,8 +519,12 @@ class UserProfile extends React.Component {
                 padding: 8,
               }}
               onPress={async () => {
-                let accountType = await AsyncStorage.getItem('accountType')
-                { accountType==="user" ? this.props.navigation.navigate('EditProfile'): this.props.navigation.navigate('EditOrganization')}
+                let accountType = await AsyncStorage.getItem('accountType');
+                {
+                  accountType === 'user'
+                    ? this.props.navigation.navigate('EditProfile')
+                    : this.props.navigation.navigate('EditOrganization');
+                }
               }}>
               <Text
                 style={{
@@ -599,7 +603,11 @@ class UserProfile extends React.Component {
           />
           <View style={{marginLeft: 10}}>
             <Text style={{fontSize: 25, fontWeight: 'bold', color: '#727272'}}>
-              {postUserFirstName + ' ' + postUserLastName.charAt(0) + '.'}
+              {postUserFirstName +
+                ' ' +
+                (postUserLastName === '' || !postUserLastName
+                  ? ''
+                  : `${postUserLastName.charAt(0)} .`)}
             </Text>
             <Text style={{fontSize: 13, fontWeight: 'bold', color: '#727272'}}>
               {postUserCampus}

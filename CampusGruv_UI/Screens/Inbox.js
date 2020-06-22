@@ -102,7 +102,11 @@ class Inbox extends Component {
                       user_id={item.id}
                       uri={item.profile_pic_url}
                       title={
-                        item.first_name + ' ' + item.last_name.charAt(0) + '.'
+                        item.first_name +
+                        ' ' +
+                        (item.last_name === '' || !item.last_name
+                          ? ''
+                          : item.last_name.charAt(0) + '.')
                       }
                       subtitle={item.message}
                       time={new Date(item.created_at.replace(' ', 'T'))}
