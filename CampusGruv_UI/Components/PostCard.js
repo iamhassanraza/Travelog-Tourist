@@ -16,13 +16,16 @@ class PostCard extends Component {
     Image.getSize(
       this.props.imageurl,
       (srcWidth, srcHeight) => {
-        const maxHeight = Dimensions.get('window').height / 2;
-        const maxWidth = Dimensions.get('window').width / 2;
+        // const maxHeight = Dimensions.get('window').height / 2;
+        // const maxWidth = Dimensions.get('window').width / 2;
+        const width = Dimensions.get('window').width / 2 - 18;
+        const ratio = width / srcWidth;
+        const height = srcHeight * ratio;
         //console.log(srcWidth,srcHeight)
         //console.log("width wala",maxWidth / srcWidth)
         //console.log("height wala",maxHeight / srcHeight)
-        const ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
-        this.setState({width: srcWidth * ratio, height: srcHeight * ratio});
+        // const ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
+        this.setState({width: width, height: height});
       },
       error => {
         () => console.log(error);
@@ -68,11 +71,13 @@ class PostCard extends Component {
         }>
         <View style={{}}>
           <FastImage
+            // resizeMode="contain"
             style={{
-              width: '100%',
+              width: this.state.width,
               borderTopLeftRadius: 7,
               borderTopRightRadius: 7,
               height: 150,
+
               // height: this.state.height < 300 ? this.state.height : 200
             }}
             source={{

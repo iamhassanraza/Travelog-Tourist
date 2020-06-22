@@ -158,10 +158,10 @@ class EditOrganization extends Component {
 
   componentDidMount() {
     this.setState({
-        organizationName: this.props.User.first_name,
-        organizationEmail:this.props.User.email,
-        imageURL:this.props.User.profile_pic_url,
-        organizationWebsite:this.props.User.website
+      organizationName: this.props.User.first_name,
+      organizationEmail: this.props.User.email,
+      imageURL: this.props.User.profile_pic_url,
+      organizationWebsite: this.props.User.website,
     });
     this.props.navigation.setParams({
       handleThis: () => {
@@ -180,7 +180,7 @@ class EditOrganization extends Component {
     this.setState({Spinner: true});
     const Token = await AsyncStorage.getItem('TOKEN');
     //const Campusid = await AsyncStorage.getItem('CAMPUS_ID');
-
+    console.log('api ran');
     let response = await fetch(
       `${require('../config').default.production}api/v1/organization/update`,
       {
@@ -190,19 +190,23 @@ class EditOrganization extends Component {
           Authorization: `Bearer ${Token}`,
         },
         body: this.createFormData(this.state.imageUri, {
-            organizationName: this.props.User.first_name,
-            organizationEmail:this.props.User.email,
-            imageURL:this.props.User.profile_pic_url,
-            organizationWebsite:this.props.User.website,
+          first_name: this.state.organizationName,
+          email: this.state.organizationEmail,
           last_name: '',
         }),
       },
     );
-    console.log('reponse', response);
+    console.log('reponse ---------------------', response);
 
     const postMasterResponse = await response.json();
-    console.log('reponse', postMasterResponse);
+    console.log(
+      'reponse --------------------- lmaooooooooooooooooo',
+      postMasterResponse,
+    );
+
     this.setState({Spinner: false});
+    this.props.CreateUserDetails(postMasterResponse);
+    this.setState({imageUri: ''});
     this.props.navigation.navigate('HomeScreen');
   };
 
@@ -227,7 +231,7 @@ class EditOrganization extends Component {
   };
 
   render() {
-      console.log(this.props.User)
+    console.log(this.props.User);
     let pickerItems = this.state.campuses[0]
       ? this.state.campuses.map((s, i) => {
           // if (s.id !== this.state.selectedId)
@@ -251,13 +255,14 @@ class EditOrganization extends Component {
             }}>
             <FastImage
               source={
-                this.state.imageUri === ''
+                this.state.imageUri === '' &&
+                this.props.User.profile_pic_url === ''
                   ? defaultAvatar
                   : {
                       uri:
-                      this.state.imageUri !== ''
-                      ? this.state.imageUri.uri
-                      : this.props.User.profile_pic_url,
+                        this.state.imageUri !== ''
+                          ? this.state.imageUri.uri
+                          : this.props.User.profile_pic_url,
                     }
               }
               style={{
@@ -349,7 +354,7 @@ class EditOrganization extends Component {
                   this.setState({organizationEmail: text});
                 }}
               />
-              <InputView
+              {/* <InputView
                 multiline={true}
                 name="Website"
                 ph="Enter your website"
@@ -357,15 +362,22 @@ class EditOrganization extends Component {
                 changestate={text => {
                   this.setState({organizationWebsite: text});
                 }}
-              />
-              <TouchableOpacity onPress={()=> this.props.navigation.navigate('AddMembers', {org_id: this.props.User.id})}>
-              <InputView
-                name="Members"
-                ph="Add Users"
-                changestate={text => {
-                  this.props.navigation.navigate('AddMembers', {searched:text})
-                }}
-              />
+              /> */}
+              <TouchableOpacity
+                onPress={() =>
+                  this.props.navigation.navigate('AddMembers', {
+                    org_id: this.props.User.id,
+                  })
+                }>
+                <InputView
+                  name="Members"
+                  ph="Add Users"
+                  changestate={text => {
+                    this.props.navigation.navigate('AddMembers', {
+                      searched: text,
+                    });
+                  }}
+                />
               </TouchableOpacity>
             </View>
           </View>

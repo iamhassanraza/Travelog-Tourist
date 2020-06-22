@@ -16,15 +16,16 @@ import AvatarUserStatus from '../Components/AvatarUserStatus';
 import AddMember from '../Components/AddMember';
 import FastImage from 'react-native-fast-image';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
+import {connect} from 'react-redux';
 
-export default class AddMembers extends Component {
+class AddMembers extends Component {
   state = {
     search: '',
     loadingUsers: false,
     totalUsers: undefined,
     Users: [],
     added: false,
-    org_id: this.props.navigation.getParam('org_id', null)
+    org_id: this.props.User.id,
   };
 
   fetchUsers = async text => {
@@ -61,22 +62,25 @@ export default class AddMembers extends Component {
     }
   };
 
-  
+  componentDidMount() {
+    this.setState({search: this.props.navigation.getParam('searched')}, () => {
+      this.SearchItems(this.state.search);
+    });
+  }
 
   SearchItems = text => {
     if (text) {
       this.fetchUsers(text);
       console.log('fetch karo');
-    } else {
-      console.log('nahi chalay');
     }
   };
 
   renderUsers = () => {
     if (this.state.loadingUsers === false) {
       return (
-        <ScrollView style={{backgroundColor: '#f9fdfe'}}>
+        <ScrollView style={{height: '100%', backgroundColor: '#f9fdfe'}}>
           <FlatList
+            style={{}}
             vertical
             data={this.state.Users}
             keyExtractor={item => item.id}
@@ -100,7 +104,11 @@ export default class AddMembers extends Component {
         </ScrollView>
       );
     } else if (this.state.loadingUsers === true) {
-      return <UIActivityIndicator color={ThemeBlue} />;
+      return (
+        <View style={{height: '100%', backgroundColor: '#f9fdfe'}}>
+          <UIActivityIndicator color={ThemeBlue} />
+        </View>
+      );
     }
   };
 
@@ -157,3 +165,16 @@ export default class AddMembers extends Component {
     );
   }
 }
+
+mapStateToProps = state => {
+  //this state will contain FULL redux store all the reducers data
+
+  //use your required reducer data in props i.e reducer1
+
+  return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+};
+
+export default connect(
+  mapStateToProps,
+  null,
+)(AddMembers);

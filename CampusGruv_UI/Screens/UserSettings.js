@@ -253,7 +253,7 @@ class UserSettings extends Component {
               Account
             </Text>
           </View> */}
-          {accountType === 'org' ? (
+          {accountType !== 'org' ? (
             <TouchableOpacity
               onPress={() => {
                 this.props.navigation.navigate('CreateOrganization', null);

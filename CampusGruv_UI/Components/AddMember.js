@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Text, View,AsyncStorage} from 'react-native';
+import {Text, View, AsyncStorage} from 'react-native';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 import FastImage from 'react-native-fast-image';
 import {ThemeBlue} from '../Assets/Colors';
@@ -7,20 +7,16 @@ import {
   TouchableOpacity,
   TouchableWithoutFeedback,
 } from 'react-native-gesture-handler';
+import {connect} from 'react-redux';
 
+class AddMember extends Component {
+  state = {
+    added: false,
+  };
 
-export default class AddMember extends Component {
-
-    state={
-        added : false,
-    }
-
-
-addMember = async () => {
-
+  addMember = async () => {
     const Token = await AsyncStorage.getItem('TOKEN');
 
-  
     if (!this.state.added) {
       Response = await fetch(
         `${
@@ -33,8 +29,8 @@ addMember = async () => {
             Authorization: `Bearer ${Token}`,
           },
           body: JSON.stringify({
-            member_id:this.props.id,
-            organization_id: this.props.org_id
+            member_id: this.props.id,
+            organization_id: this.props.org_id,
           }),
         },
       );
@@ -42,18 +38,17 @@ addMember = async () => {
       alert('Already Added');
     }
     const JsonResponse = await Response.json();
+    console.log('hey there', JsonResponse);
     if (parseInt(Response.status) === 400) {
       console.log('400');
       alert(JsonResponse.message);
     } else if (parseInt(Response.status) === 200) {
-        this.setState({added:true})
+      this.setState({added: true});
       console.log('200', JsonResponse);
     } else {
       alert('something is wrong');
     }
   };
-
-
 
   render() {
     return (
@@ -84,7 +79,7 @@ addMember = async () => {
                 color: 'grey',
                 paddingLeft: '2%',
               }}>
-             {this.props.first_name + ' ' + this.props.last_name}
+              {this.props.first_name + ' ' + this.props.last_name}
             </Text>
           </View>
         </View>
@@ -120,3 +115,16 @@ addMember = async () => {
     );
   }
 }
+
+mapStateToProps = state => {
+  //this state will contain FULL redux store all the reducers data
+
+  //use your required reducer data in props i.e reducer1
+
+  return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
+};
+
+export default connect(
+  mapStateToProps,
+  null,
+)(AddMember);
