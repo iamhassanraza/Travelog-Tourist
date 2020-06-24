@@ -11,10 +11,27 @@ import {
 } from 'react-native';
 import PostCard from './PostCard';
 import {withNavigation} from 'react-navigation';
+import {Icon} from 'native-base';
+import {UIActivityIndicator} from 'react-native-indicators';
 
 class RenderCards extends PureComponent {
+  state = {
+    onEndReachedCalledDuringMomentum: true,
+  };
+
+  loadMore = ({distanceFromEnd}) => {
+    if (
+      !this.state.onEndReachedCalledDuringMomentum ||
+      this.props.posts.length < this.props.totalPosts
+    ) {
+      console.log('hey nibba');
+      this.setState({onEndReachedCalledDuringMomentum: true}, () => {
+        this.props.loadMore();
+      });
+    }
+  };
+
   render() {
-    // {this.state.posts[0].users?  console.log(this.state.posts[0].users.first_name) : console.log('console')}
     if (this.props.posts) {
       const column1Data = this.props.posts.filter((item, i) => i % 2 === 0);
       const column2Data = this.props.posts.filter((item, i) => i % 2 === 1);
@@ -67,7 +84,11 @@ class RenderCards extends PureComponent {
             </SafeAreaView>
             <SafeAreaView style={{flex: 1}}>
               <FlatList
-                style={{marginRight: 5, marginLeft: 2.5, paddingTop: 25}}
+                style={{
+                  marginRight: 5,
+                  marginLeft: 2.5,
+                  // paddingTop: 25,
+                }}
                 data={column2Data}
                 scrollEnabled={false}
                 showsVerticalScrollIndicator={false}
@@ -102,6 +123,7 @@ class RenderCards extends PureComponent {
               />
             </SafeAreaView>
           </View>
+
           {this.props.posts.length < this.props.totalPosts ? (
             <View
               style={{
@@ -110,22 +132,25 @@ class RenderCards extends PureComponent {
                 paddingBottom: 10,
               }}>
               {this.props.loadstate ? (
-                <ActivityIndicator size={40} color="#0C91CF" />
+                <UIActivityIndicator size={40} color="#0C91CF" />
               ) : (
                 <Text
                   style={{
                     alignSelf: 'center',
                     color: '#0C91CF',
-                    backgroundColor: 'white',
                     padding: '2%',
                     borderColor: '#0C91CF',
-                    borderWidth: 0.6,
-                    borderRadius: 4,
+                    // borderWidth: 0.6,
+                    // borderRadius: 4,
                   }}
                   onPress={() => {
                     this.props.loadMore();
                   }}>
-                  Load More Posts
+                  <Icon
+                    type="MaterialIcons"
+                    name="expand-more"
+                    style={{width: 20, height: 20}}
+                  />
                 </Text>
               )}
             </View>

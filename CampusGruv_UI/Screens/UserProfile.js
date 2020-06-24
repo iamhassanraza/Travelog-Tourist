@@ -248,7 +248,7 @@ class UserProfile extends React.Component {
   }
 
   loadmore = () => {
-    userId = this.state.otherUserId
+    const userId = this.state.otherUserId
       ? this.state.otherUserId
       : this.props.User.id;
     this.setState(

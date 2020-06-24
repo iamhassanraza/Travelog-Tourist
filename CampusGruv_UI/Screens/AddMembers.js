@@ -86,19 +86,20 @@ class AddMembers extends Component {
             keyExtractor={item => item.id}
             showsHorizontalScrollIndicator={false}
             renderItem={({item}) => {
-              return (
-                <AddMember
-                  id={item.id}
-                  first_name={item.first_name}
-                  last_name={item.last_name}
-                  userFollowing={item.isFollowing ? true : false}
-                  item={item}
-                  campus={item.campus.description}
-                  status={true}
-                  pic={item.profile_pic_url}
-                  org_id={this.state.org_id}
-                />
-              );
+              if (item.id !== this.props.User.id)
+                return (
+                  <AddMember
+                    id={item.id}
+                    first_name={item.first_name}
+                    last_name={item.last_name}
+                    userFollowing={item.isFollowing ? true : false}
+                    item={item}
+                    campus={item.campus.description}
+                    status={true}
+                    pic={item.profile_pic_url}
+                    org_id={this.state.org_id}
+                  />
+                );
             }}
           />
         </ScrollView>

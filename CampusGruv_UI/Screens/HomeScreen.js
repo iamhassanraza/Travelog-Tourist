@@ -531,6 +531,11 @@ class HomeScreen extends PureComponent {
   }
 
   render() {
+    console.log(
+      'print posts and total',
+      this.state.posts?.length,
+      this.state?.total,
+    );
     if (this.props.screenProps.postDetail) {
       const postDetail = this.props.screenProps.postDetail[0];
       this.props.navigation.navigate('PostDetail', {
@@ -657,35 +662,6 @@ class HomeScreen extends PureComponent {
                   loadMore={this.loadmore}
                   loadstate={this.state.loadmore}
                 />
-                {/* <View
-                style={{
-                  backgroundColor: '#F0F0F0',
-                  paddingTop: 10,
-                  paddingBottom: 10,
-                }}>
-                {this.state.loadmore ? (
-                  <ActivityIndicator
-                    size={40}
-                    color="#0C91CF"></ActivityIndicator>
-                ) : (
-                  null
-                  // <Text
-                  //   style={{
-                  //     alignSelf: 'center',
-                  //     color: '#0C91CF',
-                  //     backgroundColor: 'white',
-                  //     padding: '2%',
-                  //     borderColor: '#0C91CF',
-                  //     borderWidth: 0.6,
-                  //     borderRadius: 4,
-                  //   }}
-                  //   onPress={() => {
-                  //     this.loadmore();
-                  //   }}>
-                  //   Load More Post
-                  // </Text>
-                )}
-              </View> */}
               </View>
             </ScrollView>
           </React.Fragment>

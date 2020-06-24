@@ -90,9 +90,27 @@ class PostDetail extends Component {
     ).userFollowing,
     isModalVisible: false,
     post_id: undefined,
+    imageurl: this.props.navigation.getParam('PostData', 'nothing to render')
+      ?.uri,
   };
 
   componentDidMount() {
+    Image.getSize(
+      this.state.imageurl,
+      (srcWidth, srcHeight) => {
+        // const maxHeight = Dimensions.get('window').height / 2;
+        // const maxWidth = Dimensions.get('window').width / 2;
+        const width = Dimensions.get('window').width;
+        const ratio = width / srcWidth;
+        const height = srcHeight * ratio;
+
+        this.setState({width: width, height: height});
+      },
+      error => {
+        () => console.log(error);
+      },
+    );
+
     const {navigation} = this.props;
     this.willFocusListener = navigation.addListener('willFocus', async () => {
       this.props.screenProps.changeStatusBar({
@@ -438,9 +456,14 @@ class PostDetail extends Component {
     return (
       <View style={{}}>
         <FastImage
-          source={{uri: image}}
+          resizeMode="contain"
+          source={{uri: this.state.imageurl}}
           //resizeMode="center"
-          style={{width: '100%', height: Dimensions.get('window').height / 2}}
+          style={{
+            width: this.state.width,
+            // height: Dimensions.get('window').height / 2,
+            height: this.state.height,
+          }}
         />
       </View>
     );

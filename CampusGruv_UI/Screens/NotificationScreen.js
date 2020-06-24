@@ -53,7 +53,7 @@ class NotificationScreen extends Component {
 
   loadMore = ({distanceFromEnd}) => {
     if (
-      !this.onEndReachedCalledDuringMomentum &&
+      !this.state.onEndReachedCalledDuringMomentum &&
       this.state.notification.length < this.state.total
     ) {
       const pageNo = this.state.pageNo;

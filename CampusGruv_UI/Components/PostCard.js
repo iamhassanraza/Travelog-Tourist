@@ -71,12 +71,13 @@ class PostCard extends Component {
         }>
         <View style={{}}>
           <FastImage
-            // resizeMode="contain"
+            resizeMode="contain"
             style={{
               width: this.state.width,
               borderTopLeftRadius: 7,
               borderTopRightRadius: 7,
-              height: 150,
+              height: this.state.height,
+              // height: 150,
 
               // height: this.state.height < 300 ? this.state.height : 200
             }}
