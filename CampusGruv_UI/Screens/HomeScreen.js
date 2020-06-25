@@ -527,7 +527,7 @@ class HomeScreen extends PureComponent {
 
   componentWillUnmount() {
     // Remove the event listener
-    this.focusListener.remove();
+    // this.focusListener.remove();
   }
 
   render() {

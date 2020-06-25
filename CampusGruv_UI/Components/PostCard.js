@@ -18,7 +18,7 @@ class PostCard extends Component {
       (srcWidth, srcHeight) => {
         // const maxHeight = Dimensions.get('window').height / 2;
         // const maxWidth = Dimensions.get('window').width / 2;
-        const width = Dimensions.get('window').width / 2 - 18;
+        const width = Dimensions.get('window').width / 2 - 14;
         const ratio = width / srcWidth;
         const height = srcHeight * ratio;
         //console.log(srcWidth,srcHeight)
@@ -38,7 +38,7 @@ class PostCard extends Component {
       <TouchableWithoutFeedback
         style={{
           marginVertical: 8,
-          marginHorizontal: 5,
+          marginHorizontal: 3,
           borderColor: 'red',
           elevation: 3,
           shadowOffset: {width: 2, height: 4},
@@ -46,8 +46,8 @@ class PostCard extends Component {
           shadowOpacity: 0.5,
           borderBottomLeftRadius: 7,
           borderBottomRightRadius: 7,
-          borderTopRightRadius: 7,
-          borderTopLeftRadius: 7,
+          borderTopRightRadius: 15,
+          borderTopLeftRadius: 15,
         }}
         onPress={() =>
           this.props.navigation.navigate('PostDetail', {
@@ -74,8 +74,8 @@ class PostCard extends Component {
             resizeMode="contain"
             style={{
               width: this.state.width,
-              borderTopLeftRadius: 7,
-              borderTopRightRadius: 7,
+              borderTopLeftRadius: 12,
+              borderTopRightRadius: 12,
               height: this.state.height,
               // height: 150,
 
@@ -92,7 +92,7 @@ class PostCard extends Component {
                 right: 5,
                 top: 10,
                 borderRadius: 5,
-                backgroundColor: `rgba(${this.props.categoryColor},0.8)`,
+                backgroundColor: `rgba(${this.props.categoryColor},0.4)`,
               }}>
               <Text
                 style={{

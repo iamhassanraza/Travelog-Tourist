@@ -34,6 +34,7 @@ class UserSettings extends Component {
 
   async componentDidMount() {
     let Token = await AsyncStorage.getItem('USERTOKEN');
+    let userId = await AsyncStorage.getItem('USER_ID');
     let selected = await AsyncStorage.getItem('selected');
     let accountType = await AsyncStorage.getItem('accountType');
     if (accountType === 'user') {
@@ -41,6 +42,19 @@ class UserSettings extends Component {
     } else {
       this.setState({selected: Number(selected)});
     }
+
+    var userResponse = await fetch(
+      `${
+        require('../config').default.production
+      }api/v1/get/user?user_id=${userId}`,
+      {
+        headers: {
+          Authorization: `Bearer ${Token}`,
+        },
+      },
+    );
+    let JsonResponse1 = await userResponse.json();
+    this.setState({user: JsonResponse1});
 
     var response = await fetch(
       `${require('../config').default.production}api/v1/user/organizations`,
@@ -108,7 +122,7 @@ class UserSettings extends Component {
               console.log('switch to main acount');
             }}
             style={{
-              width: 90,
+              // width: 90,
               alignSelf: 'center',
               height: 70,
               alignItems: 'center',
@@ -121,17 +135,22 @@ class UserSettings extends Component {
                 width: 50,
                 borderRadius: 50,
               }}
-              source={switchImg}
+              source={{
+                uri: this.state.user ? this.state.user.profile_pic_url : '',
+              }}
             />
             <Text
               numberOfLines={1}
               style={{
+                width: 60,
                 fontSize: 12,
                 marginTop: 2,
                 color: this.state.selected === 'user' ? 'black' : 'grey',
                 textAlign: 'center',
               }}>
-              Main account
+              {this.state.user
+                ? this.state.user.first_name + ' ' + this.state.user.last_name
+                : ''}
             </Text>
           </TouchableOpacity>
           <FlatList

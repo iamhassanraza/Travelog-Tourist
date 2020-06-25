@@ -127,11 +127,23 @@ class Chat extends React.Component {
                     textAlign:
                       props.currentMessage.text.length < 10 ? 'center' : 'auto',
                     borderRadius: 8,
-                    borderColor: ThemeBlue,
+                    borderColor:
+                      props.currentMessage.user._id === this.props.User.id
+                        ? '#2a9ffd'
+                        : '#e5e5ea',
+                    backgroundColor:
+                      props.currentMessage.user._id === this.props.User.id
+                        ? '#2a9ffd'
+                        : '#e5e5ea',
                     borderWidth: 1,
-                    fontSize: 14,
-                    paddingVertical: 2,
-                    paddingHorizontal: 3,
+                    fontSize: 16,
+                    paddingVertical: 3,
+                    paddingLeft: 3,
+                    paddingRight: 2,
+                    color:
+                      props.currentMessage.user._id === this.props.User.id
+                        ? 'white'
+                        : 'black',
                   }}>
                   {props.currentMessage.text}
                 </Text>

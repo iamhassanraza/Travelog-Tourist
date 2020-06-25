@@ -94,8 +94,8 @@ export default class AddNewPost extends Component {
     });
   }
 
-  selectPhoto = () => {
-    ImagePicker.showImagePicker(
+  takePhoto = () => {
+    ImagePicker.launchCamera(
       {
         maxWidth: 1000,
         maxHeight: 1000,
@@ -148,11 +148,58 @@ export default class AddNewPost extends Component {
     );
   };
 
-  openCamera = () => {
-    const options = {
-      noData: true,
-    };
-    ImagePicker.launchCamera(options, response => {});
+  selectPhoto = () => {
+    ImagePicker.launchImageLibrary(
+      {
+        maxWidth: 1000,
+        maxHeight: 1000,
+        storageOptions: {
+          skipBackup: true,
+          path: 'images',
+          cameraRoll: true,
+          waitUntilSaved: true,
+        },
+      },
+      response => {
+        if (response.didCancel) {
+        } else if (response.error) {
+        } else {
+          const source = {uri: response.uri};
+          const fileTypes = /jpeg|jpg|png|gif/;
+          const allowedImgSize = 1024 * 1024 * 10;
+          // console.log('response image: ', response);
+          if (!fileTypes.test(response.type)) {
+            alert(
+              'Uploaded file is not a valid image. \n(allowed file types: jpeg, jpg, png, gif)',
+            );
+          } else if (response.fileSize > allowedImgSize) {
+            alert('Uploaded file is too large \n(allowed file size is 10MB)');
+          } else {
+            this.state.imgCount++;
+            if (
+              typeof response.fileName === 'undefined' ||
+              response.fileName === null
+            ) {
+              // on iOS, using camera returns undefined fileName and camera roll returns  null. This fixes that issue, so API can work.
+              var getFilename = response.uri.split('/');
+              imgName = getFilename[getFilename.length - 1];
+              console.log(response, 'uri uri');
+              this.setState({
+                imageName: imgName,
+                Images: response,
+                imageSource: source,
+              });
+            } else {
+              this.setState({
+                imageName: response.fileName,
+                Images: response,
+                imageSource: source,
+              });
+            }
+          }
+        }
+      },
+    );
   };
 
   renderOptions = () => {
@@ -205,7 +252,7 @@ export default class AddNewPost extends Component {
             elevation: 5,
             justifyContent: 'center',
           }}>
-          <TouchableOpacity onPress={this.selectPhoto}>
+          <TouchableOpacity onPress={this.takePhoto}>
             <FastImage
               source={require('../Assets/Images/photo-camera.png')}
               style={{
@@ -288,7 +335,7 @@ export default class AddNewPost extends Component {
                   fontSize: 22,
                   color: 'grey',
                 }}>
-                Title
+                {' '}
               </Text>
               <Input
                 style={{
@@ -378,7 +425,7 @@ export default class AddNewPost extends Component {
                   fontSize: 22,
                   color: 'grey',
                 }}>
-                Title
+                {' '}
               </Text>
               <Input
                 style={{

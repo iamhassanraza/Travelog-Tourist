@@ -18,6 +18,7 @@ import {
 import {getStatusBarHeight} from 'react-native-status-bar-height';
 import {ThemeBlue} from '../Assets/Colors';
 import {withNavigation} from 'react-navigation';
+import firebase from '@react-native-firebase/app';
 import messaging from '@react-native-firebase/messaging';
 
 class MainTabNavigation extends React.Component {

@@ -11,6 +11,7 @@ import {withNavigation} from 'react-navigation';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 import TimeAgo from 'react-native-timeago';
 import FastImage from 'react-native-fast-image';
+import ParsedText from 'react-native-parsed-text';
 
 class InboxComponent extends Component {
   state = {
@@ -80,11 +81,11 @@ class InboxComponent extends Component {
               <Text style={{fontWeight: '700', color: '#181a1a'}}>
                 {this.props.title}
               </Text>
-              <Text numberOfLines={2} style={{color: 'grey'}}>
+              <ParsedText numberOfLines={2} style={{color: 'grey'}}>
                 {this.props.subtitle.includes('http')
                   ? 'sent a message'
                   : this.props.subtitle}
-              </Text>
+              </ParsedText>
             </View>
             <View style={{marginBottom: 10, alignSelf: 'center'}}>
               <Text style={{color: 'grey', fontSize: 10}}>
