@@ -83,7 +83,7 @@ class RecoverCode extends React.Component {
 
         <ScrollView style={{flex: 1}}>
           <KeyboardAvoidingView positon="padding">
-            <View style={{flex: 0.5, marginTop: -10}}>
+            <View style={{marginTop: '10%', height: '30%'}}>
               <HeaderTitle />
             </View>
 

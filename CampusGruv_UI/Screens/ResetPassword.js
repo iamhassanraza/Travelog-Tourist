@@ -81,7 +81,7 @@ class ResetPassword extends React.Component {
 
           <ScrollView style={{flex: 1}}>
             <KeyboardAvoidingView positon="padding">
-              <View style={{flex: 0.5, marginTop: -20}}>
+              <View style={{marginTop: '10%', height: '30%'}}>
                 <HeaderTitle />
               </View>
 
@@ -195,9 +195,10 @@ class ResetPassword extends React.Component {
                           marginTop: 40,
                           justifyContent: 'center',
                           backgroundColor: 'transparent',
+                          flexDirection: 'row',
+                          alignItems: 'center',
                           borderColor: 'white',
                           borderWidth: 0.6,
-                          flexDirection: 'row',
                         }}>
                         <Text
                           style={{
@@ -206,10 +207,15 @@ class ResetPassword extends React.Component {
                             textAlign: 'center',
                             color: 'white',
                           }}>
-                          Continue
+                          Loading{' '}
                         </Text>
+                        <BarIndicator
+                          style={{flex: 0, margin}}
+                          count={3}
+                          size={20}
+                          color={'white'}
+                        />
                       </View>
-                      <BarIndicator count={3} size={20} color={'white'} />
                     </View>
                   ) : (
                     <View style={{marginBottom: 10}}>
