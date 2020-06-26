@@ -137,9 +137,9 @@ class Chat extends React.Component {
                         : '#e5e5ea',
                     borderWidth: 1,
                     fontSize: 16,
-                    paddingVertical: 3,
-                    paddingLeft: 3,
-                    paddingRight: 2,
+                    paddingVertical: 5,
+                    paddingLeft: 5,
+                    paddingRight: 5,
                     color:
                       props.currentMessage.user._id === this.props.User.id
                         ? 'white'

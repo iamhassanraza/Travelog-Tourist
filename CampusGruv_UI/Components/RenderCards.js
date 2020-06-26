@@ -128,20 +128,16 @@ class RenderCards extends PureComponent {
             <View
               style={{
                 backgroundColor: '#f9fdfe',
-                paddingTop: 10,
-                paddingBottom: 10,
+                padding: '2%',
               }}>
               {this.props.loadstate ? (
-                <UIActivityIndicator size={40} color="#0C91CF" />
+                <UIActivityIndicator size={20} />
               ) : (
                 <Text
                   style={{
                     alignSelf: 'center',
                     color: '#0C91CF',
                     padding: '2%',
-                    borderColor: '#0C91CF',
-                    // borderWidth: 0.6,
-                    // borderRadius: 4,
                   }}
                   onPress={() => {
                     this.props.loadMore();

@@ -207,7 +207,7 @@ class NotificationScreen extends Component {
                 justifyContent: 'center',
                 alignItems: 'center',
               }}>
-              <UIActivityIndicator color={ThemeBlue} />
+              <UIActivityIndicator size={20} />
             </View>
           ) : null}
         </View>

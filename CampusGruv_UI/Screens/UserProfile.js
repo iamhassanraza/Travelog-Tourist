@@ -607,7 +607,7 @@ class UserProfile extends React.Component {
                 ' ' +
                 (postUserLastName === '' || !postUserLastName
                   ? ''
-                  : `${postUserLastName.charAt(0)} .`)}
+                  : `${postUserLastName.charAt(0)}.`)}
             </Text>
             <Text style={{fontSize: 13, fontWeight: 'bold', color: '#727272'}}>
               {postUserCampus}
