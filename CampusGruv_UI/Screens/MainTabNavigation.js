@@ -139,7 +139,8 @@ class MainTabNavigation extends React.Component {
 
   checkPermissions = async () => {
     const enabled = await messaging().hasPermission();
-    if (enabled !== 0 || enabled !== -1) {
+    console.log('enabled', messaging.AuthorizationStatus.AUTHORIZED);
+    if (enabled === 1) {
       // user has permissions
       return true;
     } else {
