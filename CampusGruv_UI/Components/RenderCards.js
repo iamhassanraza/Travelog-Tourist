@@ -123,8 +123,7 @@ class RenderCards extends PureComponent {
             </SafeAreaView>
           </View>
 
-          {this.props.posts.length < this.props.totalPosts ||
-          this.props.posts.length !== 0 ? (
+          {this.props.posts.length < this.props.totalPosts ? (
             <View
               style={{
                 backgroundColor: '#f9fdfe',

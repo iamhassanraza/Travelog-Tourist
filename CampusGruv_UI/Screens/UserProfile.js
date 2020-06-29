@@ -143,7 +143,7 @@ class UserProfile extends React.Component {
     super(props);
     this.state = {
       posts: [],
-      total: '  ',
+      // total: '  ',
       followers: '  ',
       following: '  ',
       otherUserId: null,
@@ -191,9 +191,7 @@ class UserProfile extends React.Component {
         handleThis: () => this.toggleModal(),
         handleOtherThis: () => this.props.navigation.navigate('UserSettings'),
       });
-      this.setState({pageNo: 1}, () => {
-        this.fetchdata(userNavId ? userNavId : this.props.User.id);
-      });
+      this.fetchdata(userNavId ? userNavId : this.props.User.id);
       this.fetchFollowData(userNavId ? userNavId : this.props.User.id);
     });
   }
@@ -321,12 +319,10 @@ class UserProfile extends React.Component {
       },
     );
     const jsonresponse = await response.json();
-    console.log(jsonresponse);
     this.setState({
       spinner: false,
       posts: jsonresponse.data,
       total: jsonresponse.total,
-      totalPosts: jsonresponse.data.length,
     });
   }
 
@@ -354,7 +350,6 @@ class UserProfile extends React.Component {
       const jsonresponse = await response.json();
       this.setState({
         spinner: false,
-        totalPosts: jsonresponse.data.length,
         posts: jsonresponse.data,
         total: jsonresponse.total,
         isFollowing: jsonresponse.data[0]
@@ -382,7 +377,6 @@ class UserProfile extends React.Component {
         spinner: false,
         posts: jsonresponse.data,
         total: jsonresponse.total,
-        totalPosts: jsonresponse.data.length,
       });
     }
   };
@@ -790,7 +784,7 @@ class UserProfile extends React.Component {
             paddingTop: 5,
           }}>
           <Text style={{color: '#727272', fontSize: 13, fontWeight: 'bold'}}>
-            {this.state.total + '  '}
+            {(this.state.total ?? '  ') + '  '}
           </Text>
           <Text style={{color: '#B4B8BA', fontSize: 13, fontWeight: 'bold'}}>
             Posts{'  '}
@@ -854,8 +848,7 @@ class UserProfile extends React.Component {
               width: '65%',
               marginLeft: 0,
               borderRadius: 12,
-              // paddingTop: '2%',
-              // paddingLeft: '2%',
+
               height: '75%',
             }}>
             <MenuIcon
@@ -934,9 +927,9 @@ class UserProfile extends React.Component {
           ) : null}
         </View>
 
-        {!this.state.totalPosts
+        {!this.state.total
           ? this.renderLoading()
-          : this.state.totalPosts === 0
+          : this.state.total === 0
           ? this.renderNoPost()
           : this.renderPost()}
       </ScrollView>
