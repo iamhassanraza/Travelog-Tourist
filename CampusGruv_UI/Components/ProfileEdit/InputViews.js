@@ -29,13 +29,13 @@ class InputView extends React.Component {
             style={{
               fontSize: this.props.fontSize ?? 20,
               marginTop: 15,
-              marginLeft: 10,
+              marginLeft: '5%',
               width: this.props.width ?? '25%',
             }}>
             {this.props.name}
           </Text>
           <TextInput
-            autoCapitalize="none"
+            autoCapitalize="words"
             multiline={this.props.multiline}
             onFocus={() => {
               this.setState({focused: true});

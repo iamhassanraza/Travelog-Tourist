@@ -1,5 +1,12 @@
-import React, {Component} from 'react';
-import {Text, View, ScrollView, AsyncStorage, StyleSheet} from 'react-native';
+import React, {Component, PureComponent} from 'react';
+import {
+  Text,
+  View,
+  ScrollView,
+  AsyncStorage,
+  StyleSheet,
+  Dimensions,
+} from 'react-native';
 import InboxComponent from '../Components/InboxComponent';
 import {FlatList} from 'react-native-gesture-handler';
 import {clearMsgs} from '../ReduxStore/Actions/index';
@@ -8,26 +15,27 @@ import {connect} from 'react-redux';
 
 import SearchInput, {createFilter} from 'react-native-search-filter';
 import SearchIcon from 'react-native-vector-icons/Feather';
+import {UIActivityIndicator} from 'react-native-indicators';
+import {ThemeBlue} from '../Assets/Colors';
 
 const KEYS_TO_FILTERS = ['id', 'first_name', 'last_name'];
 
 // import Ws from '@adonisjs/websocket-client'
 
-class Inbox extends Component {
-  constructor() {
-    super();
-    this.state = {
-      data: [],
-      store: mystore,
-      searchTerm: '',
-    };
-  }
+class Inbox extends PureComponent {
+  state = {
+    data: [],
+    store: mystore,
+    searchTerm: '',
+    loading: false,
+  };
 
   searchUpdated(term) {
     this.setState({searchTerm: term});
   }
 
   fetchData = async () => {
+    this.setState({loading: true});
     const Token = await AsyncStorage.getItem('TOKEN');
     const Response = await fetch(
       `${require('../config').default.production}api/v1/chat/history`,
@@ -39,13 +47,13 @@ class Inbox extends Component {
     );
     const JsonResponse = await Response.json();
     this.setState({
+      loading: false,
       data: JsonResponse,
+      total: JsonResponse.length,
     });
   };
 
   async componentDidMount() {
-    this.fetchData();
-
     this.focusListener2 = this.props.navigation.addListener('willFocus', () => {
       this.fetchData();
     });
@@ -91,29 +99,40 @@ class Inbox extends Component {
                 placeholder="Search"
               />
             </View>
-            <FlatList
-              style={{marginTop: 10}}
-              data={filtereddata}
-              renderItem={({item}) => {
-                if (item.id !== this.props.User.id)
-                  return (
-                    <InboxComponent
-                      user_id={item.id}
-                      uri={item.profile_pic_url}
-                      title={
-                        item.first_name +
-                        ' ' +
-                        (item.last_name === '' || !item.last_name
-                          ? ''
-                          : item.last_name.charAt(0) + '.')
-                      }
-                      subtitle={item.message}
-                      time={new Date(item.created_at.replace(' ', 'T'))}
-                      //time={5}
-                    />
-                  );
-              }}
-            />
+            {!this.state.total ? (
+              <View
+                style={{
+                  height: Dimensions.get('window').height - 200,
+                  alignItems: 'center',
+                  justifyContent: 'center',
+                }}>
+                <UIActivityIndicator color={ThemeBlue} />
+              </View>
+            ) : (
+              <FlatList
+                style={{marginTop: 10}}
+                data={filtereddata}
+                renderItem={({item}) => {
+                  if (item.id !== this.props.User.id)
+                    return (
+                      <InboxComponent
+                        user_id={item.id}
+                        uri={item.profile_pic_url}
+                        title={
+                          item.first_name +
+                          ' ' +
+                          (item.last_name === '' || !item.last_name
+                            ? ''
+                            : item.last_name.charAt(0) + '.')
+                        }
+                        subtitle={item.message}
+                        time={new Date(item.created_at.replace(' ', 'T'))}
+                        //time={5}
+                      />
+                    );
+                }}
+              />
+            )}
           </ScrollView>
         </View>
       </>

@@ -24,7 +24,6 @@ class RenderCards extends PureComponent {
       !this.state.onEndReachedCalledDuringMomentum ||
       this.props.posts.length < this.props.totalPosts
     ) {
-      console.log('hey nibba');
       this.setState({onEndReachedCalledDuringMomentum: true}, () => {
         this.props.loadMore();
       });
@@ -124,7 +123,8 @@ class RenderCards extends PureComponent {
             </SafeAreaView>
           </View>
 
-          {this.props.posts.length < this.props.totalPosts ? (
+          {this.props.posts.length < this.props.totalPosts ||
+          this.props.posts.length !== 0 ? (
             <View
               style={{
                 backgroundColor: '#f9fdfe',

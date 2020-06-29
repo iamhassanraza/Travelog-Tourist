@@ -152,7 +152,7 @@ class UserProfile extends React.Component {
       otherUserDp: null,
       otherUserCampus: null,
       active: 'posts',
-      spinner: false,
+      // spinner: false,
       loadmore: false,
       pageNo: 1,
       isModalVisible: false,
@@ -191,8 +191,9 @@ class UserProfile extends React.Component {
         handleThis: () => this.toggleModal(),
         handleOtherThis: () => this.props.navigation.navigate('UserSettings'),
       });
-      this.fetchdata(userNavId ? userNavId : this.props.User.id);
-      console.log('will focus');
+      this.setState({pageNo: 1}, () => {
+        this.fetchdata(userNavId ? userNavId : this.props.User.id);
+      });
       this.fetchFollowData(userNavId ? userNavId : this.props.User.id);
     });
   }
@@ -320,9 +321,12 @@ class UserProfile extends React.Component {
       },
     );
     const jsonresponse = await response.json();
+    console.log(jsonresponse);
     this.setState({
       spinner: false,
       posts: jsonresponse.data,
+      total: jsonresponse.total,
+      totalPosts: jsonresponse.data.length,
     });
   }
 
@@ -350,6 +354,7 @@ class UserProfile extends React.Component {
       const jsonresponse = await response.json();
       this.setState({
         spinner: false,
+        totalPosts: jsonresponse.data.length,
         posts: jsonresponse.data,
         total: jsonresponse.total,
         isFollowing: jsonresponse.data[0]
@@ -373,11 +378,11 @@ class UserProfile extends React.Component {
         },
       );
       const jsonresponse = await response.json();
-      console.log(jsonresponse, 'res res res');
       this.setState({
         spinner: false,
         posts: jsonresponse.data,
         total: jsonresponse.total,
+        totalPosts: jsonresponse.data.length,
       });
     }
   };
@@ -401,7 +406,6 @@ class UserProfile extends React.Component {
   };
 
   renderNoPost = () => {
-    console.log('no post');
     return (
       <View style={{paddingTop: 30, height: '100%'}}>
         <NoPosts />
@@ -870,7 +874,7 @@ class UserProfile extends React.Component {
                 paddingLeft: Platform.OS == 'ios' ? 5 : 3,
                 height: Platform.OS == 'ios' ? 40 : 35,
               }}
-              placeholder="Search"
+              placeholder="Search posts"
               value={this.state.searchbox}
               onChangeText={searchbox => {
                 this.setState({searchbox});
@@ -930,13 +934,9 @@ class UserProfile extends React.Component {
           ) : null}
         </View>
 
-        {/* {this.state.total === 0 ? <View style={{height:"70%"}}><NoPosts></NoPosts></View> : <Text>Loader</Text>}
-{this.state.total > 0 ? <View style={{paddingTop: 10}}>
-          <RenderCards posts={this.state.posts}></RenderCards>
-        </View> : <Text>Loader>>></Text>} */}
-        {this.state.spinner
+        {!this.state.totalPosts
           ? this.renderLoading()
-          : this.state.total === 0
+          : this.state.totalPosts === 0
           ? this.renderNoPost()
           : this.renderPost()}
       </ScrollView>

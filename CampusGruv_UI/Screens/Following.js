@@ -154,9 +154,10 @@ class Following extends Component {
       },
     );
     const JsonResponse = await Response.json();
-
+    console.log('total', JsonResponse.length);
     this.setState({
       search: JsonResponse,
+      total: JsonResponse.length,
       loading: false,
     });
   };
@@ -173,7 +174,7 @@ class Following extends Component {
     const filtereddata = this.state.search.filter(
       createFilter(this.state.searchTerm, KEYS_TO_FILTERS),
     );
-    return this.state.loading ? (
+    return !this.state.total ? (
       <View style={{justifyContent: 'center', alignSelf: 'center'}}>
         <BarIndicator count={4} color={ThemeBlue} />
       </View>

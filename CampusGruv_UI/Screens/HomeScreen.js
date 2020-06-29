@@ -495,6 +495,9 @@ class HomeScreen extends PureComponent {
     }
     this.focusListener = navigation.addListener('willFocus', () => {
       // The screen is focused
+      if (this.props.navigation.getParam('newPost')) {
+        this.refs._scrollView.scrollTo({x: 0, y: 0, animated: true});
+      }
       this.setState({
         pageNo: 1,
       });
@@ -531,11 +534,7 @@ class HomeScreen extends PureComponent {
   }
 
   render() {
-    console.log(
-      'print posts and total',
-      this.state.posts?.length,
-      this.state?.total,
-    );
+    console.log('i re renderd');
     if (this.props.screenProps.postDetail) {
       const postDetail = this.props.screenProps.postDetail[0];
       this.props.navigation.navigate('PostDetail', {
@@ -649,6 +648,7 @@ class HomeScreen extends PureComponent {
             )}
 
             <ScrollView
+              ref="_scrollView"
               refreshControl={
                 <RefreshControl
                   refreshing={this.state.refreshing}
@@ -679,25 +679,7 @@ class HomeScreen extends PureComponent {
         </View>
       );
     } else {
-      return (
-        <UIActivityIndicator color={ThemeBlue} />
-        // <View style={{}}>
-        //   <ContentLoader
-        //     height={450}
-        //     //width={820}
-        //     speed={0.2}
-        //     height={Dimensions.get('window').height * 1}>
-        //     <Rect x="10" y="10" rx="5" ry="5" width="160" height="200" />
-        //     <Rect x="190" y="35" rx="5" ry="5" width="160" height="200" />
-        //     <Rect x="10" y="220" rx="5" ry="5" width="160" height="200" />
-        //     <Rect x="190" y="245" rx="5" ry="5" width="160" height="200" />
-        //     <Rect x="10" y="430" rx="5" ry="5" width="160" height="200" />
-        //     <Rect x="190" y="455" rx="5" ry="5" width="160" height="200" />
-        //     <Rect x="10" y="640" rx="5" ry="5" width="160" height="200" />
-        //     <Rect x="190" y="665" rx="5" ry="5" width="160" height="200" />
-        //   </ContentLoader>
-        // </View>
-      );
+      return <UIActivityIndicator color={ThemeBlue} />;
     }
   }
 }

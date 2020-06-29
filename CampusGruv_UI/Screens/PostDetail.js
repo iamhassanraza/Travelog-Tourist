@@ -203,6 +203,32 @@ class PostDetail extends Component {
       });
   };
 
+  deletePost = async postId => {
+    const Token = await AsyncStorage.getItem('TOKEN');
+    var Response = null;
+    Response = await fetch(
+      `${require('../config').default.production}api/v1/post/delete`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          post_id: postId,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Token}`,
+        },
+      },
+    );
+    const JsonResponse = await Response.json();
+    if (JsonResponse.result === 1) {
+      this.props.navigation.navigate('HomeScreen', {newPost: true});
+    } else {
+      alert(
+        'Post was not deleted. Try again or check your internet connection',
+      );
+    }
+  };
+
   renderHeader = (
     userdp,
     postId,
@@ -388,37 +414,42 @@ class PostDetail extends Component {
                       {/* </View> */}
                     </View>
                   </View>
+                  {userId === this.props.User.id ? (
+                    <View style={styles.modalOptions}>
+                      <IconFeather name="delete" style={styles.optionIcon} />
+                      <Text
+                        onPress={() => {
+                          this.setState({isModalVisible: false});
+                          this.deletePost(postId);
+                        }}
+                        style={styles.TextWithNavigation}>
+                        Delete Post
+                      </Text>
+                    </View>
+                  ) : null}
 
-                  <View style={styles.modalOptions}>
-                    <IconFeather name="flag" style={styles.optionIcon} />
-                    <Text
-                      onPress={() => {
-                        this.setState({isModalVisible: false});
-                        this.props.navigation.navigate('ReportPost', {
-                          PostId: this.props.navigation.getParam(
-                            'PostData',
-                            'nothing to render',
-                          ),
-                        });
-                      }}
-                      style={styles.TextWithNavigation}>
-                      Report Post
-                    </Text>
-                  </View>
-
+                  {userId === this.props.User.id ? null : (
+                    <View style={styles.modalOptions}>
+                      <IconFeather name="flag" style={styles.optionIcon} />
+                      <Text
+                        onPress={() => {
+                          this.setState({isModalVisible: false});
+                          this.props.navigation.navigate('ReportPost', {
+                            PostId: this.props.navigation.getParam(
+                              'PostData',
+                              'nothing to render',
+                            ),
+                          });
+                        }}
+                        style={styles.TextWithNavigation}>
+                        Report Post
+                      </Text>
+                    </View>
+                  )}
                   <View style={styles.modalOptions}>
                     <IconFeather name="download" style={styles.optionIcon} />
                     <Text
-                      onPress={() =>
-                        this.createPDF(
-                          postId,
-                          // first_name,
-                          // last_name,
-                          // image_URL,
-                          // userdp,
-                          // postTitle,
-                        )
-                      }
+                      onPress={() => this.createPDF(postId)}
                       style={styles.TextWithNavigation}>
                       Download post
                     </Text>
@@ -480,7 +511,9 @@ class PostDetail extends Component {
           justifyContent: 'space-between',
         }}>
         <View style={{width: '90%'}}>
-          <Text style={{fontSize: 20, fontWeight: '400'}}>{title}</Text>
+          <Text selectable={true} style={{fontSize: 20, fontWeight: '400'}}>
+            {title}
+          </Text>
         </View>
 
         <View style={{}}>
@@ -503,6 +536,7 @@ class PostDetail extends Component {
     return (
       <View style={{marginLeft: '3%', marginTop: 20, marginRight: '5%'}}>
         <Text
+          selectable={true}
           style={{
             fontSize: 17,
             marginTop: '1%',
@@ -627,7 +661,7 @@ class PostDetail extends Component {
   };
 
   postComment = async (postId, postUserId) => {
-    if (this.state.currentComment !== null || this.state.currentComment != '') {
+    if (this.state.currentComment && this.state.currentComment != '') {
       const Token = await AsyncStorage.getItem('TOKEN');
       const Response = await fetch(
         `${require('../config').default.production}api/v1/comment/create`,
@@ -664,12 +698,12 @@ class PostDetail extends Component {
           currentComment: '',
         });
       } else {
-        // alert("comment can't be empty");
-        console.log('Something wrong');
+        alert(
+          'something is wrong. Try again or check your internet connection',
+        );
       }
     } else {
-      // alert("comment can't be empty");
-      console.log('Something wrong');
+      alert("comment can't be empty");
     }
   };
 
@@ -714,14 +748,11 @@ class PostDetail extends Component {
     }
     const JsonResponse = await Response.json();
     if (parseInt(Response.status) === 400) {
-      console.log('400');
-      // alert(JsonResponse.message);
+      alert(JsonResponse.message);
     } else if (parseInt(Response.status) === 201) {
-      console.log('200');
-      // alert(JsonResponse.message);
+      alert(JsonResponse.message);
     } else {
-      // alert('something is wrong');
-      console.log('Semething wrong');
+      alert('something is wrong');
     }
   };
 
@@ -762,14 +793,11 @@ class PostDetail extends Component {
     }
     const JsonResponse = await Response.json();
     if (parseInt(Response.status) === 400) {
-      console.log('400');
-      // alert(JsonResponse.message);
+      alert(JsonResponse.message);
     } else if (parseInt(Response.status) === 200) {
-      console.log('200');
-      // alert(JsonResponse.message);
+      alert(JsonResponse.message);
     } else {
-      // alert('something is wrong');
-      console.log('Semething wrong');
+      alert('something is wrong');
     }
   };
 

@@ -1,4 +1,5 @@
 import React, {Component} from 'react';
+
 import {GiftedChat} from 'react-native-gifted-chat';
 import {
   View,
@@ -7,6 +8,7 @@ import {
   AppState,
   Dimensions,
   AsyncStorage,
+  Clipboard,
   Image,
   Platform,
 } from 'react-native';
@@ -77,6 +79,27 @@ class Chat extends React.Component {
   imageloaded = () => {
     this.setState({imageLoading: false});
   };
+
+  onLongPress(props) {
+    console.log('props', props.forwardRef.current.context);
+    if (props.currentMessage.text) {
+      const options = ['Copy Text', 'Cancel'];
+      const cancelButtonIndex = options.length - 1;
+      props.forwardRef.current.context.actionSheet().showActionSheetWithOptions(
+        {
+          options,
+          cancelButtonIndex,
+        },
+        buttonIndex => {
+          switch (buttonIndex) {
+            case 0:
+              Clipboard.setString(props.currentMessage.text);
+              break;
+          }
+        },
+      );
+    }
+  }
 
   customMessage = props => {
     return (
@@ -418,6 +441,7 @@ class Chat extends React.Component {
             },
           }}
           renderFooter={this.renderLoading}
+          onLongPress={this.onLongPress}
           loadEarlier={this.state.refreshing}
           renderLoading={this.renderLoading}
           alwaysShowSend={true}

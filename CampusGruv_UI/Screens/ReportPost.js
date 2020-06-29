@@ -23,7 +23,6 @@ class ReportPost extends Component {
   };
 
   onSubmission = async () => {
-    console.log('chalra ye');
     const Token = await AsyncStorage.getItem('TOKEN');
 
     let response = await fetch(
@@ -44,18 +43,16 @@ class ReportPost extends Component {
     );
 
     const postReport = await response.json();
-    console.log(response.status, '======ppost report');
     if (parseInt(response.status) === 400) {
       alert(postReport.message);
     } else if (parseInt(response.status) === 200) {
-      alert(postReport.message);
+      this.props.navigation.navigate('HomeScreen');
     } else {
       alert('something went wrong');
     }
   };
 
   render() {
-    console.log(this.state.post_id + 'Asdadasdasd');
     return (
       <ScrollView style={{paddingTop: Platform.OS == 'ios' ? '10%' : null}}>
         <Container style={{backgroundColor: 'white'}}>
@@ -150,7 +147,7 @@ class ReportPost extends Component {
                           ? 'white'
                           : ThemeBlue,
                     }}>
-                    Absuive and harmfull
+                    Absuive and harmful
                   </Text>
                 </View>
 
@@ -226,7 +223,7 @@ class ReportPost extends Component {
                           ? 'white'
                           : ThemeBlue,
                     }}>
-                    Sensitive or Inappropriate Image
+                    Sensitive or inappropriate content
                   </Text>
                 </View>
               </View>
@@ -257,7 +254,7 @@ class ReportPost extends Component {
                           ? 'white'
                           : ThemeBlue,
                     }}>
-                    Absuive and harmfull
+                    Absuive and harmful
                   </Text>
                 </View>
 
@@ -321,7 +318,7 @@ class ReportPost extends Component {
                           ? 'white'
                           : ThemeBlue,
                     }}>
-                    Sensitive or Inappropriate Image
+                    Sensitive or inappropriate content
                   </Text>
                 </View>
               </View>

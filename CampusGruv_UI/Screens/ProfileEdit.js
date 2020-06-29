@@ -150,6 +150,7 @@ class ProfilePage extends React.Component {
     this.setState({website: this.props.User?.website});
     this.setState({bio: this.props.User?.bio});
     this.setState({name: this.props.User.first_name});
+    this.setState({last_name: this.props.User.last_name});
     this.setState({phone: this.props.User.contact_no});
     this.setState({gradutationYear: this.props.User.graduate_year});
 
@@ -214,6 +215,7 @@ class ProfilePage extends React.Component {
     phone: '',
     gradutationYear: '',
     name: '',
+    last_name: '',
     focused: false,
     Spinner: false,
   };
@@ -314,6 +316,7 @@ class ProfilePage extends React.Component {
             website: this.state.website,
             major: this.state.major,
             first_name: this.state.name,
+            last_name: this.state.last_name,
             contact_no: this.state.phone,
             graduate_year: this.state.gradutationYear,
           }),
@@ -333,7 +336,7 @@ class ProfilePage extends React.Component {
     //his.props.navigation.navigate('HomeScreen')
     this.state.currentCampus === 'nahi_hai'
       ? this.props.navigation.navigate('AuthLoading')
-      : this.props.navigation.navigate('HomeScreen');
+      : this.props.navigation.navigate('UserProfile');
 
     console.log(postMasterResponse, 'patch request');
   };
@@ -345,7 +348,7 @@ class ProfilePage extends React.Component {
           style={{
             fontSize: 20,
             marginTop: 15,
-            marginLeft: 10,
+            marginLeft: 15,
             width: '25%',
             marginRight: '0.5%',
           }}>
@@ -354,7 +357,7 @@ class ProfilePage extends React.Component {
 
         <DatePicker
           style={{
-            width: '70%',
+            width: '60%',
           }}
           date={this.state.date}
           mode="date"
@@ -399,7 +402,7 @@ class ProfilePage extends React.Component {
       <View style={{marginTop: '5%'}}>
         <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
           <Text
-            style={{fontSize: 20, marginTop: 15, marginLeft: 10, width: '25%'}}>
+            style={{fontSize: 20, marginTop: 15, marginLeft: 15, width: '25%'}}>
             Phone
           </Text>
           <TextInput
@@ -532,11 +535,19 @@ class ProfilePage extends React.Component {
               marginTop: Dimensions.get('window').height > 800 ? 50 : 20,
             }}>
             <InputView
-              name="Name"
-              ph="Enter name"
+              name="First name"
+              ph="edit first name"
               value={this.state.name}
               changestate={text => {
                 this.setState({name: text});
+              }}
+            />
+            <InputView
+              name="Last name"
+              ph="Edit last name"
+              value={this.state.last_name}
+              changestate={text => {
+                this.setState({last_name: text});
               }}
             />
             {/* <InputView name='Campus' ph='University of Pittsburgh'/> */}
@@ -546,7 +557,7 @@ class ProfilePage extends React.Component {
                 style={{
                   fontSize: 20,
                   marginTop: 15,
-                  marginLeft: 10,
+                  marginLeft: 15,
                   width: '25%',
                 }}>
                 Campus

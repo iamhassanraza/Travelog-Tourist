@@ -447,12 +447,9 @@ class CreateNewPost extends Component {
 
       let imageResponse = await raw_response.json();
 
-      console.log(imageResponse, 'IMAGEE ka responseE');
-      console.log(imageResponse.image_url, 'IMAGEEEEEEEEEEEEEEEEEEEEEEEE');
-
       this.setState({spinner: false, Description: ''});
 
-      this.props.navigation.navigate('HomeScreen', null);
+      this.props.navigation.navigate('HomeScreen', {newPost: true});
     }
   };
 

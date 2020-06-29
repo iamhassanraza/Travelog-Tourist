@@ -478,6 +478,10 @@ const TabNavigator = createBottomTabNavigator(
         tabBarIcon: ({tintColor}) => (
           <HomeIcon name="home" color={tintColor} style={{fontSize: 25}} />
         ),
+        tabBarOnPress: ({navigation, defaultHandler}) => {
+          navigation.dispatch(StackActions.popToTop());
+          defaultHandler();
+        },
         tabBarLabel: 'Home',
       },
     },
@@ -487,7 +491,6 @@ const TabNavigator = createBottomTabNavigator(
         if (props.screenProps.PostDetail) props.navigation.navigate('Home');
         store = mystore;
         state = store.getState();
-        //console.log('state', state);
         return {
           tabBarOnPress: ({navigation, defaultHandler}) => {
             navigation.dispatch(StackActions.popToTop());

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PureComponent} from 'react';
 import {
   Text,
   View,
@@ -28,7 +28,7 @@ import {
 } from 'react-native-indicators';
 import {ThemeBlue} from '../Assets/Colors';
 
-class NotificationScreen extends Component {
+class NotificationScreen extends PureComponent {
   state = {
     notification: [],
     pageNo: 1,
@@ -49,6 +49,7 @@ class NotificationScreen extends Component {
       this.state.store.dispatch(clearNoti());
     });
   }
+
   //${require('../config').default.production}
 
   loadMore = ({distanceFromEnd}) => {
@@ -109,6 +110,7 @@ class NotificationScreen extends Component {
     const JsonResponse = await Response.json();
     this.setState({
       notification: JsonResponse.data,
+      totalNotis: JsonResponse.data.length,
       total: JsonResponse.total,
       loading: false,
     });
@@ -153,7 +155,9 @@ class NotificationScreen extends Component {
             </View>
           )}
           {/* {this.state.notification[0] ? */
-          !this.state.loading ? (
+          !this.state.totalNotis ? (
+            <UIActivityIndicator color={ThemeBlue} />
+          ) : (
             <View style={{flex: 1}}>
               <FlatList
                 onEndReached={this.loadMore}
@@ -197,8 +201,6 @@ class NotificationScreen extends Component {
                 )}
               />
             </View>
-          ) : (
-            <UIActivityIndicator color={ThemeBlue} />
           )}
           {this.state.endReached ? (
             <View
