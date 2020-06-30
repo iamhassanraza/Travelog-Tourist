@@ -143,7 +143,6 @@ class UserProfile extends React.Component {
     super(props);
     this.state = {
       posts: [],
-      // total: '  ',
       followers: '  ',
       following: '  ',
       otherUserId: null,
@@ -348,6 +347,8 @@ class UserProfile extends React.Component {
         },
       );
       const jsonresponse = await response.json();
+      console.log(jsonresponse, 'helllllllllllllllloooooooooooooooooooooooo');
+
       this.setState({
         spinner: false,
         posts: jsonresponse.data,
@@ -927,7 +928,7 @@ class UserProfile extends React.Component {
           ) : null}
         </View>
 
-        {!this.state.total
+        {this.state.total === undefined || this.state.total === null
           ? this.renderLoading()
           : this.state.total === 0
           ? this.renderNoPost()

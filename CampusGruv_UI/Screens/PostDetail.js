@@ -416,6 +416,19 @@ class PostDetail extends Component {
                   </View>
                   {userId === this.props.User.id ? (
                     <View style={styles.modalOptions}>
+                      <IconFeather name="edit" style={styles.optionIcon} />
+                      <Text
+                        onPress={() => {
+                          this.setState({isModalVisible: false});
+                          alert('edit post');
+                        }}
+                        style={styles.TextWithNavigation}>
+                        Edit Post
+                      </Text>
+                    </View>
+                  ) : null}
+                  {userId === this.props.User.id ? (
+                    <View style={styles.modalOptions}>
                       <IconFeather name="delete" style={styles.optionIcon} />
                       <Text
                         onPress={() => {
