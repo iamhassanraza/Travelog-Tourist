@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, PureComponent} from 'react';
 
 import {GiftedChat} from 'react-native-gifted-chat';
 import {
@@ -24,7 +24,7 @@ import ImagePicker from 'react-native-image-picker';
 import FastImage from 'react-native-fast-image';
 import {UIActivityIndicator} from 'react-native-indicators';
 
-class Chat extends React.Component {
+class Chat extends React.PureComponent {
   static navigationOptions = props => {
     const {params = {}} = props.navigation.state;
     return {
@@ -81,7 +81,6 @@ class Chat extends React.Component {
   };
 
   onLongPress(props) {
-    console.log('props', props.forwardRef.current.context);
     if (props.currentMessage.text) {
       const options = ['Copy Text', 'Cancel'];
       const cancelButtonIndex = options.length - 1;
@@ -143,22 +142,22 @@ class Chat extends React.Component {
                   justifyContent: 'center',
                   maxWidth: 250,
                   minWidth: 20,
-                  paddingVertical: '1%',
+                  borderRadius: 10,
+                  borderWidth: 1,
+                  borderColor:
+                    props.currentMessage.user._id === this.props.User.id
+                      ? '#2a9ffd'
+                      : '#e5e5ea',
+                  backgroundColor:
+                    props.currentMessage.user._id === this.props.User.id
+                      ? '#2a9ffd'
+                      : '#e5e5ea',
                 }}>
                 <Text
                   style={{
                     textAlign:
                       props.currentMessage.text.length < 10 ? 'center' : 'auto',
-                    borderRadius: 8,
-                    borderColor:
-                      props.currentMessage.user._id === this.props.User.id
-                        ? '#2a9ffd'
-                        : '#e5e5ea',
-                    backgroundColor:
-                      props.currentMessage.user._id === this.props.User.id
-                        ? '#2a9ffd'
-                        : '#e5e5ea',
-                    borderWidth: 1,
+
                     fontSize: 16,
                     paddingVertical: 5,
                     paddingLeft: 5,
@@ -303,6 +302,8 @@ class Chat extends React.Component {
       {
         maxWidth: 1000,
         maxHeight: 1000,
+        allowsEditing: true,
+
         storageOptions: {
           skipBackup: true,
           path: 'images',

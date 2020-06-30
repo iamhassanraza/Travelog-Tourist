@@ -503,7 +503,7 @@ const TabNavigator = createBottomTabNavigator(
                   <NotiIcon
                     name="bell"
                     color={tintColor}
-                    style={{fontSize: 25}}
+                    style={{fontSize: 25, margin: 6}}
                   />
                 }
                 BadgeElement={
@@ -553,7 +553,7 @@ const TabNavigator = createBottomTabNavigator(
                   <Icon2
                     name="email-outline"
                     color={tintColor}
-                    style={{fontSize: 25}}
+                    style={{fontSize: 25, margin: 6}}
                   />
                 }
                 BadgeElement={
