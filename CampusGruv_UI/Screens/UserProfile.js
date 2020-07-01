@@ -601,7 +601,13 @@ class UserProfile extends React.Component {
             }}
           />
           <View style={{marginLeft: 10}}>
-            <Text style={{fontSize: 25, fontWeight: 'bold', color: '#727272'}}>
+            <Text
+              style={{
+                width: '80%',
+                fontSize: 25,
+                fontWeight: 'bold',
+                color: '#727272',
+              }}>
               {postUserFirstName +
                 ' ' +
                 (postUserLastName === '' || !postUserLastName

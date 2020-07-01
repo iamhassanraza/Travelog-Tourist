@@ -65,6 +65,7 @@ class PostCard extends Component {
               description: this.props.description,
               comments: this.props.comments,
               views: this.props.views,
+              likes: this.props.likes,
               height: this.state.height,
             },
           })

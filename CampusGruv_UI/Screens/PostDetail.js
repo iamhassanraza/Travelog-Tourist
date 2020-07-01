@@ -51,6 +51,7 @@ import YesSave from '../Assets/Images/YesSave.png';
 import FastImage from 'react-native-fast-image';
 
 const IconGrey = '#b4b8bf';
+var {width, height} = Dimensions.get('window');
 
 //AndroidKeyboardAdjust.setAdjustPan();
 
@@ -89,6 +90,10 @@ class PostDetail extends Component {
       'no follow status',
     ).userFollowing,
     isModalVisible: false,
+    description: this.props.navigation.getParam('PostData', 'no save status')
+      .description,
+    editDescText: this.props.navigation.getParam('PostData', 'no save status')
+      .description,
     post_id: undefined,
     imageurl: this.props.navigation.getParam('PostData', 'nothing to render')
       ?.uri,
@@ -419,11 +424,13 @@ class PostDetail extends Component {
                       <IconFeather name="edit" style={styles.optionIcon} />
                       <Text
                         onPress={() => {
-                          this.setState({isModalVisible: false});
-                          alert('edit post');
+                          this.setState({
+                            isModalVisible: false,
+                            editDescription: true,
+                          });
                         }}
                         style={styles.TextWithNavigation}>
-                        Edit Post
+                        Edit post description
                       </Text>
                     </View>
                   ) : null}
@@ -436,7 +443,7 @@ class PostDetail extends Component {
                           this.deletePost(postId);
                         }}
                         style={styles.TextWithNavigation}>
-                        Delete Post
+                        Delete post
                       </Text>
                     </View>
                   ) : null}
@@ -455,7 +462,7 @@ class PostDetail extends Component {
                           });
                         }}
                         style={styles.TextWithNavigation}>
-                        Report Post
+                        Report post
                       </Text>
                     </View>
                   )}
@@ -484,7 +491,7 @@ class PostDetail extends Component {
                     <Text
                       onPress={() => this.sharePost(first_name, postId)}
                       style={styles.TextWithNavigation}>
-                      Share Post
+                      Share post
                     </Text>
                   </View>
                 </View>
@@ -513,7 +520,7 @@ class PostDetail extends Component {
     );
   };
 
-  renderTitle = (title, views) => {
+  renderTitle = (title, views, likes) => {
     return (
       <View
         style={{
@@ -526,6 +533,19 @@ class PostDetail extends Component {
         <View style={{width: '90%'}}>
           <Text selectable={true} style={{fontSize: 20, fontWeight: '400'}}>
             {title}
+          </Text>
+        </View>
+
+        <View style={{marginRight: '1%'}}>
+          <ViewsIcon color="grey" name="thumb-up" style={{fontSize: 17}} />
+          <Text
+            style={{
+              fontSize: 9,
+              color: 'grey',
+              marginTop: -2,
+              alignSelf: 'center',
+            }}>
+            {likes}
           </Text>
         </View>
 
@@ -555,7 +575,7 @@ class PostDetail extends Component {
             marginTop: '1%',
             marginBottom: 10,
           }}>
-          {description}
+          {this.state.description}
         </Text>
       </View>
     );
@@ -851,7 +871,7 @@ class PostDetail extends Component {
                   data.title,
                 )}
                 {this.renderImage(data.uri)}
-                {this.renderTitle(data.title, data.views)}
+                {this.renderTitle(data.title, data.views, data.likes)}
                 {this.renderDescription(data.description)}
                 {this.state.comments[0]
                   ? this.renderAllComments(data.userAvatar, data.comments)
@@ -875,7 +895,7 @@ class PostDetail extends Component {
                   data.title,
                 )}
                 {this.renderImage(data.uri)}
-                {this.renderTitle(data.title, data.views)}
+                {this.renderTitle(data.title, data.views, data.likes)}
                 {this.renderDescription(data.description)}
                 {this.state.comments[0]
                   ? this.renderAllComments(data.userAvatar, data.comments)
@@ -884,6 +904,122 @@ class PostDetail extends Component {
               {this.renderAddComment(data.userAvatar, data.postId, data.userId)}
             </>
           )}
+          {this.state.editDescription ? (
+            <View
+              style={{
+                flex: 1,
+                position: 'absolute',
+                left: 0,
+                bottom: 0,
+                top: 0,
+                right: 0,
+                opacity: 0.9,
+                backgroundColor: 'black',
+                width: width,
+                height: height,
+              }}>
+              <CrossIcon
+                name="cancel"
+                onPress={() => this.setState({editDescription: false})}
+                style={{
+                  position: 'absolute',
+                  top: 22,
+                  left: 10,
+                  fontSize: 25,
+                  color: IconGrey,
+                }}
+              />
+              <View
+                style={{
+                  justifyContent: 'center',
+                  alignItems: 'center',
+                  marginTop: '20%',
+                  width: width,
+                }}>
+                <Text style={{fontSize: 20, color: 'grey'}}>
+                  Edit post description
+                </Text>
+                <View style={{marginTop: '3%'}}>
+                  <TextInput
+                    selectionColor="grey"
+                    value={this.state.editDescText}
+                    scrollEnabled={false}
+                    multiline={true}
+                    autoFocus={true}
+                    style={{
+                      color: 'grey',
+                      width: '100%',
+                      height: Dimensions.get('window').height / 3.9,
+                      width: Dimensions.get('window').width / 1.1,
+                      paddingLeft: 10,
+                      paddingRight: 5,
+                      marginLeft: '2.5%',
+                      marginRight: '2.5%',
+                      borderColor: 'grey',
+                      borderRadius: 8,
+                      borderWidth: 1,
+                      textAlignVertical: 'top',
+                    }}
+                    onChangeText={text => {
+                      this.setState({
+                        editDescText: text,
+                      });
+                    }}
+                  />
+                </View>
+              </View>
+              <TouchableOpacity
+                style={{alignItems: 'center', marginTop: '1%'}}
+                onPress={() => {
+                  this.setState(
+                    {
+                      description: this.state.editDescText,
+                      editDescription: false,
+                    },
+                    async () => {
+                      const Token = await AsyncStorage.getItem('TOKEN');
+
+                      let response = await fetch(
+                        `${
+                          require('../config').default.production
+                        }api/v1/post/edit`,
+                        {
+                          method: 'POST',
+                          headers: {
+                            'Content-Type': 'application/json',
+                            Authorization: `Bearer ${Token}`,
+                          },
+                          body: JSON.stringify({
+                            post_id: data.postId,
+                            description: this.state.description,
+                          }),
+                        },
+                      );
+                      console.log('reponse', response);
+                    },
+                  );
+                }}>
+                <View
+                  style={{
+                    width: '90%',
+                    borderRadius: 5,
+                    height: 35,
+                    justifyContent: 'center',
+                    backgroundColor: '#0C91CF',
+                    alignSelf: 'center',
+                  }}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontWeight: 'bold',
+                      alignSelf: 'center',
+                    }}>
+                    submit
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          ) : null}
         </Container>
       </>
     );

@@ -49,7 +49,6 @@ class AuthLoading extends React.Component {
     } else {
       initialUrl = await Linking.getInitialURL();
     }
-    console.log('initial url', initialUrl);
     if (initialUrl) {
       const route = initialUrl.replace(
         Platform.OS === 'android'

@@ -346,7 +346,7 @@ class CreateNewPost extends Component {
           width: Dimensions.get('window').width,
         }}>
         <Text style={{fontSize: 17, color: 'grey', marginBottom: 7}}>
-          Add Description (optional)
+          Add Description
         </Text>
         <View style={{}}>
           <TextInput

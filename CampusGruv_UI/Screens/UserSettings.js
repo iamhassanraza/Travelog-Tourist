@@ -22,7 +22,7 @@ import FastImage from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import {CreateUserDetails} from '../ReduxStore/Actions/index';
 import Spinner from 'react-native-loading-spinner-overlay';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {UIActivityIndicator, BarIndicator} from 'react-native-indicators';
 import {ThemeBlue} from '../Assets/Colors';
 import switchImg from '../Assets/Images/switch.png';
 
@@ -37,6 +37,7 @@ class UserSettings extends Component {
     let userId = await AsyncStorage.getItem('USER_ID');
     let selected = await AsyncStorage.getItem('selected');
     let accountType = await AsyncStorage.getItem('accountType');
+    this.setState({accountType: accountType});
     if (accountType === 'user') {
       this.setState({selected: 'user'});
     } else {
@@ -65,7 +66,6 @@ class UserSettings extends Component {
       },
     );
     let JsonResponse = await response.json();
-    console.log(JsonResponse, 'POPOPOPOOOOOOOOOOOOPOPOPOPOPOPOOOOOOOOP');
     this.setState({organizations: JsonResponse});
   }
 
@@ -74,8 +74,6 @@ class UserSettings extends Component {
   };
 
   render() {
-    let accountType = AsyncStorage.getItem('accountType');
-
     return (
       <View style={{flex: 1, backgroundColor: '#f9fdfe'}}>
         <Spinner
@@ -91,68 +89,82 @@ class UserSettings extends Component {
             marginLeft: '3%',
             marginTop: '3%',
           }}>
-          <TouchableOpacity
-            disabled={this.state.selected === 'user'}
-            onPress={() => {
-              this.setState({selected: 'user'}, async () => {
-                var USER = await AsyncStorage.getItem('USER_ID');
-                var userToken = await AsyncStorage.getItem('USERTOKEN');
-                var currentToken = await AsyncStorage.getItem('TOKEN');
-                console.log('socket', this.props.socket);
+          {this.state.user ? (
+            <TouchableOpacity
+              disabled={this.state.selected === 'user'}
+              onPress={() => {
+                this.setState({selected: 'user'}, async () => {
+                  var USER = await AsyncStorage.getItem('USER_ID');
+                  var userToken = await AsyncStorage.getItem('USERTOKEN');
+                  var currentToken = await AsyncStorage.getItem('TOKEN');
+                  console.log('socket', this.props.socket);
 
-                await this.props.socket.emit('account_switched');
-                var res = await fetch(
-                  `${
-                    require('../config').default.production
-                  }api/v1/user/logout`,
-                  {
-                    method: 'GET',
-                    headers: {
-                      'Content-Type': 'application/json',
-                      Authorization: `Bearer ${currentToken}`,
+                  await this.props.socket.emit('account_switched');
+                  var res = await fetch(
+                    `${
+                      require('../config').default.production
+                    }api/v1/user/logout`,
+                    {
+                      method: 'GET',
+                      headers: {
+                        'Content-Type': 'application/json',
+                        Authorization: `Bearer ${currentToken}`,
+                      },
                     },
-                  },
-                );
-                console.log('response', await res.json());
-                await AsyncStorage.setItem('TOKEN', userToken);
-                await AsyncStorage.setItem('selected', USER);
-                await AsyncStorage.setItem('accountType', 'user');
-                this.props.screenProps.rootNavigation.navigate('AuthLoading');
-              });
-              console.log('switch to main acount');
-            }}
-            style={{
-              // width: 90,
-              alignSelf: 'center',
-              height: 70,
-              alignItems: 'center',
-            }}>
-            <FastImage
-              style={{
-                height: 50,
-                borderWidth: 2,
-                borderColor: this.state.selected === 'user' ? 'black' : 'grey',
-                width: 50,
-                borderRadius: 50,
+                  );
+                  console.log('response', await res.json());
+                  await AsyncStorage.setItem('TOKEN', userToken);
+                  await AsyncStorage.setItem('selected', USER);
+                  await AsyncStorage.setItem('accountType', 'user');
+                  this.props.screenProps.rootNavigation.navigate('AuthLoading');
+                });
+                console.log('switch to main acount');
               }}
-              source={{
-                uri: this.state.user ? this.state.user.profile_pic_url : '',
-              }}
-            />
-            <Text
-              numberOfLines={1}
               style={{
-                width: 60,
-                fontSize: 12,
-                marginTop: 2,
-                color: this.state.selected === 'user' ? 'black' : 'grey',
-                textAlign: 'center',
+                // width: 90,
+
+                alignSelf: 'center',
+                height: 70,
+                alignItems: 'center',
               }}>
-              {this.state.user
-                ? this.state.user.first_name + ' ' + this.state.user.last_name
-                : ''}
-            </Text>
-          </TouchableOpacity>
+              <FastImage
+                style={{
+                  height: 50,
+                  borderWidth: 2,
+                  borderColor:
+                    this.state.selected === 'user' ? 'black' : 'grey',
+                  width: 50,
+                  borderRadius: 50,
+                }}
+                source={{
+                  uri: this.state.user ? this.state.user.profile_pic_url : '',
+                }}
+              />
+              <Text
+                numberOfLines={1}
+                style={{
+                  width: 60,
+                  fontSize: 12,
+                  marginTop: 2,
+                  fontWeight: this.state.selected === 'user' ? '600' : 'normal',
+                  color: this.state.selected === 'user' ? 'black' : 'grey',
+                  textAlign: 'center',
+                }}>
+                {this.state.user
+                  ? this.state.user.first_name + ' ' + this.state.user.last_name
+                  : ''}
+              </Text>
+            </TouchableOpacity>
+          ) : (
+            <View
+              style={{
+                width: '100%',
+                justifyContent: 'center',
+                alignItems: 'center',
+              }}>
+              <UIActivityIndicator size={20} />
+            </View>
+          )}
           <FlatList
             style={{height: 70}}
             horizontal
@@ -236,6 +248,11 @@ class UserSettings extends Component {
                         marginTop: 2,
                         width: 60,
                         fontSize: 12,
+                        fontWeight:
+                          this.state.selected === item.organizations.id
+                            ? '600'
+                            : 'normal',
+
                         color:
                           this.state.selected === item.organizations.id
                             ? 'black'
@@ -272,7 +289,7 @@ class UserSettings extends Component {
               Account
             </Text>
           </View> */}
-          {accountType !== 'org' ? (
+          {this.state.accountType !== 'org' ? (
             <TouchableOpacity
               onPress={() => {
                 this.props.navigation.navigate('CreateOrganization', null);

@@ -371,15 +371,6 @@ class HomeScreen extends PureComponent {
 
     if (parseInt(Response.status) === 401) {
     } else if (parseInt(Response.status) === 200) {
-      console.log('Category aagyi yayyyy');
-      // this.setState(previousState => {
-      //   return {
-      //     posts: [...previousState.posts, ...JsonResponse.data],
-      //     totl: JsonResponse.total,
-      //     loading: false,
-      //     loadmore: false,
-      //   };
-      // });
       this.setState({
         posts: JsonResponse.data,
         total: JsonResponse.total,
@@ -454,11 +445,7 @@ class HomeScreen extends PureComponent {
           })
           .catch(err => console.log(err));
       }
-    }
-    // else if (this.state.FollowersPosts){
-    //   console.log("Followers ki posten dikhaao bhaeeeeeeeeeeeeeeee");
-    // }
-    else {
+    } else {
       this.fetchCategoryPosts();
     }
   };
@@ -504,18 +491,6 @@ class HomeScreen extends PureComponent {
       this.fetchdata();
     });
 
-    //Socket connection goes here
-    // const Token = await AsyncStorage.getItem('TOKEN');
-    // this.socket = io('${require('../config').default.pro_chat}', { query: `token=${Token}`, transports: ['websocket'] });
-
-    // this.socket.on('connect', () => {
-    //   console.log('hello jee connection established')
-    //   this.props.connectSocket(this.socket)
-    // });
-    // this.socket.on('connect_error', (err) => {
-    //   console.log('hello jee error established',err)
-    // });
-
     this.props.navigation.setParams({
       handleThis: async () => {
         await this.setState(prevState => {
@@ -534,7 +509,6 @@ class HomeScreen extends PureComponent {
   }
 
   render() {
-    console.log('i re renderd');
     if (this.props.screenProps.postDetail) {
       const postDetail = this.props.screenProps.postDetail[0];
       this.props.navigation.navigate('PostDetail', {

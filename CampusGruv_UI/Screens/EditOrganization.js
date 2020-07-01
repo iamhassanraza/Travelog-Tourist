@@ -162,16 +162,11 @@ class EditOrganization extends Component {
       organizationEmail: this.props.User.email,
       imageURL: this.props.User.profile_pic_url,
       organizationWebsite: this.props.User.website,
+      selectedOrgType: this.props.User?.organization_type,
     });
     this.props.navigation.setParams({
       handleThis: () => {
-        if (
-          this.state.organizationName &&
-          this.state.organizationEmail &&
-          this.state.organizationWebsite
-        ) {
-          this.editOrganization();
-        } else alert('All fields except members are required');
+        this.editOrganization();
       },
     });
   }
@@ -192,6 +187,7 @@ class EditOrganization extends Component {
         body: this.createFormData(this.state.imageUri, {
           first_name: this.state.organizationName,
           email: this.state.organizationEmail,
+          organization_type: this.state.selectedOrgType,
           last_name: '',
         }),
       },
@@ -307,6 +303,53 @@ class EditOrganization extends Component {
                   this.setState({organizationName: text});
                 }}
               />
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    marginTop: 15,
+                    marginLeft: 15,
+                    width: '30%',
+                  }}>
+                  Organization type
+                </Text>
+                <View
+                  style={{
+                    width: '60%',
+                    marginTop: 5,
+                    borderBottomWidth: 0.5,
+                    borderBottomColor: '#C4C4C4',
+                  }}>
+                  <Picker
+                    textStyle={{paddingLeft: 0}}
+                    selectedValue={this.state.selectedOrgType}
+                    onValueChange={itemValue => {
+                      this.setState({
+                        selectedOrgType: itemValue,
+                      });
+                    }}>
+                    <Picker.Item
+                      label="Student organization"
+                      value="Student organization"
+                    />
+                    <Picker.Item
+                      label="University department"
+                      value="University department"
+                    />
+                    <Picker.Item
+                      label="Alumni association"
+                      value="Alumni association"
+                    />
+                  </Picker>
+                </View>
+                <Icon
+                  name="pencil"
+                  color="#C4C4C4"
+                  size={26}
+                  style={{width: '10%', marginTop: 15}}
+                />
+              </View>
               {/* <View
                 style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Text

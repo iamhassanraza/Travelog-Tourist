@@ -96,6 +96,7 @@ class CreateOrganization extends Component {
     organizationEmail: '',
     organizationWebsite: '',
     organizationMembers: [],
+    selectedOrgType: 'Student organization',
     focused: false,
     Spinner: false,
     imageName: '',
@@ -188,6 +189,7 @@ class CreateOrganization extends Component {
           email: this.state.organizationEmail,
           website: this.state.organizationWebsite,
           first_name: this.state.organizationName,
+          organization_type: this.state.selectedOrgType,
           last_name: '',
         }),
       },
@@ -334,6 +336,7 @@ class CreateOrganization extends Component {
                 />
               </View> */}
               <InputView
+                width="30%"
                 multiline={true}
                 name="Email"
                 ph="Enter email"
@@ -343,6 +346,7 @@ class CreateOrganization extends Component {
                 }}
               />
               <InputView
+                width="30%"
                 multiline={true}
                 name="Website"
                 ph="Enter your website"
@@ -351,14 +355,64 @@ class CreateOrganization extends Component {
                   this.setState({organizationWebsite: text});
                 }}
               />
-              {/* <TouchableOpacity onPress={()=> this.props.navigation.navigate('AddMembers')}>
-              <InputView
-                name="Members"
-                ph="Add Users"
-                changestate={text => {
-                  this.props.navigation.navigate('AddMembers', {searched:text})
-                }}
-              />
+              <View
+                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                <Text
+                  style={{
+                    fontSize: 18,
+                    marginTop: 15,
+                    marginLeft: 15,
+                    width: '30%',
+                  }}>
+                  Organization type
+                </Text>
+                <View
+                  style={{
+                    width: '60%',
+                    marginTop: 5,
+                    borderBottomWidth: 0.5,
+                    borderBottomColor: '#C4C4C4',
+                  }}>
+                  <Picker
+                    textStyle={{paddingLeft: 0}}
+                    selectedValue={this.state.selectedOrgType}
+                    onValueChange={itemValue => {
+                      this.setState({
+                        selectedOrgType: itemValue,
+                      });
+                    }}>
+                    <Picker.Item
+                      label="Student organization"
+                      value="Student organization"
+                    />
+                    <Picker.Item
+                      label="University department"
+                      value="University department"
+                    />
+                    <Picker.Item
+                      label="Alumni association"
+                      value="Alumni association"
+                    />
+                  </Picker>
+                </View>
+                <Icon
+                  name="pencil"
+                  color="#C4C4C4"
+                  size={26}
+                  style={{width: '10%', marginTop: 15}}
+                />
+              </View>
+              {/* <TouchableOpacity
+                onPress={() => this.props.navigation.navigate('AddMembers')}>
+                <InputView
+                  name="Members"
+                  ph="Add Users"
+                  changestate={text => {
+                    this.props.navigation.navigate('AddMembers', {
+                      searched: text,
+                    });
+                  }}
+                />
               </TouchableOpacity> */}
             </View>
           </View>

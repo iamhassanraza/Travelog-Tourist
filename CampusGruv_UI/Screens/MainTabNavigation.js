@@ -45,32 +45,23 @@ class MainTabNavigation extends React.Component {
       console.log('hello jee error established', err);
     });
     this.props.socket.on('user_message', msg => {
-      console.log('msg received', msg);
       this.props.unreadMsg();
     });
     this.props.socket.on('notification', noti => {
-      console.log('noti', noti);
       this.props.unreadNoti();
     });
 
     this.checkPermissions().then(permission => {
-      console.log('indidmount', permission);
-
       this.getRegistrationToken(Token);
 
       messaging().onNotificationOpenedApp(remoteMessage => {
         jsonMessage = JSON.parse(remoteMessage.data.info);
-        console.log(
-          'Notification caused app to open from background state:',
-          jsonMessage,
-        );
         if (
           jsonMessage.notification_type === 'liked' ||
           jsonMessage.notification_type === 'commented'
         ) {
           this.fetchPostData(jsonMessage.post_id);
         } else if (jsonMessage.notification_type === 'message') {
-          console.log('message received');
           this.setState({
             chatDetail: {
               room_id: jsonMessage.room_id,
@@ -84,17 +75,13 @@ class MainTabNavigation extends React.Component {
         .then(async remoteMessage => {
           if (remoteMessage) {
             jsonMessage = JSON.parse(remoteMessage.data.info);
-            console.log(
-              'Notification caused app to open from quit state:',
-              jsonMessage,
-            );
+
             if (
               jsonMessage.notification_type === 'liked' ||
               jsonMessage.notification_type === 'commented'
             ) {
               this.fetchPostData(jsonMessage.post_id);
             } else if (jsonMessage.notification_type === 'message') {
-              console.log('message received');
               this.setState({
                 chatDetail: {
                   room_id: jsonMessage.room_id,
@@ -113,8 +100,6 @@ class MainTabNavigation extends React.Component {
       .getToken()
       .then(async fcmToken => {
         if (fcmToken) {
-          console.log('fcm', fcmToken);
-
           // user has a device token
           var response = await fetch(
             `${require('../config').default.production}api/v1/user/update/fcm`,
@@ -129,7 +114,6 @@ class MainTabNavigation extends React.Component {
               },
             },
           );
-          console.log('response', await response.json());
         } else {
           alert('error occured fetching token');
           // user doesn't have a device token yet
@@ -139,7 +123,6 @@ class MainTabNavigation extends React.Component {
 
   checkPermissions = async () => {
     const enabled = await messaging().hasPermission();
-    console.log('enabled', messaging.AuthorizationStatus.AUTHORIZED);
     if (enabled === 1) {
       // user has permissions
       return true;
@@ -177,7 +160,6 @@ class MainTabNavigation extends React.Component {
       },
     );
     let JsonResponse = await response.json();
-    console.log('response of the post', JsonResponse);
     if (JsonResponse.length > 0) this.setState({postDetail: JsonResponse});
   };
 
