@@ -600,10 +600,10 @@ class UserProfile extends React.Component {
               shadowOpacity: 0.5,
             }}
           />
-          <View style={{marginLeft: 10}}>
+          <View style={{marginLeft: 10, width: '70%'}}>
             <Text
               style={{
-                width: '80%',
+                
                 fontSize: 25,
                 fontWeight: 'bold',
                 color: '#727272',

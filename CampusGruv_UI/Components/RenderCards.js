@@ -11,7 +11,7 @@ import {
 } from 'react-native';
 import PostCard from './PostCard';
 import {withNavigation} from 'react-navigation';
-import {Icon} from 'native-base';
+import Icon from 'react-native-vector-icons/MaterialIcons';
 import {UIActivityIndicator} from 'react-native-indicators';
 
 class RenderCards extends PureComponent {
@@ -143,9 +143,8 @@ class RenderCards extends PureComponent {
                     this.props.loadMore();
                   }}>
                   <Icon
-                    type="MaterialIcons"
                     name="expand-more"
-                    style={{width: 20, height: 20}}
+                    style={{width: 20, height: 20, color: 'black'}}
                   />
                 </Text>
               )}

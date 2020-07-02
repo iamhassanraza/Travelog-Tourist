@@ -54,8 +54,9 @@ class ReportPost extends Component {
 
   render() {
     return (
-      <ScrollView style={{paddingTop: Platform.OS == 'ios' ? '10%' : null}}>
-        <Container style={{backgroundColor: 'white'}}>
+      // <ScrollView style={{paddingTop: Platform.OS == 'ios' ? '10%' : null}}>
+      <Container style={{backgroundColor: 'white'}}>
+        <Content>
           <TouchableOpacity>
             <Icon
               onPress={() => this.props.navigation.goBack()}
@@ -325,23 +326,15 @@ class ReportPost extends Component {
             )}
           </View>
 
-          <Content
-            style={{
-              paddingTop: '5%',
-              marginTop: '5%',
-              paddingBottom: '30%',
-              marginLeft: '5%',
-              marginRight: '5%',
-              borderRadius: 20,
-            }}>
-            <Item style={{width: '80%', alignSelf: 'center'}}>
+          <View style={{}}>
+            <Item style={{width: '80%', marginTop: 20, alignSelf: 'center'}}>
               <Input
                 onChangeText={text => {
                   this.setState({description: text});
                 }}
                 placeholder="This post contains ..."
-                placeholderTextColor="black"
-                style={{color: ThemeBlue}}
+                placeholderTextColor="grey"
+                style={{width: '80%', color: ThemeBlue}}
               />
             </Item>
 
@@ -370,9 +363,9 @@ class ReportPost extends Component {
                 Done
               </Text>
             </Button>
-          </Content>
-        </Container>
-      </ScrollView>
+          </View>
+        </Content>
+      </Container>
     );
   }
 }

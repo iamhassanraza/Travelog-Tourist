@@ -124,7 +124,7 @@ class PostDetail extends Component {
       });
     });
 
-    this.willBlurListener = navigation.addListener('didBlur', async () => {
+    this.willBlurListener = navigation.addListener('willBlur', async () => {
       this.props.screenProps.changeStatusBar({
         color: ThemeBlue,
         contentType: 'light-content',
