@@ -337,7 +337,10 @@ class UserSettings extends Component {
             </Text>
           </View>
 
-          <View
+         <TouchableOpacity onPress={() => {
+                this.props.navigation.navigate('Help');
+              }}>
+         <View
             style={{flexDirection: 'row', marginLeft: '2%', marginTop: '3%'}}>
             <Icon
               name="help-circle-outline"
@@ -352,6 +355,7 @@ class UserSettings extends Component {
               Help & Support
             </Text>
           </View>
+         </TouchableOpacity>
 
           <View
             style={{flexDirection: 'row', marginLeft: '2%', marginTop: '3%'}}>
