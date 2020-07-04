@@ -7,7 +7,7 @@ import {ThemeBlue} from '../Assets/Colors';
 export default class Help extends Component {
 
     state={
-        isModalVisible:true
+        isModalVisible:false
     }
 
 
@@ -15,10 +15,13 @@ export default class Help extends Component {
         this.setState({isModalVisible: !this.state.isModalVisible});
       };
 
-    renderOption = (option) => {
+    renderOption = (type,option) => {
         return(
         <View style={styles.optionContainer}>
-            <Text style={styles.optionText} onPress={()=> this.props.navigation.navigate('Feedback')}>{option}</Text>
+            <Text style={styles.optionText} onPress={()=> {
+                this.toggleModal();
+                this.props.navigation.navigate('Feedback',{type:type,name:option});
+            }}>{option}</Text>
         </View>
         )
     }
@@ -28,7 +31,7 @@ export default class Help extends Component {
            <SafeAreaView style={styles.container}>
                <TouchableOpacity onPress={()=> this.toggleModal()}>
                 <View style={styles.reportContainer} >
-                <Text style={styles.reportText}> Report a problem </Text>
+                <Text style={styles.reportText}>Report a problem</Text>
                 <Icon name="keyboard-arrow-right" color="grey" size={35} />
                 </View>
                 </TouchableOpacity>
@@ -39,10 +42,10 @@ export default class Help extends Component {
                 <View style={styles.modalContainer}>
                   
                     <Text style={styles.modalHeading}>Report a Problem</Text>
-                    {this.renderOption("Spam or Abuse")}
-                    {this.renderOption("Something isn't working")}
-                    {this.renderOption("General Feedback")}
-                    {this.renderOption("Image or Video Quality Issue")}
+                    {this.renderOption(1,"Spam or Abuse")}
+                    {this.renderOption(2,"Something isn't working")}
+                    {this.renderOption(3,"General Feedback")}
+                    {this.renderOption(4,"Image or Video Quality Issue")}
                     <View style={styles.cancelView}>
                     <Text style={styles.cancelText} onPress={()=> this.toggleModal()}>Cancel</Text>
                     </View>
@@ -61,7 +64,8 @@ const styles = StyleSheet.create({
   reportContainer: {
       flexDirection:'row',
       marginTop:5,
-      marginHorizontal:5,
+      marginRight:6,
+      marginLeft:13,
       justifyContent:'space-between',
       alignItems:'center'
   },
@@ -71,7 +75,7 @@ const styles = StyleSheet.create({
   },
   modalContainer:{
       backgroundColor:'white',
-      marginHorizontal:'15%',
+      marginHorizontal:'10%',
       alignItems:'center',
       borderRadius:8
   },
@@ -83,19 +87,19 @@ const styles = StyleSheet.create({
       borderTopColor:ThemeBlue
   },
   optionText:{
-      fontSize:17,
+      fontSize:18,
       color:ThemeBlue,
       paddingVertical:5
   },
   cancelText:{
       fontWeight:"bold",
-      fontSize:18,
+      fontSize:20,
       color:ThemeBlue,
       paddingVertical:5
   },
   modalHeading:{
     fontWeight:"bold",
-    fontSize:18,
+    fontSize:20,
     color:'black',
     paddingVertical:5,
   
