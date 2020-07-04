@@ -1,9 +1,79 @@
 import React, {Component} from 'react';
-import {Text, View, SafeAreaView, StyleSheet, TextInput} from 'react-native';
+import {Text, View, SafeAreaView, StyleSheet, TextInput, TouchableOpacity} from 'react-native';
 import FastImage from 'react-native-fast-image';
 import image from '../Assets/Images/lahore.jpg';
 
 export default class Feedback extends Component {
+
+    static navigationOptions = props => {
+        tabBarVisibile = false;
+        const {params = {}} = props.navigation.state;
+        return {
+          header: (
+            <View
+              style={{
+                height: 50,
+                backgroundColor: '#0C91CF',
+                flexDirection: 'row',
+                justifyContent: 'center',
+              }}>
+              <View
+                style={{
+                  position: 'absolute',
+                  padding: 2,
+                  alignSelf: 'center',
+                  left: 8,
+                }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    props.navigation.navigate('UserSettings');
+                  }}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      padding: 2,
+                      fontSize:17
+                    }}>
+                    Cancel
+                  </Text>
+                </TouchableOpacity>
+              </View>
+              <View style={{alignSelf: 'center'}}>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontSize: 21,
+                    fontWeight: 'bold',
+                  }}>
+                  Feedback
+                </Text>
+              </View>
+              <View
+                style={{
+                  position: 'absolute',
+                  padding: 2,
+                  alignSelf: 'center',
+                  right: 8,
+                }}>
+                <TouchableOpacity onPress={() => params.handleThis()}>
+                  <Text
+                    style={{
+                      color: 'white',
+                      padding: 2,
+                      fontSize:17
+                    }}>
+                    Send
+                  </Text>
+                </TouchableOpacity>
+              </View>
+            </View>
+          ),
+        };
+      };
+
+
+
+
   state = {
     type: this.props.navigation.getParam('type', null),
     name: this.props.navigation.getParam('name', null),
