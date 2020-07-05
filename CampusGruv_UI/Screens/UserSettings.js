@@ -321,7 +321,7 @@ class UserSettings extends Component {
             </TouchableOpacity>
           ) : null}
 
-          <View
+          {/* <View
             style={{flexDirection: 'row', marginLeft: '2%', marginTop: '3%'}}>
             <Icon
               name="bell-outline"
@@ -335,43 +335,47 @@ class UserSettings extends Component {
             <Text style={{flex: 8, alignSelf: 'center', fontSize: 19}}>
               Notifications
             </Text>
-          </View>
+          </View> */}
 
-         <TouchableOpacity onPress={() => {
-                this.props.navigation.navigate('Help');
-              }}>
-         <View
-            style={{flexDirection: 'row', marginLeft: '2%', marginTop: '3%'}}>
-            <Icon
-              name="help-circle-outline"
-              style={{
-                flex: 1,
-                alignSelf: 'center',
-                paddingLeft: '2%',
-                fontSize: 35,
-              }}
-            />
-            <Text style={{flex: 8, alignSelf: 'center', fontSize: 19}}>
-              Help & Support
-            </Text>
-          </View>
-         </TouchableOpacity>
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate('Help');
+            }}>
+            <View
+              style={{flexDirection: 'row', marginLeft: '2%', marginTop: '3%'}}>
+              <Icon
+                name="help-circle-outline"
+                style={{
+                  flex: 1,
+                  alignSelf: 'center',
+                  paddingLeft: '2%',
+                  fontSize: 35,
+                }}
+              />
+              <Text style={{flex: 8, alignSelf: 'center', fontSize: 19}}>
+                Help & Support
+              </Text>
+            </View>
+          </TouchableOpacity>
 
-          <View
-            style={{flexDirection: 'row', marginLeft: '2%', marginTop: '3%'}}>
-            <IconFeather
-              name="info"
-              style={{
-                flex: 1,
-                alignSelf: 'center',
-                paddingLeft: '2%',
-                fontSize: 35,
-              }}
-            />
-            <Text style={{flex: 8, alignSelf: 'center', fontSize: 19}}>
-              About
-            </Text>
-          </View>
+          <TouchableOpacity
+            onPress={() => this.props.navigation.navigate('About')}>
+            <View
+              style={{flexDirection: 'row', marginLeft: '2%', marginTop: '3%'}}>
+              <IconFeather
+                name="info"
+                style={{
+                  flex: 1,
+                  alignSelf: 'center',
+                  paddingLeft: '2%',
+                  fontSize: 35,
+                }}
+              />
+              <Text style={{flex: 8, alignSelf: 'center', fontSize: 19}}>
+                About
+              </Text>
+            </View>
+          </TouchableOpacity>
         </View>
 
         <View

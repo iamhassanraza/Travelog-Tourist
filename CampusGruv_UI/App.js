@@ -61,8 +61,9 @@ import CategoryPosts from './Screens/CategoryPosts';
 import CreateOrganization from './Screens/CreateOrganization';
 import AddMembers from './Screens/AddMembers';
 import EditOrganization from './Screens/EditOrganization';
-import Help from './Screens/Help'
-import Feedback from './Screens/Feedback'
+import Help from './Screens/Help';
+import Feedback from './Screens/Feedback';
+import About from './Screens/About';
 // const state = mystore.getState();
 
 const AuthNavigator = createStackNavigator({
@@ -211,7 +212,44 @@ const ProfileStack = createStackNavigator(
       },
     },
     Feedback: {
-      screen:Feedback,
+      screen: Feedback,
+    },
+    About: {
+      screen: About,
+      navigationOptions: {
+        header: props => (
+          <View style={{backgroundColor: '#0C91CF'}}>
+            <View
+              style={{
+                height: 50,
+                backgroundColor: '#0C91CF',
+                flexDirection: 'row',
+                justifyContent: 'center',
+              }}>
+              <View style={{alignSelf: 'center'}}>
+                <Text
+                  style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
+                  About Us
+                </Text>
+              </View>
+              <View
+                style={{
+                  position: 'absolute',
+                  padding: 2,
+                  alignSelf: 'center',
+                  left: 8,
+                }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    props.navigation.navigate('UserSettings');
+                  }}>
+                  <Icon name="arrow-back" color="white" size={25} />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        ),
+      },
     },
     AddMembers: {
       screen: AddMembers,
