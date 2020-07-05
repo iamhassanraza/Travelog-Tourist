@@ -347,7 +347,6 @@ class UserProfile extends React.Component {
         },
       );
       const jsonresponse = await response.json();
-      console.log(jsonresponse, 'helllllllllllllllloooooooooooooooooooooooo');
 
       this.setState({
         spinner: false,
@@ -603,7 +602,6 @@ class UserProfile extends React.Component {
           <View style={{marginLeft: 10, width: '70%'}}>
             <Text
               style={{
-                
                 fontSize: 25,
                 fontWeight: 'bold',
                 color: '#727272',

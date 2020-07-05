@@ -9,9 +9,7 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
-import {Content, Container} from 'native-base';
-import {SearchBar} from 'react-native-elements';
-import AvatarUserStatus from '../Components/AvatarUserStatus';
+import {Content, Container, Icon} from 'native-base';
 import NewMessageComponent from '../Components/NewMessageComponent';
 import {connect} from 'react-redux';
 import {UIActivityIndicator} from 'react-native-indicators';
@@ -43,7 +41,6 @@ class SelectNewChat extends Component {
       },
     );
     const JsonResponse = await Response.json();
-    console.log(JsonResponse, 'resssss');
     this.setState({
       users: JsonResponse,
       loadingUsers: false,
@@ -132,48 +129,46 @@ class SelectNewChat extends Component {
               placeholder="Search"
             />
           </View>
-          {/* <SearchBar
+          <TouchableOpacity
+            onPress={() => {
+              this.props.navigation.navigate('CreateGroupChat');
+            }}
             style={{
+              marginTop: '2%',
+              paddingHorizontal: '3%',
               alignItems: 'center',
-              justifyContent: 'center',
-              paddingTop: 0,
-              marginLeft: 5,
-              paddingBottom: 0,
-              width: 250,
-              color: '#C4C4C4',
-            }}
-            //platform="ios"
-            placeholder="Type Here..."
-            onChangeText={this.updateSearch}
-            value={this.state.text}
-            onCancel={() => {
-              this.setState({text: ''});
-            }}
-            clearIcon={false}
-          /> */}
+              flexDirection: 'row',
+            }}>
+            <Icon
+              type="AntDesign"
+              name="addusergroup"
+              style={{color: 'grey'}}
+            />
+            <Text style={{marginLeft: '2%', fontSize: 18, color: 'grey'}}>
+              New group chat
+            </Text>
+          </TouchableOpacity>
           {!this.state.loadingUsers ? (
-            <ScrollView style={{}}>
-              <FlatList
-                style={{}}
-                vertical
-                data={this.state.users}
-                keyExtractor={item => item.id}
-                showsHorizontalScrollIndicator={false}
-                renderItem={({item}) => {
-                  if (item.id !== this.props.User.id) {
-                    return (
-                      <NewMessageComponent
-                        id={item.id}
-                        profile_pic_url={item.profile_pic_url}
-                        first_name={item.first_name}
-                        last_name={item.last_name}
-                        navigationProps={this.props.navigation}
-                      />
-                    );
-                  }
-                }}
-              />
-            </ScrollView>
+            <FlatList
+              style={{marginTop: 5}}
+              vertical
+              data={this.state.users}
+              keyExtractor={item => item.id}
+              showsHorizontalScrollIndicator={false}
+              renderItem={({item}) => {
+                if (item.id !== this.props.User.id) {
+                  return (
+                    <NewMessageComponent
+                      id={item.id}
+                      profile_pic_url={item.profile_pic_url}
+                      first_name={item.first_name}
+                      last_name={item.last_name}
+                      navigationProps={this.props.navigation}
+                    />
+                  );
+                }
+              }}
+            />
           ) : (
             <View style={{height: 500}}>
               <UIActivityIndicator color={ThemeBlue} />

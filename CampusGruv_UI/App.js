@@ -27,6 +27,7 @@ import SelectNewChat from './Screens/SelectNewChat';
 import PostDetail from './Screens/PostDetail';
 import CreatePost from './Screens/CreateNewPost';
 import PostsList from './Components/PostsList';
+import CreateGroupChat from './Screens/CreateGroupChat';
 import CategoryList from './Screens/CategoryList';
 import {
   createMaterialTopTabNavigator,
@@ -332,6 +333,9 @@ const NotificationStack = createStackNavigator(
 const MessageStack = createStackNavigator(
   {
     InboxComponent,
+    CreateGroupChat: {
+      screen: CreateGroupChat,
+    },
     SelectNewChat: {
       screen: SelectNewChat,
       navigationOptions: {

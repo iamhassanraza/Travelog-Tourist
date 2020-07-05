@@ -11,6 +11,7 @@ import {
 } from 'react-native';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 import FastImage from 'react-native-fast-image';
+import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 
 // import {withNavigation} from 'react-navigation';
 
@@ -64,7 +65,12 @@ class NewMessageComponent extends Component {
                 name: this.props.first_name + ' ' + this.props.last_name,
               })
             }>
-            <View style={{flexDirection: 'row', padding: '1%'}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                padding: '1%',
+              }}>
               <FastImage
                 source={
                   this.props.profile_pic_url === '' ||

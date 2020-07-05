@@ -99,7 +99,7 @@ class Inbox extends PureComponent {
                 placeholder="Search"
               />
             </View>
-            {!this.state.total ? (
+            {this.state.total === undefined ? (
               <View
                 style={{
                   height: Dimensions.get('window').height - 200,
@@ -108,7 +108,7 @@ class Inbox extends PureComponent {
                 }}>
                 <UIActivityIndicator color={ThemeBlue} />
               </View>
-            ) : (
+            ) : this.state.total !== 0 ? (
               <FlatList
                 style={{marginTop: 10}}
                 data={filtereddata}
@@ -127,12 +127,11 @@ class Inbox extends PureComponent {
                         }
                         subtitle={item.message}
                         time={new Date(item.created_at.replace(' ', 'T'))}
-                        //time={5}
                       />
                     );
                 }}
               />
-            )}
+            ) : null}
           </ScrollView>
         </View>
       </>
