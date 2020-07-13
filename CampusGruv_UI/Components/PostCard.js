@@ -85,20 +85,14 @@ class PostCard extends Component {
             onLoadEnd={this.imageLoaded}
             resizeMode="contain"
             style={{
-              width: this.state.imageLoaded
-                ? this.state.width
-                : Dimensions.get('window').width / 2 - 14,
+              width: this.state.width,
               borderTopLeftRadius: 12,
               borderTopRightRadius: 12,
-              height: this.state.imageLoaded ? this.state.height : 150,
+              height: this.state.height ?? 150,
             }}
-            source={
-              this.state.imageLoaded
-                ? {
-                    uri: this.props.imageurl,
-                  }
-                : defaultImg
-            }
+            source={{
+              uri: this.props.imageurl,
+            }}
           />
 
           {!this.props.hideCategory ? (
