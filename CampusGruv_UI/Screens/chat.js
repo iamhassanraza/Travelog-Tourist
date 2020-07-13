@@ -56,7 +56,7 @@ class Chat extends React.PureComponent {
               }}>
               <TouchableOpacity
                 onPress={() => {
-                  props.navigation.navigation('inbox');
+                  props.navigation.naviagte('inbox');
                 }}>
                 <PostIcon name="arrow-back" color="white" size={25} />
               </TouchableOpacity>
