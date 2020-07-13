@@ -511,9 +511,9 @@ class PostDetail extends Component {
           source={{uri: this.state.imageurl}}
           //resizeMode="center"
           style={{
-            width: this.state.width,
+            width: this.state.width ?? Dimensions.get('window').width,
             // height: Dimensions.get('window').height / 2,
-            height: this.state.height,
+            height: this.state.height ?? 300,
           }}
         />
       </View>
