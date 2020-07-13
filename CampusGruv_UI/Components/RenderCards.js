@@ -70,9 +70,11 @@ class RenderCards extends PureComponent {
                       views={item.view_count}
                       likes={item.likes_count}
                       imageurl={
-                        item.postDetail.length > 0
-                          ? item.postDetail[0].image_url
-                          : 'https://travelog-pk.herokuapp.com/images/default.png'
+                        // item.postDetail.length > 0
+                        // ?
+                        item.postDetail[0].image_url
+                        // :
+                        // 'https://travelog-pk.herokuapp.com/images/default.png'
                       }>
                       {' '}
                     </PostCard>
