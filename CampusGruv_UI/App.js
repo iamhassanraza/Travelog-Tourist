@@ -621,6 +621,7 @@ const TabNavigator = createBottomTabNavigator(
     },
     messages: {
       screen: MessageStack,
+
       navigationOptions: props => {
         if (props.screenProps.PostDetail) props.navigation.navigate('Home');
         store = mystore;
@@ -675,6 +676,7 @@ const TabNavigator = createBottomTabNavigator(
     initialRouteName: 'Home',
     tabBarPosition: 'bottom',
     swipeEnabled: false,
+    // resetOnBlur: true,
     defaultNavigationOptions: {
       // tabBarOnPress: ({navigation, defaultHandler}) => {
       //   navigation.dispatch(StackActions.popToTop());

@@ -150,7 +150,7 @@ class SelectNewChat extends Component {
           </TouchableOpacity>
           {!this.state.loadingUsers ? (
             <FlatList
-              style={{marginTop: 5}}
+              style={{marginTop: 5, marginHorizontal: '2%'}}
               vertical
               data={this.state.users}
               keyExtractor={item => item.id}

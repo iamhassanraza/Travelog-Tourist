@@ -45,6 +45,7 @@ class Inbox extends PureComponent {
         },
       },
     );
+
     const JsonResponse = await Response.json();
     this.setState({
       loading: false,
@@ -54,12 +55,18 @@ class Inbox extends PureComponent {
   };
 
   async componentDidMount() {
-    this.focusListener2 = this.props.navigation.addListener('willFocus', () => {
+    this.focusListener2 = this.props.navigation.addListener('didFocus', () => {
       this.fetchData();
     });
     this.focusListener = this.props.navigation.addListener('didBlur', () => {
       this.state.store.dispatch(clearMsgs());
+      this.setState({data: []});
     });
+  }
+
+  componentWillUnmount() {
+    this.focusListener2.remove();
+    this.focusListener.remove();
   }
 
   render() {
@@ -112,19 +119,26 @@ class Inbox extends PureComponent {
               <FlatList
                 style={{marginTop: 10}}
                 data={filtereddata}
-                renderItem={({item}) => {
+                renderItem={({item, index}) => {
                   if (item.id !== this.props.User.id)
                     return (
                       <InboxComponent
+                        key={' ' + index}
                         user_id={item.id}
-                        uri={item.profile_pic_url}
-                        title={
-                          item.first_name +
-                          ' ' +
-                          (item.last_name === '' || !item.last_name
-                            ? ''
-                            : item.last_name.charAt(0) + '.')
+                        uri={
+                          item.room_type ? item.room_dp : item.profile_pic_url
                         }
+                        title={
+                          item.room_type
+                            ? item.room_name
+                            : item.first_name +
+                              ' ' +
+                              (item.last_name === '' || !item.last_name
+                                ? ''
+                                : item.last_name.charAt(0) + '.')
+                        }
+                        room_type={item.room_type ? 'group' : 'personal'}
+                        room_id={item.room_id}
                         subtitle={item.message}
                         time={new Date(item.created_at.replace(' ', 'T'))}
                       />

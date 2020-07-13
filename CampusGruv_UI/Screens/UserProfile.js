@@ -198,11 +198,16 @@ class UserProfile extends React.Component {
   fetchRoomDetails = async () => {
     const Token = await AsyncStorage.getItem('TOKEN');
     const Response = await fetch(
-      `${require('../config').default.production}api/v1/room/details?user_id=${
-        this.state.otherUserId
-      }`,
+      `${require('../config').default.production}api/v1/room/details`,
       {
-        method: 'GET',
+        method: 'POST',
+        body: JSON.stringify({
+          room_type: 0,
+          userArray: [this.state.otherUserId],
+          name:
+            this.state.otherUserFirstName + ' ' + this.state.otherUserLastName,
+          profile_pic_url: this.state.otherUserDp,
+        }),
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${Token}`,
@@ -740,6 +745,7 @@ class UserProfile extends React.Component {
                     room_id = await this.fetchRoomDetails();
                     this.props.navigation.navigate('chat', {
                       room_id,
+                      room_type: 'personal',
                       name: postUserFirstName + ' ' + postUserLastName,
                     });
                   }}
@@ -894,7 +900,7 @@ class UserProfile extends React.Component {
               }}>
               <Text
                 onPress={() => {
-                  this.setState({active: 'posts', total: 0, pageNo: 1}, () => {
+                  this.setState({active: 'posts', pageNo: 1}, () => {
                     this.fetchdata(postUserId);
                   });
                 }}
@@ -916,7 +922,7 @@ class UserProfile extends React.Component {
               />
               <Text
                 onPress={() => {
-                  this.setState({active: 'saves', total: 0, pageNo: 1}, () => {
+                  this.setState({active: 'saves', pageNo: 1}, () => {
                     this.fetchdata(postUserId);
                   });
                 }}

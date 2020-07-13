@@ -9,9 +9,11 @@ import {
   Dimensions,
   AsyncStorage,
   Clipboard,
+  StyleSheet,
   Image,
   Platform,
 } from 'react-native';
+import Modal from 'react-native-modal';
 import {Icon, Input, Item, Container} from 'native-base';
 import PostIcon from 'react-native-vector-icons/MaterialIcons';
 //import AndroidKeyboardAdjust from 'react-native-android-keyboard-adjust';
@@ -24,9 +26,12 @@ import ImagePicker from 'react-native-image-picker';
 import FastImage from 'react-native-fast-image';
 import {UIActivityIndicator} from 'react-native-indicators';
 
+var {width, height} = Dimensions.get('window');
+
 class Chat extends React.PureComponent {
   static navigationOptions = props => {
     const {params = {}} = props.navigation.state;
+    console.log('params', params);
     return {
       header: (
         <View style={{backgroundColor: '#0C91CF'}}>
@@ -51,11 +56,27 @@ class Chat extends React.PureComponent {
               }}>
               <TouchableOpacity
                 onPress={() => {
-                  props.navigation.goBack();
+                  props.navigation.navigation('inbox');
                 }}>
                 <PostIcon name="arrow-back" color="white" size={25} />
               </TouchableOpacity>
             </View>
+            {params.room_type === 'xyz' ? (
+              <View
+                style={{
+                  position: 'absolute',
+                  padding: 2,
+                  alignSelf: 'center',
+                  right: 8,
+                }}>
+                <TouchableOpacity
+                  onPress={() => {
+                    params.handleThis();
+                  }}>
+                  <PostIcon name="more-vert" color="white" size={25} />
+                </TouchableOpacity>
+              </View>
+            ) : null}
           </View>
         </View>
       ),
@@ -73,6 +94,8 @@ class Chat extends React.PureComponent {
       loadMore: false,
       refreshing: false,
       imageLoading: true,
+      isModalVisible: false,
+      editGroupNameOverlay: false,
     };
   }
 
@@ -252,8 +275,13 @@ class Chat extends React.PureComponent {
 
   async componentDidMount() {
     this.joinRoom(this.state.pageNo);
-
     this.OnjoinRoom();
+
+    this.props.navigation.setParams({
+      handleThis: () => {
+        this.setState({isModalVisible: true});
+      },
+    });
 
     // this.props.socket.on('disconnect', () => {
     //   console.log('disconnected');
@@ -484,6 +512,207 @@ class Chat extends React.PureComponent {
             avatar: this.props.User.profile_pic_url,
           }}
         />
+        <View>
+          <Modal
+            style={{margin: 0}}
+            isVisible={this.state.isModalVisible}
+            onBackdropPress={() => this.setState({isModalVisible: false})}>
+            <View style={{flex: 1, justifyContent: 'flex-end'}}>
+              <View
+                style={{
+                  backgroundColor: 'white',
+                  flexDirection: 'row',
+                  justifyContent: 'center',
+                  paddingBottom: 30,
+                  borderTopRightRadius: 12,
+                  borderTopLeftRadius: 12,
+                }}>
+                <PostIcon
+                  name="cancel"
+                  onPress={() => this.setState({isModalVisible: false})}
+                  style={{
+                    position: 'absolute',
+                    top: 12,
+                    left: 10,
+                    fontSize: 20,
+                    color: 'grey',
+                  }}
+                />
+                <View
+                  style={{
+                    alignItems: 'center',
+                    paddingTop: 3,
+                  }}>
+                  <View
+                    style={{
+                      alignSelf: 'center',
+                      borderTopWidth: 2,
+                      marginTop: 3,
+                      width: 50,
+                      borderTopColor: 'grey',
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      fontWeight: 'bold',
+                      marginTop: 2,
+                    }}>
+                    Group chat options
+                  </Text>
+                  {/* </View> */}
+                </View>
+              </View>
+
+              <View style={styles.modalOptions}>
+                <Icon type="Feather" name="edit" style={styles.optionIcon} />
+                <Text
+                  onPress={() => {
+                    this.setState({
+                      isModalVisible: false,
+                      editGroupNameOverlay: true,
+                    });
+                  }}
+                  style={styles.TextWithNavigation}>
+                  Edit group name
+                </Text>
+              </View>
+
+              {/* <View style={styles.modalOptions}>
+                <Icon type="Feather" style={styles.optionIcon} />
+                <Text
+                  onPress={() => {
+                    this.setState({isModalVisible: false});
+                    this.props.navigation.navigate('ReportPost', {
+                      PostId: this.props.navigation.getParam(
+                        'PostData',
+                        'nothing to render',
+                      ),
+                    });
+                  }}
+                  style={styles.TextWithNavigation}>
+                  Report post
+                </Text>
+              </View> */}
+            </View>
+          </Modal>
+        </View>
+        {this.state.editGroupNameOverlay ? (
+          <View
+            style={{
+              flex: 1,
+              position: 'absolute',
+              left: 0,
+              bottom: 0,
+              top: 0,
+              right: 0,
+              opacity: 0.9,
+              backgroundColor: 'black',
+              width: width,
+              height: height,
+            }}>
+            <PostIcon
+              name="cancel"
+              onPress={() => this.setState({editGroupNameOverlay: false})}
+              style={{
+                position: 'absolute',
+                top: 22,
+                left: 10,
+                fontSize: 25,
+                color: IconGrey,
+              }}
+            />
+            <View
+              style={{
+                justifyContent: 'center',
+                alignItems: 'center',
+                marginTop: '20%',
+                width: width,
+              }}>
+              <Text style={{fontSize: 20, color: 'grey'}}>
+                Edit post description
+              </Text>
+              <View style={{marginTop: '3%'}}>
+                <TextInput
+                  selectionColor="grey"
+                  value={this.state.editGroupName}
+                  scrollEnabled={false}
+                  multiline={true}
+                  autoFocus={true}
+                  style={{
+                    color: 'grey',
+                    width: '100%',
+                    height: Dimensions.get('window').height / 3.9,
+                    width: Dimensions.get('window').width / 1.1,
+                    paddingLeft: 10,
+                    paddingRight: 5,
+                    marginLeft: '2.5%',
+                    marginRight: '2.5%',
+                    borderColor: 'grey',
+                    borderRadius: 8,
+                    borderWidth: 1,
+                    textAlignVertical: 'top',
+                  }}
+                  onChangeText={text => {
+                    this.setState({
+                      editGroupName: text,
+                    });
+                  }}
+                />
+              </View>
+            </View>
+            <TouchableOpacity
+              style={{alignItems: 'center', marginTop: '1%'}}
+              onPress={() => {
+                this.setState(
+                  {
+                    description: this.state.editGroupName,
+                    editGroupNameOverlay: false,
+                  },
+                  async () => {
+                    // const Token = await AsyncStorage.getItem('TOKEN');
+
+                    // let response = await fetch(
+                    //   `${
+                    //     require('../config').default.production
+                    //   }api/v1/post/edit`,
+                    //   {
+                    //     method: 'POST',
+                    //     headers: {
+                    //       'Content-Type': 'application/json',
+                    //       Authorization: `Bearer ${Token}`,
+                    //     },
+                    //     body: JSON.stringify({
+                    //       post_id: data.postId,
+                    //       description: this.state.description,
+                    //     }),
+                    //   },
+                    // );
+                    console.log('reponse');
+                  },
+                );
+              }}>
+              <View
+                style={{
+                  width: '90%',
+                  borderRadius: 5,
+                  height: 35,
+                  justifyContent: 'center',
+                  backgroundColor: '#0C91CF',
+                  alignSelf: 'center',
+                }}>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontWeight: 'bold',
+                    alignSelf: 'center',
+                  }}>
+                  submit
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+        ) : null}
       </View>
     );
   }
@@ -499,6 +728,25 @@ mapStateToProps = state => {
     socket: state.socket,
   }; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
 };
+
+const styles = StyleSheet.create({
+  TextWithNavigation: {
+    color: 'black',
+    backgroundColor: 'white',
+    width: '100%',
+    fontSize: 17,
+    paddingLeft: '4%',
+    paddingBottom: 20,
+  },
+  modalOptions: {
+    backgroundColor: 'white',
+    flexDirection: 'row',
+  },
+  optionIcon: {
+    paddingLeft: '3%',
+    fontSize: 25,
+  },
+});
 
 export default connect(
   mapStateToProps,

@@ -4,13 +4,19 @@ import ViewsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import {withNavigation} from 'react-navigation';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
+import defaultImg from '../Assets/Images/default.png';
 import FastImage from 'react-native-fast-image';
 
 class PostCard extends Component {
   state = {
     width: undefined,
     height: undefined,
+    imageLoaded: false,
   };
+
+  // width = 537
+  // ratio = width / currentVideoWidth
+  // height = currentVideoHeight * ratio
 
   componentDidMount() {
     Image.getSize(
@@ -32,6 +38,10 @@ class PostCard extends Component {
       },
     );
   }
+
+  imageLoaded = () => {
+    this.setState({imageLoaded: true});
+  };
 
   render() {
     return (
@@ -72,6 +82,7 @@ class PostCard extends Component {
         }>
         <View style={{}}>
           <FastImage
+            onLoadEnd={this.imageLoaded}
             resizeMode="contain"
             style={{
               width: this.state.width,
@@ -83,6 +94,15 @@ class PostCard extends Component {
               uri: this.props.imageurl,
             }}
           />
+          {!this.state.imageLoaded ? (
+            <FastImage
+              source={defaultImg}
+              style={{
+                width: Dimensions.get('window').width / 2 - 14,
+                height: 200,
+              }}
+            />
+          ) : null}
           {!this.props.hideCategory ? (
             <View
               style={{

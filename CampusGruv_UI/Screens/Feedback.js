@@ -4,6 +4,7 @@ import {
   View,
   SafeAreaView,
   StyleSheet,
+  AsyncStorage,
   TextInput,
   TouchableOpacity,
 } from 'react-native';
@@ -81,6 +82,34 @@ class Feedback extends Component {
     type: this.props.navigation.getParam('type', null),
     name: this.props.navigation.getParam('name', null),
     message: '',
+  };
+
+  componentDidMount() {
+    this.props.navigation.setParams({
+      handleThis: () => {
+        this.sendFeedback();
+      },
+    });
+  }
+
+  sendFeedback = async () => {
+    const Token = await AsyncStorage.getItem('TOKEN');
+    var Response = null;
+    Response = await fetch(
+      `${require('../config').default.production}api/v1/user/feedback`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          subject: this.state.name,
+          body: this.state.message,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Token}`,
+        },
+      },
+    );
+    console.log('rsponse', Response);
   };
 
   renderDescription = () => {

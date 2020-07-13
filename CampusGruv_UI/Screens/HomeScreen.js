@@ -451,6 +451,8 @@ class HomeScreen extends PureComponent {
   };
 
   async componentDidMount() {
+    this.fetchdata();
+
     const {navigation} = this.props;
     if (this.props.screenProps.postDetail) {
       const postDetail = this.props.screenProps.postDetail[0];
@@ -484,11 +486,11 @@ class HomeScreen extends PureComponent {
       // The screen is focused
       if (this.props.navigation.getParam('newPost')) {
         this.refs._scrollView.scrollTo({x: 0, y: 0, animated: true});
+        this.setState({
+          pageNo: 1,
+        });
+        this.fetchdata();
       }
-      this.setState({
-        pageNo: 1,
-      });
-      this.fetchdata();
     });
 
     this.props.navigation.setParams({

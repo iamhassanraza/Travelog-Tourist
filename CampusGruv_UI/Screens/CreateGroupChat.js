@@ -9,7 +9,7 @@ import {
   Image,
   Dimensions,
 } from 'react-native';
-import {Content, Container, Icon} from 'native-base';
+import {Content, Container, Icon, Input} from 'native-base';
 import {SearchBar} from 'react-native-elements';
 import AvatarUserStatus from '../Components/AvatarUserStatus';
 import NewMessageComponent from '../Components/NewMessageComponent';
@@ -73,7 +73,7 @@ class CreateGroupChat extends Component {
               }}>
               <TouchableOpacity
                 onPress={() => {
-                  params.handleThis();
+                  props.navigation.navigate('SelectNewChat');
                 }}>
                 <Icon
                   name="ios-arrow-back"
@@ -92,12 +92,48 @@ class CreateGroupChat extends Component {
     super(props);
     this.state = {
       text: '',
+      title: '',
       loadingUsers: false,
       selected: [],
       users: [],
       room_id: null,
     };
   }
+
+  fetchRoomDetails = async () => {
+    const Token = await AsyncStorage.getItem('TOKEN');
+    const userArray = this.state.selected.map(obj => obj.id);
+    const Response = await fetch(
+      `${require('../config').default.production}api/v1/room/details`,
+      {
+        method: 'POST',
+        body: JSON.stringify({
+          room_type: 1,
+          userArray: userArray,
+          name: this.state.title,
+          //   profile_pic_url: this.props.profile_pic_url,
+        }),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Token}`,
+        },
+      },
+    );
+    const JsonResponse = await Response.json();
+    console.log('hello', JsonResponse);
+    this.setState(
+      {
+        room_id: JsonResponse[0].room_id,
+      },
+      () => {
+        this.props.navigation.navigate('chat', {
+          room_id: JsonResponse[0].room_id,
+          name: this.state.title,
+          room_type: 'group',
+        });
+      },
+    );
+  };
 
   getFollowing = async () => {
     const Token = await AsyncStorage.getItem('TOKEN');
@@ -123,7 +159,14 @@ class CreateGroupChat extends Component {
 
     this.props.navigation.setParams({
       handleThis: () => {
-        alert('handle this');
+        if (
+          this.state.selected.length < 2 &&
+          (!this.state.title || this.state.title === '')
+        )
+          alert(
+            'you must: \n -select at least 2 members \n -enter the group name',
+          );
+        else this.fetchRoomDetails();
       },
     });
   }
@@ -180,7 +223,6 @@ class CreateGroupChat extends Component {
   };
 
   render() {
-    console.log('selected array', this.state.selected);
     return (
       <Container>
         <Content style={{backgroundColor: '#f9fdfe'}}>
@@ -218,9 +260,30 @@ class CreateGroupChat extends Component {
                 width: 250,
                 color: '#C4C4C4',
               }}
-              placeholder="Search"
+              placeholder="Search friends"
             />
           </View>
+          <Input
+            style={{
+              marginTop: 10,
+              marginLeft: '2%',
+              marginRight: '2%',
+              alignItems: 'center',
+              textAlignVertical: 'center',
+              paddingTop: 0,
+              paddingBottom: 0,
+              justifyContent: 'center',
+              height: 35,
+              borderRadius: 7,
+              borderBottomWidth: 1,
+              borderBottomColor: '#C4C4C4',
+            }}
+            placeholder="  Enter group name"
+            value={this.state.title}
+            onChangeText={text => {
+              this.setState({title: text});
+            }}
+          />
           {this.state.selected.length >= 1 ? (
             <FlatList
               style={{marginTop: 15}}
@@ -274,7 +337,7 @@ class CreateGroupChat extends Component {
           {!this.state.loadingUsers ? (
             <ScrollView style={{}}>
               <FlatList
-                style={{marginTop: 5}}
+                style={{marginTop: 5, marginHorizontal: '2%'}}
                 vertical
                 data={this.state.users}
                 keyExtractor={item => item.id}

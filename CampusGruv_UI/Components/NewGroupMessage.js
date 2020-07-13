@@ -26,11 +26,15 @@ class NewGroupMessage extends Component {
   fetchRoomDetails = async () => {
     const Token = await AsyncStorage.getItem('TOKEN');
     const Response = await fetch(
-      `${require('../config').default.production}api/v1/room/details?user_id=${
-        this.props.id
-      }`,
+      `${require('../config').default.production}api/v1/room/details`,
       {
-        method: 'GET',
+        method: 'POST',
+        body: JSON.stringify({
+          room_type: 0,
+          userArray: [this.props.id],
+          name: this.props.first_name + ' ' + this.props.last_name,
+          profile_pic_url: this.props.profile_pic_url,
+        }),
         headers: {
           'Content-Type': 'application/json',
           Authorization: `Bearer ${Token}`,

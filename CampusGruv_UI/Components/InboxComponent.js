@@ -18,28 +18,28 @@ class InboxComponent extends Component {
     room_id: null,
   };
 
-  fetchRoomDetails = async () => {
-    const Token = await AsyncStorage.getItem('TOKEN');
-    const Response = await fetch(
-      `${require('../config').default.production}api/v1/room/details?user_id=${
-        this.props.user_id
-      }`,
-      {
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json',
-          Authorization: `Bearer ${Token}`,
-        },
-      },
-    );
-    const JsonResponse = await Response.json();
-    this.setState({
-      room_id: JsonResponse[0].room_id,
-    });
-  };
+  // fetchRoomDetails = async () => {
+  //   const Token = await AsyncStorage.getItem('TOKEN');
+  //   const Response = await fetch(
+  //     `${require('../config').default.production}api/v1/room/details?user_id=${
+  //       this.props.user_id
+  //     }`,
+  //     {
+  //       method: 'GET',
+  //       headers: {
+  //         'Content-Type': 'application/json',
+  //         Authorization: `Bearer ${Token}`,
+  //       },
+  //     },
+  //   );
+  //   const JsonResponse = await Response.json();
+  //   this.setState({
+  //     room_id: JsonResponse[0].room_id,
+  //   });
+  // };
 
   async componentDidMount() {
-    await this.fetchRoomDetails();
+    // await this.fetchRoomDetails();
   }
 
   render() {
@@ -48,11 +48,12 @@ class InboxComponent extends Component {
         <TouchableOpacity
           onPress={() => {
             this.props.navigation.push('chat', {
-              room_id: this.state.room_id,
+              room_id: this.props.room_id,
               user_id: this.props.user_id,
               avatar: this.props.uri,
               name: this.props.title,
               msg: this.props.subtitle,
+              room_type: this.props.room_type,
             });
           }}>
           <View
@@ -69,7 +70,13 @@ class InboxComponent extends Component {
                       uri: this.props.uri,
                     }
               }
-              style={{height: 40, width: 40, borderRadius: 50}}
+              style={{
+                height: 40,
+                width: 40,
+                borderRadius: 50,
+                borderWidth: 0.5,
+                borderColor: '#C4C4C4',
+              }}
             />
             <View
               style={{
