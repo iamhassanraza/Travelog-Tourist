@@ -722,7 +722,14 @@ const RootStackNavigator = createSwitchNavigator(
       screen: MainTabNavigation,
     },
     EditProfile: {
-      screen: createStackNavigator({EditProfile}),
+      screen: createStackNavigator(
+        {EditProfile},
+        {
+          defaultNavigationOptions: {
+            header: null,
+          },
+        },
+      ),
     },
     EmailVerification: {
       screen: EmailVerification,
