@@ -720,12 +720,12 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "CampusGruv_UI/CampusGrüv.entitlements";
-				CURRENT_PROJECT_VERSION = 1.21;
+				CURRENT_PROJECT_VERSION = 1.22;
 				DEAD_CODE_STRIPPING = NO;
 				DEVELOPMENT_TEAM = 8DBSTH96YC;
 				INFOPLIST_FILE = CampusGruv_UI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.21;
+				MARKETING_VERSION = 1.22;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",
@@ -744,11 +744,11 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = "CampusGruv_UI/CampusGrüv.entitlements";
-				CURRENT_PROJECT_VERSION = 1.21;
+				CURRENT_PROJECT_VERSION = 1.22;
 				DEVELOPMENT_TEAM = 8DBSTH96YC;
 				INFOPLIST_FILE = CampusGruv_UI/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				MARKETING_VERSION = 1.21;
+				MARKETING_VERSION = 1.22;
 				OTHER_LDFLAGS = (
 					"$(inherited)",
 					"-ObjC",

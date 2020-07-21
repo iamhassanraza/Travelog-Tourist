@@ -8,9 +8,11 @@ import {
   StyleSheet,
   Dimensions,
   Platform,
+  StatusBar,
   TextInput,
   AsyncStorage,
   KeyboardAvoidingView,
+  SafeAreaView,
 } from 'react-native';
 import InputView from '../Components/ProfileEdit/InputViews';
 import ImagePicker from 'react-native-image-picker';
@@ -21,6 +23,7 @@ import {TouchableHighlight} from 'react-native-gesture-handler';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import DatePicker from 'react-native-datepicker';
 import Spinner from 'react-native-loading-spinner-overlay';
+import {getStatusBarHeight} from 'react-native-status-bar-height';
 
 import {connect} from 'react-redux';
 import {CreateUserDetails} from '../ReduxStore/Actions/index';
@@ -48,7 +51,9 @@ class ProfilePage extends React.Component {
         params.cam_id === 'nahi_hai' ? (
           <View
             style={{
-              height: 50,
+              height: Dimensions.get('window').height > 800 ? 50 : 100,
+              marginTop: Dimensions.get('window').height > 800 ? 50 : 0,
+              borderColor: 'red',
               backgroundColor: '#0C91CF',
               flexDirection: 'row',
               justifyContent: 'center',
@@ -143,8 +148,7 @@ class ProfilePage extends React.Component {
 
   componentDidMount = async () => {
     this.setState({
-      dob:
-        this.props.User.dob === null ? '' : this.props.User.dob.split('T')[0],
+      dob: !this.props.User.dob ? '' : this.props.User.dob.split('T')[0],
     });
     this.setState({major: this.props.User.major});
     this.setState({website: this.props.User?.website});
@@ -472,6 +476,7 @@ class ProfilePage extends React.Component {
   };
 
   render() {
+    console.log(this.props.User);
     let pickerItems = this.state.campuses[0]
       ? this.state.campuses.map((s, i) => {
           // if (s.id !== this.state.selectedId)
@@ -480,7 +485,18 @@ class ProfilePage extends React.Component {
       : null;
 
     return (
-      <Container>
+      <>
+        {Platform.OS === 'ios' ? (
+          // <View
+          //   style={{
+          //     height: getStatusBarHeight(),
+          //     backgroundColor: ThemeBlue,
+          //   }}>
+          <StatusBar />
+        ) : // </View>
+        null}
+        {/* <Container> */}
+        {/* <SafeAreaView style={{flex: 1, borderWidth: 1}}> */}
         <Spinner
           visible={this.state.Spinner}
           textStyle={{color: ThemeBlue}}
@@ -630,7 +646,9 @@ class ProfilePage extends React.Component {
             {this.renderGradYear()}
           </View>
         </Content>
-      </Container>
+        {/* </SafeAreaView> */}
+        {/* </Container> */}
+      </>
     );
   }
 }
