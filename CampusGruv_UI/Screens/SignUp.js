@@ -186,6 +186,15 @@ class Signup extends React.Component {
                       'isverified',
                       response.email_verified.toString(),
                     );
+                    await AsyncStorage.setItem(
+                      'USER_ID',
+                      response.id.toString(),
+                    );
+                    await AsyncStorage.setItem(
+                      'selected',
+                      response.id.toString(),
+                    );
+                    await AsyncStorage.setItem('accountType', 'user');
                     //  AsyncStorage.setItem('CAMPUS_ID', response.campus_id.toString());
                     await AsyncStorage.setItem('CAMPUS_ID', 'nahi_hai');
                     this.setState({

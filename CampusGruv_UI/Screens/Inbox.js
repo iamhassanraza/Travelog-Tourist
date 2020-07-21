@@ -117,7 +117,7 @@ class Inbox extends PureComponent {
               </View>
             ) : this.state.total !== 0 ? (
               <FlatList
-                style={{marginTop: 10}}
+                style={{paddingTop: 10}}
                 data={filtereddata}
                 renderItem={({item, index}) => {
                   if (item.id !== this.props.User.id)

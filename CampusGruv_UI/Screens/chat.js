@@ -99,7 +99,7 @@ class Chat extends React.PureComponent {
     };
   }
 
-  imageloaded = () => {
+  imageloaded = image => {
     this.setState({imageLoading: false});
   };
 
@@ -124,6 +124,22 @@ class Chat extends React.PureComponent {
   }
 
   customMessage = props => {
+    const width = 200;
+    const height = 200;
+    if (props.currentMessage.message_type === 'image') {
+      console.log('if ran');
+      Image.getSize(
+        props.currentMessage.text,
+        (srcWidth, srcHeight) => {
+          const ratio = width / srcWidth;
+          height = srcHeight * ratio;
+          alert('heylo', width, height);
+        },
+        error => {
+          () => console.log(error);
+        },
+      );
+    }
     return (
       <View
         style={{
@@ -196,16 +212,17 @@ class Chat extends React.PureComponent {
             ) : null}
             {props.currentMessage.message_type === 'image' ? (
               <FastImage
-                onLoad={this.imageloaded}
+                // resizeMode="contain"
+                onLoadEnd={() => this.imageloaded(props.currentMessage.text)}
                 source={{
                   uri: props.currentMessage.text,
                   priority: FastImage.priority.high,
                 }}
                 style={{
-                  borderWidth: this.state.imageloading ? 0.8 : 0,
+                  borderWidth: 0.8,
                   borderColor: 'grey',
                   backgroundColor: this.state.imageloading ? 'none' : 'grey',
-                  width: 200,
+                  width: width,
                   marginTop: 5,
                   borderRadius: 10,
                   height: 200,

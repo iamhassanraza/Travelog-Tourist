@@ -90,7 +90,7 @@ class InboxComponent extends Component {
               </Text>
               <ParsedText numberOfLines={2} style={{color: 'grey'}}>
                 {this.props.subtitle.includes('http')
-                  ? 'sent a message'
+                  ? 'sent a photo'
                   : this.props.subtitle}
               </ParsedText>
             </View>

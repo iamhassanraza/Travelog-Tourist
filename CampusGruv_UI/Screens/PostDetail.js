@@ -26,6 +26,7 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import CrossIcon from 'react-native-vector-icons/MaterialIcons';
 import IconFeather from 'react-native-vector-icons/Feather';
 import BackIcon from 'react-native-vector-icons/Ionicons';
+import AntIcon from 'react-native-vector-icons/AntDesign';
 import EvilIcons from 'react-native-vector-icons/SimpleLineIcons';
 import {ThemeBlue} from '../Assets/Colors';
 import Modal from 'react-native-modal';
@@ -322,10 +323,15 @@ class PostDetail extends Component {
               this.likePost(postId, userId);
             }}>
             <View style={{height: 40, width: 40, justifyContent: 'center'}}>
-              <FastImage
+              {/* <FastImage
                 source={this.state.liked ? YesLike : NoLike}
                 style={{height: 25, width: 28}}
-              />
+              /> */}
+              {this.state.liked ? (
+                <AntIcon name="star" color={ThemeBlue} size={30} />
+              ) : (
+                <AntIcon name="staro" color="grey" size={30} />
+              )}
             </View>
           </TouchableOpacity>
 
@@ -694,6 +700,7 @@ class PostDetail extends Component {
   };
 
   postComment = async (postId, postUserId) => {
+    Keyboard.dismiss();
     if (this.state.currentComment && this.state.currentComment != '') {
       const Token = await AsyncStorage.getItem('TOKEN');
       const Response = await fetch(
@@ -716,7 +723,6 @@ class PostDetail extends Component {
       if (parseInt(Response.status) === 400) {
         alert(JsonResponse.message);
       } else if (parseInt(Response.status) === 200) {
-        Keyboard.dismiss();
         const comments = this.state.comments;
         comments.push({
           ...JsonResponse,
@@ -783,7 +789,7 @@ class PostDetail extends Component {
     if (parseInt(Response.status) === 400) {
       alert(JsonResponse.message);
     } else if (parseInt(Response.status) === 201) {
-      alert(JsonResponse.message);
+      // alert(JsonResponse.message);
     } else {
       alert('something is wrong');
     }
@@ -828,7 +834,6 @@ class PostDetail extends Component {
     if (parseInt(Response.status) === 400) {
       alert(JsonResponse.message);
     } else if (parseInt(Response.status) === 200) {
-      alert(JsonResponse.message);
     } else {
       alert('something is wrong');
     }

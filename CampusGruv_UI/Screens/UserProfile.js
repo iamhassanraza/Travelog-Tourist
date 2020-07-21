@@ -595,8 +595,8 @@ class UserProfile extends React.Component {
                   }
             }
             style={{
-              width: 80,
-              height: 80,
+              width: 100,
+              height: 100,
               borderRadius: 50,
               elevation: 3,
               shadowOffset: {width: 1, height: 2},
