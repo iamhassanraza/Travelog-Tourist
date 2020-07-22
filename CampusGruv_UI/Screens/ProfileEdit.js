@@ -500,7 +500,7 @@ class ProfilePage extends React.Component {
 
     return (
       <>
-        {Platform.OS === 'ios' ? (
+        {Platform.OS === 'ios' && getStatusBarHeight() > 800 ? (
           // <View
           //   style={{
           //     height: getStatusBarHeight(),

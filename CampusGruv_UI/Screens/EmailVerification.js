@@ -110,12 +110,12 @@ class EmailVerification extends React.Component {
                   }}>
                   <TextInput
                     autoCapitalize="none"
-                    placeholder="Email"
+                    placeholder="Verification code"
                     style={{
                       width: '90%',
                       fontSize: 20,
                       color: '#ACACAC',
-                      paddingLeft: '8%',
+                      paddingLeft: '5%',
                       height: Platform.OS == 'ios' ? 40 : 50,
                     }}
                     onChangeText={text => this.setState({code: text})}
