@@ -10,6 +10,8 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
+const {width, height} = Dimensions.get('window');
+
 class InputView extends React.Component {
   constructor(props) {
     super(props);
@@ -24,13 +26,13 @@ class InputView extends React.Component {
       <View>
         {/* OPTIONS */}
 
-        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text
             style={{
-              fontSize: this.props.fontSize ?? 20,
+              fontSize: 20,
               marginTop: 15,
-              marginLeft: '5%',
-              width: this.props.width ?? '25%',
+              marginLeft: 10,
+              width: width / 3.1,
             }}>
             {this.props.name}
           </Text>
@@ -45,7 +47,8 @@ class InputView extends React.Component {
             }}
             value={this.props.value}
             style={{
-              width: '60%',
+              width: width / 1.8,
+              paddingBottom: 1,
               borderBottomColor: '#C4C4C4',
               borderBottomWidth: 0.5,
               fontSize: 20,
@@ -60,7 +63,11 @@ class InputView extends React.Component {
             name="pencil"
             color={this.state.focused ? '#0C91CF' : '#C4C4C4'}
             size={26}
-            style={{width: '10%', marginTop: 15}}
+            style={{
+              width: width / 10,
+              marginLeft: '1%',
+              marginTop: 15,
+            }}
           />
         </View>
       </View>

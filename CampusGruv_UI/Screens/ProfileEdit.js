@@ -41,6 +41,8 @@ import {
 import FastImage from 'react-native-fast-image';
 import {ThemeBlue} from '../Assets/Colors';
 
+const {width, height} = Dimensions.get('window');
+
 //cam_id === 'nahi_hai'
 class ProfilePage extends React.Component {
   static navigationOptions = props => {
@@ -352,16 +354,15 @@ class ProfilePage extends React.Component {
           style={{
             fontSize: 20,
             marginTop: 15,
-            marginLeft: 15,
-            width: '25%',
-            marginRight: '0.5%',
+            marginLeft: 10,
+            width: width / 3.1,
           }}>
           Birthday
         </Text>
 
         <DatePicker
           style={{
-            width: '60%',
+            width: width / 1.52,
           }}
           date={this.state.date}
           mode="date"
@@ -379,7 +380,7 @@ class ProfilePage extends React.Component {
               top: 4,
             },
             placeholderText: {
-              fontSize: 16,
+              fontSize: 20,
               color: 'black',
             },
             dateInput: {
@@ -403,10 +404,15 @@ class ProfilePage extends React.Component {
 
   renderPhoneNo = () => {
     return (
-      <View style={{marginTop: '5%'}}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+      <View style={{}}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text
-            style={{fontSize: 20, marginTop: 15, marginLeft: 15, width: '25%'}}>
+            style={{
+              fontSize: 20,
+              marginTop: 15,
+              marginLeft: 10,
+              width: width / 3.1,
+            }}>
             Phone
           </Text>
           <TextInput
@@ -418,8 +424,9 @@ class ProfilePage extends React.Component {
             }}
             keyboardType="numeric"
             style={{
-              width: '60%',
+              width: width / 1.8,
               borderBottomColor: '#C4C4C4',
+              paddingBottom: 1,
               borderBottomWidth: 0.5,
               fontSize: 20,
             }}
@@ -431,7 +438,7 @@ class ProfilePage extends React.Component {
             name="pencil"
             color={this.state.focused ? '#0C91CF' : '#C4C4C4'}
             size={26}
-            style={{width: '10%', marginTop: 15}}
+            style={{width: width / 10, marginTop: 15}}
           />
         </View>
       </View>
@@ -440,10 +447,15 @@ class ProfilePage extends React.Component {
 
   renderGradYear = () => {
     return (
-      <View style={{marginTop: '5%'}}>
-        <View style={{flexDirection: 'row', justifyContent: 'space-around'}}>
+      <View style={{}}>
+        <View style={{flexDirection: 'row', alignItems: 'center'}}>
           <Text
-            style={{fontSize: 20, marginTop: 15, marginLeft: 10, width: '25%'}}>
+            style={{
+              fontSize: 20,
+              marginTop: 15,
+              marginLeft: 10,
+              width: width / 3.1,
+            }}>
             Grad Year
           </Text>
           <TextInput
@@ -455,20 +467,22 @@ class ProfilePage extends React.Component {
             }}
             keyboardType="numeric"
             style={{
-              width: '60%',
+              width: width / 1.8,
               borderBottomColor: '#C4C4C4',
+              paddingBottom: 1,
               borderBottomWidth: 0.5,
               fontSize: 20,
             }}
             placeholder="2020"
+            placeholderTextColor="black"
             value={this.state.gradutationYear}
             onChangeText={text => this.setState({gradutationYear: text})}
           />
           <Icon
             name="pencil"
-            color={this.state.focused ? '#0C91CF' : '#C4C4C4'}
+            color="#C4C4C4"
             size={26}
-            style={{width: '10%', marginTop: 15}}
+            style={{width: width / 10, marginTop: 15}}
           />
         </View>
       </View>
@@ -567,26 +581,25 @@ class ProfilePage extends React.Component {
               }}
             />
             {/* <InputView name='Campus' ph='University of Pittsburgh'/> */}
-            <View
-              style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+            <View style={{flexDirection: 'row', alignItems: 'center'}}>
               <Text
                 style={{
                   fontSize: 20,
                   marginTop: 15,
-                  marginLeft: 15,
-                  width: '25%',
+                  marginLeft: 10,
+                  width: width / 3.1,
                 }}>
                 Campus
               </Text>
               <View
                 style={{
-                  width: '60%',
+                  width: width / 1.8,
                   marginTop: 5,
                   borderBottomWidth: 0.5,
                   borderBottomColor: '#C4C4C4',
                 }}>
                 <Picker
-                  textStyle={{paddingLeft: 0}}
+                  style={{height: 40}}
                   selectedValue={this.state.selectedId}
                   onValueChange={itemValue => {
                     if (itemValue !== 'select campus') {
@@ -602,7 +615,7 @@ class ProfilePage extends React.Component {
                 name="pencil"
                 color="#C4C4C4"
                 size={26}
-                style={{width: '10%', marginTop: 15}}
+                style={{width: width / 10, marginTop: 15}}
               />
             </View>
             {/* <InputView
