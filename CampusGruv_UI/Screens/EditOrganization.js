@@ -20,6 +20,8 @@ import {ThemeBlue} from '../Assets/Colors';
 import {connect} from 'react-redux';
 import {CreateUserDetails} from '../ReduxStore/Actions/index';
 
+const {width, height} = Dimensions.get('window');
+
 class EditOrganization extends Component {
   static navigationOptions = props => {
     tabBarVisibile = false;
@@ -307,21 +309,22 @@ class EditOrganization extends Component {
                 style={{flexDirection: 'row', justifyContent: 'space-between'}}>
                 <Text
                   style={{
-                    fontSize: 18,
+                    fontSize: 20,
                     marginTop: 15,
-                    marginLeft: 15,
-                    width: '30%',
+                    marginLeft: 10,
+                    width: width / 3.1,
                   }}>
-                  Organization type
+                  Org. Type
                 </Text>
                 <View
                   style={{
-                    width: '60%',
+                    width: width / 1.8,
                     marginTop: 5,
                     borderBottomWidth: 0.5,
                     borderBottomColor: '#C4C4C4',
                   }}>
                   <Picker
+                    style={{height: 40}}
                     textStyle={{paddingLeft: 0}}
                     selectedValue={this.state.selectedOrgType}
                     onValueChange={itemValue => {
@@ -347,7 +350,7 @@ class EditOrganization extends Component {
                   name="pencil"
                   color="#C4C4C4"
                   size={26}
-                  style={{width: '10%', marginTop: 15}}
+                  style={{width: width / 10, marginTop: 15}}
                 />
               </View>
               {/* <View

@@ -37,6 +37,7 @@ class InputView extends React.Component {
             {this.props.name}
           </Text>
           <TextInput
+            selection={{start: 0, end: 0}}
             autoCapitalize="words"
             multiline={this.props.multiline}
             onFocus={() => {
@@ -48,6 +49,7 @@ class InputView extends React.Component {
             value={this.props.value}
             style={{
               width: width / 1.8,
+              // marginLeft: '5%',
               paddingBottom: 1,
               borderBottomColor: '#C4C4C4',
               borderBottomWidth: 0.5,
