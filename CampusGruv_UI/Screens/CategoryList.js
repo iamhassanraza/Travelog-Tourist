@@ -54,7 +54,7 @@ export default class CategoryList extends Component {
                 </View>
                 <View style={{alignSelf: 'center'}}>
                   <Text
-                    style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>
+                    style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
                     Categories
                   </Text>
                 </View>
@@ -106,7 +106,7 @@ export default class CategoryList extends Component {
                 </View>
                 <View style={{alignSelf: 'center'}}>
                   <Text
-                    style={{color: 'white', fontSize: 24, fontWeight: 'bold'}}>
+                    style={{color: 'white', fontSize: 20, fontWeight: 'bold'}}>
                     Categories
                   </Text>
                 </View>

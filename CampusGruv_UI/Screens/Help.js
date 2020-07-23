@@ -42,8 +42,8 @@ export default class Help extends Component {
       <SafeAreaView style={styles.container}>
         <TouchableOpacity onPress={() => this.toggleModal()}>
           <View style={styles.reportContainer}>
-            <Text style={styles.reportText}>Report a problem</Text>
-            <Icon name="keyboard-arrow-right" size={35} />
+            <Text style={styles.reportText}>Report a Problem/Feedback</Text>
+            <Icon name="keyboard-arrow-right" size={30} />
           </View>
         </TouchableOpacity>
         <Modal
@@ -95,6 +95,7 @@ const styles = StyleSheet.create({
     borderTopWidth: 0.4,
     width: '100%',
     height: 40,
+    justifyContent: 'center',
     alignItems: 'center',
     borderTopColor: ThemeBlue,
   },
@@ -104,7 +105,7 @@ const styles = StyleSheet.create({
     paddingVertical: 5,
   },
   cancelText: {
-    fontWeight: 'bold',
+    // fontWeight: 'bold',
     fontSize: 20,
     color: ThemeBlue,
     paddingVertical: 5,

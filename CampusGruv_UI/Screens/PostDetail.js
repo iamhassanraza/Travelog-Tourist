@@ -340,10 +340,15 @@ class PostDetail extends Component {
               this.savePost(postId);
             }}>
             <View style={{height: 40, width: 40, justifyContent: 'center'}}>
-              <FastImage
+              {/* <FastImage
                 source={this.state.saved ? YesSave : NoSave}
                 style={{height: 25, width: 25}}
-              />
+              /> */}
+              {this.state.saved ? (
+                <IconFeather name="save" color={ThemeBlue} size={30} />
+              ) : (
+                <IconFeather name="save" color="grey" size={30} />
+              )}
             </View>
           </TouchableOpacity>
 
