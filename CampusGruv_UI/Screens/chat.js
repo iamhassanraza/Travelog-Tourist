@@ -459,6 +459,7 @@ class Chat extends React.PureComponent {
       <View style={{flex: 1}}>
         <GiftedChat
           listViewProps={{
+            marginBottom: 10,
             scrollEventThrottle: 400,
             onScroll: async ({nativeEvent}) => {
               if (this.isCloseToTop(nativeEvent) && this.state.loadMore) {
@@ -497,7 +498,7 @@ class Chat extends React.PureComponent {
             placeholder: 'send a message',
             borderWidth: 1,
             borderColor: 'grey',
-            // marginTop: 10,
+            marginTop: 10,
             paddingLeft: '2%',
             paddingRight: '2%',
             fontSize: 16,
