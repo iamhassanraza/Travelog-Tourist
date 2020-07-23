@@ -124,8 +124,8 @@ class Chat extends React.PureComponent {
   }
 
   customMessage = props => {
-    const width = 200;
-    const height = 200;
+    var width = 200;
+    var height = 200;
     if (props.currentMessage.message_type === 'image') {
       console.log('if ran');
       Image.getSize(
