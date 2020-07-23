@@ -324,8 +324,8 @@ class EditOrganization extends Component {
                     borderBottomColor: '#C4C4C4',
                   }}>
                   <Picker
-                    style={{height: 40}}
-                    textStyle={{paddingLeft: 0}}
+                    style={{height: 40, marginBottom: -5}}
+                    textStyle={{fontSize: 20, paddingLeft: 0}}
                     selectedValue={this.state.selectedOrgType}
                     onValueChange={itemValue => {
                       this.setState({

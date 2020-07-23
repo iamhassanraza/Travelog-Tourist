@@ -26,7 +26,8 @@ class InputView extends React.Component {
       <View>
         {/* OPTIONS */}
 
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View
+          style={{flexDirection: 'row', alignItems: 'center', marginTop: 5}}>
           <Text
             style={{
               fontSize: 20,
@@ -48,6 +49,7 @@ class InputView extends React.Component {
             value={this.props.value}
             style={{
               width: width / 1.8,
+              marginTop: 15,
               // marginLeft: '5%',
               paddingBottom: 1,
               borderBottomColor: '#C4C4C4',

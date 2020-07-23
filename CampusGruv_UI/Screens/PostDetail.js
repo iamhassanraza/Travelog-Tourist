@@ -226,6 +226,7 @@ class PostDetail extends Component {
       },
     );
     const JsonResponse = await Response.json();
+    console.log('JSON', JsonResponse);
     if (JsonResponse.result === 1) {
       this.props.navigation.navigate('HomeScreen', {newPost: true});
     } else {

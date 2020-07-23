@@ -349,7 +349,7 @@ class ProfilePage extends React.Component {
 
   renderDatePicker = () => {
     return (
-      <View style={{flexDirection: 'row', marginTop: '3%'}}>
+      <View style={{flexDirection: 'row', marginTop: 5}}>
         <Text
           style={{
             fontSize: 20,
@@ -362,7 +362,7 @@ class ProfilePage extends React.Component {
 
         <DatePicker
           style={{
-            width: width / 1.52,
+            width: width / 1.54,
           }}
           date={this.state.date}
           mode="date"
@@ -382,6 +382,7 @@ class ProfilePage extends React.Component {
             placeholderText: {
               fontSize: 20,
               color: 'black',
+              marginBottom: -10,
             },
             dateInput: {
               alignItems: 'flex-start',
@@ -405,7 +406,8 @@ class ProfilePage extends React.Component {
   renderPhoneNo = () => {
     return (
       <View style={{}}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View
+          style={{flexDirection: 'row', alignItems: 'center', marginTop: 5}}>
           <Text
             style={{
               fontSize: 20,
@@ -427,6 +429,8 @@ class ProfilePage extends React.Component {
               width: width / 1.8,
               borderBottomColor: '#C4C4C4',
               paddingBottom: 1,
+              marginTop: 15,
+
               borderBottomWidth: 0.5,
               fontSize: 20,
             }}
@@ -448,7 +452,8 @@ class ProfilePage extends React.Component {
   renderGradYear = () => {
     return (
       <View style={{}}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+        <View
+          style={{flexDirection: 'row', alignItems: 'center', marginTop: 5}}>
           <Text
             style={{
               fontSize: 20,
@@ -470,6 +475,7 @@ class ProfilePage extends React.Component {
               width: width / 1.8,
               borderBottomColor: '#C4C4C4',
               paddingBottom: 1,
+              marginTop: 15,
               borderBottomWidth: 0.5,
               fontSize: 20,
             }}
@@ -581,7 +587,12 @@ class ProfilePage extends React.Component {
               }}
             />
             {/* <InputView name='Campus' ph='University of Pittsburgh'/> */}
-            <View style={{flexDirection: 'row', alignItems: 'center'}}>
+            <View
+              style={{
+                flexDirection: 'row',
+                alignItems: 'center',
+                marginTop: 5,
+              }}>
               <Text
                 style={{
                   fontSize: 20,
@@ -599,7 +610,11 @@ class ProfilePage extends React.Component {
                   borderBottomColor: '#C4C4C4',
                 }}>
                 <Picker
-                  style={{height: 40}}
+                  textStyle={{fontSize: 20, paddingLeft: 0}}
+                  style={{
+                    height: 40,
+                    marginBottom: -5,
+                  }}
                   selectedValue={this.state.selectedId}
                   onValueChange={itemValue => {
                     if (itemValue !== 'select campus') {
