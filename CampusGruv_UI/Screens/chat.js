@@ -1,6 +1,6 @@
 import React, {Component, PureComponent} from 'react';
 
-import {GiftedChat} from 'react-native-gifted-chat';
+import {GiftedChat, InputToolbar} from 'react-native-gifted-chat';
 import {
   View,
   Text,
@@ -444,6 +444,18 @@ class Chat extends React.PureComponent {
     else return null;
   };
 
+  renderInputToolbar = props => {
+    return (
+      <InputToolbar
+        {...props}
+        containerStyle={{
+          backgroundColor: '#f9fdfe',
+          borderTopWidth: 0,
+        }}
+      />
+    );
+  };
+
   isCloseToTop({layoutMeasurement, contentOffset, contentSize}) {
     const paddingToTop = 80;
     return (
@@ -454,7 +466,7 @@ class Chat extends React.PureComponent {
 
   render() {
     return (
-      <View style={{flex: 1}}>
+      <View style={{flex: 1, backgroundColor: '#f9fdfe'}}>
         <GiftedChat
           listViewProps={{
             marginBottom: 10,
@@ -485,6 +497,7 @@ class Chat extends React.PureComponent {
               backgroundColor: '#f9fdfe',
             },
           }}
+          renderInputToolbar={this.renderInputToolbar}
           renderFooter={this.renderLoading}
           onLongPress={this.onLongPress}
           loadEarlier={this.state.refreshing}
@@ -492,18 +505,12 @@ class Chat extends React.PureComponent {
           alwaysShowSend={true}
           renderMessage={props => this.customMessage(props)}
           textInputProps={{
-            multiline: true,
+            lineHeight: 20,
             borderRadius: 10,
-            // textAlignVertical: 'top',
-            // placeholder: 'send a message',
             borderWidth: 1,
             borderColor: 'grey',
-            paddingTop: 5,
-            paddingBottom: 0,
-            // marginTop: 10,
             paddingLeft: '2%',
             paddingRight: '2%',
-            // fontSize: 16,
             backgroundColor: 'white',
           }}
           renderActions={() => (

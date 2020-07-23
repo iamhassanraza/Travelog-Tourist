@@ -194,18 +194,14 @@ class EditOrganization extends Component {
         }),
       },
     );
-    console.log('reponse ---------------------', response);
 
     const postMasterResponse = await response.json();
-    console.log(
-      'reponse --------------------- lmaooooooooooooooooo',
-      postMasterResponse,
-    );
+    console.log(postMasterResponse);
 
     this.setState({Spinner: false});
     this.props.CreateUserDetails(postMasterResponse);
     this.setState({imageUri: ''});
-    this.props.navigation.navigate('HomeScreen');
+    this.props.navigation.navigate('UserProfile');
   };
 
   createFormData = (images, body) => {
@@ -229,13 +225,7 @@ class EditOrganization extends Component {
   };
 
   render() {
-    console.log(this.props.User);
-    let pickerItems = this.state.campuses[0]
-      ? this.state.campuses.map((s, i) => {
-          // if (s.id !== this.state.selectedId)
-          return <Picker.Item key={i} value={s.id} label={s.description} />;
-        })
-      : null;
+    console.log(this.state.selectedOrgType);
     return (
       <Container>
         <Spinner
@@ -306,7 +296,11 @@ class EditOrganization extends Component {
                 }}
               />
               <View
-                style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+                style={{
+                  flexDirection: 'row',
+                  justifyContent: 'space-between',
+                  marginTop: 5,
+                }}>
                 <Text
                   style={{
                     fontSize: 20,
@@ -324,8 +318,8 @@ class EditOrganization extends Component {
                     borderBottomColor: '#C4C4C4',
                   }}>
                   <Picker
-                    style={{height: 40}}
-                    textStyle={{paddingLeft: 0}}
+                    style={{height: 40, marginBottom: -5}}
+                    textStyle={{fontSize: 20, paddingLeft: 0}}
                     selectedValue={this.state.selectedOrgType}
                     onValueChange={itemValue => {
                       this.setState({

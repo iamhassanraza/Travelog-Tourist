@@ -83,13 +83,13 @@ class PostCard extends Component {
         <View style={{}}>
           <FastImage
             onLoadEnd={this.imageLoaded}
-            resizeMode="contain"
+            resizeMode={this.state.height ? 'contain' : 'cover'}
             style={{
               width: this.state.width,
               borderTopLeftRadius: 12,
               borderTopRightRadius: 12,
               backgroundColor: this.state.imageLoaded ? 'white' : '#8a918d',
-              height: this.state.height ?? 150,
+              height: this.state.height ?? 200,
             }}
             source={{
               uri: this.props.imageurl,
