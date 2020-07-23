@@ -125,15 +125,13 @@ class Chat extends React.PureComponent {
 
   customMessage = props => {
     var width = 200;
-    var height = 200;
+    var height = undefined;
     if (props.currentMessage.message_type === 'image') {
-      console.log('if ran');
       Image.getSize(
         props.currentMessage.text,
         (srcWidth, srcHeight) => {
           const ratio = width / srcWidth;
           height = srcHeight * ratio;
-          alert('heylo', width, height);
         },
         error => {
           () => console.log(error);
@@ -219,7 +217,7 @@ class Chat extends React.PureComponent {
                   priority: FastImage.priority.high,
                 }}
                 style={{
-                  borderWidth: 0.8,
+                  // borderWidth: 0.8,
                   borderColor: 'grey',
                   backgroundColor: this.state.imageloading ? 'none' : 'grey',
                   width: width,
@@ -494,14 +492,18 @@ class Chat extends React.PureComponent {
           alwaysShowSend={true}
           renderMessage={props => this.customMessage(props)}
           textInputProps={{
+            multiline: true,
             borderRadius: 10,
-            placeholder: 'send a message',
+            // textAlignVertical: 'top',
+            // placeholder: 'send a message',
             borderWidth: 1,
             borderColor: 'grey',
-            marginTop: 10,
+            paddingTop: 5,
+            paddingBottom: 0,
+            // marginTop: 10,
             paddingLeft: '2%',
             paddingRight: '2%',
-            fontSize: 16,
+            // fontSize: 16,
             backgroundColor: 'white',
           }}
           renderActions={() => (

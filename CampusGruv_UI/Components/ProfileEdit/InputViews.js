@@ -37,7 +37,6 @@ class InputView extends React.Component {
             {this.props.name}
           </Text>
           <TextInput
-            selection={{start: 0, end: 0}}
             autoCapitalize="words"
             multiline={this.props.multiline}
             onFocus={() => {
