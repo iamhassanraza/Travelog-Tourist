@@ -194,10 +194,22 @@ class Searching extends React.PureComponent {
     return Token;
   };
 
+  isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    return layoutMeasurement.height + contentOffset.y >= contentSize.height - 1;
+  };
+
   renderFeed = () => {
     if (this.state.loadingFeed === false) {
       return (
         <ScrollView
+          onScroll={({nativeEvent}) => {
+            if (this.isCloseToBottom(nativeEvent)) {
+              if (this.state.posts.length < this.state.totalFeed) {
+                this.loadmore();
+                console.log('Reached end of page');
+              }
+            }
+          }}
           style={{backgroundColor: '#f9fdfe'}}
           refreshControl={
             <RefreshControl

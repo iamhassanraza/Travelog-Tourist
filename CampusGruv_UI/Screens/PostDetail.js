@@ -50,6 +50,7 @@ import NoSave from '../Assets/Images/NoSave.png';
 import YesLike from '../Assets/Images/YesLike.png';
 import YesSave from '../Assets/Images/YesSave.png';
 import FastImage from 'react-native-fast-image';
+import TimeAgo from 'react-native-timeago';
 
 const IconGrey = '#b4b8bf';
 var {width, height} = Dimensions.get('window');
@@ -532,7 +533,7 @@ class PostDetail extends Component {
     );
   };
 
-  renderTitle = (title, views, likes) => {
+  renderTitle = (title, views, likes, createdAt) => {
     return (
       <View
         style={{
@@ -540,13 +541,15 @@ class PostDetail extends Component {
           marginLeft: '3%',
           marginRight: '3%',
           flexDirection: 'row',
-          justifyContent: 'space-between',
+          // justifyContent: 'space-between',
         }}>
-        <View style={{width: '90%'}}>
+        <View style={{width: '70%', borderWidth: 1}}>
           <Text selectable={true} style={{fontSize: 20, fontWeight: '400'}}>
             {title}
           </Text>
         </View>
+
+        {/* <TimeAgo time={createdAt} /> */}
 
         <View style={{marginRight: '1%'}}>
           <ViewsIcon color="grey" name="thumb-up" style={{fontSize: 17}} />
@@ -882,7 +885,12 @@ class PostDetail extends Component {
                   data.title,
                 )}
                 {this.renderImage(data.uri)}
-                {this.renderTitle(data.title, data.views, data.likes)}
+                {this.renderTitle(
+                  data.title,
+                  data.views,
+                  data.likes,
+                  data.createdAt,
+                )}
                 {this.renderDescription(data.description)}
                 {this.state.comments[0]
                   ? this.renderAllComments(data.userAvatar, data.comments)

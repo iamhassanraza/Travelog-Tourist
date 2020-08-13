@@ -109,7 +109,7 @@ class Feedback extends Component {
         },
       },
     );
-    console.log('rsponse', Response);
+    this.props.navigation.navigate('UserSettings');
   };
 
   renderDescription = () => {

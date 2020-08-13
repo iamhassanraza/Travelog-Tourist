@@ -225,77 +225,6 @@ export default class FolllowersPosts extends PureComponent {
               </View>
             </View>
           </View>
-          // <View
-          //   style={{
-          //     height: 50,
-          //     flexDirection: 'row',
-          //     backgroundColor: '#0C91CF',
-          //     alignItems: 'center',
-          //   }}>
-          //   <View
-          //     style={{flexDirection: 'row', alignItems: 'center', flex: 10}}>
-          //     <View
-          //       style={{
-          //         marginLeft: '2%',
-          //         flexDirection: 'row',
-          //         alignSelf: 'center',
-          //       }}>
-          //       <TouchableOpacity
-          //         onPress={() => props.navigation.navigate('Searching')}>
-          //         <View
-          //           style={{
-          //             height: 30,
-          //             padding: 0,
-          //             flexDirection: 'row',
-          //             alignItems: 'center',
-          //             width: 250,
-          //             backgroundColor: '#F0F0F0',
-          //             borderRadius: 10,
-          //           }}>
-          //           <View style={{marginLeft: '2%'}}>
-          //             <Icon name="search" color="#0C91CF" size={20} />
-          //           </View>
-          //           <View style={{height: 20}}>
-          //             <Image
-          //               source={Logo}
-          //               style={{
-          //                 width: 150,
-          //                 alignSelf: 'flex-start',
-          //                 height: '100%',
-          //               }}
-          //               resizeMode="contain"
-          //             />
-          //           </View>
-          //         </View>
-          //       </TouchableOpacity>
-          //     </View>
-          //     <View style={{paddingLeft: '4%'}}>
-          //       <TouchableOpacity
-          //         onPress={() => props.navigation.navigate('CategoryList')}>
-          //         <View
-          //           style={{height: 40, width: 40, justifyContent: 'center'}}>
-          //           <Image
-          //             source={NoCategory}
-          //             style={{height: 30, width: 30, borderWidth: 1}}
-          //           />
-          //         </View>
-          //       </TouchableOpacity>
-          //     </View>
-
-          //     <View style={{paddingLeft: '2%'}}>
-          //       <TouchableOpacity
-          //         onPress={() => props.navigation.navigate('HomeScreen')}>
-          //         <View
-          //           style={{height: 40, width: 50, justifyContent: 'center'}}>
-          //           <Image
-          //             source={YesFollower}
-          //             style={{height: 30, width: 35, borderWidth: 1}}
-          //           />
-          //         </View>
-          //       </TouchableOpacity>
-          //     </View>
-          //   </View>
-          // </View>
         ),
     };
   };
@@ -430,40 +359,22 @@ export default class FolllowersPosts extends PureComponent {
     this.focusListener.remove();
   }
 
+  isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    return layoutMeasurement.height + contentOffset.y >= contentSize.height - 1;
+  };
+
   render() {
     if (this.state.total > 0) {
       return (
         <React.Fragment>
-          {/* <View style={{backgroundColor: '#F0F0F0'}}>
-          <Text
-            onPress={() => {
-              this.setState({FolllowersPosts: false});
-              
-            }}
-            style={{
-              margin: 6,
-              padding: 2,
-              paddingLeft: 5,
-              borderWidth: 1,
-              borderColor: ThemeBlue,
-              borderRadius: 6,
-              fontWeight: 'bold',
-              alignSelf: 'flex-end',
-              fontSize: 15,
-              color: ThemeBlue,
-            }}>
-            Clear Followers Post{' '}
-            <CrossIcon
-              name="circle-with-cross"
-              size={15}
-              style={{
-                borderWidth: 1,
-                alignSelf: 'center',
-                color: ThemeBlue,
-              }}></CrossIcon>
-          </Text>
-        </View>  */}
           <ScrollView
+            onScroll={({nativeEvent}) => {
+              if (this.isCloseToBottom(nativeEvent)) {
+                if (this.state.posts.length < this.state.total) {
+                  this.loadmore();
+                }
+              }
+            }}
             style={{backgroundColor: '#f9fdfe'}}
             refreshControl={
               <RefreshControl

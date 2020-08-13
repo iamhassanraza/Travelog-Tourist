@@ -231,6 +231,7 @@ class ProfilePage extends React.Component {
       {
         maxWidth: 1000,
         maxHeight: 1000,
+        allowsEditing: true,
         storageOptions: {
           skipBackup: true,
           path: 'images',

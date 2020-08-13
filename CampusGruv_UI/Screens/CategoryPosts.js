@@ -389,11 +389,22 @@ export default class CategoryPosts extends PureComponent {
     this.fetchCategoryPosts();
   };
 
+  isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    return layoutMeasurement.height + contentOffset.y >= contentSize.height - 1;
+  };
+
   render() {
     if (this.state.total > 0) {
       return (
         <React.Fragment>
           <ScrollView
+            onScroll={({nativeEvent}) => {
+              if (this.isCloseToBottom(nativeEvent)) {
+                if (this.state.posts.length < this.state.total) {
+                  this.loadmore();
+                }
+              }
+            }}
             style={{backgroundColor: '#f9fdfe'}}
             refreshControl={
               <RefreshControl

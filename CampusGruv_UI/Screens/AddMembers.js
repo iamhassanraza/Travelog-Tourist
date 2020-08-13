@@ -42,11 +42,9 @@ class AddMembers extends Component {
       },
     );
     const JsonResponse = await Response.json();
-    // console.log('follow data arha ya nhi ----------------> ',JsonResponse.data)
 
     if (parseInt(Response.status) === 400) {
       this.setState({error: true, totalUsers: 0});
-      console.log(Response);
     } else if (parseInt(Response.status) === 200) {
       if (JsonResponse.total > 0) {
         this.setState({
@@ -54,10 +52,8 @@ class AddMembers extends Component {
           totalUsers: JsonResponse.total,
           loadingUsers: false,
         });
-        console.log(Response);
       } else if (JsonResponse.total === 0) {
         this.setState({totalUsers: 0});
-        console.log(Response);
       }
     }
   };
@@ -71,7 +67,6 @@ class AddMembers extends Component {
   SearchItems = text => {
     if (text) {
       this.fetchUsers(text);
-      console.log('fetch karo');
     }
   };
 

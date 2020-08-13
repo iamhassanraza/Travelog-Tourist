@@ -510,7 +510,12 @@ class HomeScreen extends PureComponent {
     // this.focusListener.remove();
   }
 
+  isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    return layoutMeasurement.height + contentOffset.y >= contentSize.height - 1;
+  };
+
   render() {
+    console.log('total', this.state.posts.length);
     if (this.props.screenProps.postDetail) {
       const postDetail = this.props.screenProps.postDetail[0];
       this.props.navigation.navigate('PostDetail', {
@@ -625,6 +630,14 @@ class HomeScreen extends PureComponent {
 
             <ScrollView
               ref="_scrollView"
+              onScroll={({nativeEvent}) => {
+                if (this.isCloseToBottom(nativeEvent)) {
+                  if (this.state.posts.length < this.state.total) {
+                    this.loadmore();
+                    console.log('Reached end of page');
+                  }
+                }
+              }}
               refreshControl={
                 <RefreshControl
                   refreshing={this.state.refreshing}

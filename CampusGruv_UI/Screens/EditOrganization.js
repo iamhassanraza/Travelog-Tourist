@@ -286,8 +286,6 @@ class EditOrganization extends Component {
                 marginTop: Dimensions.get('window').height > 800 ? 50 : 20,
               }}>
               <InputView
-                width="30%"
-                fontSize={18}
                 name="Organization"
                 ph="enter organization"
                 value={this.state.organizationName}
@@ -386,7 +384,6 @@ class EditOrganization extends Component {
                 />
               </View> */}
               <InputView
-                multiline={true}
                 name="Email"
                 ph="Enter email"
                 value={this.state.organizationEmail}
@@ -394,6 +391,7 @@ class EditOrganization extends Component {
                   this.setState({organizationEmail: text});
                 }}
               />
+
               {/* <InputView
                 multiline={true}
                 name="Website"
@@ -409,7 +407,39 @@ class EditOrganization extends Component {
                     org_id: this.props.User.id,
                   })
                 }>
-                <InputView
+                <View
+                  style={{
+                    flexDirection: 'row',
+                    // alignItems: 'center',
+                    justifyContent: 'space-between',
+                    marginTop: 5,
+                  }}>
+                  <Text
+                    style={{
+                      fontSize: 20,
+                      marginTop: 15,
+                      marginLeft: 10,
+                      width: width / 3.1,
+                    }}>
+                    Members
+                  </Text>
+                  <View
+                    style={{
+                      width: width / 1.8,
+                      marginTop: 10,
+                      borderBottomWidth: 0.5,
+                      borderBottomColor: '#C4C4C4',
+                    }}>
+                    <Text style={{fontSize: 20}}>Add Members</Text>
+                  </View>
+                  <Icon
+                    name="pencil"
+                    color="#C4C4C4"
+                    size={26}
+                    style={{width: width / 10, marginTop: 15}}
+                  />
+                </View>
+                {/* <InputView
                   name="Members"
                   ph="Add Users"
                   changestate={text => {
@@ -417,7 +447,7 @@ class EditOrganization extends Component {
                       searched: text,
                     });
                   }}
-                />
+                /> */}
               </TouchableOpacity>
             </View>
           </View>

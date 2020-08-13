@@ -112,7 +112,7 @@ class AuthLoading extends React.Component {
   // Fetch the token from storage then navigate to our appropriate place
   _bootstrapAsync = async () => {
     try {
-      await this.fetchUser();
+      // await this.fetchUser();
       const userToken = await AsyncStorage.getItem('TOKEN');
       const campus_id = await AsyncStorage.getItem('CAMPUS_ID');
       const isverified = await AsyncStorage.getItem('isverified');
@@ -124,6 +124,8 @@ class AuthLoading extends React.Component {
       // console.log(email,'===================email')
 
       if (userToken) {
+        await this.fetchUser();
+
         //means logged in hai
         if (isverified !== '1') {
           this.props.navigation.navigate('EmailVerification', {
@@ -149,7 +151,6 @@ class AuthLoading extends React.Component {
           });
         }
       } else {
-        console.log('else ran');
         this.props.navigation.navigate('Auth');
       }
     } catch (e) {

@@ -485,6 +485,10 @@ class UserProfile extends React.Component {
     }
   };
 
+  isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
+    return layoutMeasurement.height + contentOffset.y >= contentSize.height - 1;
+  };
+
   render() {
     let accountType = AsyncStorage.getItem('accountType');
 
@@ -506,7 +510,16 @@ class UserProfile extends React.Component {
       ? this.state.otherUserCampus
       : this.props.User.campus.description;
     return (
-      <ScrollView style={{backgroundColor: '#f9fdfe'}}>
+      <ScrollView
+        onScroll={({nativeEvent}) => {
+          if (this.isCloseToBottom(nativeEvent)) {
+            if (this.state.posts.length < this.state.total) {
+              this.loadmore();
+              console.log('Reached end of page');
+            }
+          }
+        }}
+        style={{backgroundColor: '#f9fdfe'}}>
         {/* EDIT PROFILE BUTTON */}
         {postUserId === this.props.User.id ? (
           <View

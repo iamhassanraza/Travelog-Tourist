@@ -32,16 +32,16 @@ class Test1 extends PureComponent {
           'Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1aWQiOjM1NCwiaWF0IjoxNTc2MTMzNzQwfQ.f6hcEx-YKAcIaUJM8ZdH66iWahJafbLEzFEFwvLagE8',
       },
     })
-      .then((response) => {
+      .then(response => {
         return response.json();
       })
-      .then((responseJson) => {
+      .then(responseJson => {
         this.setState({
           posts: responseJson,
           refreshing: false,
         });
       })
-      .catch((err) => console.log(err));
+      .catch(err => console.log(err));
   };
 
   componentDidMount() {
@@ -102,7 +102,7 @@ class Test1 extends PureComponent {
                     </PostCard>
                   );
                 }}
-                keyExtractor={(item) => item.tour_id}
+                keyExtractor={item => item.tour_id}
               />
             </SafeAreaView>
             <SafeAreaView style={{flex: 1}}>
@@ -127,7 +127,7 @@ class Test1 extends PureComponent {
                     </PostCard>
                   );
                 }}
-                keyExtractor={(item) => item.tour_id}
+                keyExtractor={item => item.tour_id}
               />
             </SafeAreaView>
           </View>

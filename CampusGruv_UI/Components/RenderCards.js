@@ -12,7 +12,7 @@ import {
 import PostCard from './PostCard';
 import {withNavigation} from 'react-navigation';
 import Icon from 'react-native-vector-icons/MaterialIcons';
-import {UIActivityIndicator} from 'react-native-indicators';
+import {UIActivityIndicator, MaterialIndicator} from 'react-native-indicators';
 
 class RenderCards extends PureComponent {
   state = {
@@ -46,13 +46,19 @@ class RenderCards extends PureComponent {
             }}>
             <SafeAreaView style={{flex: 1}}>
               <FlatList
-                style={{marginLeft: 5, marginRight: 2.5}}
-                data={column1Data}
+                style={{
+                  paddingTop: 10,
+                }}
+                initialNumToRender={4}
+                windowSize={2}
+                data={this.props.posts}
+                numColumns={2}
                 scrollEnabled={false}
                 showsVerticalScrollIndicator={false}
-                renderItem={({item}) => {
+                renderItem={({item, index}) => {
                   return (
                     <PostCard
+                      index={index}
                       hideCategory={this.props.hideCategory ?? false}
                       categoryName={item.postCategory.description}
                       categoryColor={item.postCategory.rgba_colors}
@@ -69,6 +75,7 @@ class RenderCards extends PureComponent {
                       title={item.title}
                       views={item.view_count}
                       likes={item.likes_count}
+                      createdAt={item.created_at}
                       imageurl={
                         item.postDetail.length > 0
                           ? item.postDetail[0].image_url
@@ -81,7 +88,7 @@ class RenderCards extends PureComponent {
                 keyExtractor={item => item.title}
               />
             </SafeAreaView>
-            <SafeAreaView style={{flex: 1}}>
+            {/* <SafeAreaView style={{flex: 1}}>
               <FlatList
                 style={{
                   marginRight: 5,
@@ -121,35 +128,16 @@ class RenderCards extends PureComponent {
                 }}
                 keyExtractor={item => item.title}
               />
-            </SafeAreaView>
+            </SafeAreaView> */}
           </View>
 
-          {this.props.posts.length < this.props.totalPosts ? (
-            <View
-              style={{
-                backgroundColor: '#f9fdfe',
-                padding: '2%',
-              }}>
-              {this.props.loadstate ? (
-                <UIActivityIndicator size={20} />
-              ) : (
-                <Text
-                  style={{
-                    alignSelf: 'center',
-                    color: '#0C91CF',
-                    padding: '2%',
-                  }}
-                  onPress={() => {
-                    this.props.loadMore();
-                  }}>
-                  <Icon
-                    name="expand-more"
-                    style={{width: 20, height: 20, color: 'black'}}
-                  />
-                </Text>
-              )}
-            </View>
-          ) : null}
+          <View
+            style={{
+              backgroundColor: '#f9fdfe',
+              padding: '2%',
+            }}>
+            {this.props.loadstate && <MaterialIndicator size={20} />}
+          </View>
         </>
       );
     } else {

@@ -9,6 +9,8 @@ import FastImage from 'react-native-fast-image';
 
 class PostCard extends Component {
   state = {
+    isEven: this.props.index % 2 === 0 ? true : false,
+
     width: undefined,
     height: undefined,
     imageLoaded: false,
@@ -47,8 +49,10 @@ class PostCard extends Component {
     return (
       <TouchableWithoutFeedback
         style={{
-          marginVertical: 8,
-          marginHorizontal: 3,
+          width: Dimensions.get('window').width / 2 - 14,
+          marginLeft: this.state.isEven ? 10 : 5,
+          marginRight: this.state.isEven ? 5 : 10,
+          marginBottom: 10,
           borderColor: 'red',
           elevation: 3,
           shadowOffset: {width: 2, height: 4},
@@ -77,19 +81,22 @@ class PostCard extends Component {
               views: this.props.views,
               likes: this.props.likes,
               height: this.state.height,
+              // createdAt: new Date(this.props.createdAt.replace(' ', 'T')),
             },
           })
         }>
         <View style={{}}>
           <FastImage
             onLoadEnd={this.imageLoaded}
-            resizeMode={this.state.height ? 'contain' : 'cover'}
+            // resizeMode="contain"
+            // resizeMode={this.state.height ? 'contain' : 'cover'}
             style={{
-              width: this.state.width,
+              width: Dimensions.get('window').width / 2 - 14,
               borderTopLeftRadius: 12,
               borderTopRightRadius: 12,
               backgroundColor: this.state.imageLoaded ? 'white' : '#8a918d',
-              height: this.state.height ?? 200,
+              height: 180,
+              // height: this.state.height ?? 200,
             }}
             source={{
               uri: this.props.imageurl,
