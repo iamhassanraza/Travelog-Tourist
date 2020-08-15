@@ -506,7 +506,8 @@ class HomeScreen extends PureComponent {
     this.focusListener = navigation.addListener('willFocus', () => {
       // The screen is focused
       if (this.props.navigation.getParam('newPost')) {
-        this.refs._scrollView.scrollTo({x: 0, y: 0, animated: true});
+        this.setState({newPost: true});
+        // this.refs._scrollView.scrollTo({x: 0, y: 0, animated: true});
         this.setState({
           pageNo: 1,
         });
@@ -545,6 +546,10 @@ class HomeScreen extends PureComponent {
 
   isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
     return layoutMeasurement.height + contentOffset.y >= contentSize.height - 1;
+  };
+
+  toggleNewPost = () => {
+    this.setState({newPost: false});
   };
 
   render() {
@@ -907,6 +912,8 @@ class HomeScreen extends PureComponent {
                 loadstate={this.state.loadmore}
                 onRefresh={this.onPageRefresh}
                 refreshState={this.state.refreshing}
+                newPost={this.state.newPost}
+                toggleNewPost={this.toggleNewPost}
               />
             </View>
             {/* </ScrollView> */}

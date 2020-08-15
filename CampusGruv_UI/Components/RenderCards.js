@@ -36,13 +36,9 @@ class RenderCards extends PureComponent {
   //   return false;
   // };
 
-  // componentDidUpdate = (nextProps, prevState) => {
-  //   if (nextProps.posts.length != prevState.posts.length) {
-  //     console.log('update');
-  //     // const mappedArray = this.mapPosts(nextProps.posts);
-  //     this.setState({posts: nextProps.posts});
-  //   }
-  // };
+  componentDidUpdate = (nextProps, prevState) => {
+    // this.props.toggleNewPost();
+  };
 
   loadMore = ({distanceFromEnd}) => {
     console.log('i ran');
@@ -74,6 +70,7 @@ class RenderCards extends PureComponent {
   };
 
   render() {
+    console.log('new', this.props.newPost);
     return (
       <>
         <View
@@ -239,9 +236,18 @@ class RenderCards extends PureComponent {
               images={mappedPosts}
             /> */}
             <FlatList
+              ref={'flatlist'}
               style={{
                 flex: 1,
                 paddingTop: 5,
+              }}
+              onContentSizeChange={() => {
+                if (this.props.newPost)
+                  this.refs.flatlist.scrollToOffset({
+                    offset: 0,
+                    animated: true,
+                  });
+                this.props.toggleNewPost();
               }}
               onRefresh={this.props.onRefresh}
               refreshing={this.props.refreshState}
