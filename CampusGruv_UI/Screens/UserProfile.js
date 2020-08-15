@@ -151,7 +151,7 @@ class UserProfile extends React.Component {
       otherUserDp: null,
       otherUserCampus: null,
       active: 'posts',
-      // spinner: false,
+      spinner: false,
       loadmore: false,
       pageNo: 1,
       isModalVisible: false,
@@ -297,6 +297,7 @@ class UserProfile extends React.Component {
           this.setState(previousState => {
             return {
               posts: [...previousState.posts, ...JsonResponse.data],
+              // posts: previousState.posts.concat(JsonResponse.data),
               total: JsonResponse.total,
               spinner: false,
               loadmore: false,
@@ -393,7 +394,7 @@ class UserProfile extends React.Component {
 
   renderPost = () => {
     return (
-      <View style={{backgroundColor: '#f9fdfe'}}>
+      <View style={{flex: 1, backgroundColor: '#f9fdfe'}}>
         <RenderCards
           posts={this.state.posts}
           loadMore={this.loadmore}
@@ -510,17 +511,18 @@ class UserProfile extends React.Component {
       ? this.state.otherUserCampus
       : this.props.User.campus.description;
     return (
-      <ScrollView
-        onScroll={({nativeEvent}) => {
-          if (this.isCloseToBottom(nativeEvent)) {
-            if (this.state.posts.length < this.state.total) {
-              this.loadmore();
-              console.log('Reached end of page');
-            }
-          }
-        }}
-        style={{backgroundColor: '#f9fdfe'}}>
-        {/* EDIT PROFILE BUTTON */}
+      // <ScrollView
+      //   // onScroll={({nativeEvent}) => {
+      //   //   if (this.isCloseToBottom(nativeEvent)) {
+      //   //     if (this.state.posts.length < this.state.total) {
+      //   //       this.loadmore();
+      //   //       console.log('Reached end of page');
+      //   //     }
+      //   //   }
+      //   // }}
+      //   style={{backgroundColor: '#f9fdfe'}}>
+      /* EDIT PROFILE BUTTON */
+      <>
         {postUserId === this.props.User.id ? (
           <View
             style={{
@@ -951,12 +953,14 @@ class UserProfile extends React.Component {
           ) : null}
         </View>
 
-        {this.state.total === undefined || this.state.total === null
+        {/* {this.state.total === undefined || this.state.total === null */}
+        {this.state.spinner
           ? this.renderLoading()
           : this.state.total === 0
           ? this.renderNoPost()
           : this.renderPost()}
-      </ScrollView>
+        {/* </ScrollView> */}
+      </>
     );
   }
 }

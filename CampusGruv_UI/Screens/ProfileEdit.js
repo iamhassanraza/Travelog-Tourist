@@ -229,8 +229,8 @@ class ProfilePage extends React.Component {
   uploadProfilePicture = () => {
     ImagePicker.showImagePicker(
       {
-        maxWidth: 1000,
-        maxHeight: 1000,
+        maxWidth: 500,
+        maxHeight: 500,
         allowsEditing: true,
         storageOptions: {
           skipBackup: true,
@@ -247,7 +247,7 @@ class ProfilePage extends React.Component {
         } else {
           const source = {uri: response.uri};
           const fileTypes = /jpeg|jpg|png|gif/;
-          const allowedImgSize = 1024 * 1024 * 10;
+          const allowedImgSize = 1024 * 1024 * 5;
           if (!fileTypes.test(response.type)) {
             alert(
               'Uploaded file is not a valid image. \n(allowed file types: jpeg, jpg, png, gif)',

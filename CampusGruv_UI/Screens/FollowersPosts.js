@@ -244,7 +244,14 @@ export default class FolllowersPosts extends PureComponent {
 
   onPageRefresh = () => {
     this.setState(
-      {posts: [], loading: true, total: undefined, FollowersPosts: false},
+      {
+        posts: [],
+        loading: true,
+        pageNo: 1,
+        refreshing: true,
+        total: undefined,
+        FollowersPosts: false,
+      },
       () => {
         this.fetchdata();
       },
@@ -367,7 +374,7 @@ export default class FolllowersPosts extends PureComponent {
     if (this.state.total > 0) {
       return (
         <React.Fragment>
-          <ScrollView
+          {/* <ScrollView
             onScroll={({nativeEvent}) => {
               if (this.isCloseToBottom(nativeEvent)) {
                 if (this.state.posts.length < this.state.total) {
@@ -381,16 +388,18 @@ export default class FolllowersPosts extends PureComponent {
                 refreshing={this.state.refreshing}
                 onRefresh={this.onPageRefresh}
               />
-            }>
-            <View style={{flex: 1}}>
-              <RenderCards
-                posts={this.state.posts}
-                totalPosts={this.state.total}
-                loadMore={this.loadmore}
-                loadstate={this.state.loadmore}
-              />
-            </View>
-          </ScrollView>
+            }> */}
+          <View style={{flex: 1}}>
+            <RenderCards
+              posts={this.state.posts}
+              totalPosts={this.state.total}
+              loadMore={this.loadmore}
+              loadstate={this.state.loadmore}
+              onRefresh={this.onPageRefresh}
+              refreshState={this.state.refreshing}
+            />
+          </View>
+          {/* </ScrollView> */}
         </React.Fragment>
       );
     } else if (this.state.total === 0) {

@@ -97,8 +97,8 @@ export default class AddNewPost extends Component {
   takePhoto = () => {
     ImagePicker.launchCamera(
       {
-        maxWidth: 1000,
-        maxHeight: 1000,
+        maxWidth: 500,
+        maxHeight: 500,
         storageOptions: {
           skipBackup: true,
           path: 'images',
@@ -112,7 +112,7 @@ export default class AddNewPost extends Component {
         } else {
           const source = {uri: response.uri};
           const fileTypes = /jpeg|jpg|png|gif/;
-          const allowedImgSize = 1024 * 1024 * 10;
+          const allowedImgSize = 1024 * 1024 * 5;
           // console.log('response image: ', response);
           if (!fileTypes.test(response.type)) {
             alert(

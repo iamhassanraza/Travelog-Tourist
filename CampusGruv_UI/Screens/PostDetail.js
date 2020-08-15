@@ -543,13 +543,26 @@ class PostDetail extends Component {
           flexDirection: 'row',
           // justifyContent: 'space-between',
         }}>
-        <View style={{width: '70%', borderWidth: 1}}>
+        <View style={{width: '70%'}}>
           <Text selectable={true} style={{fontSize: 20, fontWeight: '400'}}>
             {title}
           </Text>
         </View>
 
         {/* <TimeAgo time={createdAt} /> */}
+
+        <View style={{marginRight: '1%'}}>
+          <ViewsIcon color="grey" name="thumb-up" style={{fontSize: 17}} />
+          <Text
+            style={{
+              fontSize: 9,
+              color: 'grey',
+              marginTop: -2,
+              alignSelf: 'center',
+            }}>
+            {likes}
+          </Text>
+        </View>
 
         <View style={{marginRight: '1%'}}>
           <ViewsIcon color="grey" name="thumb-up" style={{fontSize: 17}} />

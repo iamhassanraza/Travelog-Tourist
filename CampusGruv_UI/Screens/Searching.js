@@ -201,29 +201,29 @@ class Searching extends React.PureComponent {
   renderFeed = () => {
     if (this.state.loadingFeed === false) {
       return (
-        <ScrollView
-          onScroll={({nativeEvent}) => {
-            if (this.isCloseToBottom(nativeEvent)) {
-              if (this.state.posts.length < this.state.totalFeed) {
-                this.loadmore();
-                console.log('Reached end of page');
-              }
-            }
-          }}
-          style={{backgroundColor: '#f9fdfe'}}
-          refreshControl={
-            <RefreshControl
-              refreshing={this.state.refreshing}
-              onRefresh={this.onPageRefresh}
-            />
-          }>
-          <RenderCards
-            posts={this.state.posts}
-            loadMore={this.loadmore}
-            loadstate={this.state.loadmore}
-            totalPosts={this.state.totalFeed}
-          />
-        </ScrollView>
+        // <ScrollView
+        //   onScroll={({nativeEvent}) => {
+        //     if (this.isCloseToBottom(nativeEvent)) {
+        //       if (this.state.posts.length < this.state.totalFeed) {
+        //         this.loadmore();
+        //         console.log('Reached end of page');
+        //       }
+        //     }
+        //   }}
+        //   style={{backgroundColor: '#f9fdfe'}}
+        //   refreshControl={
+        //     <RefreshControl
+        //       refreshing={this.state.refreshing}
+        //       onRefresh={this.onPageRefresh}
+        //     />
+        //   }>
+        <RenderCards
+          posts={this.state.posts}
+          loadMore={this.loadmore}
+          loadstate={this.state.loadmore}
+          totalPosts={this.state.totalFeed}
+        />
+        // </ScrollView>
       );
     } else if (this.state.loadingFeed === true) {
       return <UIActivityIndicator color={ThemeBlue} />;

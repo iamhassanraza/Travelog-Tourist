@@ -260,9 +260,16 @@ export default class CategoryPosts extends PureComponent {
 
   onPageRefresh = () => {
     this.setState(
-      {posts: [], loading: true, total: undefined, FollowersPosts: false},
+      {
+        posts: [],
+        loading: true,
+        refreshing: true,
+        pageNo: 1,
+        total: undefined,
+        FollowersPosts: false,
+      },
       () => {
-        this.fetchdata();
+        this.fetchCategoryPosts();
       },
     );
   };
@@ -353,6 +360,7 @@ export default class CategoryPosts extends PureComponent {
         posts: JsonResponse.data,
         total: JsonResponse.total,
         loading: false,
+        refreshing: false,
         loadmore: false,
       });
     }
@@ -364,19 +372,6 @@ export default class CategoryPosts extends PureComponent {
       // The screen is focused
       this.fetchCategoryPosts();
     });
-
-    // this.props.navigation.setParams({
-    //   handleThis: async () => {
-    //     console.log('users icon clicked', this.state.FollowersPosts);
-    //     await this.setState(prevState => {
-    //       return {
-    //         FollowersPosts: !prevState.FollowersPosts,
-    //       };
-    //     });
-    //     this.fetchdata();
-    //     console.log('fetch data ran');
-    //   },
-    // });
   }
 
   componentWillUnmount() {
@@ -385,9 +380,9 @@ export default class CategoryPosts extends PureComponent {
     this.focusListener.remove();
   }
 
-  onPageRefresh = () => {
-    this.fetchCategoryPosts();
-  };
+  // onPageRefresh = () => {
+  //   this.fetchCategoryPosts();
+  // };
 
   isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
     return layoutMeasurement.height + contentOffset.y >= contentSize.height - 1;
@@ -397,7 +392,7 @@ export default class CategoryPosts extends PureComponent {
     if (this.state.total > 0) {
       return (
         <React.Fragment>
-          <ScrollView
+          {/* <ScrollView
             onScroll={({nativeEvent}) => {
               if (this.isCloseToBottom(nativeEvent)) {
                 if (this.state.posts.length < this.state.total) {
@@ -411,17 +406,19 @@ export default class CategoryPosts extends PureComponent {
                 refreshing={this.state.refreshing}
                 onRefresh={this.onPageRefresh}
               />
-            }>
-            <View style={{flex: 1}}>
-              <RenderCards
-                posts={this.state.posts}
-                totalPosts={this.state.total}
-                loadMore={this.loadmore}
-                loadstate={this.state.loadmore}
-                hideCategory={true}
-              />
-            </View>
-          </ScrollView>
+            }> */}
+          <View style={{flex: 1}}>
+            <RenderCards
+              posts={this.state.posts}
+              totalPosts={this.state.total}
+              loadMore={this.loadmore}
+              loadstate={this.state.loadmore}
+              hideCategory={true}
+              onRefresh={this.onPageRefresh}
+              refreshState={this.state.refreshing}
+            />
+          </View>
+          {/* </ScrollView> */}
         </React.Fragment>
       );
     } else if (this.state.total === 0) {
