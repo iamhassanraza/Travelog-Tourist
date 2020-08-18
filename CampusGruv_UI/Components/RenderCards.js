@@ -36,9 +36,7 @@ class RenderCards extends PureComponent {
   //   return false;
   // };
 
-  componentDidUpdate = (nextProps, prevState) => {
-    // this.props.toggleNewPost();
-  };
+  componentDidUpdate = (nextProps, prevState) => {};
 
   loadMore = ({distanceFromEnd}) => {
     console.log('i ran');
@@ -70,7 +68,6 @@ class RenderCards extends PureComponent {
   };
 
   render() {
-    console.log('new', this.props.newPost);
     return (
       <>
         <View
@@ -242,12 +239,13 @@ class RenderCards extends PureComponent {
                 paddingTop: 5,
               }}
               onContentSizeChange={() => {
-                if (this.props.newPost)
+                if (this.props?.newPost) {
                   this.refs.flatlist.scrollToOffset({
                     offset: 0,
                     animated: true,
                   });
-                this.props.toggleNewPost();
+                  this.props?.toggleNewPost();
+                }
               }}
               onRefresh={this.props.onRefresh}
               refreshing={this.props.refreshState}
@@ -281,7 +279,7 @@ class RenderCards extends PureComponent {
                     title={item.title}
                     views={item.view_count}
                     likes={item.likes_count}
-                    // createdAt={item.created_at}
+                    createdAt={item.created_at}
                     imageurl={
                       item.postDetail.length > 0
                         ? item.postDetail[0].image_url

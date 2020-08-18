@@ -153,9 +153,9 @@ class AddMembers extends Component {
             </View>
           </View>
 
-          {this.state.totalUsers === 0
-            ? this.renderNoPost('No Users Availiable')
-            : this.renderUsers()}
+          {this.state.totalUsers !== 0 &&
+            // ? this.renderNoPost('No Users Available')
+            this.renderUsers()}
         </View>
       </View>
     );

@@ -543,15 +543,13 @@ class PostDetail extends Component {
           flexDirection: 'row',
           // justifyContent: 'space-between',
         }}>
-        <View style={{width: '70%'}}>
+        <View style={{width: '78%'}}>
           <Text selectable={true} style={{fontSize: 20, fontWeight: '400'}}>
             {title}
           </Text>
         </View>
 
-        {/* <TimeAgo time={createdAt} /> */}
-
-        <View style={{marginRight: '1%'}}>
+        <View style={{marginRight: '1%', width: '5%'}}>
           <ViewsIcon color="grey" name="thumb-up" style={{fontSize: 17}} />
           <Text
             style={{
@@ -564,20 +562,7 @@ class PostDetail extends Component {
           </Text>
         </View>
 
-        <View style={{marginRight: '1%'}}>
-          <ViewsIcon color="grey" name="thumb-up" style={{fontSize: 17}} />
-          <Text
-            style={{
-              fontSize: 9,
-              color: 'grey',
-              marginTop: -2,
-              alignSelf: 'center',
-            }}>
-            {likes}
-          </Text>
-        </View>
-
-        <View style={{}}>
+        <View style={{width: '5%'}}>
           <ViewsIcon color="grey" name="eye" style={{fontSize: 17}} />
           <Text
             style={{
@@ -588,6 +573,14 @@ class PostDetail extends Component {
             }}>
             {views}
           </Text>
+        </View>
+
+        <View style={{width: '12%'}}>
+          <TimeAgo
+            style={{textAlign: 'center', color: 'grey', fontSize: 12}}
+            time={createdAt}
+            suffix={false}
+          />
         </View>
       </View>
     );

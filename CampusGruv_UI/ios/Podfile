@@ -34,10 +34,10 @@ target 'CampusGruv_UI' do
   pod 'glog', :podspec => '../node_modules/react-native/third-party-podspecs/glog.podspec'
   pod 'Folly', :podspec => '../node_modules/react-native/third-party-podspecs/Folly.podspec'
 
-  target 'CampusGruv_UITests' do
-    inherit! :search_paths
-    # Pods for testing
-  end
+#  target 'CampusGruv_UITests' do
+#    inherit! :search_paths
+#    # Pods for testing
+#  end
 
   use_native_modules!
 end
