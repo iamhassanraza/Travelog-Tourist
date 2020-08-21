@@ -26,18 +26,6 @@ class RenderCards extends PureComponent {
     posts: this.props.posts,
   };
 
-  componentDidMount() {}
-
-  // shouldComponentUpdate = nextProps => {
-  //   if (nextProps.posts != this.state.posts) {
-  //     this.setState({posts: nextProps.posts});
-  //     return true;
-  //   }
-  //   return false;
-  // };
-
-  // componentDidUpdate = (nextProps, prevState) => {};
-
   loadMore = ({distanceFromEnd}) => {
     console.log('i ran');
     if (
@@ -68,11 +56,10 @@ class RenderCards extends PureComponent {
   };
 
   render() {
-    console.log('size', this.props.posts.length);
     const column1Data = this.props.posts.filter((item, i) => i % 2 === 0);
     const column2Data = this.props.posts.filter((item, i) => i % 2 === 1);
     return (
-      <>
+      <View>
         <View
           style={{
             height: '100%',
@@ -123,6 +110,7 @@ class RenderCards extends PureComponent {
                     views={item.view_count}
                     likes={item.likes_count}
                     createdAt={item.created_at}
+                    height={item.height}
                     imageurl={
                       item.postDetail.length > 0
                         ? item.postDetail[0].image_url
@@ -165,6 +153,7 @@ class RenderCards extends PureComponent {
                     title={item.title}
                     views={item.view_count}
                     likes={item.likes_count}
+                    height={item.height}
                     imageurl={
                       item.postDetail.length > 0
                         ? item.postDetail[0].image_url
@@ -188,7 +177,7 @@ class RenderCards extends PureComponent {
             <MaterialIndicator size={20} />
           </View>
         )}
-      </>
+      </View>
     );
   }
 }

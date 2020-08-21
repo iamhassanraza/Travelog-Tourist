@@ -16,6 +16,7 @@ import {
   Platform,
   StatusBar,
 } from 'react-native';
+import RNFetchBlob from 'rn-fetch-blob';
 import Logo from '../Assets/Images/logo.png';
 import PostCard from '../Components/PostCard';
 import CrossIcon from 'react-native-vector-icons/Entypo';
@@ -270,6 +271,47 @@ class HomeScreen extends PureComponent {
     );
   };
 
+  mapArray = posts => {
+    posts.map(post => {
+      RNFetchBlob.config({
+        // add this option that makes response data to be stored as a file,
+        // this is much more performant.
+        fileCache: true,
+      })
+        .fetch(
+          'GET',
+          post.postDetail.length > 0
+            ? post.postDetail[0].image_url
+            : 'https://travelog-pk.herokuapp.com/images/default.png',
+          {
+            //some headers ..
+          },
+        )
+        .then(res => {
+          if (posts.every(obj => obj.height)) {
+            this.setState({loading: false});
+          }
+
+          Image.getSize(
+            post.postDetail.length > 0
+              ? post.postDetail[0].image_url
+              : 'https://travelog-pk.herokuapp.com/images/default.png',
+            (srcWidth, srcHeight) => {
+              const width = Dimensions.get('window').width / 2 - 14;
+              const ratio = width / srcWidth;
+              const height = srcHeight * ratio;
+              post['height'] = height;
+            },
+            error => {
+              () => console.log(error);
+            },
+          );
+        });
+
+      return posts;
+    });
+  };
+
   loadmore = () => {
     if (
       this.props.navigation.getParam('CategoryID', 'undefined') === 'undefined'
@@ -343,11 +385,13 @@ class HomeScreen extends PureComponent {
           if (parseInt(Response.status) === 401) {
             alert(JsonResponse.message);
           } else if (parseInt(Response.status) === 200) {
+            this.mapArray(JsonResponse.data);
+
             this.setState(previousState => {
               return {
                 posts: [...previousState.posts, ...JsonResponse.data],
                 totl: JsonResponse.total,
-                loading: false,
+                // loading: false,
                 loadmore: false,
               };
             });
@@ -383,19 +427,6 @@ class HomeScreen extends PureComponent {
         total: JsonResponse.total,
         loading: false,
         loadmore: false,
-      });
-    }
-  };
-
-  loadMore = ({distanceFromEnd}) => {
-    console.log('i ran');
-    if (
-      !this.state.onEndReachedCalledDuringMomentum &&
-      this.state.posts.length < this.state.total
-    ) {
-      console.log('fetching');
-      this.setState({onEndReachedCalledDuringMomentum: true}, async () => {
-        this.loadmore();
       });
     }
   };
@@ -456,12 +487,13 @@ class HomeScreen extends PureComponent {
           })
           .then(responseJson => {
             console.log('dataa', responseJson.data.length);
-
+            this.mapArray(responseJson.data);
+            // console.log('array', mappedArray);
             this.setState({
               posts: responseJson.data,
               total: responseJson.total,
               refreshing: false,
-              loading: false,
+              // loading: false,
               Category: 'undefined',
             });
           })
@@ -507,8 +539,7 @@ class HomeScreen extends PureComponent {
     this.focusListener = navigation.addListener('willFocus', () => {
       // The screen is focused
       if (this.props.navigation.getParam('newPost')) {
-        this.setState({newPost: true});
-        // this.refs._scrollView.scrollTo({x: 0, y: 0, animated: true});
+        this.refs._scrollView.scrollTo({x: 0, y: 0, animated: true});
         this.setState({
           pageNo: 1,
         });
@@ -537,10 +568,6 @@ class HomeScreen extends PureComponent {
     return (
       layoutMeasurement.height + contentOffset.y >= contentSize.height - 50
     );
-  };
-
-  toggleNewPost = () => {
-    this.setState({newPost: false});
   };
 
   render() {

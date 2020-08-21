@@ -42,6 +42,7 @@ import YesCategory from '../Assets/Images/YesCategory.png';
 import NoFollower from '../Assets/Images/NoFollower.png';
 import SearchIcon from '../Assets/Images/SearchIcon.png';
 import FastImage from 'react-native-fast-image';
+import RNFetchBlob from 'rn-fetch-blob';
 
 export default class CategoryPosts extends PureComponent {
   static navigationOptions = props => {
@@ -308,10 +309,11 @@ export default class CategoryPosts extends PureComponent {
           alert(JsonResponse.message);
         } else if (parseInt(Response.status) === 200) {
           this.setState(previousState => {
+            this.mapArray(JsonResponse.data);
             return {
               posts: [...previousState.posts, ...JsonResponse.data],
               total: JsonResponse.total,
-              loading: false,
+              // loading: false,
               loadmore: false,
             };
           });
@@ -347,23 +349,56 @@ export default class CategoryPosts extends PureComponent {
     if (parseInt(Response.status) === 401) {
       console.log('Error code status 401');
     } else if (parseInt(Response.status) === 200) {
-      console.log('Category aagyi yayyyy');
-      // this.setState(previousState => {
-      //   return {
-      //     posts: [...previousState.posts, ...JsonResponse.data],
-      //     totl: JsonResponse.total,
-      //     loading: false,
-      //     loadmore: false,
-      //   };
-      // });
+      this.mapArray(JsonResponse.data);
       this.setState({
         posts: JsonResponse.data,
         total: JsonResponse.total,
-        loading: false,
+        // loading: false,
         refreshing: false,
         loadmore: false,
       });
     }
+  };
+
+  mapArray = posts => {
+    posts.map(post => {
+      RNFetchBlob.config({
+        // add this option that makes response data to be stored as a file,
+        // this is much more performant.
+        fileCache: true,
+      })
+        .fetch(
+          'GET',
+          post.postDetail.length > 0
+            ? post.postDetail[0].image_url
+            : 'https://travelog-pk.herokuapp.com/images/default.png',
+          {
+            //some headers ..
+          },
+        )
+        .then(res => {
+          if (posts.every(obj => obj.height)) {
+            this.setState({loading: false});
+          }
+
+          Image.getSize(
+            post.postDetail.length > 0
+              ? post.postDetail[0].image_url
+              : 'https://travelog-pk.herokuapp.com/images/default.png',
+            (srcWidth, srcHeight) => {
+              const width = Dimensions.get('window').width / 2 - 14;
+              const ratio = width / srcWidth;
+              const height = srcHeight * ratio;
+              post['height'] = height;
+            },
+            error => {
+              () => console.log(error);
+            },
+          );
+        });
+
+      return posts;
+    });
   };
 
   componentDidMount() {
@@ -380,10 +415,6 @@ export default class CategoryPosts extends PureComponent {
     this.focusListener.remove();
   }
 
-  // onPageRefresh = () => {
-  //   this.fetchCategoryPosts();
-  // };
-
   isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
     return layoutMeasurement.height + contentOffset.y >= contentSize.height - 1;
   };
@@ -392,7 +423,7 @@ export default class CategoryPosts extends PureComponent {
     if (this.state.total > 0) {
       return (
         <React.Fragment>
-          {/* <ScrollView
+          <ScrollView
             onScroll={({nativeEvent}) => {
               if (this.isCloseToBottom(nativeEvent)) {
                 if (this.state.posts.length < this.state.total) {
@@ -406,19 +437,17 @@ export default class CategoryPosts extends PureComponent {
                 refreshing={this.state.refreshing}
                 onRefresh={this.onPageRefresh}
               />
-            }> */}
-          <View style={{flex: 1}}>
-            <RenderCards
-              posts={this.state.posts}
-              totalPosts={this.state.total}
-              loadMore={this.loadmore}
-              loadstate={this.state.loadmore}
-              hideCategory={true}
-              onRefresh={this.onPageRefresh}
-              refreshState={this.state.refreshing}
-            />
-          </View>
-          {/* </ScrollView> */}
+            }>
+            <View style={{flex: 1}}>
+              <RenderCards
+                posts={this.state.posts}
+                totalPosts={this.state.total}
+                loadMore={this.loadmore}
+                loadstate={this.state.loadmore}
+                hideCategory={true}
+              />
+            </View>
+          </ScrollView>
         </React.Fragment>
       );
     } else if (this.state.total === 0) {

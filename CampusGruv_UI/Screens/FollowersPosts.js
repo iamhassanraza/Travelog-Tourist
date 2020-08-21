@@ -15,6 +15,7 @@ import {
   Platform,
   StatusBar,
 } from 'react-native';
+import RNFetchBlob from 'rn-fetch-blob';
 import Logo from '../Assets/Images/logo.png';
 import PostCard from '../Components/PostCard';
 import CrossIcon from 'react-native-vector-icons/Entypo';
@@ -289,10 +290,12 @@ export default class FolllowersPosts extends PureComponent {
           alert(JsonResponse.message);
         } else if (parseInt(Response.status) === 200) {
           this.setState(previousState => {
+            this.mapArray(JsonResponse.data);
+
             return {
               posts: [...previousState.posts, ...JsonResponse.data],
               total: JsonResponse.total,
-              loading: false,
+              // loading: false,
               loadmore: false,
             };
           });
@@ -326,13 +329,13 @@ export default class FolllowersPosts extends PureComponent {
         return response.json();
       })
       .then(responseJson => {
-        //console.log('home --------------------',responseJson.data[0])
+        this.mapArray(responseJson.data);
 
         this.setState({
           posts: responseJson.data,
           total: responseJson.total,
           refreshing: false,
-          loading: false,
+          // loading: false,
           Category: 'undefined',
         });
       })
@@ -360,6 +363,47 @@ export default class FolllowersPosts extends PureComponent {
     });
   }
 
+  mapArray = posts => {
+    posts.map(post => {
+      RNFetchBlob.config({
+        // add this option that makes response data to be stored as a file,
+        // this is much more performant.
+        fileCache: true,
+      })
+        .fetch(
+          'GET',
+          post.postDetail.length > 0
+            ? post.postDetail[0].image_url
+            : 'https://travelog-pk.herokuapp.com/images/default.png',
+          {
+            //some headers ..
+          },
+        )
+        .then(res => {
+          if (posts.every(obj => obj.height)) {
+            this.setState({loading: false});
+          }
+
+          Image.getSize(
+            post.postDetail.length > 0
+              ? post.postDetail[0].image_url
+              : 'https://travelog-pk.herokuapp.com/images/default.png',
+            (srcWidth, srcHeight) => {
+              const width = Dimensions.get('window').width / 2 - 14;
+              const ratio = width / srcWidth;
+              const height = srcHeight * ratio;
+              post['height'] = height;
+            },
+            error => {
+              () => console.log(error);
+            },
+          );
+        });
+
+      return posts;
+    });
+  };
+
   componentWillUnmount() {
     // Remove the event listener
 
@@ -374,7 +418,7 @@ export default class FolllowersPosts extends PureComponent {
     if (this.state.total > 0) {
       return (
         <React.Fragment>
-          {/* <ScrollView
+          <ScrollView
             onScroll={({nativeEvent}) => {
               if (this.isCloseToBottom(nativeEvent)) {
                 if (this.state.posts.length < this.state.total) {
@@ -388,18 +432,16 @@ export default class FolllowersPosts extends PureComponent {
                 refreshing={this.state.refreshing}
                 onRefresh={this.onPageRefresh}
               />
-            }> */}
-          <View style={{flex: 1}}>
-            <RenderCards
-              posts={this.state.posts}
-              totalPosts={this.state.total}
-              loadMore={this.loadmore}
-              loadstate={this.state.loadmore}
-              onRefresh={this.onPageRefresh}
-              refreshState={this.state.refreshing}
-            />
-          </View>
-          {/* </ScrollView> */}
+            }>
+            <View style={{flex: 1}}>
+              <RenderCards
+                posts={this.state.posts}
+                totalPosts={this.state.total}
+                loadMore={this.loadmore}
+                loadstate={this.state.loadmore}
+              />
+            </View>
+          </ScrollView>
         </React.Fragment>
       );
     } else if (this.state.total === 0) {
