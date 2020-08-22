@@ -56,6 +56,7 @@ class RenderCards extends PureComponent {
   };
 
   render() {
+    console.log('size', this.props.posts.length);
     const column1Data = this.props.posts.filter((item, i) => i % 2 === 0);
     const column2Data = this.props.posts.filter((item, i) => i % 2 === 1);
     return (

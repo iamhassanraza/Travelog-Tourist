@@ -288,6 +288,7 @@ class HomeScreen extends PureComponent {
           },
         )
         .then(res => {
+          // console.log('ressssss=================', res);
           if (posts.every(obj => obj.height)) {
             this.setState({loading: false});
           }
@@ -566,7 +567,7 @@ class HomeScreen extends PureComponent {
 
   isCloseToBottom = ({layoutMeasurement, contentOffset, contentSize}) => {
     return (
-      layoutMeasurement.height + contentOffset.y >= contentSize.height - 50
+      layoutMeasurement.height + contentOffset.y >= contentSize.height - 100
     );
   };
 
