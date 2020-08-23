@@ -288,7 +288,6 @@ class HomeScreen extends PureComponent {
           },
         )
         .then(res => {
-          // console.log('ressssss=================', res);
           if (posts.every(obj => obj.height)) {
             this.setState({loading: false});
           }
@@ -489,7 +488,6 @@ class HomeScreen extends PureComponent {
           .then(responseJson => {
             console.log('dataa', responseJson.data.length);
             this.mapArray(responseJson.data);
-            // console.log('array', mappedArray);
             this.setState({
               posts: responseJson.data,
               total: responseJson.total,

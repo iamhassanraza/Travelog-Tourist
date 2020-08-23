@@ -82,7 +82,7 @@ class PostCard extends Component {
               likes: this.props.likes,
               // height: this.state.height,
               height: 200,
-              createdAt: new Date(this.props.createdAt.replace(' ', 'T')),
+              createdAt: this.props.createdAt,
             },
           })
         }>

@@ -154,6 +154,7 @@ class RenderCards extends PureComponent {
                     title={item.title}
                     views={item.view_count}
                     likes={item.likes_count}
+                    createdAt={item.created_at}
                     height={item.height}
                     imageurl={
                       item.postDetail.length > 0

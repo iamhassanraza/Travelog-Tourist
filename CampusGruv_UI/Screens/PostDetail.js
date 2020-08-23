@@ -92,6 +92,7 @@ class PostDetail extends Component {
       'no follow status',
     ).userFollowing,
     isModalVisible: false,
+    createdAt: this.props.navigation.getParam('PostData', null).createdAt,
     description: this.props.navigation.getParam('PostData', 'no save status')
       .description,
     editDescText: this.props.navigation.getParam('PostData', 'no save status')
@@ -227,7 +228,6 @@ class PostDetail extends Component {
       },
     );
     const JsonResponse = await Response.json();
-    console.log('JSON', JsonResponse);
     if (JsonResponse.result === 1) {
       this.props.navigation.navigate('HomeScreen', {newPost: true});
     } else {
@@ -543,13 +543,22 @@ class PostDetail extends Component {
           flexDirection: 'row',
           // justifyContent: 'space-between',
         }}>
-        <View style={{width: '78%'}}>
-          <Text selectable={true} style={{fontSize: 20, fontWeight: '400'}}>
+        <View style={{width: '74%'}}>
+          <Text
+            selectable={true}
+            style={{fontSize: 20, fontWeight: '400', paddingRight: '2%'}}>
             {title}
           </Text>
         </View>
 
-        <View style={{marginRight: '1%', width: '5%'}}>
+        <View style={{width: '12%'}}>
+          <TimeAgo
+            style={{textAlign: 'center', color: 'grey', fontSize: 12}}
+            time={this.state.createdAt}
+          />
+        </View>
+
+        <View style={{marginLeft: '1%', width: '5%'}}>
           <ViewsIcon color="grey" name="thumb-up" style={{fontSize: 17}} />
           <Text
             style={{
@@ -562,7 +571,7 @@ class PostDetail extends Component {
           </Text>
         </View>
 
-        <View style={{width: '5%'}}>
+        <View style={{width: '5%', marginLeft: '1%'}}>
           <ViewsIcon color="grey" name="eye" style={{fontSize: 17}} />
           <Text
             style={{
@@ -574,24 +583,23 @@ class PostDetail extends Component {
             {views}
           </Text>
         </View>
-
-        <View style={{width: '12%'}}>
-          <TimeAgo
-            style={{textAlign: 'center', color: 'grey', fontSize: 12}}
-            time={createdAt}
-            suffix={false}
-          />
-        </View>
       </View>
     );
   };
 
   renderDescription = description => {
     return (
-      <View style={{marginLeft: '3%', marginTop: 20, marginRight: '5%'}}>
+      <View
+        style={{
+          marginLeft: '3%',
+          flexDirection: 'row',
+          marginTop: 20,
+          marginRight: '5%',
+        }}>
         <Text
           selectable={true}
           style={{
+            // width: '85%',
             fontSize: 17,
             marginTop: '1%',
             marginBottom: 10,
@@ -1020,7 +1028,6 @@ class PostDetail extends Component {
                           }),
                         },
                       );
-                      console.log('reponse', response);
                     },
                   );
                 }}>
