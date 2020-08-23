@@ -255,7 +255,7 @@ class RenderCards extends PureComponent {
                 this.setState({onEndReachedCalledDuringMomentum: false});
               }}
               initialNumToRender={4}
-              removeClippedSubviews={true}
+              // removeClippedSubviews={true}
               data={this.props.posts}
               numColumns={2}
               showsVerticalScrollIndicator={false}
