@@ -272,58 +272,63 @@ class HomeScreen extends PureComponent {
 
   mapArray = (posts, total) => {
     posts.map(post => {
-      RNFetchBlob.config({
-        // add this option that makes response data to be stored as a file,
-        // this is much more performant.
-        fileCache: true,
-      })
-        .fetch(
-          'GET',
-          post.postDetail.length > 0
-            ? post.postDetail[0].image_url
-            : 'https://travelog-pk.herokuapp.com/images/default.png',
-          {
-            //some headers ..
-          },
-        )
-        .then(res => {
-          // if (posts.every(obj => obj.height)) {
-          //   console.log('all heights are there');
-          //   this.setState({loading: false, loadmore: false, total: total});
-          // }
-
-          Image.getSize(
+      if (!post.height) {
+        RNFetchBlob.config({
+          // add this option that makes response data to be stored as a file,
+          // this is much more performant.
+          fileCache: true,
+        })
+          .fetch(
+            'GET',
             post.postDetail.length > 0
               ? post.postDetail[0].image_url
               : 'https://travelog-pk.herokuapp.com/images/default.png',
-            (srcWidth, srcHeight) => {
-              const width = Dimensions.get('window').width / 2 - 14;
-              const ratio = width / srcWidth;
-              const height = srcHeight * ratio;
-              post['height'] = height;
-              if (posts.every(obj => obj.height)) {
-                console.log('all heights are there');
-                this.setState(previousState => {
-                  return {
-                    posts: [...previousState.posts, ...posts],
-                    total: total,
-                    loading: false,
-                    loadmore: false,
-                    refreshing: false,
-                    newPost: false,
-                    Category: 'undefined',
-                  };
-                });
-                // this.setState({loading: false, loadmore: false, total: total});
-              }
+            {
+              //some headers ..
             },
-            error => {
-              () => console.log(error);
-            },
-          );
-        });
+          )
+          .then(res => {
+            console.log('i ran');
+            // if (posts.every(obj => obj.height)) {
+            //   console.log('all heights are there');
+            //   this.setState({loading: false, loadmore: false, total: total});
+            // }
 
-      return posts;
+            Image.getSize(
+              post.postDetail.length > 0
+                ? post.postDetail[0].image_url
+                : 'https://travelog-pk.herokuapp.com/images/default.png',
+              (srcWidth, srcHeight) => {
+                const width = Dimensions.get('window').width / 2 - 14;
+                const ratio = width / srcWidth;
+                const height = srcHeight * ratio;
+                post['height'] = height;
+                if (posts.every(obj => obj.height)) {
+                  console.log('all heights are there');
+                  console.log(new Date().toLocaleTimeString());
+
+                  this.setState(previousState => {
+                    return {
+                      posts: [...previousState.posts, ...posts],
+                      total: total,
+                      loading: false,
+                      loadmore: false,
+                      refreshing: false,
+                      newPost: false,
+                      Category: 'undefined',
+                    };
+                  });
+                  // this.setState({loading: false, loadmore: false, total: total});
+                }
+              },
+              error => {
+                () => console.log(error);
+              },
+            );
+          });
+
+        return posts;
+      }
     });
   };
 
@@ -512,6 +517,7 @@ class HomeScreen extends PureComponent {
           })
           .then(responseJson => {
             console.log('dataa', responseJson.data.length);
+            console.log(new Date().toLocaleTimeString());
             this.mapArray(responseJson.data, responseJson.total);
             //   this.setState({
             //     posts: responseJson.data,
