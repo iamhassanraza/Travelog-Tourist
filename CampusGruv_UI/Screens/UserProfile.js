@@ -13,6 +13,7 @@ import {
   AsyncStorage,
   TouchableOpacity,
 } from 'react-native';
+import RNFetchBlob from 'rn-fetch-blob';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 import RenderCards from '../Components/RenderCards';
 import NoPosts from '../Components/NoPost';
@@ -250,6 +251,47 @@ class UserProfile extends React.Component {
     //this.anotherFocusListener.remove();
   }
 
+  mapArray = posts => {
+    posts.map(post => {
+      RNFetchBlob.config({
+        // add this option that makes response data to be stored as a file,
+        // this is much more performant.
+        fileCache: true,
+      })
+        .fetch(
+          'GET',
+          post.postDetail.length > 0
+            ? post.postDetail[0].image_url
+            : 'https://travelog-pk.herokuapp.com/images/default.png',
+          {
+            //some headers ..
+          },
+        )
+        .then(res => {
+          if (posts.every(obj => obj.height)) {
+            this.setState({loading: false});
+          }
+
+          Image.getSize(
+            post.postDetail.length > 0
+              ? post.postDetail[0].image_url
+              : 'https://travelog-pk.herokuapp.com/images/default.png',
+            (srcWidth, srcHeight) => {
+              const width = Dimensions.get('window').width / 2 - 14;
+              const ratio = width / srcWidth;
+              const height = srcHeight * ratio;
+              post['height'] = height;
+            },
+            error => {
+              () => console.log(error);
+            },
+          );
+        });
+
+      return posts;
+    });
+  };
+
   loadmore = () => {
     const userId = this.state.otherUserId
       ? this.state.otherUserId
@@ -295,9 +337,10 @@ class UserProfile extends React.Component {
           alert(JsonResponse.message);
         } else if (parseInt(Response.status) === 200) {
           this.setState(previousState => {
+            this.mapArray(JsonResponse.data);
+
             return {
               posts: [...previousState.posts, ...JsonResponse.data],
-              // posts: previousState.posts.concat(JsonResponse.data),
               total: JsonResponse.total,
               spinner: false,
               loadmore: false,
@@ -324,6 +367,8 @@ class UserProfile extends React.Component {
       },
     );
     const jsonresponse = await response.json();
+    this.mapArray(JsonResponse.data);
+
     this.setState({
       spinner: false,
       posts: jsonresponse.data,
@@ -353,6 +398,7 @@ class UserProfile extends React.Component {
         },
       );
       const jsonresponse = await response.json();
+      this.mapArray(jsonresponse.data);
 
       this.setState({
         spinner: false,
@@ -379,6 +425,8 @@ class UserProfile extends React.Component {
         },
       );
       const jsonresponse = await response.json();
+      this.mapArray(jsonresponse.data);
+
       this.setState({
         spinner: false,
         posts: jsonresponse.data,
@@ -511,18 +559,20 @@ class UserProfile extends React.Component {
       ? this.state.otherUserCampus
       : this.props.User.campus.description;
     return (
-      // <ScrollView
-      //   // onScroll={({nativeEvent}) => {
-      //   //   if (this.isCloseToBottom(nativeEvent)) {
-      //   //     if (this.state.posts.length < this.state.total) {
-      //   //       this.loadmore();
-      //   //       console.log('Reached end of page');
-      //   //     }
-      //   //   }
-      //   // }}
-      //   style={{backgroundColor: '#f9fdfe'}}>
-      /* EDIT PROFILE BUTTON */
-      <>
+      <ScrollView
+        onScroll={({nativeEvent}) => {
+          if (this.isCloseToBottom(nativeEvent)) {
+            if (
+              this.state.posts.length < this.state.total &&
+              !this.state.loadmore
+            ) {
+              this.loadmore();
+              console.log('Reached end of page');
+            }
+          }
+        }}
+        style={{backgroundColor: '#f9fdfe'}}>
+        {/* <> */}
         {postUserId === this.props.User.id ? (
           <View
             style={{
@@ -953,14 +1003,14 @@ class UserProfile extends React.Component {
           ) : null}
         </View>
 
-        {/* {this.state.total === undefined || this.state.total === null */}
-        {this.state.spinner
-          ? this.renderLoading()
+        {this.state.total === undefined || this.state.total === null
+          ? // {this.state.spinner
+            this.renderLoading()
           : this.state.total === 0
           ? this.renderNoPost()
           : this.renderPost()}
-        {/* </ScrollView> */}
-      </>
+      </ScrollView>
+      /* </> */
     );
   }
 }

@@ -42,7 +42,7 @@ class CreateGroupChat extends Component {
                 position: 'absolute',
                 padding: 2,
                 alignSelf: 'center',
-                right: 8,
+                right: 10,
               }}>
               <TouchableOpacity
                 onPress={() => {

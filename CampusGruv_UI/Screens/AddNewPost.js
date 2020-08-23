@@ -151,8 +151,8 @@ export default class AddNewPost extends Component {
   selectPhoto = () => {
     ImagePicker.launchImageLibrary(
       {
-        maxWidth: 1000,
-        maxHeight: 1000,
+        maxWidth: 500,
+        maxHeight: 600,
         storageOptions: {
           skipBackup: true,
           path: 'images',
@@ -166,14 +166,14 @@ export default class AddNewPost extends Component {
         } else {
           const source = {uri: response.uri};
           const fileTypes = /jpeg|jpg|png|gif/;
-          const allowedImgSize = 1024 * 1024 * 10;
+          const allowedImgSize = 1024 * 1024 * 4;
           // console.log('response image: ', response);
           if (!fileTypes.test(response.type)) {
             alert(
               'Uploaded file is not a valid image. \n(allowed file types: jpeg, jpg, png, gif)',
             );
           } else if (response.fileSize > allowedImgSize) {
-            alert('Uploaded file is too large \n(allowed file size is 10MB)');
+            alert('Uploaded file is too large \n(allowed file size is 4MB)');
           } else {
             this.state.imgCount++;
             if (

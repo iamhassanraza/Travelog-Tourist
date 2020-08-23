@@ -14,6 +14,7 @@ import {
   PermissionsAndroid,
   Dimensions,
   AppState,
+  Button,
   Platform,
   StatusBar,
   SafeAreaView,
@@ -92,11 +93,13 @@ class PostDetail extends Component {
       'no follow status',
     ).userFollowing,
     isModalVisible: false,
+    deleteModalVisible: false,
+    createdAt: this.props.navigation.getParam('PostData', null).createdAt,
     description: this.props.navigation.getParam('PostData', 'no save status')
       .description,
     editDescText: this.props.navigation.getParam('PostData', 'no save status')
       .description,
-    post_id: undefined,
+    postId: this.props.navigation.getParam('PostData', 'no save status').postId,
     imageurl: this.props.navigation.getParam('PostData', 'nothing to render')
       ?.uri,
   };
@@ -218,7 +221,7 @@ class PostDetail extends Component {
       {
         method: 'POST',
         body: JSON.stringify({
-          post_id: postId,
+          post_id: this.state.postId,
         }),
         headers: {
           'Content-Type': 'application/json',
@@ -227,7 +230,6 @@ class PostDetail extends Component {
       },
     );
     const JsonResponse = await Response.json();
-    console.log('JSON', JsonResponse);
     if (JsonResponse.result === 1) {
       this.props.navigation.navigate('HomeScreen', {newPost: true});
     } else {
@@ -452,8 +454,11 @@ class PostDetail extends Component {
                       <IconFeather name="delete" style={styles.optionIcon} />
                       <Text
                         onPress={() => {
-                          this.setState({isModalVisible: false});
-                          this.deletePost(postId);
+                          this.setState({
+                            isModalVisible: false,
+                            deleteModalVisible: true,
+                          });
+                          // this.deletePost(postId);
                         }}
                         style={styles.TextWithNavigation}>
                         Delete post
@@ -541,15 +546,30 @@ class PostDetail extends Component {
           marginLeft: '3%',
           marginRight: '3%',
           flexDirection: 'row',
+          alignItems: 'center',
           // justifyContent: 'space-between',
         }}>
-        <View style={{width: '78%'}}>
-          <Text selectable={true} style={{fontSize: 20, fontWeight: '400'}}>
+        <View style={{width: '74%'}}>
+          <Text
+            selectable={true}
+            style={{fontSize: 20, fontWeight: '400', paddingRight: '2%'}}>
             {title}
           </Text>
         </View>
 
-        <View style={{marginRight: '1%', width: '5%'}}>
+        <View style={{width: '12%'}}>
+          <TimeAgo
+            style={{
+              textAlign: 'center',
+              lineHeight: 12,
+              color: 'grey',
+              fontSize: 11,
+            }}
+            time={this.state.createdAt}
+          />
+        </View>
+
+        <View style={{marginLeft: '1%', width: '5%'}}>
           <ViewsIcon color="grey" name="thumb-up" style={{fontSize: 17}} />
           <Text
             style={{
@@ -562,7 +582,7 @@ class PostDetail extends Component {
           </Text>
         </View>
 
-        <View style={{width: '5%'}}>
+        <View style={{width: '5%', marginLeft: '1%'}}>
           <ViewsIcon color="grey" name="eye" style={{fontSize: 17}} />
           <Text
             style={{
@@ -574,24 +594,23 @@ class PostDetail extends Component {
             {views}
           </Text>
         </View>
-
-        <View style={{width: '12%'}}>
-          <TimeAgo
-            style={{textAlign: 'center', color: 'grey', fontSize: 12}}
-            time={createdAt}
-            suffix={false}
-          />
-        </View>
       </View>
     );
   };
 
   renderDescription = description => {
     return (
-      <View style={{marginLeft: '3%', marginTop: 20, marginRight: '5%'}}>
+      <View
+        style={{
+          marginLeft: '3%',
+          flexDirection: 'row',
+          marginTop: 20,
+          marginRight: '5%',
+        }}>
         <Text
           selectable={true}
           style={{
+            // width: '85%',
             fontSize: 17,
             marginTop: '1%',
             marginBottom: 10,
@@ -863,10 +882,31 @@ class PostDetail extends Component {
       'PostData',
       'nothing to render',
     );
+    console.log('modal', this.state.deleteModalVisible);
     return (
       <>
         {/* {Platform.OS === 'ios' ? <StatusBar barStyle="default" /> : null} */}
         <Container style={{}}>
+          {/* <Modal
+            style={{margin: 0}}
+            isVisible={this.state.deleteModalVisible}
+            onBackdropPress={() => this.setState({deleteModalVisible: false})}>
+            <View
+              style={{
+                backgroundColor: 'white',
+                marginHorizontal: '10%',
+                alignItems: 'center',
+                borderRadius: 8,
+              }}>
+              <View>
+                <Text
+                  // style={styles.cancelText}
+                  onPress={() => this.setState({deleteModalVisible: false})}>
+                  Cancel
+                </Text>
+              </View>
+            </View>
+          </Modal> */}
           {Platform.OS === 'android' ? (
             <StatusBar barStyle="dark-content" backgroundColor="white" />
           ) : null}
@@ -1020,7 +1060,6 @@ class PostDetail extends Component {
                           }),
                         },
                       );
-                      console.log('reponse', response);
                     },
                   );
                 }}>
@@ -1045,6 +1084,72 @@ class PostDetail extends Component {
               </TouchableOpacity>
             </View>
           ) : null}
+          {this.state.deleteModalVisible && (
+            <View
+              style={{
+                alignItems: 'center',
+                height: height / 7,
+                position: 'absolute',
+                top: height / 2 - height / 14,
+                left: width / 2 - width / 4,
+                backgroundColor: '#d6d4ce',
+                width: width / 2,
+                borderRadius: 10,
+              }}>
+              <Text
+                style={{
+                  position: 'absolute',
+                  top: '10%',
+                  width: '80%',
+                  textAlign: 'center',
+                }}>
+                Are you sure you want to delete this post? This action can be
+                undone.
+              </Text>
+              <View
+                style={{
+                  width: '100%',
+                  position: 'absolute',
+                  bottom: 0,
+                  flexDirection: 'row',
+                  justifyContent: 'space-around',
+                  borderTopWidth: 0.5,
+                  borderTopColor: 'gray',
+                }}>
+                <Button
+                  title="Cancel"
+                  onPress={() => this.setState({deleteModalVisible: false})}
+                />
+                <Button
+                  title="Delete"
+                  onPress={() => {
+                    this.setState({deleteModalVisible: false});
+                    this.deletePost();
+                  }}
+                />
+              </View>
+            </View>
+          )}
+          {/* <Modal
+            style={{ backgroundColor: 'black', borderWidth: 5}}
+            isVisible={this.state.deleteModalVisible}
+            onBackdropPress={() => this.setState({deleteModalVisible: false})}>
+            <View
+              style={{
+                backgroundColor: 'white',
+                marginHorizontal: '10%',
+                alignItems: 'center',
+                borderRadius: 8,
+              }}>
+              <View>
+                <Text
+                  // style={styles.cancelText}
+                  onPress={() => this.setState({deleteModalVisible: false})}>
+                  Cancel
+                </Text>
+              </View>
+            </View>
+          </Modal> */}
         </Container>
       </>
     );

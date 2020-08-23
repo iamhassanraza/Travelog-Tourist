@@ -80,23 +80,24 @@ class PostCard extends Component {
               comments: this.props.comments,
               views: this.props.views,
               likes: this.props.likes,
-              height: this.state.height,
-              createdAt: new Date(this.props.createdAt.replace(' ', 'T')),
+              // height: this.state.height,
+              height: 200,
+              createdAt: this.props.createdAt,
             },
           })
         }>
         <View style={{}}>
           <FastImage
             onLoadEnd={this.imageLoaded}
-            // resizeMode="contain"
+            resizeMode="contain"
             // resizeMode={this.state.height ? 'contain' : 'cover'}
             style={{
               width: Dimensions.get('window').width / 2 - 14,
               borderTopLeftRadius: 12,
               borderTopRightRadius: 12,
               backgroundColor: this.state.imageLoaded ? 'white' : '#8a918d',
-              height: 180,
-              // height: this.state.height ?? 200,
+              height: this.props.height,
+              // height: this.state.height,
             }}
             source={{
               uri: this.props.imageurl,

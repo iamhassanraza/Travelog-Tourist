@@ -37,6 +37,7 @@ import {
   UIActivityIndicator,
   WaveIndicator,
 } from 'react-native-indicators';
+import RNFetchBlob from 'rn-fetch-blob';
 import NoCategory from '../Assets/Images/NoCategory.png';
 import NoFollower from '../Assets/Images/NoFollower.png';
 import SearchIcon from '../Assets/Images/SearchIcon.png';
@@ -81,6 +82,47 @@ class Searching extends React.PureComponent {
     });
   }
 
+  mapArray = posts => {
+    posts.map(post => {
+      RNFetchBlob.config({
+        // add this option that makes response data to be stored as a file,
+        // this is much more performant.
+        fileCache: true,
+      })
+        .fetch(
+          'GET',
+          post.postDetail.length > 0
+            ? post.postDetail[0].image_url
+            : 'https://travelog-pk.herokuapp.com/images/default.png',
+          {
+            //some headers ..
+          },
+        )
+        .then(res => {
+          if (posts.every(obj => obj.height)) {
+            this.setState({loadingFeed: false});
+          }
+
+          Image.getSize(
+            post.postDetail.length > 0
+              ? post.postDetail[0].image_url
+              : 'https://travelog-pk.herokuapp.com/images/default.png',
+            (srcWidth, srcHeight) => {
+              const width = Dimensions.get('window').width / 2 - 14;
+              const ratio = width / srcWidth;
+              const height = srcHeight * ratio;
+              post['height'] = height;
+            },
+            error => {
+              () => console.log(error);
+            },
+          );
+        });
+
+      return posts;
+    });
+  };
+
   fetchFeed = async text => {
     this.setState({loadingFeed: true});
     const Token = await AsyncStorage.getItem('TOKEN');
@@ -105,10 +147,12 @@ class Searching extends React.PureComponent {
     } else if (parseInt(Response.status) === 200) {
       // console.log("YE Feeed AGAYE ::::::::",JsonResponse.data)
       if (JsonResponse.total > 0) {
+        this.mapArray(JsonResponse.data);
+
         this.setState({
           posts: JsonResponse.data,
           totalFeed: JsonResponse.total,
-          loadingFeed: false,
+          // loadingFeed: false,
         });
       } else if (JsonResponse.total === 0) {
         this.setState({totalFeed: 0});
@@ -342,11 +386,13 @@ class Searching extends React.PureComponent {
           this.setState({error: true, totalFeed: 0});
         } else if (parseInt(Response.status) === 200) {
           if (JsonResponse.total > 0) {
+            this.mapArray(JsonResponse.data);
+
             this.setState(previousState => {
               return {
                 posts: [...previousState.posts, ...JsonResponse.data],
                 totalFeed: JsonResponse.total,
-                loadingFeed: false,
+                // loadingFeed: false,
                 loadmore: false,
               };
             });
