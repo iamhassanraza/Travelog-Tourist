@@ -541,6 +541,7 @@ class PostDetail extends Component {
           marginLeft: '3%',
           marginRight: '3%',
           flexDirection: 'row',
+          alignItems: 'center',
           // justifyContent: 'space-between',
         }}>
         <View style={{width: '74%'}}>
@@ -553,7 +554,12 @@ class PostDetail extends Component {
 
         <View style={{width: '12%'}}>
           <TimeAgo
-            style={{textAlign: 'center', color: 'grey', fontSize: 12}}
+            style={{
+              textAlign: 'center',
+              lineHeight: 12,
+              color: 'grey',
+              fontSize: 11,
+            }}
             time={this.state.createdAt}
           />
         </View>
