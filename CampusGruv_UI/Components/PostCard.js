@@ -96,8 +96,8 @@ class PostCard extends Component {
               borderTopLeftRadius: 12,
               borderTopRightRadius: 12,
               backgroundColor: this.state.imageLoaded ? 'white' : '#8a918d',
-              height: this.props.height,
-              // height: this.state.height,
+              // height: this.props.height,
+              height: this.state.height,
             }}
             source={{
               uri: this.props.imageurl,

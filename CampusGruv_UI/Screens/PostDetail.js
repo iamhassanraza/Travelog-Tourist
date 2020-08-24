@@ -100,6 +100,9 @@ class PostDetail extends Component {
     editDescText: this.props.navigation.getParam('PostData', 'no save status')
       .description,
     postId: this.props.navigation.getParam('PostData', 'no save status').postId,
+    postUserId: this.props.navigation.getParam('PostData', 'no save status')
+      .userId,
+
     imageurl: this.props.navigation.getParam('PostData', 'nothing to render')
       ?.uri,
   };
@@ -504,7 +507,12 @@ class PostDetail extends Component {
                     </Text>
                   </View> */}
 
-                  <View style={styles.modalOptions}>
+                  <View
+                    style={{
+                      backgroundColor: 'white',
+                      flexDirection: 'row',
+                      marginBottom: 10,
+                    }}>
                     <Icon name="share-variant" style={styles.optionIcon} />
                     <Text
                       onPress={() => this.sharePost(first_name, postId)}
@@ -699,9 +707,15 @@ class PostDetail extends Component {
   };
 
   renderAllComments = dp => {
+    console.log('comments', this.state.comments[0]);
     return (
-      <View style={{marginLeft: '4%', marginTop: 10}}>
-        <View style={{flexDirection: 'row', alignItems: 'center'}}>
+      <View style={{marginTop: 10}}>
+        <View
+          style={{
+            marginLeft: '4%',
+            flexDirection: 'row',
+            alignItems: 'center',
+          }}>
           <Text style={{color: 'grey', fontSize: 12}}>Comments</Text>
           <CrossIcon style={{}} name="expand-more" />
         </View>
@@ -713,6 +727,10 @@ class PostDetail extends Component {
           renderItem={({item, index}) => {
             return (
               <Comment
+                deleteComment={this.deleteComment}
+                commentId={item.id}
+                userId={item.user_id}
+                postUserId={this.state.postUserId}
                 dp={item.user.profile_pic_url}
                 name={
                   item.user.first_name +
@@ -778,6 +796,13 @@ class PostDetail extends Component {
     } else {
       alert("comment can't be empty");
     }
+  };
+
+  deleteComment = commentId => {
+    var comments = this.state.comments.filter(
+      comment => commentId != comment.id,
+    );
+    this.setState({comments: comments});
   };
 
   likePost = async (postId, postUserId) => {
@@ -882,7 +907,7 @@ class PostDetail extends Component {
       'PostData',
       'nothing to render',
     );
-    console.log('modal', this.state.deleteModalVisible);
+    // console.log('data', data);
     return (
       <>
         {/* {Platform.OS === 'ios' ? <StatusBar barStyle="default" /> : null} */}

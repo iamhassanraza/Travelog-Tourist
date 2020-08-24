@@ -367,16 +367,16 @@ class HomeScreen extends PureComponent {
           if (parseInt(Response.status) === 401) {
             alert(JsonResponse.message);
           } else if (parseInt(Response.status) === 200) {
-            this.mapArray(JsonResponse.data, JsonResponse.total);
+            // this.mapArray(JsonResponse.data, JsonResponse.total);
 
-            // this.setState(previousState => {
-            //   return {
-            //     posts: [...previousState.posts, ...JsonResponse.data],
-            //     total: JsonResponse.total,
-            //     loading: false,
-            //     loadmore: false,
-            //   };
-            // });
+            this.setState(previousState => {
+              return {
+                posts: [...previousState.posts, ...JsonResponse.data],
+                total: JsonResponse.total,
+                loading: false,
+                loadmore: false,
+              };
+            });
             // this.setState(previousState => {
             //   // const mappedArray = this.mapPosts(JsonResponse.data);
             //   return {
@@ -420,9 +420,9 @@ class HomeScreen extends PureComponent {
             this.setState(previousState => {
               return {
                 posts: [...previousState.posts, ...JsonResponse.data],
-                // total: JsonResponse.total,
-                // loading: false,
-                // loadmore: false,
+                total: JsonResponse.total,
+                loading: false,
+                loadmore: false,
               };
             });
           }
@@ -518,14 +518,14 @@ class HomeScreen extends PureComponent {
           .then(responseJson => {
             console.log('dataa', responseJson.data.length);
             console.log(new Date().toLocaleTimeString());
-            this.mapArray(responseJson.data, responseJson.total);
-            //   this.setState({
-            //     posts: responseJson.data,
-            //     // total: responseJson.total,
-            //     refreshing: false,
-            //     // loading: false,
-            //     Category: 'undefined',
-            //   });
+            // this.mapArray(responseJson.data, responseJson.total);
+            this.setState({
+              posts: responseJson.data,
+              total: responseJson.total,
+              refreshing: false,
+              loading: false,
+              Category: 'undefined',
+            });
           })
           .catch(err => console.log(err));
       }
@@ -570,13 +570,25 @@ class HomeScreen extends PureComponent {
       // The screen is focused
       if (this.props.navigation.getParam('newPost')) {
         // this.refs._scrollView.scrollTo({x: 0, y: 0, animated: true});
-        this.setState({
-          pageNo: 1,
-          total: undefined,
-          posts: [],
-        });
-        this.fetchdata();
+        this.setState(
+          {
+            pageNo: 1,
+            total: undefined,
+            posts: [],
+          },
+          () => this.fetchdata(),
+        );
+      } else {
+        this.setState(
+          {
+            pageNo: 1,
+            // total: undefined,
+            // posts: [],
+          },
+          () => this.fetchdata(),
+        );
       }
+      // this.fetchdata();
     });
 
     this.props.navigation.setParams({
@@ -603,7 +615,6 @@ class HomeScreen extends PureComponent {
   };
 
   render() {
-    console.log('total', this.state.total);
     if (this.props.screenProps.postDetail) {
       const postDetail = this.props.screenProps.postDetail[0];
       this.props.navigation.navigate('PostDetail', {
@@ -635,7 +646,6 @@ class HomeScreen extends PureComponent {
     //&& this.state.posts.every(obj => obj.height)
     const catid = this.props.navigation.getParam('CategoryID', 'undefined');
     if (this.state.total > 0) {
-      console.log('if why not', this.state.total, this.state.posts[0]);
       return (
         <>
           <React.Fragment>

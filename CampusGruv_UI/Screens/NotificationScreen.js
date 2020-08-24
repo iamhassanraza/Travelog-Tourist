@@ -40,10 +40,12 @@ class NotificationScreen extends PureComponent {
   componentDidMount() {
     this.focusListener = this.props.navigation.addListener('willFocus', () => {
       //The screen is focused
-      this.setState({
-        pageNo: 1,
-      });
-      this.getNoti();
+      this.setState(
+        {
+          pageNo: 1,
+        },
+        () => this.getNoti(),
+      );
     });
     this.focusListener = this.props.navigation.addListener('didBlur', () => {
       this.state.store.dispatch(clearNoti());
@@ -53,10 +55,12 @@ class NotificationScreen extends PureComponent {
   //${require('../config').default.production}
 
   loadMore = ({distanceFromEnd}) => {
+    console.log('end reached');
     if (
       !this.state.onEndReachedCalledDuringMomentum &&
       this.state.notification.length < this.state.total
     ) {
+      console.log('fetch more');
       const pageNo = this.state.pageNo;
       this.setState(
         {
@@ -80,7 +84,6 @@ class NotificationScreen extends PureComponent {
             },
           );
           const JsonResponse = await Response.json();
-          console.log('lolol', JsonResponse);
           this.setState(prevState => ({
             notification: [...prevState.notification, ...JsonResponse.data],
             endReached: false,
@@ -155,7 +158,7 @@ class NotificationScreen extends PureComponent {
             </View>
           )}
           {/* {this.state.notification[0] ? */
-          !this.state.totalNotis ? (
+          this.state.total === undefined ? (
             <UIActivityIndicator color={ThemeBlue} />
           ) : (
             <View style={{flex: 1}}>

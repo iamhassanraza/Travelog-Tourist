@@ -503,6 +503,7 @@ class CreateNewPost extends Component {
   };
 
   render() {
+    console.log('data', this.state.DATA);
     return (
       <Container>
         {Platform.OS === 'ios' ? (

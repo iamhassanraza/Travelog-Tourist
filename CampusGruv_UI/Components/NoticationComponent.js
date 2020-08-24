@@ -13,7 +13,8 @@ class NoticationComponent extends Component {
     return (
       <View
         style={{
-          padding: 5,
+          paddingHorizontal: 5,
+          paddingVertical: 10,
           backgroundColor: this.props.unread ? '#E5E5E5' : '#f9fdfe',
         }}>
         <TouchableOpacity

@@ -96,7 +96,7 @@ class CreateOrganization extends Component {
     organizationEmail: '',
     organizationWebsite: '',
     organizationMembers: [],
-    selectedOrgType: 'Student organization',
+    selectedOrgType: 'Student Organization',
     focused: false,
     Spinner: false,
     imageName: '',
@@ -382,16 +382,17 @@ class CreateOrganization extends Component {
                       });
                     }}>
                     <Picker.Item
-                      label="Student organization"
-                      value="Student organization"
+                      label="Student Organization"
+                      value="Student Organization"
                     />
                     <Picker.Item
-                      label="University department"
-                      value="University department"
+                      label="Campus Department"
+                      value="Campus Department"
                     />
+                    <Picker.Item label="Alumni Group" value="Alumni Group" />
                     <Picker.Item
-                      label="Alumni association"
-                      value="Alumni association"
+                      label="Local Business"
+                      value="Local Business"
                     />
                   </Picker>
                 </View>

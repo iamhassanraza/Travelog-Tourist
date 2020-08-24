@@ -87,7 +87,7 @@ class RenderCards extends PureComponent {
               // onRefresh={this.props.onRefresh}
               // refreshing={this.props.refreshState}
               scrollEnabled={false}
-              initialNumToRender={2}
+              // initialNumToRender={3}
               data={column1Data}
               showsVerticalScrollIndicator={false}
               renderItem={({item, index}) => {
@@ -133,7 +133,7 @@ class RenderCards extends PureComponent {
               }}
               data={column2Data}
               scrollEnabled={false}
-              initialNumToRender={2}
+              // initialNumToRender={3}
               showsVerticalScrollIndicator={false}
               renderItem={({item}) => {
                 return (

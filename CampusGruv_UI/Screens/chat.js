@@ -510,6 +510,7 @@ class Chat extends React.PureComponent {
             borderWidth: 1,
             borderColor: 'grey',
             paddingLeft: '2%',
+            // paddingTop: 5,
             paddingRight: '2%',
             backgroundColor: 'white',
           }}
