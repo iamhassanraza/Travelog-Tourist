@@ -448,6 +448,16 @@ class Chat extends React.PureComponent {
     return (
       <InputToolbar
         {...props}
+        textInputStyle={{
+          lineHeight: 20,
+          borderRadius: 8,
+          borderWidth: 1,
+          borderColor: 'grey',
+          paddingLeft: '2%',
+          // paddingTop: 5,
+          paddingRight: '2%',
+          backgroundColor: 'white',
+        }}
         containerStyle={{
           backgroundColor: '#f9fdfe',
           borderTopWidth: 0,
@@ -504,16 +514,16 @@ class Chat extends React.PureComponent {
           renderLoading={this.renderLoading}
           alwaysShowSend={true}
           renderMessage={props => this.customMessage(props)}
-          textInputProps={{
-            lineHeight: 20,
-            borderRadius: 10,
-            borderWidth: 1,
-            borderColor: 'grey',
-            paddingLeft: '2%',
-            // paddingTop: 5,
-            paddingRight: '2%',
-            backgroundColor: 'white',
-          }}
+          // textInputProps={{
+          //   lineHeight: 20,
+          //   borderRadius: 10,
+          //   borderWidth: 1,
+          //   borderColor: 'grey',
+          //   paddingLeft: '2%',
+          //   paddingTop: '2%',
+          //   paddingRight: '2%',
+          //   backgroundColor: 'white',
+          // }}
           renderActions={() => (
             <Icon
               onPress={this.selectPhoto}

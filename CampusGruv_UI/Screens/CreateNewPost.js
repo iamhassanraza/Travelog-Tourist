@@ -469,14 +469,19 @@ class CreateNewPost extends Component {
         <View
           style={{
             width: '90%',
-            borderRadius: 5,
+            borderRadius: 10,
             height: 35,
             justifyContent: 'center',
             backgroundColor: '#0C91CF',
             alignSelf: 'center',
           }}>
           <Text
-            style={{color: 'white', fontWeight: 'bold', alignSelf: 'center'}}>
+            style={{
+              fontSize: 20,
+              color: 'white',
+              fontWeight: 'bold',
+              alignSelf: 'center',
+            }}>
             Share
           </Text>
         </View>

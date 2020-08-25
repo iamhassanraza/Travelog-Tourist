@@ -303,6 +303,7 @@ class ProfilePage extends React.Component {
   };
 
   UpdateProfile = async () => {
+    console.log('state',this.state.bio, this.state.website)
     this.setState({Spinner: true});
     const Token = await AsyncStorage.getItem('TOKEN');
     let response = null;
@@ -334,6 +335,7 @@ class ProfilePage extends React.Component {
     }
 
     const postMasterResponse = await response.json();
+    console.log('post postMasterResponse', postMasterResponse);
     this.setState({Spinner: false});
     this.props.CreateUserDetails(postMasterResponse);
     this.setState({imageUri: ''});
@@ -497,7 +499,12 @@ class ProfilePage extends React.Component {
   };
 
   render() {
-    console.log(this.props.User);
+    // console.log(
+    //   'user ------------- >',
+    //   this.state.bio,
+    //   this.state.website,
+    //   this.state.major,
+    // );
     let pickerItems = this.state.campuses[0]
       ? this.state.campuses.map((s, i) => {
           // if (s.id !== this.state.selectedId)
@@ -634,7 +641,7 @@ class ProfilePage extends React.Component {
                 style={{width: width / 10, marginTop: 15}}
               />
             </View>
-            {/* <InputView
+            <InputView
               multiline={true}
               name="Bio"
               ph="enter bio"
@@ -651,7 +658,7 @@ class ProfilePage extends React.Component {
               changestate={text => {
                 this.setState({website: text});
               }}
-            /> */}
+            />
             <InputView
               name="Major"
               ph="Major"

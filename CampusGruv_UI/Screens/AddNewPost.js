@@ -97,7 +97,7 @@ export default class AddNewPost extends Component {
   takePhoto = () => {
     ImagePicker.launchCamera(
       {
-        maxWidth: 500,
+        // maxWidth: 500,
         maxHeight: 500,
         storageOptions: {
           skipBackup: true,
