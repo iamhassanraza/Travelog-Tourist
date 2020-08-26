@@ -29,7 +29,6 @@ const options = {
   quality: 1,
   error: '',
 };
-
 export default class AddNewPost extends Component {
   static navigationOptions = props => {
     const {params = {}} = props.navigation.state;
@@ -84,6 +83,8 @@ export default class AddNewPost extends Component {
     file: '',
     Images: undefined,
     imgCount: 0,
+    imageDetails:null
+    
   };
 
   componentDidMount() {
@@ -113,6 +114,8 @@ export default class AddNewPost extends Component {
           const source = {uri: response.uri};
           const fileTypes = /jpeg|jpg|png|gif/;
           const allowedImgSize = 1024 * 1024 * 5;
+          
+         
           // console.log('response image: ', response);
           if (!fileTypes.test(response.type)) {
             alert(
@@ -134,12 +137,14 @@ export default class AddNewPost extends Component {
                 imageName: imgName,
                 Images: response,
                 imageSource: source,
+                imageDetails:response
               });
             } else {
               this.setState({
                 imageName: response.fileName,
                 Images: response,
                 imageSource: source,
+                imageDetails:response
               });
             }
           }
@@ -164,9 +169,11 @@ export default class AddNewPost extends Component {
         if (response.didCancel) {
         } else if (response.error) {
         } else {
+       
           const source = {uri: response.uri};
           const fileTypes = /jpeg|jpg|png|gif/;
           const allowedImgSize = 1024 * 1024 * 4;
+          
           // console.log('response image: ', response);
           if (!fileTypes.test(response.type)) {
             alert(
@@ -188,12 +195,14 @@ export default class AddNewPost extends Component {
                 imageName: imgName,
                 Images: response,
                 imageSource: source,
+                imageDetails:response
               });
             } else {
               this.setState({
                 imageName: response.fileName,
                 Images: response,
                 imageSource: source,
+                imageDetails:response
               });
             }
           }
@@ -362,6 +371,7 @@ export default class AddNewPost extends Component {
                       Images: this.state.Images,
                       imageName: this.state.imageName,
                       title: this.state.title,
+                      imageDetails:this.state.imageDetails,
                       deleteItems: this.deleteItems,
                     });
                   } else if (

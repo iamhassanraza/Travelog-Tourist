@@ -111,6 +111,7 @@ class CreateNewPost extends Component {
     Description: '',
     Price: '',
     spinner: false,
+    imageDetails:this.props.navigation.getParam('imageDetails',null),
     PicAndTitle: this.props.navigation.getParam(
       'deleteItems',
       'nothing to render',
@@ -441,6 +442,8 @@ class CreateNewPost extends Component {
           body: this.createFormData(this.state.Images, {
             user_id: this.props.User.id,
             post_id: postMasterResponse.id,
+            height:this.state.imageDetails. height,
+            width:this.state.imageDetails.width
           }),
         },
       );

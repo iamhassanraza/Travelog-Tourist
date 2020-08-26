@@ -11,43 +11,25 @@ class PostCard extends Component {
   state = {
     isEven: this.props.index % 2 === 0 ? true : false,
 
-    width: undefined,
-    height: undefined,
+
     imageLoaded: false,
   };
 
-  // width = 537
-  // ratio = width / currentVideoWidth
-  // height = currentVideoHeight * ratio
-
-  componentDidMount() {
-    Image.getSize(
-      this.props.imageurl,
-      (srcWidth, srcHeight) => {
-        // const maxHeight = Dimensions.get('window').height / 2;
-        // const maxWidth = Dimensions.get('window').width / 2;
-        const width = Dimensions.get('window').width / 2 - 14;
-        const ratio = width / srcWidth;
-        const height = srcHeight * ratio;
-        //console.log(srcWidth,srcHeight)
-        //console.log("width wala",maxWidth / srcWidth)
-        //console.log("height wala",maxHeight / srcHeight)
-        // const ratio = Math.min(maxWidth / srcWidth, maxHeight / srcHeight);
-        this.setState({width: width, height: height});
-      },
-      error => {
-        () => console.log(error);
-      },
-    );
-  }
+ 
 
   imageLoaded = () => {
     this.setState({imageLoaded: true});
   };
 
   render() {
-    return (
-      <TouchableWithoutFeedback
+    if(this.props.height==NaN){
+      console.log(this.props.index,"index")
+
+    }
+    const width = Dimensions.get('window').width / 2 - 14;
+    const ratio = width / this.props.width||200;
+    const height = this.props.height * ratio||200;
+    return ( <TouchableWithoutFeedback
         style={{
           width: Dimensions.get('window').width / 2 - 14,
           marginLeft: this.state.isEven ? 10 : 5,
@@ -82,7 +64,7 @@ class PostCard extends Component {
               likes: this.props.likes,
               // height: this.state.height,
               height: 200,
-              createdAt: this.props.createdAt,
+              createdAt: this.props.creaxtedAt,
             },
           })
         }>
@@ -96,8 +78,8 @@ class PostCard extends Component {
               borderTopLeftRadius: 12,
               borderTopRightRadius: 12,
               backgroundColor: this.state.imageLoaded ? 'white' : '#8a918d',
-              // height: this.props.height,
-              height: this.state.height,
+              height: height,
+              // height: 375,
             }}
             source={{
               uri: this.props.imageurl,

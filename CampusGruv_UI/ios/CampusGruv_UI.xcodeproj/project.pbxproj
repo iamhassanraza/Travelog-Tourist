@@ -71,7 +71,7 @@
 		008F07F21AC5B25A0029DE68 /* main.jsbundle */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = main.jsbundle; sourceTree = "<group>"; };
 		00E356F11AD99517003FC87E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		00E356F21AD99517003FC87E /* CampusGruv_UITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = CampusGruv_UITests.m; sourceTree = "<group>"; };
-		04599EA32487D79000007E3A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
+		04599EA32487D79000007E3A /* GoogleService-Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; name = "GoogleService-Info.plist"; path = "../../../Downloads/GoogleService-Info.plist"; sourceTree = "<group>"; };
 		046B14D62488E9F700009BC2 /* CampusGrüv.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; name = "CampusGrüv.entitlements"; path = "CampusGruv_UI/CampusGrüv.entitlements"; sourceTree = "<group>"; };
 		0CD447A03F1C4F4CB85481CB /* MaterialIcons.ttf */ = {isa = PBXFileReference; explicitFileType = undefined; fileEncoding = 9; includeInIndex = 0; lastKnownFileType = unknown; name = MaterialIcons.ttf; path = "../node_modules/react-native-vector-icons/Fonts/MaterialIcons.ttf"; sourceTree = "<group>"; };
 		13B07F961A680F5B00A75B9A /* CampusGrüv.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "CampusGrüv.app"; sourceTree = BUILT_PRODUCTS_DIR; };

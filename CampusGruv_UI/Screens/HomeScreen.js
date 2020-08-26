@@ -16,7 +16,7 @@ import {
   Platform,
   StatusBar,
 } from 'react-native';
-import RNFetchBlob from 'rn-fetch-blob';
+// import RNFetchBlob from 'rn-fetch-blob';
 import Logo from '../Assets/Images/logo.png';
 import PostCard from '../Components/PostCard';
 import CrossIcon from 'react-native-vector-icons/Entypo';
@@ -270,67 +270,22 @@ class HomeScreen extends PureComponent {
     );
   };
 
-  mapArray = (posts, total) => {
-    posts.map(post => {
-      if (!post.height) {
-        RNFetchBlob.config({
-          // add this option that makes response data to be stored as a file,
-          // this is much more performant.
-          fileCache: true,
-        })
-          .fetch(
-            'GET',
-            post.postDetail.length > 0
-              ? post.postDetail[0].image_url
-              : 'https://travelog-pk.herokuapp.com/images/default.png',
-            {
-              //some headers ..
-            },
-          )
-          .then(res => {
-            console.log('i ran');
-            // if (posts.every(obj => obj.height)) {
-            //   console.log('all heights are there');
-            //   this.setState({loading: false, loadmore: false, total: total});
-            // }
+  // mapArray = (posts, total) => {
+  //   alert('kkk')
+  //  let updatePost= posts.map(post => {
+  //                const width = Dimensions.get('window').width / 2 - 14;
+  //               const ratio = width / post.postDetail[0].width;
+  //               const height = post.postDetail[0].height * ratio;
+  //               console.lof(height,width,"height,width")
+  //               post['height'] = height;
+  //               alert(height)
+     
 
-            Image.getSize(
-              post.postDetail.length > 0
-                ? post.postDetail[0].image_url
-                : 'https://travelog-pk.herokuapp.com/images/default.png',
-              (srcWidth, srcHeight) => {
-                const width = Dimensions.get('window').width / 2 - 14;
-                const ratio = width / srcWidth;
-                const height = srcHeight * ratio;
-                post['height'] = height;
-                if (posts.every(obj => obj.height)) {
-                  console.log('all heights are there');
-                  console.log(new Date().toLocaleTimeString());
-
-                  this.setState(previousState => {
-                    return {
-                      posts: [...previousState.posts, ...posts],
-                      total: total,
-                      loading: false,
-                      loadmore: false,
-                      refreshing: false,
-                      newPost: false,
-                      Category: 'undefined',
-                    };
-                  });
-                  // this.setState({loading: false, loadmore: false, total: total});
-                }
-              },
-              error => {
-                () => console.log(error);
-              },
-            );
-          });
-
-        return posts;
-      }
-    });
-  };
+  //       // return posts;
+  //     // }
+  //   });
+  //   // return updatePost;
+  // };
 
   loadmore = () => {
     if (
@@ -368,6 +323,7 @@ class HomeScreen extends PureComponent {
             alert(JsonResponse.message);
           } else if (parseInt(Response.status) === 200) {
             // this.mapArray(JsonResponse.data, JsonResponse.total);
+            console.log(JsonResponse.data,"responseJson.data")
 
             this.setState(previousState => {
               return {
@@ -415,7 +371,7 @@ class HomeScreen extends PureComponent {
           if (parseInt(Response.status) === 401) {
             alert(JsonResponse.message);
           } else if (parseInt(Response.status) === 200) {
-            this.mapArray(JsonResponse.data, JsonResponse.total);
+            // this.mapArray(JsonResponse.data, JsonResponse.total);
 
             this.setState(previousState => {
               return {
@@ -452,6 +408,8 @@ class HomeScreen extends PureComponent {
 
     if (parseInt(Response.status) === 401) {
     } else if (parseInt(Response.status) === 200) {
+      console.log(JsonResponse.data,"responseJson.data")
+
       this.setState({
         posts: JsonResponse.data,
         total: JsonResponse.total,
@@ -484,6 +442,8 @@ class HomeScreen extends PureComponent {
             return response.json();
           })
           .then(responseJson => {
+            // alert()
+            console.log(responseJson.data,"responseJson.data")
             this.setState({
               posts: responseJson.data,
               total: responseJson.total,
@@ -516,9 +476,11 @@ class HomeScreen extends PureComponent {
             return response.json();
           })
           .then(responseJson => {
-            console.log('dataa', responseJson.data.length);
+            console.log('dataa', responseJson.data);
             console.log(new Date().toLocaleTimeString());
+            console.log(responseJson.data,"responseJson.data")
             // this.mapArray(responseJson.data, responseJson.total);
+            // alert()
             this.setState({
               posts: responseJson.data,
               total: responseJson.total,
