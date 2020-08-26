@@ -279,7 +279,6 @@ class HomeScreen extends PureComponent {
   //               console.lof(height,width,"height,width")
   //               post['height'] = height;
   //               alert(height)
-     
 
   //       // return posts;
   //     // }
@@ -322,9 +321,6 @@ class HomeScreen extends PureComponent {
           if (parseInt(Response.status) === 401) {
             alert(JsonResponse.message);
           } else if (parseInt(Response.status) === 200) {
-            // this.mapArray(JsonResponse.data, JsonResponse.total);
-            console.log(JsonResponse.data,"responseJson.data")
-
             this.setState(previousState => {
               return {
                 posts: [...previousState.posts, ...JsonResponse.data],
@@ -408,7 +404,7 @@ class HomeScreen extends PureComponent {
 
     if (parseInt(Response.status) === 401) {
     } else if (parseInt(Response.status) === 200) {
-      console.log(JsonResponse.data,"responseJson.data")
+      console.log(JsonResponse.data, 'responseJson.data');
 
       this.setState({
         posts: JsonResponse.data,
@@ -443,7 +439,6 @@ class HomeScreen extends PureComponent {
           })
           .then(responseJson => {
             // alert()
-            console.log(responseJson.data,"responseJson.data")
             this.setState({
               posts: responseJson.data,
               total: responseJson.total,
@@ -476,11 +471,6 @@ class HomeScreen extends PureComponent {
             return response.json();
           })
           .then(responseJson => {
-            console.log('dataa', responseJson.data);
-            console.log(new Date().toLocaleTimeString());
-            console.log(responseJson.data,"responseJson.data")
-            // this.mapArray(responseJson.data, responseJson.total);
-            // alert()
             this.setState({
               posts: responseJson.data,
               total: responseJson.total,
@@ -497,7 +487,7 @@ class HomeScreen extends PureComponent {
   };
 
   async componentDidMount() {
-    this.fetchdata();
+    // this.fetchdata();
 
     const {navigation} = this.props;
     if (this.props.screenProps.postDetail) {

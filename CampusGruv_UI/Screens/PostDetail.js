@@ -529,17 +529,20 @@ class PostDetail extends Component {
     );
   };
 
-  renderImage = image => {
+  renderImage = (image, width, height) => {
+    const screenWidth = Dimensions.get('window').width;
+    const ratio = screenWidth / width;
+    const imgheight = height * ratio;
+    console.log('imageeee', screenWidth, imgheight);
     return (
       <View style={{}}>
         <FastImage
           resizeMode="contain"
           source={{uri: this.state.imageurl}}
-          //resizeMode="center"
           style={{
-            width: this.state.width ?? Dimensions.get('window').width,
+            width: screenWidth,
             // height: Dimensions.get('window').height / 2,
-            height: this.state.height ?? 300,
+            height: imgheight ?? 300,
           }}
         />
       </View>
@@ -907,7 +910,7 @@ class PostDetail extends Component {
       'PostData',
       'nothing to render',
     );
-    // console.log('data', data);
+    console.log('data', data);
     return (
       <>
         {/* {Platform.OS === 'ios' ? <StatusBar barStyle="default" /> : null} */}
@@ -955,7 +958,7 @@ class PostDetail extends Component {
                   data.userId,
                   data.title,
                 )}
-                {this.renderImage(data.uri)}
+                {this.renderImage(data.uri, data.width, data.height)}
                 {this.renderTitle(
                   data.title,
                   data.views,
@@ -984,7 +987,7 @@ class PostDetail extends Component {
                   data.userId,
                   data.title,
                 )}
-                {this.renderImage(data.uri)}
+                {this.renderImage(data.uri, data.width, data.height)}
                 {this.renderTitle(data.title, data.views, data.likes)}
                 {this.renderDescription(data.description)}
                 {this.state.comments[0]

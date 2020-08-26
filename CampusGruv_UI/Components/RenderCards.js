@@ -55,8 +55,6 @@ class RenderCards extends PureComponent {
   };
 
   render() {
-    console.log(JSON.stringify(this.props.posts) ,"this.props.posts")
-
     console.log('size', this.props.posts.length);
     const column1Data = this.props.posts.filter((item, i) => i % 2 === 0);
     const column2Data = this.props.posts.filter((item, i) => i % 2 === 1);
@@ -113,14 +111,17 @@ class RenderCards extends PureComponent {
                     likes={item.likes_count}
                     createdAt={item.created_at}
                     height={
-                      item.postDetail.length > 0&&item.postDetail[0].height!=undefined
+                      item.postDetail.length > 0 &&
+                      item.postDetail[0].height != undefined
                         ? item.postDetail[0].height
                         : 200
-                      }
-                    width={ item.postDetail.length > 0&&item.postDetail[0].width!=undefined
-                      ? item.postDetail[0].width
-                      : 200}
-
+                    }
+                    width={
+                      item.postDetail.length > 0 &&
+                      item.postDetail[0].width != undefined
+                        ? item.postDetail[0].width
+                        : 200
+                    }
                     imageurl={
                       item.postDetail.length > 0
                         ? item.postDetail[0].image_url
@@ -164,9 +165,18 @@ class RenderCards extends PureComponent {
                     views={item.view_count}
                     likes={item.likes_count}
                     createdAt={item.created_at}
-                    // height={item.height}
-                    height={item.postDetail&& Number(item.postDetail[0].height)}
-                    width={item.postDetail&& item.postDetail[0].width}
+                    height={
+                      item.postDetail.length > 0 &&
+                      item.postDetail[0].height != undefined
+                        ? item.postDetail[0].height
+                        : 200
+                    }
+                    width={
+                      item.postDetail.length > 0 &&
+                      item.postDetail[0].width != undefined
+                        ? item.postDetail[0].width
+                        : 200
+                    }
                     imageurl={
                       item.postDetail.length > 0
                         ? item.postDetail[0].image_url

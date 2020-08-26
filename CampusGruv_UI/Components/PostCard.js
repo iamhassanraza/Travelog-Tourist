@@ -11,25 +11,22 @@ class PostCard extends Component {
   state = {
     isEven: this.props.index % 2 === 0 ? true : false,
 
-
     imageLoaded: false,
   };
-
- 
 
   imageLoaded = () => {
     this.setState({imageLoaded: true});
   };
 
   render() {
-    if(this.props.height==NaN){
-      console.log(this.props.index,"index")
-
+    if (this.props.height == NaN) {
+      console.log(this.props.index, 'index');
     }
     const width = Dimensions.get('window').width / 2 - 14;
-    const ratio = width / this.props.width||200;
-    const height = this.props.height * ratio||200;
-    return ( <TouchableWithoutFeedback
+    const ratio = width / this.props.width;
+    const height = this.props.height * ratio;
+    return (
+      <TouchableWithoutFeedback
         style={{
           width: Dimensions.get('window').width / 2 - 14,
           marginLeft: this.state.isEven ? 10 : 5,
@@ -62,9 +59,9 @@ class PostCard extends Component {
               comments: this.props.comments,
               views: this.props.views,
               likes: this.props.likes,
-              // height: this.state.height,
-              height: 200,
-              createdAt: this.props.creaxtedAt,
+              height: this.props.height,
+              width: this.props.width,
+              createdAt: this.props.createdAt,
             },
           })
         }>
