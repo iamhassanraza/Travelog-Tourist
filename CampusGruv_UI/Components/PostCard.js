@@ -90,7 +90,7 @@ class PostCard extends Component {
                 right: 5,
                 top: 10,
                 borderRadius: 5,
-                backgroundColor: `rgba(${this.props.categoryColor},0.4)`,
+                backgroundColor: `rgba(${this.props.categoryColor},0.7)`,
               }}>
               <Text
                 style={{
@@ -118,7 +118,7 @@ class PostCard extends Component {
               //flex: 1,
               flexDirection: 'row',
             }}>
-            <View style={{paddingVertical: 5}}>
+            <View style={{paddingTop: 5}}>
               <Text
                 numberOfLines={1}
                 style={{paddingHorizontal: 2, fontWeight: '400'}}>
@@ -126,6 +126,19 @@ class PostCard extends Component {
               </Text>
             </View>
           </View>
+          {/* ___________________________________________________ new addition___________________*/}
+
+          <View style={{}}>
+            <View style={{paddingVertical: 0}}>
+              <Text
+                numberOfLines={1}
+                style={{paddingHorizontal: 2, fontWeight: '100',color:'grey',fontSize:12,marginBottom:5}}>
+               Departure: 12 Sept,2020
+              </Text>
+            </View>
+          </View>
+
+          {/* ________________________________________________________________________________ */}
           <View
             style={{
               marginTop: '1%',

@@ -20,6 +20,7 @@ import {
   SafeAreaView,
   Keyboard,
 } from 'react-native';
+import PlanItem from '../Components/PlanItem';
 import {ThemeConsumer, Header} from 'react-native-elements';
 import {Container, Item, Content, Input} from 'native-base';
 import Comment from '../Components/Comment';
@@ -29,10 +30,12 @@ import IconFeather from 'react-native-vector-icons/Feather';
 import BackIcon from 'react-native-vector-icons/Ionicons';
 import AntIcon from 'react-native-vector-icons/AntDesign';
 import EvilIcons from 'react-native-vector-icons/SimpleLineIcons';
-import {ThemeBlue} from '../Assets/Colors';
+import Colors, {ThemeBlue} from '../Assets/Colors';
 import Modal from 'react-native-modal';
 import ViewsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import {connect} from 'react-redux';
+import TextCutter from '../Components/TextCutter';
+import IconWithText from '../Components/IconWithText';
 import {CreateUserDetails} from '../ReduxStore/Actions/index';
 import {
   FlatList,
@@ -162,6 +165,54 @@ class PostDetail extends Component {
           Authorization: `Bearer ${Token}`,
         },
       },
+    );
+  };
+
+  renderIcons = data => {
+    const date_of_departure = new Date();
+    return (
+      <View
+        style={{
+          flexDirection: 'row',
+          justifyContent: 'space-between',
+          marginTop: 10,
+          flex: 1,
+        }}>
+        <View style={{flexDirection: 'column', flex: 1}}>
+          <IconWithText
+            textstyle={{fontSize: 14}}
+            icon="account-supervisor"
+            title="Speciality:"
+            subtitle={'Public'}
+          />
+          <IconWithText
+            textstyle={{fontSize: 14}}
+            icon="calendar-check"
+            title="Departure:"
+            subtitle={
+              date_of_departure.getDate() +
+              '-' +
+              (date_of_departure.getMonth() + 1) +
+              '-' +
+              date_of_departure.getFullYear()
+            }
+          />
+        </View>
+        <View style={{flexDirection: 'column', flex: 1}}>
+          <IconWithText
+            textstyle={{fontSize: 14}}
+            icon="timer"
+            title="Duration"
+            subtitle={'10 Days'}
+          />
+          <IconWithText
+            textstyle={{fontSize: 14}}
+            icon="seat-recline-normal"
+            title="Seats Left"
+            subtitle="10"
+          />
+        </View>
+      </View>
     );
   };
 
@@ -545,6 +596,18 @@ class PostDetail extends Component {
             height: imgheight ?? 300,
           }}
         />
+        <View
+          style={{
+            position: 'absolute',
+            right: '5%',
+            bottom:'5%',
+            backgroundColor:'rgba(138, 69, 250,0.5)',
+            padding:2,
+            paddingHorizontal:8,
+            borderRadius:10,
+          }}>
+          <Text style={{fontSize:18,color:'white',fontWeight:'bold'}}>10 Days / Rs 28,000 </Text>
+        </View>
       </View>
     );
   };
@@ -610,15 +673,84 @@ class PostDetail extends Component {
   };
 
   renderDescription = description => {
+    const array = [
+      {
+        plan_id: 1,
+        title: 'Day 1: Islamabad to Naran',
+        description:
+          'On this day the participants will depart for Kaghan Valley. The passage will pass through Haripur, Abbotabad and Balakot. The road has one of the most amazing landscapes and scenery. The participants will witness lush green hills, fresh water streams, glacier, alpine trees and much more. River Kunhar will be flowing on the Banks of Naran. The marvelous view will make the road trip incredible. We will make quick tea stops on our way. After arrival at the hotel the guest will have lunch and rest for some time. After the break the participants can go out for a walk or sightseeing.Hotel at Naran.',
+      },
+      {
+        plan_id: 2,
+        description:
+          'This day the participants will begin their journey early morning. The sunshine will make the aesthetics of the valley very vibrant. It is also a good time for photography on the way. The road passes through the Lulusar Lake, participants will take a short break at the lake. Participants will taketea break at Babusar Pass (4173 m). The participants will continue their tour towards Hunza Valley.',
+        title: 'Day 2: Naran to Hunza',
+      },
+      {
+        plan_id: 3,
+        description: `This day the participants will have a lot of interactions with historians, musicians and story tellers as they will be visiting the historic Baltit Fort (700 years old) and Altit fort (900 years old). To have the best experience in Hunza Valley, we always attach a local travel guide from Hunza Valley who can explain the culture, history and norms of the People of Hunza.
+
+      Our local guides have always very interesting stories to tell our guests. Participants will visit Leif Larson Music School in Altit and have quality time in the Royal gardens. Khabasi Café in Royal Gardens serves one the most delicious local foods. Participants can also grab a cup of coffee. Participants will visit Duikar before the sunset where the participants will experience the sun set on the mighty Karakoram Mountains.
+      Night stay at Hunza.`,
+        title: 'Day 3: Hunza Valley Travel Guide',
+      },
+      {
+        plan_id: 4,
+        description:
+          'This day participants will depart for Pak-China Border (Khunjerab Pass – highest road border in the world) which is one the best road trips of Hunza valley tour. Participants will pass through the 1,000 years old civilization of Ganish. They will see the ancient rock carvings and sacred rocks. The participants will travel along Attabad lake after a half hour time from Ganish bridge. The Karakoram Highway in the Upper Hunza has a lot to offer.',
+        title: `Day 4:Khunjerab Pass`,
+      },
+      {
+        plan_id: 5,
+        description: `This day the participants will be travel back to Naran Kaghan Valley. The participants will be taking the same route to reach Naran (Kaghan Valley). Participants will take quick stops on the way. Participants will reach Naran in the afternoon. Upon arrival to Naran, Participants can visit Naran Bazaar.
+      Night Stay in Naran.`,
+        title: 'Day 5: Return to Naran Kaghan Valley',
+      },
+      {
+        plan_id: 5,
+        description: `The participants will continue their journey towards Islamabad. Travelers will take quick stops on the way. It will take approximately 7-8 hours to reach Islamabad from Naran. Upon arrival in Islamabad, Hunza Valley Tour will come to an end.`,
+        title: 'Day 6: Islamabad City',
+      },
+    ];
     return (
       <View
         style={{
-          marginLeft: '3%',
-          flexDirection: 'row',
-          marginTop: 20,
+          marginLeft: '6%',
+          // flexDirection: 'row',
+          marginTop: 5,
           marginRight: '5%',
         }}>
+        {this.renderIcons()}
+
         <Text
+          style={{
+            fontSize: 21,
+            fontWeight: 'bold',
+            color: 'black',
+            marginTop: 10,
+          }}>
+          Overview
+        </Text>
+        <TextCutter
+          text={`Hunza Valley Tour is one the most popular tours of the world. It is located in the far Northern territory of Pakistan. It is widely believed by many people that James Hilton’s famous novel “Lost Horizon” was inspired from Hunza Valley. The world acclaim the Hunza Valley as the “Land Of Legends” and it is famous worldwide for its culture, landscape, friendliness and hospitality. Travelers and adventurers from around the world make their visit to this point of Earth every year.
+
+          The mighty peaks of Karakoram Range surround Hunza Valley. Rakaposhi Peak (7,788 m), Diran Peak (7,266 m), Spantik (7,072 m), Shishper Peak (7,611 m), Ultar Peak (7,388 m) and many other above 6,000 m peaks and mountains can be clearly viewed from any point in central Hunza valley. Hunza valley is home to many species of Flora and Fauna. You will experience sights of beautiful lakes, huge mountains, unique culture, history, architecture, wild life, glaciers and the community system. The itinerary for Hunza valley tour is given below.`}
+          limit={150}
+          style={{lineHeight: 22}}
+        />
+
+        <Text style={{fontSize: 21, fontWeight: 'bold', color: ThemeBlue}}>
+          Tour Plan
+        </Text>
+        {array.map((item, index) => (
+          <PlanItem
+            id={item.plan_id}
+            lastitem={array.length - 1 === index ? true : false}
+            details={item.description}
+            title={item.title}
+          />
+        ))}
+        {/* <Text
           selectable={true}
           style={{
             // width: '85%',
@@ -627,7 +759,7 @@ class PostDetail extends Component {
             marginBottom: 10,
           }}>
           {this.state.description}
-        </Text>
+        </Text> */}
       </View>
     );
   };
@@ -965,7 +1097,15 @@ class PostDetail extends Component {
                   data.likes,
                   data.createdAt,
                 )}
+                <TextCutter
+                  text={
+                    'asdjashdlaksjdaskljasdkljaslkdjsalkdjaskljdaskljdaskldjaslj slakjd askldj a lasjkdas kljdaslkjd askldjas ljkdaslk jlsd jaslkd jasljdaskl'
+                  }
+                  limit={150}
+                  style={{lineHeight: 22}}
+                />
                 {this.renderDescription(data.description)}
+                {/* {this.renderIcons()} */}
                 {this.state.comments[0]
                   ? this.renderAllComments(data.userAvatar, data.comments)
                   : null}
@@ -989,12 +1129,13 @@ class PostDetail extends Component {
                 )}
                 {this.renderImage(data.uri, data.width, data.height)}
                 {this.renderTitle(data.title, data.views, data.likes)}
+
                 {this.renderDescription(data.description)}
                 {this.state.comments[0]
                   ? this.renderAllComments(data.userAvatar, data.comments)
                   : null}
               </Content>
-              {this.renderAddComment(data.userAvatar, data.postId, data.userId)}
+              {/* {this.renderAddComment(data.userAvatar, data.postId, data.userId)} */}
             </>
           )}
           {this.state.editDescription ? (

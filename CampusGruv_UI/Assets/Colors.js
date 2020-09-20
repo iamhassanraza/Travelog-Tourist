@@ -2,6 +2,7 @@ import {StyleSheet} from 'react-native';
 import {colors} from 'react-native-elements';
 
 export const ThemeBlue = '#0C91CF';
+export const ThemeColor = '#0C91CF';
 export const CatBrown = 'rgba(179,106,80,0.7)';
 export const Catlight = 'rgba(162,119,117,0.9)';
 export const Catpurple = 'rgba(202,126,215,0.8)';

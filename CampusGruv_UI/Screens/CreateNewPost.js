@@ -21,7 +21,16 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import BackIcon from 'react-native-vector-icons/Ionicons';
 import Spinner from 'react-native-loading-spinner-overlay';
 import RNFetchBlob from 'rn-fetch-blob';
-import {Container, Item, Content, Input} from 'native-base';
+// import {Container, Item, Content, Input} from 'native-base';
+import {
+  Container,
+  Header,
+  Content,
+  Form,
+  Item,
+  Input,
+  Label,
+} from 'native-base';
 import {connect} from 'react-redux';
 
 import {
@@ -111,7 +120,7 @@ class CreateNewPost extends Component {
     Description: '',
     Price: '',
     spinner: false,
-    imageDetails:this.props.navigation.getParam('imageDetails',null),
+    imageDetails: this.props.navigation.getParam('imageDetails', null),
     PicAndTitle: this.props.navigation.getParam(
       'deleteItems',
       'nothing to render',
@@ -122,7 +131,7 @@ class CreateNewPost extends Component {
   };
 
   componentDidMount = () => {
-    this.getCategories();
+    // this.getCategories();
     this.setState({
       Images: this.props.navigation.getParam('Images', 'nothing to render'),
       imageName: this.props.navigation.getParam(
@@ -260,10 +269,12 @@ class CreateNewPost extends Component {
       <View
         style={{
           flexDirection: 'row',
-          justifyContent: 'flex-end',
-          marginTop: 0,
+          justifyContent: "space-between",
+          alignItems:'center',
+          marginTop: 20,
           marginRight: '5%',
         }}>
+        <Text style={{fontSize:16,marginLeft:'5%'}}>Departure</Text>
         <DatePicker
           style={{width: '60%', justifyContent: 'center', alignSelf: 'center'}}
           date={this.state.date}
@@ -346,13 +357,12 @@ class CreateNewPost extends Component {
           marginTop: '5%',
           width: Dimensions.get('window').width,
         }}>
-        <Text style={{fontSize: 17, color: 'grey', marginBottom: 7}}>
-          Add Description
-        </Text>
-        <View style={{}}>
+     
+        <View style={{marginTop:'10%'}}>
           <TextInput
             value={this.state.Description}
             scrollEnabled={false}
+            placeholder="  Detailed Overview Of this Tour"
             multiline={true}
             style={{
               color: 'grey',
@@ -442,8 +452,8 @@ class CreateNewPost extends Component {
           body: this.createFormData(this.state.Images, {
             user_id: this.props.User.id,
             post_id: postMasterResponse.id,
-            height:this.state.imageDetails. height,
-            width:this.state.imageDetails.width
+            height: this.state.imageDetails.height,
+            width: this.state.imageDetails.width,
           }),
         },
       );
@@ -485,7 +495,7 @@ class CreateNewPost extends Component {
               fontWeight: 'bold',
               alignSelf: 'center',
             }}>
-            Share
+            Next
           </Text>
         </View>
       </TouchableOpacity>
@@ -521,36 +531,36 @@ class CreateNewPost extends Component {
             behavior="padding">
             <Content style={{backgroundColor: '#f9fdfe'}}>
               {/* <ScrollView> */}
-              <Spinner
+              {/* <Spinner
                 visible={this.state.spinner}
                 textContent={'Uploading...'}
                 textStyle={{color: 'white'}}
                 customIndicator={<BarIndicator count={5} />}
-              />
+              /> */}
 
-              <View style={{alignItems: 'center', marginTop: 20}}>
+              {/* <View style={{alignItems: 'center', marginTop: 20}}>
                 <Text style={{fontSize: 20, color: 'grey'}}>
                   Select Category
                 </Text>
-              </View>
+              </View> */}
 
-              {this.state.DATA ? (
+              {/* {this.state.DATA ? (
                 this.renderCategories()
               ) : (
                 <View style={{marginTop: '10%', marginBottom: '10%'}}>
                   <SkypeIndicator count={5} />
                 </View>
-              )}
-
+              )} */}
+              {/* 
               {this.state.Category === 6 ? this.renderDatePicker() : null}
               {this.state.Category === 7 ? this.renderPrice() : null}
-              {this.renderDescription()}
+              {this.renderDescription()} */}
               {this.renderShareButton()}
               {/* </ScrollView> */}
             </Content>
           </KeyboardAvoidingView>
         ) : (
-          <Content style={{backgroundColor: '#f9fdfe'}}>
+          <Content style={{backgroundColor: '#f9fdfe',paddingHorizontal:'2%'}}>
             {/* <KeyboardAvoidingView
           style={{flex: 1}}
           keyboardVerticalOffset={80}
@@ -563,6 +573,37 @@ class CreateNewPost extends Component {
               customIndicator={<BarIndicator count={5} />}
             />
 
+            <Form>
+              <Item floatingLabel>
+                <Label>Number of Days</Label>
+                <Input />
+              </Item>
+              <Item floatingLabel>
+                <Label>Price in PKR</Label>
+                <Input />
+              </Item>
+              <Item floatingLabel last>
+                <Label>Speciality</Label>
+                <Input />
+              </Item>
+              <Item floatingLabel last>
+                <Label>Total seats</Label>
+                <Input />
+              </Item>
+             
+            
+            
+               {this.renderDatePicker()}
+
+             
+         
+            
+              
+           {this.renderDescription()}
+          
+            </Form>
+
+            {/* 
             <View style={{alignItems: 'center', marginTop: 20}}>
               <Text style={{fontSize: 20, color: 'grey'}}>Select Category</Text>
             </View>
@@ -577,7 +618,7 @@ class CreateNewPost extends Component {
 
             {this.state.Category === 5 ? this.renderDatePicker() : null}
             {this.state.Category === 7 ? this.renderPrice() : null}
-            {this.renderDescription()}
+            {this.renderDescription()} */}
             {this.renderShareButton()}
             {/* </ScrollView> */}
             {/* </KeyboardAvoidingView> */}

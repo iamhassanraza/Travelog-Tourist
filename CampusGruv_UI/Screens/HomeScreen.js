@@ -34,6 +34,7 @@ import {getStatusBarHeight} from 'react-native-status-bar-height';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 import ViewsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MasonryList from 'react-native-masonry-list';
+import feed from "../data"
 
 import {connect} from 'react-redux';
 import {connectSocket} from '../ReduxStore/Actions/index';
@@ -131,7 +132,6 @@ class HomeScreen extends PureComponent {
                 <TouchableOpacity
                   onPress={() => props.navigation.navigate('FollowersPosts')}
                   style={{position: 'absolute', right: 5}}>
-                  {/* <PeopleIcon name="users" color="#00527a" size={20} /> */}
                   <View
                     style={{
                       height: 40,
@@ -171,7 +171,7 @@ class HomeScreen extends PureComponent {
                     justifyContent: 'center',
                     flexDirection: 'row',
                   }}>
-                  <FastImage
+                  {/* <FastImage
                     source={Logo}
                     style={{
                       width: 150,
@@ -179,13 +179,13 @@ class HomeScreen extends PureComponent {
                       height: '100%',
                     }}
                     resizeMode="contain"
-                  />
+                  /> */}
+                  <Text style={{color:'white',fontWeight:'bold',fontSize:21,letterSpacing:1.4}}>Tour Feed</Text>
                 </View>
 
-                <TouchableOpacity
+                {/* <TouchableOpacity
                   onPress={() => props.navigation.navigate('Searching')}
                   style={{position: 'absolute', left: 8}}>
-                  {/* <Icon2 name="view-grid" color="#00527a" size={28} /> */}
                   <View
                     style={{
                       height: 40,
@@ -197,13 +197,13 @@ class HomeScreen extends PureComponent {
                       style={{height: 25, width: 30}}
                     />
                   </View>
-                </TouchableOpacity>
-
+                </TouchableOpacity> */}
+{/* 
                 <TouchableOpacity
                   onPress={() => props.navigation.navigate('CategoryList')}
-                  style={{position: 'absolute', right: 50}}>
-                  {/* <Icon2 name="view-grid" color="#00527a" size={28} /> */}
-                  <View
+                  style={{position: 'absolute', right: 50}}> */}
+                
+                  {/* <View
                     style={{
                       height: 40,
                       width: 40,
@@ -214,12 +214,11 @@ class HomeScreen extends PureComponent {
                       style={{height: 25, width: 30}}
                     />
                   </View>
-                </TouchableOpacity>
-
+                </TouchableOpacity> */}
+{/* 
                 <TouchableOpacity
                   onPress={() => props.navigation.navigate('FollowersPosts')}
                   style={{position: 'absolute', right: 5}}>
-                  {/* <PeopleIcon name="users" color="#00527a" size={20} /> */}
                   <View
                     style={{
                       height: 40,
@@ -231,7 +230,7 @@ class HomeScreen extends PureComponent {
                       style={{height: 25, width: 30}}
                     />
                   </View>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
               </View>
             </View>
           </View>
@@ -323,7 +322,7 @@ class HomeScreen extends PureComponent {
           } else if (parseInt(Response.status) === 200) {
             this.setState(previousState => {
               return {
-                posts: [...previousState.posts, ...JsonResponse.data],
+                posts: [...feed, ...feed],
                 total: JsonResponse.total,
                 loading: false,
                 loadmore: false,
@@ -371,7 +370,7 @@ class HomeScreen extends PureComponent {
 
             this.setState(previousState => {
               return {
-                posts: [...previousState.posts, ...JsonResponse.data],
+                posts: [...feed, ...feed],
                 total: JsonResponse.total,
                 loading: false,
                 loadmore: false,
@@ -439,8 +438,15 @@ class HomeScreen extends PureComponent {
           })
           .then(responseJson => {
             // alert()
+            console.log("___________________________________________")
+
+
+              console.log(responseJson.data)
+
+            console.log("___________________________________________")
+
             this.setState({
-              posts: responseJson.data,
+              posts: feed,
               total: responseJson.total,
               refreshing: false,
               loading: false,
@@ -471,8 +477,14 @@ class HomeScreen extends PureComponent {
             return response.json();
           })
           .then(responseJson => {
+            console.log("___________________________________________")
+
+
+            console.log(responseJson.data[2].postDetail)
+
+          console.log("___________________________________________")
             this.setState({
-              posts: responseJson.data,
+              posts: feed,
               total: responseJson.total,
               refreshing: false,
               loading: false,

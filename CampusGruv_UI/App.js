@@ -354,7 +354,7 @@ const HomeStack = createStackNavigator(
                       <Icon name="search" color="#0C91CF" size={20} />
                     </View>
                     <View style={{height: 20}}>
-                      <Image
+                      {/* <Image
                         source={Logo}
                         style={{
                           width: 150,
@@ -362,7 +362,7 @@ const HomeStack = createStackNavigator(
                           height: '100%',
                         }}
                         resizeMode="contain"
-                      />
+                      /> */}
                     </View>
                   </View>
                 </TouchableOpacity>

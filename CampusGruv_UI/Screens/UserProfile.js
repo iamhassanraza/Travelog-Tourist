@@ -7,9 +7,11 @@ import {
   StyleSheet,
   Dimensions,
   Button,
+  ImageBackground,
   Platform,
   TextInput,
   TouchableHighlight,
+  Linking,
   AsyncStorage,
   TouchableOpacity,
 } from 'react-native';
@@ -24,7 +26,9 @@ import Logo from '../Assets/Images/logo.png';
 import IconFeather from 'react-native-vector-icons/Feather';
 import MenuIcon from 'react-native-vector-icons/Feather';
 import Modal from 'react-native-modal';
+import IconWithText from "../Components/IconAndText"
 const IconGrey = '#b4b8bf';
+import data from "../data"
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 import {
@@ -56,11 +60,12 @@ class UserProfile extends React.Component {
                 justifyContent: 'center',
               }}>
               <View style={{alignSelf: 'center'}}>
-                <FastImage
+                {/* <FastImage
                   source={Logo}
                   style={{width: 150, alignSelf: 'flex-start', height: '90%'}}
                   resizeMode="contain"
-                />
+                /> */}
+                 <Text style={{color:'white',fontWeight:'bold',fontSize:21,letterSpacing:1.4}}>Profile</Text>
               </View>
               <View
                 style={{
@@ -402,7 +407,7 @@ class UserProfile extends React.Component {
 
       this.setState({
         spinner: false,
-        posts: jsonresponse.data,
+        posts: data,
         total: jsonresponse.total,
         isFollowing: jsonresponse.data[0]
           ? jsonresponse.data[0].isFollowing
@@ -573,76 +578,9 @@ class UserProfile extends React.Component {
         }}
         style={{backgroundColor: '#f9fdfe'}}>
         {/* <> */}
-        {postUserId === this.props.User.id ? (
-          <View
-            style={{
-              flexDirection: 'row',
-              backgroundColor: 'white',
-              justifyContent: 'flex-end',
-            }}>
-            <TouchableOpacity
-              style={{
-                marginTop: 5,
-                alignSelf: 'flex-end',
-                padding: 8,
-              }}
-              onPress={async () => {
-                let accountType = await AsyncStorage.getItem('accountType');
-                {
-                  accountType === 'user'
-                    ? this.props.navigation.navigate('EditProfile')
-                    : this.props.navigation.navigate('EditOrganization');
-                }
-              }}>
-              <Text
-                style={{
-                  color: '#ACACAC',
-                  borderWidth: 1,
-                  padding: 5,
-                  fontSize: 12,
-                  fontWeight: 'bold',
-                  alignSelf: 'center',
-                  borderColor: '#ACACAC',
-                  borderRadius: 8,
-                }}>
-                Edit Profile
-              </Text>
-            </TouchableOpacity>
-          </View>
-        ) : this.state.isFollowing !== null ? (
-          <View style={{backgroundColor: 'white'}}>
-            <TouchableOpacity
-              style={{
-                backgroundColor: 'white',
-                marginTop: 8,
-                marginRight: 8,
-                //width: 80,
-                justifyContent: 'center',
-                alignSelf: 'flex-end',
-                flexDirection: 'row',
-              }}
-              onPress={() => {
-                this.followButton(postUserId);
-              }}>
-              <Text
-                style={{
-                  color: this.state.isFollowing ? ThemeBlue : '#ACACAC',
-                  borderWidth: 1,
-                  padding: 5,
-                  fontWeight: 'bold',
-                  fontSize: 12,
-                  borderColor: this.state.isFollowing ? ThemeBlue : '#ACACAC',
-                  borderRadius: 8,
-                }}>
-                {this.state.isFollowing ? 'Following' : 'Follow'}
-              </Text>
-            </TouchableOpacity>
-          </View>
-        ) : (
-          <View style={{height: 35, backgroundColor: 'white'}} />
-        )}
+
         {/* IMAGE and NAME  */}
-        <View
+        {/* <View
           style={{
             flexDirection: 'row',
             backgroundColor: 'white',
@@ -686,73 +624,245 @@ class UserProfile extends React.Component {
               {postUserCampus}
             </Text>
           </View>
-        </View>
+        </View> */}
+        {/* __________________________copied from user app________________________________________ */}
 
-        {/* Modal goes here */}
-
-        <View>
-          <Modal
-            style={{
-              margin: 0,
-              //backgroundColor: 'white',
-              flexDirection: 'row',
-              // alignItems: 'flex-end',
-            }}
-            isVisible={this.state.isModalVisible}
-            onBackdropPress={() => this.setState({isModalVisible: false})}>
-            <View
-              style={{
-                flex: 1,
-                justifyContent: 'flex-end',
-                alignItems: 'center',
-              }}>
-              <View
-                style={{
-                  backgroundColor: 'white',
-                  flexDirection: 'row',
-                  justifyContent: 'center',
-                  width: '100%',
-                  paddingBottom: 20,
-                  borderTopRightRadius: 12,
-                  borderTopLeftRadius: 12,
-                }}>
-                <Icon
-                  name="cancel"
-                  onPress={() => this.setState({isModalVisible: false})}
-                  style={{
-                    position: 'absolute',
-                    top: 12,
-                    left: 10,
-                    fontSize: 20,
-                    color: IconGrey,
-                  }}
-                />
+        <View style={{}}>
+          <View style={{borderWidth: 1, borderColor: '#b3b5b4'}}>
+            <ImageBackground
+              source={{
+                uri:
+                  'https://cf.bstatic.com/images/hotel/max1280x900/183/183223496.jpg',
+              }}
+              style={styles.coverPhoto}>
+              {postUserId === this.props.User.id ? (
                 <View
                   style={{
-                    alignItems: 'center',
-                    paddingTop: 3,
+                    flexDirection: 'row',
+                    justifyContent: 'flex-end',
                   }}>
-                  <View
+                  <TouchableOpacity
                     style={{
-                      alignSelf: 'center',
-                      borderTopWidth: 2,
-                      marginTop: 3,
-                      width: 50,
-                      borderTopColor: IconGrey,
+                      marginTop: 5,
+                      alignSelf: 'flex-end',
+                      padding: 8,
+                    }}
+                    onPress={async () => {
+                      let accountType = await AsyncStorage.getItem(
+                        'accountType',
+                      );
+                      {
+                        accountType === 'user'
+                          ? this.props.navigation.navigate('EditProfile')
+                          : this.props.navigation.navigate('EditOrganization');
+                      }
+                    }}>
+                    <Text
+                      style={{
+                        color: 'black',
+                        borderWidth: 1,
+                        padding: 5,
+                        backgroundColor: 'rgba(255,255,255,0.7)',
+
+                        fontSize: 12,
+                        fontWeight: 'bold',
+                        alignSelf: 'center',
+                        borderColor: '#ACACAC',
+                        borderRadius: 8,
+                      }}>
+                      Edit Profile
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              ) : this.state.isFollowing !== null ? (
+                <View style={{backgroundColor: 'white'}}>
+                  <TouchableOpacity
+                    style={{
+                      backgroundColor: 'white',
+                      marginTop: 8,
+                      marginRight: 8,
+                      //width: 80,
+                      justifyContent: 'center',
+                      alignSelf: 'flex-end',
+                      flexDirection: 'row',
+                    }}
+                    onPress={() => {
+                      this.followButton(postUserId);
+                    }}>
+                    <Text
+                      style={{
+                        color: this.state.isFollowing ? ThemeBlue : '#ACACAC',
+                        borderWidth: 1,
+                        padding: 5,
+                        fontWeight: 'bold',
+                        fontSize: 12,
+                        borderColor: this.state.isFollowing
+                          ? ThemeBlue
+                          : '#ACACAC',
+                        borderRadius: 8,
+                      }}>
+                      {this.state.isFollowing ? 'Following' : 'Follow'}
+                    </Text>
+                  </TouchableOpacity>
+                </View>
+              ) : (
+                <View style={{height: 35, backgroundColor: 'white'}} />
+              )}
+            </ImageBackground>
+          </View>
+          <View style={styles.logoButton}>
+            <View style={styles.logoContainer}>
+              <Image
+                source={{
+                  uri:
+                    'https://cf.bstatic.com/images/hotel/max1280x900/183/183223496.jpg',
+                }}
+                style={styles.logo}
+              />
+            </View>
+            {/* __________________-----_________---____ */}
+
+            {/* FOLLORWERS */}
+            <View
+              style={{
+                flexDirection: 'row',
+                backgroundColor: 'white',
+                paddingLeft: 10,
+                paddingTop: 5,
+              }}>
+              <Text
+                style={{color: '#727272', fontSize: 18, fontWeight: 'bold'}}>
+                {(this.state.total ?? '  ') + '  '}
+              </Text>
+              <Text
+                style={{color: '#B4B8BA', fontSize: 18, fontWeight: 'bold'}}>
+                Tours{'  '}
+              </Text>
+              <Text
+                style={{color: '#727272', fontSize: 18, fontWeight: 'bold'}}>
+                {this.state.following + '  '}
+              </Text>
+              <TouchableOpacity
+                onPress={() => {
+                  this.props.navigation.push('Followers', {
+                    postUserId,
+                    postUserFirstName,
+                    postUserLastName,
+                    postUserDp,
+                    postUserCampus,
+                    isFollowing: this.state.isFollowing,
+                  });
+                }}>
+                <Text
+                  style={{color: '#B4B8BA', fontSize: 18, fontWeight: 'bold'}}>
+                  Followers{'  '}
+                </Text>
+              </TouchableOpacity>
+
+              {/* ______________----______________-----_________ */}
+            </View>
+          </View>
+          <View style={{marginTop: '2%', marginLeft: '5%'}}>
+            <Text style={{fontSize: 18, fontWeight: 'bold'}}>Nomads Adventure Service</Text>
+            <Text style={styles.shortIntro}>Nomads Adventure Service was started its bussiness in 2014, and since then we have successfully hosted 5000+ Tours and Trips.</Text>
+          </View>
+
+
+          <View style={{marginTop: '5%', marginLeft: '1%'}}>
+                    <TouchableOpacity onPress = {() => Linking.openURL('geo:' + 40.7127753 + ',' + -74.0059728)}>
+                        <IconWithText 
+                            textstyle={{...styles.textstyle}} 
+                            iconstyle={styles.iconstyle} 
+                            name="map-marker" 
+                            text={"Anum Blessing , Office number 304"}            
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress = {() => Linking.openURL(`tel:${"030308313255"}`)}>
+                        <IconWithText 
+                            textstyle={{...styles.textstyle, textDecorationLine: 'underline'}} 
+                            iconstyle={styles.iconstyle} 
+                            name="phone" 
+                            text={"030308313255"}                         
+                        />
+                    </TouchableOpacity>
+                    <TouchableOpacity onPress = {() => Linking.openURL(`mailto:${this.props.screenProps.email}`)}>
+                        <IconWithText 
+                            textstyle={{...styles.textstyle, textDecorationLine: 'underline'}} 
+                            iconstyle={styles.iconstyle} 
+                            name="email" 
+                            text={"Nomads@gmail.com"}
+                        />
+                    </TouchableOpacity>
+                </View>
+         
+
+          {/* __________________________________________________________________ */}
+
+          {/* Modal goes here */}
+
+          <View>
+            <Modal
+              style={{
+                margin: 0,
+                //backgroundColor: 'white',
+                flexDirection: 'row',
+                // alignItems: 'flex-end',
+              }}
+              isVisible={this.state.isModalVisible}
+              onBackdropPress={() => this.setState({isModalVisible: false})}>
+              <View
+                style={{
+                  flex: 1,
+                  justifyContent: 'flex-end',
+                  alignItems: 'center',
+                }}>
+                <View
+                  style={{
+                    backgroundColor: 'white',
+                    flexDirection: 'row',
+                    justifyContent: 'center',
+                    width: '100%',
+                    paddingBottom: 20,
+                    borderTopRightRadius: 12,
+                    borderTopLeftRadius: 12,
+                  }}>
+                  <Icon
+                    name="cancel"
+                    onPress={() => this.setState({isModalVisible: false})}
+                    style={{
+                      position: 'absolute',
+                      top: 12,
+                      left: 10,
+                      fontSize: 20,
+                      color: IconGrey,
                     }}
                   />
-                  <Text
+                  <View
                     style={{
-                      fontSize: 20,
-                      fontWeight: 'bold',
-                      marginTop: 2,
+                      alignItems: 'center',
+                      paddingTop: 3,
                     }}>
-                    More Options
-                  </Text>
-                  {/* </View> */}
+                    <View
+                      style={{
+                        alignSelf: 'center',
+                        borderTopWidth: 2,
+                        marginTop: 3,
+                        width: 50,
+                        borderTopColor: IconGrey,
+                      }}
+                    />
+                    <Text
+                      style={{
+                        fontSize: 20,
+                        fontWeight: 'bold',
+                        marginTop: 2,
+                      }}>
+                      More Options
+                    </Text>
+                    {/* </View> */}
+                  </View>
                 </View>
-              </View>
-              {/* <View
+                {/* <View
                 style={{
                   backgroundColor: 'white',
                   flexDirection: 'row',
@@ -799,94 +909,62 @@ class UserProfile extends React.Component {
                 </View>
               </View> */}
 
-              <View
-                style={{
-                  width: '100%',
-                  backgroundColor: 'white',
-                }}>
-                <Text
-                  onPress={async () => {
-                    this.setState({isModalVisible: false});
-                    room_id = await this.fetchRoomDetails();
-                    this.props.navigation.navigate('chat', {
-                      room_id,
-                      room_type: 'personal',
-                      name: postUserFirstName + ' ' + postUserLastName,
-                    });
-                  }}
+                <View
                   style={{
-                    color: 'black',
-                    backgroundColor: 'white',
-                    textAlign: 'center',
                     width: '100%',
-                    fontSize: 17,
-                    paddingBottom: 20,
+                    backgroundColor: 'white',
                   }}>
-                  Message user
-                </Text>
-              </View>
+                  <Text
+                    onPress={async () => {
+                      this.setState({isModalVisible: false});
+                      room_id = await this.fetchRoomDetails();
+                      this.props.navigation.navigate('chat', {
+                        room_id,
+                        room_type: 'personal',
+                        name: postUserFirstName + ' ' + postUserLastName,
+                      });
+                    }}
+                    style={{
+                      color: 'black',
+                      backgroundColor: 'white',
+                      textAlign: 'center',
+                      width: '100%',
+                      fontSize: 17,
+                      paddingBottom: 20,
+                    }}>
+                    Message user
+                  </Text>
+                </View>
 
-              <View
-                style={{
-                  width: '100%',
-                  backgroundColor: 'white',
-                }}>
-                <Text
-                  onPress={() => {
-                    this.setState({isModalVisible: false});
-                    this.blockUser(postUserId);
-                  }}
+                <View
                   style={{
-                    color: 'black',
-                    backgroundColor: 'white',
-                    textAlign: 'center',
                     width: '100%',
-                    fontSize: 17,
-                    paddingBottom: 20,
+                    backgroundColor: 'white',
                   }}>
-                  Block user
-                </Text>
+                  <Text
+                    onPress={() => {
+                      this.setState({isModalVisible: false});
+                      this.blockUser(postUserId);
+                    }}
+                    style={{
+                      color: 'black',
+                      backgroundColor: 'white',
+                      textAlign: 'center',
+                      width: '100%',
+                      fontSize: 17,
+                      paddingBottom: 20,
+                    }}>
+                    Block user
+                  </Text>
+                </View>
               </View>
-            </View>
-          </Modal>
-        </View>
+            </Modal>
+          </View>
 
-        {/* FOLLORWERS */}
-        <View
-          style={{
-            flexDirection: 'row',
-            backgroundColor: 'white',
-            paddingLeft: 10,
-            paddingTop: 5,
-          }}>
-          <Text style={{color: '#727272', fontSize: 13, fontWeight: 'bold'}}>
-            {(this.state.total ?? '  ') + '  '}
-          </Text>
-          <Text style={{color: '#B4B8BA', fontSize: 13, fontWeight: 'bold'}}>
-            Posts{'  '}
-          </Text>
-          <Text style={{color: '#727272', fontSize: 13, fontWeight: 'bold'}}>
-            {this.state.following + '  '}
-          </Text>
-          <TouchableOpacity
-            onPress={() => {
-              this.props.navigation.push('Followers', {
-                postUserId,
-                postUserFirstName,
-                postUserLastName,
-                postUserDp,
-                postUserCampus,
-                isFollowing: this.state.isFollowing,
-              });
-            }}>
-            <Text style={{color: '#B4B8BA', fontSize: 13, fontWeight: 'bold'}}>
-              Followers{'  '}
-            </Text>
-          </TouchableOpacity>
-          <Text style={{color: '#727272', fontSize: 13, fontWeight: 'bold'}}>
+          {/* <Text style={{color: '#727272', fontSize: 13, fontWeight: 'bold'}}>
             {this.state.followers + '  '}
-          </Text>
-          <TouchableOpacity
+          </Text> */}
+          {/* <TouchableOpacity
             onPress={() => {
               this.props.navigation.push('Following', {
                 postUserId,
@@ -900,7 +978,7 @@ class UserProfile extends React.Component {
             <Text style={{color: '#B4B8BA', fontSize: 13, fontWeight: 'bold'}}>
               Following
             </Text>
-          </TouchableOpacity>
+          </TouchableOpacity> */}
         </View>
 
         {/* SEARCH AND POST */}
@@ -1022,6 +1100,53 @@ mapStateToProps = state => {
 
   return {User: state.User}; //isse ye reducer1 wala data as a props ajaega is component me (combinereducer me jo key assign ki thi wo use karna)
 };
+
+const styles = StyleSheet.create({
+  container: {
+    width: '100%',
+    height: '100%',
+  },
+  coverPhoto: {
+    height: Dimensions.get('window').height / 4,
+  },
+  logoButton: {
+    flexDirection: 'row',
+    alignItems: 'center',
+  },
+  logoContainer: {
+    marginLeft: '5%',
+    width: '30%',
+    marginTop: -30,
+  },
+  logo: {
+    height: 100,
+    width: 100,
+    borderRadius: 50,
+    borderWidth: 2,
+    borderColor: '#b3b5b4',
+    alignSelf: 'center',
+  },
+  buttonContainer: {
+    width: '65%',
+    borderWidth: 0,
+  },
+  followButton: {
+    height: 35,
+    width: 100,
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'space-around',
+    backgroundColor: ThemeBlue,
+    alignSelf: 'center',
+    borderRadius: 5,
+  },
+  shortIntro: {
+    marginTop: '2%',
+    fontSize: 14,
+    marginRight: '5%',
+    color: '#6b6b69',
+  },
+});
 
 export default connect(
   mapStateToProps,

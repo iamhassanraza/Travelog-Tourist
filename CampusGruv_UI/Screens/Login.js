@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import HeaderTitle from './Heading';
-import Colors from '../Assets/Colors';
+import Colors, { ThemeBlue } from '../Assets/Colors';
 const API_BASE_URL = `${require('../config').default.production}api/v1`;
 import {connect} from 'react-redux';
 import {CreateUserDetails} from '../ReduxStore/Actions/index';
@@ -328,12 +328,13 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     marginTop: 40,
     justifyContent: 'center',
-    backgroundColor: 'transparent',
+    backgroundColor: ThemeBlue,
     borderColor: 'white',
     borderWidth: 0.6,
   },
   container: {
     width: screenwidth,
+    paddingTop:100,
     height: screenheight,
     backgroundColor: Colors.overlayColor,
   },
