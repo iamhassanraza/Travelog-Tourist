@@ -152,11 +152,11 @@ class ProfilePage extends React.Component {
     this.setState({
       dob: !this.props.User.dob ? '' : this.props.User.dob.split('T')[0],
     });
-    this.setState({major: this.props.User.major});
+    this.setState({major: this.props.User?.major});
     this.setState({website: this.props.User?.website});
     this.setState({bio: this.props.User?.bio});
     this.setState({name: this.props.User.first_name});
-    this.setState({last_name: this.props.User.last_name});
+    // this.setState({last_name: this.props.User.last_name});
     this.setState({phone: this.props.User.contact_no});
     this.setState({gradutationYear: this.props.User.graduate_year});
 
@@ -303,7 +303,7 @@ class ProfilePage extends React.Component {
   };
 
   UpdateProfile = async () => {
-    console.log('state',this.state.bio, this.state.website)
+    console.log('state', this.state.bio, this.state.website);
     this.setState({Spinner: true});
     const Token = await AsyncStorage.getItem('TOKEN');
     let response = null;
@@ -319,14 +319,14 @@ class ProfilePage extends React.Component {
           },
           body: this.createFormData(this.state.imageUri, {
             campus_id: this.state.selectedId,
-            dob: this.state.dob,
+            // dob: this.state.dob,
             bio: this.state.bio,
             website: this.state.website,
             major: this.state.major,
             first_name: this.state.name,
-            last_name: this.state.last_name,
+            // last_name: this.state.last_name,
             contact_no: this.state.phone,
-            graduate_year: this.state.gradutationYear,
+            // graduate_year: this.state.gradutationYear,
           }),
         },
       );
@@ -499,12 +499,6 @@ class ProfilePage extends React.Component {
   };
 
   render() {
-    // console.log(
-    //   'user ------------- >',
-    //   this.state.bio,
-    //   this.state.website,
-    //   this.state.major,
-    // );
     let pickerItems = this.state.campuses[0]
       ? this.state.campuses.map((s, i) => {
           // if (s.id !== this.state.selectedId)
@@ -579,21 +573,21 @@ class ProfilePage extends React.Component {
               marginTop: Dimensions.get('window').height > 800 ? 50 : 20,
             }}>
             <InputView
-              name="First name"
-              ph="edit first name"
+              name="Name"
+              ph="edit name"
               value={this.state.name}
               changestate={text => {
                 this.setState({name: text});
               }}
             />
-            <InputView
+            {/* <InputView
               name="Last name"
               ph="Edit last name"
               value={this.state.last_name}
               changestate={text => {
                 this.setState({last_name: text});
               }}
-            />
+            /> */}
             {/* <InputView name='Campus' ph='University of Pittsburgh'/> */}
             <View
               style={{
@@ -608,7 +602,7 @@ class ProfilePage extends React.Component {
                   marginLeft: 10,
                   width: width / 3.1,
                 }}>
-                Campus
+                City
               </Text>
               <View
                 style={{
@@ -660,15 +654,15 @@ class ProfilePage extends React.Component {
               }}
             />
             <InputView
-              name="Major"
-              ph="Major"
+              name="Address"
+              ph="Address"
               value={this.state.major}
               changestate={text => {
                 this.setState({major: text});
               }}
             />
             {/* <InputView name='Birth Date' ph='MM/DD/YY' changestate={(text)=>{this.setState({dob:text})}} /> */}
-            {this.renderDatePicker()}
+            {/* {this.renderDatePicker()} */}
             {this.renderPhoneNo()}
             {/* <InputView name='Phone' ph='XXX-XXXXX-XXXX' changestate={(text)=>{this.setState({phone:text})}} /> */}
             {/* <InputView
@@ -679,7 +673,7 @@ class ProfilePage extends React.Component {
               }}
             /> */}
 
-            {this.renderGradYear()}
+            {/* {this.renderGradYear()} */}
           </View>
         </Content>
         {/* </SafeAreaView> */}

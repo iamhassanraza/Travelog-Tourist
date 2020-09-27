@@ -62,6 +62,14 @@ class PostCard extends Component {
               height: this.props.height,
               width: this.props.width,
               createdAt: this.props.createdAt,
+              seats: this.props.seats,
+              days: this.props.days,
+              departureDate: this.props.departureDate,
+              price: this.props.price,
+              speciality: this.props.speciality,
+              major: this.props.major,
+              contact_no: this.props.contact_no,
+              bio: this.props.bio,
             },
           })
         }>
@@ -132,8 +140,14 @@ class PostCard extends Component {
             <View style={{paddingVertical: 0}}>
               <Text
                 numberOfLines={1}
-                style={{paddingHorizontal: 2, fontWeight: '100',color:'grey',fontSize:12,marginBottom:5}}>
-               Departure: 12 Sept,2020
+                style={{
+                  paddingHorizontal: 2,
+                  fontWeight: '100',
+                  color: 'grey',
+                  fontSize: 12,
+                  marginBottom: 5,
+                }}>
+                Departure: 12 Sept,2020
               </Text>
             </View>
           </View>

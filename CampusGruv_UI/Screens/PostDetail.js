@@ -168,8 +168,9 @@ class PostDetail extends Component {
     );
   };
 
-  renderIcons = data => {
-    const date_of_departure = new Date();
+  renderIcons = (description, speciality, days, seats, departureDate) => {
+    const deptDate = new Date(departureDate);
+
     return (
       <View
         style={{
@@ -183,18 +184,18 @@ class PostDetail extends Component {
             textstyle={{fontSize: 14}}
             icon="account-supervisor"
             title="Speciality:"
-            subtitle={'Public'}
+            subtitle={speciality}
           />
           <IconWithText
             textstyle={{fontSize: 14}}
             icon="calendar-check"
             title="Departure:"
             subtitle={
-              date_of_departure.getDate() +
+              deptDate.getDate() +
               '-' +
-              (date_of_departure.getMonth() + 1) +
+              (deptDate.getMonth() + 1) +
               '-' +
-              date_of_departure.getFullYear()
+              deptDate.getFullYear()
             }
           />
         </View>
@@ -203,13 +204,13 @@ class PostDetail extends Component {
             textstyle={{fontSize: 14}}
             icon="timer"
             title="Duration"
-            subtitle={'10 Days'}
+            subtitle={days}
           />
           <IconWithText
             textstyle={{fontSize: 14}}
             icon="seat-recline-normal"
             title="Seats Left"
-            subtitle="10"
+            subtitle={seats}
           />
         </View>
       </View>
@@ -301,6 +302,9 @@ class PostDetail extends Component {
     image_URL,
     userId,
     postTitle,
+    major,
+    bio,
+    contact_no,
   ) => {
     return (
       <View
@@ -340,6 +344,9 @@ class PostDetail extends Component {
                 userNavFirstName: first_name,
                 userNavLastName: last_name,
                 userFollowing: this.state.userFollowing,
+                userNavBio: bio,
+                userNavContact: contact_no,
+                userNavMajor: major,
               })
             }>
             <FastImage
@@ -580,7 +587,7 @@ class PostDetail extends Component {
     );
   };
 
-  renderImage = (image, width, height) => {
+  renderImage = (image, width, height, price) => {
     const screenWidth = Dimensions.get('window').width;
     const ratio = screenWidth / width;
     const imgheight = height * ratio;
@@ -600,13 +607,15 @@ class PostDetail extends Component {
           style={{
             position: 'absolute',
             right: '5%',
-            bottom:'5%',
-            backgroundColor:'rgba(138, 69, 250,0.5)',
-            padding:2,
-            paddingHorizontal:8,
-            borderRadius:10,
+            bottom: '5%',
+            backgroundColor: 'rgba(138, 69, 250,0.5)',
+            padding: 2,
+            paddingHorizontal: 8,
+            borderRadius: 10,
           }}>
-          <Text style={{fontSize:18,color:'white',fontWeight:'bold'}}>10 Days / Rs 28,000 </Text>
+          <Text style={{fontSize: 18, color: 'white', fontWeight: 'bold'}}>
+            {'PKR ' + price / 1000 + 'K'}
+          </Text>
         </View>
       </View>
     );
@@ -672,7 +681,7 @@ class PostDetail extends Component {
     );
   };
 
-  renderDescription = description => {
+  renderDescription = (description, speciality, days, seats, departureDate) => {
     const array = [
       {
         plan_id: 1,
@@ -720,7 +729,7 @@ class PostDetail extends Component {
           marginTop: 5,
           marginRight: '5%',
         }}>
-        {this.renderIcons()}
+        {this.renderIcons(description, speciality, days, seats, departureDate)}
 
         <Text
           style={{
@@ -729,15 +738,9 @@ class PostDetail extends Component {
             color: 'black',
             marginTop: 10,
           }}>
-          Overview
+          Description
         </Text>
-        <TextCutter
-          text={`Hunza Valley Tour is one the most popular tours of the world. It is located in the far Northern territory of Pakistan. It is widely believed by many people that James Hilton’s famous novel “Lost Horizon” was inspired from Hunza Valley. The world acclaim the Hunza Valley as the “Land Of Legends” and it is famous worldwide for its culture, landscape, friendliness and hospitality. Travelers and adventurers from around the world make their visit to this point of Earth every year.
-
-          The mighty peaks of Karakoram Range surround Hunza Valley. Rakaposhi Peak (7,788 m), Diran Peak (7,266 m), Spantik (7,072 m), Shishper Peak (7,611 m), Ultar Peak (7,388 m) and many other above 6,000 m peaks and mountains can be clearly viewed from any point in central Hunza valley. Hunza valley is home to many species of Flora and Fauna. You will experience sights of beautiful lakes, huge mountains, unique culture, history, architecture, wild life, glaciers and the community system. The itinerary for Hunza valley tour is given below.`}
-          limit={150}
-          style={{lineHeight: 22}}
-        />
+        <TextCutter text={description} limit={150} style={{lineHeight: 22}} />
 
         <Text style={{fontSize: 21, fontWeight: 'bold', color: ThemeBlue}}>
           Tour Plan
@@ -750,16 +753,6 @@ class PostDetail extends Component {
             title={item.title}
           />
         ))}
-        {/* <Text
-          selectable={true}
-          style={{
-            // width: '85%',
-            fontSize: 17,
-            marginTop: '1%',
-            marginBottom: 10,
-          }}>
-          {this.state.description}
-        </Text> */}
       </View>
     );
   };
@@ -1089,8 +1082,16 @@ class PostDetail extends Component {
                   data.uri,
                   data.userId,
                   data.title,
+                  data.major,
+                  data.bio,
+                  data.contact_no,
                 )}
-                {this.renderImage(data.uri, data.width, data.height)}
+                {this.renderImage(
+                  data.uri,
+                  data.width,
+                  data.height,
+                  data.price,
+                )}
                 {this.renderTitle(
                   data.title,
                   data.views,
@@ -1104,7 +1105,13 @@ class PostDetail extends Component {
                   limit={150}
                   style={{lineHeight: 22}}
                 />
-                {this.renderDescription(data.description)}
+                {this.renderDescription(
+                  data.description,
+                  data.speciality,
+                  data.days,
+                  data.seats,
+                  data.departureDate,
+                )}
                 {/* {this.renderIcons()} */}
                 {this.state.comments[0]
                   ? this.renderAllComments(data.userAvatar, data.comments)
@@ -1126,11 +1133,25 @@ class PostDetail extends Component {
                   data.uri,
                   data.userId,
                   data.title,
+                  data.major,
+                  data.bio,
+                  data.contact_no,
                 )}
-                {this.renderImage(data.uri, data.width, data.height)}
+                {this.renderImage(
+                  data.uri,
+                  data.width,
+                  data.height,
+                  data.price,
+                )}
                 {this.renderTitle(data.title, data.views, data.likes)}
 
-                {this.renderDescription(data.description)}
+                {this.renderDescription(
+                  data.description,
+                  data.speciality,
+                  data.days,
+                  data.seats,
+                  data.departureDate,
+                )}
                 {this.state.comments[0]
                   ? this.renderAllComments(data.userAvatar, data.comments)
                   : null}

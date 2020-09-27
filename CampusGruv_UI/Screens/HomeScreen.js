@@ -34,7 +34,7 @@ import {getStatusBarHeight} from 'react-native-status-bar-height';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 import ViewsIcon from 'react-native-vector-icons/MaterialCommunityIcons';
 import MasonryList from 'react-native-masonry-list';
-import feed from "../data"
+import feed from '../data';
 
 import {connect} from 'react-redux';
 import {connectSocket} from '../ReduxStore/Actions/index';
@@ -180,7 +180,15 @@ class HomeScreen extends PureComponent {
                     }}
                     resizeMode="contain"
                   /> */}
-                  <Text style={{color:'white',fontWeight:'bold',fontSize:21,letterSpacing:1.4}}>Tour Feed</Text>
+                  <Text
+                    style={{
+                      color: 'white',
+                      fontWeight: 'bold',
+                      fontSize: 21,
+                      letterSpacing: 1.4,
+                    }}>
+                    Tour Feed
+                  </Text>
                 </View>
 
                 {/* <TouchableOpacity
@@ -198,12 +206,12 @@ class HomeScreen extends PureComponent {
                     />
                   </View>
                 </TouchableOpacity> */}
-{/* 
+                {/* 
                 <TouchableOpacity
                   onPress={() => props.navigation.navigate('CategoryList')}
                   style={{position: 'absolute', right: 50}}> */}
-                
-                  {/* <View
+
+                {/* <View
                     style={{
                       height: 40,
                       width: 40,
@@ -215,7 +223,7 @@ class HomeScreen extends PureComponent {
                     />
                   </View>
                 </TouchableOpacity> */}
-{/* 
+                {/* 
                 <TouchableOpacity
                   onPress={() => props.navigation.navigate('FollowersPosts')}
                   style={{position: 'absolute', right: 5}}>
@@ -437,14 +445,6 @@ class HomeScreen extends PureComponent {
             return response.json();
           })
           .then(responseJson => {
-            // alert()
-            console.log("___________________________________________")
-
-
-              console.log(responseJson.data)
-
-            console.log("___________________________________________")
-
             this.setState({
               posts: feed,
               total: responseJson.total,
@@ -477,14 +477,9 @@ class HomeScreen extends PureComponent {
             return response.json();
           })
           .then(responseJson => {
-            console.log("___________________________________________")
-
-
-            console.log(responseJson.data[2].postDetail)
-
-          console.log("___________________________________________")
+            console.log('hello', responseJson);
             this.setState({
-              posts: feed,
+              posts: responseJson.data,
               total: responseJson.total,
               refreshing: false,
               loading: false,

@@ -55,7 +55,7 @@ class RenderCards extends PureComponent {
   };
 
   render() {
-    console.log('size', this.props.posts.length);
+    console.log('size', this.props.posts[0]);
     const column1Data = this.props.posts.filter((item, i) => i % 2 === 0);
     const column2Data = this.props.posts.filter((item, i) => i % 2 === 1);
     return (
@@ -109,7 +109,15 @@ class RenderCards extends PureComponent {
                     title={item.title}
                     views={item.view_count}
                     likes={item.likes_count}
+                    seats={item.total_seats}
+                    days={item.number_of_days}
+                    departureDate={item.departure_date}
+                    price={item.price}
+                    speciality={item.speciality}
                     createdAt={item.created_at}
+                    major={item.users.major}
+                    bio={item.users.bio}
+                    contact_no={item.users.contact_no}
                     height={
                       item.postDetail.length > 0 &&
                       item.postDetail[0].height != undefined
@@ -164,7 +172,15 @@ class RenderCards extends PureComponent {
                     title={item.title}
                     views={item.view_count}
                     likes={item.likes_count}
+                    seats={item.total_seats}
+                    days={item.number_of_days}
+                    departureDate={item.departure_date}
+                    price={item.price}
+                    speciality={item.speciality}
                     createdAt={item.created_at}
+                    major={item.users.major}
+                    bio={item.users.bio}
+                    contact_no={item.users.contact_no}
                     height={
                       item.postDetail.length > 0 &&
                       item.postDetail[0].height != undefined

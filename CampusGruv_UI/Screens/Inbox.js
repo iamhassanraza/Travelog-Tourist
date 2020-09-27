@@ -47,6 +47,7 @@ class Inbox extends PureComponent {
     );
 
     const JsonResponse = await Response.json();
+    console.log(JsonResponse, 'ressssssssssssssssssssssss');
     this.setState({
       loading: false,
       data: JsonResponse,

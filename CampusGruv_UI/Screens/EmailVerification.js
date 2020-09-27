@@ -88,7 +88,7 @@ class EmailVerification extends React.Component {
                     width: '95%',
                     marginLeft: '2.5%',
                     textAlign: 'center',
-                    color: 'white',
+                    color: 'gray',
                     fontSize: 15,
                     marginBottom: 10,
                   }}>

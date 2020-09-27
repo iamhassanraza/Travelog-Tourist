@@ -114,11 +114,14 @@ class CreateNewPost extends Component {
   };
 
   state = {
-    Category: '',
+    Category: 1,
     CategoryEventDate: '',
     Title: '',
-    Description: '',
-    Price: '',
+    description: '',
+    price: '',
+    seats: '',
+    speciality: '',
+    days: '',
     spinner: false,
     imageDetails: this.props.navigation.getParam('imageDetails', null),
     PicAndTitle: this.props.navigation.getParam(
@@ -269,20 +272,18 @@ class CreateNewPost extends Component {
       <View
         style={{
           flexDirection: 'row',
-          justifyContent: "space-between",
-          alignItems:'center',
+          justifyContent: 'space-between',
+          alignItems: 'center',
           marginTop: 20,
           marginRight: '5%',
         }}>
-        <Text style={{fontSize:16,marginLeft:'5%'}}>Departure</Text>
+        <Text style={{fontSize: 16, marginLeft: '5%'}}>Departure</Text>
         <DatePicker
           style={{width: '60%', justifyContent: 'center', alignSelf: 'center'}}
           date={this.state.date}
           mode="date"
           placeholder={
-            this.state.CategoryEventDate
-              ? this.state.CategoryEventDate
-              : 'Select Date'
+            this.state.tourDate ? this.state.tourDate : 'Select Date'
           }
           format="YYYY-MM-DD"
           minDate="2019-05-04"
@@ -303,7 +304,7 @@ class CreateNewPost extends Component {
             // ... You can check the source to find the other keys.
           }}
           onDateChange={date => {
-            this.setState({CategoryEventDate: date});
+            this.setState({tourDate: date});
           }}
         />
       </View>
@@ -354,13 +355,12 @@ class CreateNewPost extends Component {
         style={{
           justifyContent: 'center',
           alignItems: 'center',
-          marginTop: '5%',
+          marginTop: '2%',
           width: Dimensions.get('window').width,
         }}>
-     
-        <View style={{marginTop:'10%'}}>
+        <View style={{marginTop: '3%'}}>
           <TextInput
-            value={this.state.Description}
+            value={this.state.description}
             scrollEnabled={false}
             placeholder="  Detailed Overview Of this Tour"
             multiline={true}
@@ -377,7 +377,7 @@ class CreateNewPost extends Component {
               textAlignVertical: 'top',
             }}
             onChangeText={text => {
-              this.changeDescriptionState(text);
+              this.onChange('description', text);
             }}
           />
         </View>
@@ -435,12 +435,16 @@ class CreateNewPost extends Component {
             campus_id: this.props.User.campus_id,
             category_id: this.state.Category,
             title: this.state.Title,
-            description: this.state.Description,
+            description: this.state.description,
+            speciality: this.state.speciality,
+            price: this.state.price,
+            number_of_days: this.state.days,
+            total_seats: this.state.seats,
+            departure_date: this.state.date,
           }),
         },
       );
       const postMasterResponse = await response.json();
-      //console.log(this.state.Images,' ================================ ')
       let raw_response = await fetch(
         `${require('../config').default.production}api/v1/post/detail`,
         {
@@ -452,15 +456,15 @@ class CreateNewPost extends Component {
           body: this.createFormData(this.state.Images, {
             user_id: this.props.User.id,
             post_id: postMasterResponse.id,
-            height: this.state.imageDetails.height,
-            width: this.state.imageDetails.width,
+            height: this.state.Images.height,
+            width: this.state.Images.width,
           }),
         },
       );
 
       let imageResponse = await raw_response.json();
 
-      this.setState({spinner: false, Description: ''});
+      this.setState({spinner: false, description: ''});
 
       this.props.navigation.navigate('HomeScreen', {newPost: true});
     }
@@ -495,7 +499,7 @@ class CreateNewPost extends Component {
               fontWeight: 'bold',
               alignSelf: 'center',
             }}>
-            Next
+            Create
           </Text>
         </View>
       </TouchableOpacity>
@@ -520,8 +524,12 @@ class CreateNewPost extends Component {
     return data;
   };
 
+  onChange(name, val) {
+    this.setState({[name]: val});
+  }
+
   render() {
-    console.log('data', this.state.DATA);
+    // console.log('data', this.state.Images);
     return (
       <Container>
         {Platform.OS === 'ios' ? (
@@ -560,7 +568,8 @@ class CreateNewPost extends Component {
             </Content>
           </KeyboardAvoidingView>
         ) : (
-          <Content style={{backgroundColor: '#f9fdfe',paddingHorizontal:'2%'}}>
+          <Content
+            style={{backgroundColor: '#f9fdfe', paddingHorizontal: '2%'}}>
             {/* <KeyboardAvoidingView
           style={{flex: 1}}
           keyboardVerticalOffset={80}
@@ -576,49 +585,49 @@ class CreateNewPost extends Component {
             <Form>
               <Item floatingLabel>
                 <Label>Number of Days</Label>
-                <Input />
+                <Input
+                  value={this.state.days}
+                  keyboardType="number-pad"
+                  onChangeText={text => {
+                    this.onChange('days', text);
+                  }}
+                />
               </Item>
               <Item floatingLabel>
                 <Label>Price in PKR</Label>
-                <Input />
+                <Input
+                  value={this.state.price}
+                  keyboardType="number-pad"
+                  onChangeText={text => {
+                    this.onChange('price', text);
+                  }}
+                />
               </Item>
               <Item floatingLabel last>
                 <Label>Speciality</Label>
-                <Input />
+                <Input
+                  value={this.state.speciality}
+                  onChangeText={text => {
+                    this.onChange('speciality', text);
+                  }}
+                />
               </Item>
               <Item floatingLabel last>
                 <Label>Total seats</Label>
-                <Input />
+                <Input
+                  value={this.state.seats}
+                  keyboardType="number-pad"
+                  onChangeText={text => {
+                    this.onChange('seats', text);
+                  }}
+                />
               </Item>
-             
-            
-            
-               {this.renderDatePicker()}
 
-             
-         
-            
-              
-           {this.renderDescription()}
-          
+              {this.renderDatePicker()}
+
+              {this.renderDescription()}
             </Form>
 
-            {/* 
-            <View style={{alignItems: 'center', marginTop: 20}}>
-              <Text style={{fontSize: 20, color: 'grey'}}>Select Category</Text>
-            </View>
-
-            {this.state.DATA ? (
-              this.renderCategories()
-            ) : (
-              <View style={{marginTop: '10%', marginBottom: '10%'}}>
-                <SkypeIndicator count={5} />
-              </View>
-            )}
-
-            {this.state.Category === 5 ? this.renderDatePicker() : null}
-            {this.state.Category === 7 ? this.renderPrice() : null}
-            {this.renderDescription()} */}
             {this.renderShareButton()}
             {/* </ScrollView> */}
             {/* </KeyboardAvoidingView> */}

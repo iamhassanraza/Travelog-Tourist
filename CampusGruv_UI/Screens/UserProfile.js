@@ -26,9 +26,9 @@ import Logo from '../Assets/Images/logo.png';
 import IconFeather from 'react-native-vector-icons/Feather';
 import MenuIcon from 'react-native-vector-icons/Feather';
 import Modal from 'react-native-modal';
-import IconWithText from "../Components/IconAndText"
+import IconWithText from '../Components/IconAndText';
 const IconGrey = '#b4b8bf';
-import data from "../data"
+import data from '../data';
 import {TouchableWithoutFeedback} from 'react-native-gesture-handler';
 import defaultAvatar from '../Assets/Images/defaultAvatar.jpg';
 import {
@@ -65,7 +65,15 @@ class UserProfile extends React.Component {
                   style={{width: 150, alignSelf: 'flex-start', height: '90%'}}
                   resizeMode="contain"
                 /> */}
-                 <Text style={{color:'white',fontWeight:'bold',fontSize:21,letterSpacing:1.4}}>Profile</Text>
+                <Text
+                  style={{
+                    color: 'white',
+                    fontWeight: 'bold',
+                    fontSize: 21,
+                    letterSpacing: 1.4,
+                  }}>
+                  Profile
+                </Text>
               </View>
               <View
                 style={{
@@ -156,6 +164,7 @@ class UserProfile extends React.Component {
       otherUserLastName: null,
       otherUserDp: null,
       otherUserCampus: null,
+      otherUserBio: null,
       active: 'posts',
       spinner: false,
       loadmore: false,
@@ -182,12 +191,19 @@ class UserProfile extends React.Component {
       userNavDp = this.props.navigation.getParam('userNavDp', null);
       userCampus = this.props.navigation.getParam('userCampus', null);
       userFollowing = this.props.navigation.getParam('userFollowing', null);
+      userNavBio = this.props.navigation.getParam('userNavBio', null);
+      userNavContact = this.props.navigation.getParam('userNavContact', null);
+      userNavMajor = this.props.navigation.getParam('userNavMajor', null);
+
       await this.setState({
         otherUserId: userNavId,
         otherUserDp: userNavDp,
         otherUserFirstName: userNavFirstName,
         otherUserLastName: userNavLastName,
         otherUserCampus: userCampus,
+        otherUserBio: userNavBio,
+        otherUserMajor: userNavMajor,
+        otherUserContact: userNavContact,
         userFollowing: userFollowing,
       });
       this.props.navigation.setParams({
@@ -342,7 +358,7 @@ class UserProfile extends React.Component {
           alert(JsonResponse.message);
         } else if (parseInt(Response.status) === 200) {
           this.setState(previousState => {
-            this.mapArray(JsonResponse.data);
+            // this.mapArray(JsonResponse.data);
 
             return {
               posts: [...previousState.posts, ...JsonResponse.data],
@@ -372,7 +388,7 @@ class UserProfile extends React.Component {
       },
     );
     const jsonresponse = await response.json();
-    this.mapArray(JsonResponse.data);
+    // this.mapArray(JsonResponse.data);
 
     this.setState({
       spinner: false,
@@ -403,11 +419,11 @@ class UserProfile extends React.Component {
         },
       );
       const jsonresponse = await response.json();
-      this.mapArray(jsonresponse.data);
+      // this.mapArray(jsonresponse.data);
 
       this.setState({
         spinner: false,
-        posts: data,
+        posts: jsonresponse.data,
         total: jsonresponse.total,
         isFollowing: jsonresponse.data[0]
           ? jsonresponse.data[0].isFollowing
@@ -430,7 +446,7 @@ class UserProfile extends React.Component {
         },
       );
       const jsonresponse = await response.json();
-      this.mapArray(jsonresponse.data);
+      // this.mapArray(jsonresponse.data);
 
       this.setState({
         spinner: false,
@@ -560,6 +576,15 @@ class UserProfile extends React.Component {
     const postUserDp = this.state.otherUserDp
       ? this.state.otherUserDp
       : this.props.User.profile_pic_url;
+    const postUserBio = this.state.otherUserBio
+      ? this.state.otherUserBio
+      : this.props.User.bio;
+    const postUserMajor = this.state.otherUserMajor
+      ? this.state.otherUserMajor
+      : this.props.User.major;
+    const postUserContact = this.state.otherUserContact
+      ? this.state.otherUserContact
+      : this.props.User.contact_no;
     const postUserCampus = this.state.otherUserCampus
       ? this.state.otherUserCampus
       : this.props.User.campus.description;
@@ -714,8 +739,7 @@ class UserProfile extends React.Component {
             <View style={styles.logoContainer}>
               <Image
                 source={{
-                  uri:
-                    'https://cf.bstatic.com/images/hotel/max1280x900/183/183223496.jpg',
+                  uri: postUserDp,
                 }}
                 style={styles.logo}
               />
@@ -763,38 +787,51 @@ class UserProfile extends React.Component {
             </View>
           </View>
           <View style={{marginTop: '2%', marginLeft: '5%'}}>
-            <Text style={{fontSize: 18, fontWeight: 'bold'}}>Nomads Adventure Service</Text>
-            <Text style={styles.shortIntro}>Nomads Adventure Service was started its bussiness in 2014, and since then we have successfully hosted 5000+ Tours and Trips.</Text>
+            <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+              {postUserFirstName}
+            </Text>
+            <Text style={styles.shortIntro}>{`${postUserBio}`}</Text>
           </View>
 
-
           <View style={{marginTop: '5%', marginLeft: '1%'}}>
-                    <TouchableOpacity onPress = {() => Linking.openURL('geo:' + 40.7127753 + ',' + -74.0059728)}>
-                        <IconWithText 
-                            textstyle={{...styles.textstyle}} 
-                            iconstyle={styles.iconstyle} 
-                            name="map-marker" 
-                            text={"Anum Blessing , Office number 304"}            
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress = {() => Linking.openURL(`tel:${"030308313255"}`)}>
-                        <IconWithText 
-                            textstyle={{...styles.textstyle, textDecorationLine: 'underline'}} 
-                            iconstyle={styles.iconstyle} 
-                            name="phone" 
-                            text={"030308313255"}                         
-                        />
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress = {() => Linking.openURL(`mailto:${this.props.screenProps.email}`)}>
-                        <IconWithText 
-                            textstyle={{...styles.textstyle, textDecorationLine: 'underline'}} 
-                            iconstyle={styles.iconstyle} 
-                            name="email" 
-                            text={"Nomads@gmail.com"}
-                        />
-                    </TouchableOpacity>
-                </View>
-         
+            <TouchableOpacity
+              onPress={() =>
+                Linking.openURL('geo:' + 40.7127753 + ',' + -74.0059728)
+              }>
+              <IconWithText
+                textstyle={{...styles.textstyle}}
+                iconstyle={styles.iconstyle}
+                name="map-marker"
+                text={postUserMajor}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() => Linking.openURL(`tel:${'030308313255'}`)}>
+              <IconWithText
+                textstyle={{
+                  ...styles.textstyle,
+                  textDecorationLine: 'underline',
+                }}
+                iconstyle={styles.iconstyle}
+                name="phone"
+                text={postUserContact}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={() =>
+                Linking.openURL(`mailto:${this.props.screenProps.email}`)
+              }>
+              <IconWithText
+                textstyle={{
+                  ...styles.textstyle,
+                  textDecorationLine: 'underline',
+                }}
+                iconstyle={styles.iconstyle}
+                name="email"
+                text={'Nomads@gmail.com'}
+              />
+            </TouchableOpacity>
+          </View>
 
           {/* __________________________________________________________________ */}
 
