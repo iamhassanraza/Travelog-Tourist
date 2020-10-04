@@ -108,24 +108,25 @@ class PostDetail extends Component {
 
     imageurl: this.props.navigation.getParam('PostData', 'nothing to render')
       ?.uri,
+    plan: [],
   };
 
   componentDidMount() {
-    Image.getSize(
-      this.state.imageurl,
-      (srcWidth, srcHeight) => {
-        // const maxHeight = Dimensions.get('window').height / 2;
-        // const maxWidth = Dimensions.get('window').width / 2;
-        const width = Dimensions.get('window').width;
-        const ratio = width / srcWidth;
-        const height = srcHeight * ratio;
+    // Image.getSize(
+    //   this.state.imageurl,
+    //   (srcWidth, srcHeight) => {
+    //     // const maxHeight = Dimensions.get('window').height / 2;
+    //     // const maxWidth = Dimensions.get('window').width / 2;
+    //     const width = Dimensions.get('window').width;
+    //     const ratio = width / srcWidth;
+    //     const height = srcHeight * ratio;
 
-        this.setState({width: width, height: height});
-      },
-      error => {
-        () => console.log(error);
-      },
-    );
+    //     this.setState({width: width, height: height});
+    //   },
+    //   error => {
+    //     () => console.log(error);
+    //   },
+    // );
 
     const {navigation} = this.props;
     this.willFocusListener = navigation.addListener('willFocus', async () => {
@@ -143,12 +144,34 @@ class PostDetail extends Component {
     });
 
     this.incrementView();
+    this.getPlan();
   }
 
   componentWillUnmount() {
     this.willFocusListener.remove();
     this.willBlurListener.remove();
   }
+
+  getPlan = async () => {
+    const DATA = this.props.navigation.getParam(
+      'PostData',
+      'nothing to render',
+    );
+    const Token = await AsyncStorage.getItem('TOKEN');
+    var Response = await fetch(
+      `${require('../config').default.production}api/v1/get/plan`,
+      {
+        method: 'POST',
+        body: JSON.stringify({post_id: DATA.postId}),
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${Token}`,
+        },
+      },
+    );
+    const JsonResponse = await Response.json();
+    this.setState({plan: JsonResponse.plan});
+  };
 
   incrementView = async () => {
     const DATA = this.props.navigation.getParam(
@@ -745,7 +768,7 @@ class PostDetail extends Component {
         <Text style={{fontSize: 21, fontWeight: 'bold', color: ThemeBlue}}>
           Tour Plan
         </Text>
-        {array.map((item, index) => (
+        {this.state?.plan.map((item, index) => (
           <PlanItem
             id={item.plan_id}
             lastitem={array.length - 1 === index ? true : false}
