@@ -14,7 +14,7 @@ import {
   KeyboardAvoidingView,
 } from 'react-native';
 import HeaderTitle from './Heading';
-import Colors from '../Assets/Colors';
+import Colors, {ThemeBlue} from '../Assets/Colors';
 import {withNavigation} from 'react-navigation';
 import Spinner from 'react-native-loading-spinner-overlay';
 import {BarIndicator} from 'react-native-indicators';
@@ -43,7 +43,6 @@ class ForgetPassword extends React.Component {
       );
       const JsonResponse = await Response.json();
       this.setState({spinner: false});
-      console.log(JsonResponse);
       if (parseInt(Response.status) === 404) {
         alert(JsonResponse.message);
       } else if (parseInt(Response.status) === 200) {
@@ -57,7 +56,6 @@ class ForgetPassword extends React.Component {
   };
 
   validate = text => {
-    console.log(text);
     let check = /^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/;
     if (check.test(text) === false) {
       console.log('Email is Not Correct');
@@ -107,7 +105,7 @@ class ForgetPassword extends React.Component {
                     width: '95%',
                     marginLeft: '2.5%',
                     textAlign: 'center',
-                    color: 'white',
+                    color: ThemeBlue,
                     fontSize: 20,
                   }}>
                   Forgot your password? Please enter your email below and you
@@ -166,7 +164,7 @@ class ForgetPassword extends React.Component {
                           borderRadius: 10,
                           marginTop: 40,
                           justifyContent: 'center',
-                          backgroundColor: 'transparent',
+                          backgroundColor: ThemeBlue,
                           borderColor: 'white',
                           borderWidth: 0.6,
                           flexDirection: 'row',
@@ -198,7 +196,7 @@ class ForgetPassword extends React.Component {
                           borderRadius: 10,
                           marginTop: 40,
                           justifyContent: 'center',
-                          backgroundColor: 'transparent',
+                          backgroundColor: ThemeBlue,
                           borderColor: 'white',
                           borderWidth: 1,
                         }}>

@@ -14,7 +14,7 @@ import {
   StatusBar,
 } from 'react-native';
 import HeaderTitle from './Heading';
-import Colors from '../Assets/Colors';
+import Colors, {ThemeBlue} from '../Assets/Colors';
 import {withNavigation} from 'react-navigation';
 import {BarIndicator} from 'react-native-indicators';
 
@@ -68,7 +68,7 @@ class ResetPassword extends React.Component {
           resizeMode="cover">
           <Text
             style={{
-              color: 'white',
+              color: ThemeBlue,
               fontSize: 16,
               margin: 10,
               marginTop: Platform.OS == 'ios' ? 40 : 20,
@@ -81,7 +81,7 @@ class ResetPassword extends React.Component {
 
           <ScrollView style={{flex: 1}}>
             <KeyboardAvoidingView positon="padding">
-              <View style={{marginTop: '10%', height: '30%'}}>
+              <View style={{marginTop: '10%', height: '20%'}}>
                 <HeaderTitle />
               </View>
 
@@ -89,7 +89,7 @@ class ResetPassword extends React.Component {
                 <Text
                   style={{
                     marginLeft: '7%',
-                    color: 'white',
+                    color: ThemeBlue,
                     fontSize: 18,
                   }}>
                   New Password
@@ -124,7 +124,7 @@ class ResetPassword extends React.Component {
                   style={{
                     marginLeft: '7%',
                     marginTop: '3%',
-                    color: 'white',
+                    color: ThemeBlue,
                     fontSize: 18,
                   }}>
                   Confirm Password
@@ -194,7 +194,7 @@ class ResetPassword extends React.Component {
                           borderRadius: 10,
                           marginTop: 40,
                           justifyContent: 'center',
-                          backgroundColor: 'transparent',
+                          backgroundColor: ThemeBlue,
                           flexDirection: 'row',
                           alignItems: 'center',
                           borderColor: 'white',
@@ -210,7 +210,7 @@ class ResetPassword extends React.Component {
                           Loading{' '}
                         </Text>
                         <BarIndicator
-                          style={{flex: 0, margin}}
+                          style={{flex: 0}}
                           count={3}
                           size={20}
                           color={'white'}
@@ -227,7 +227,7 @@ class ResetPassword extends React.Component {
                           borderRadius: 10,
                           marginTop: 40,
                           justifyContent: 'center',
-                          backgroundColor: 'transparent',
+                          backgroundColor: ThemeBlue,
                           borderColor: 'white',
                           borderWidth: 0.6,
                         }}>

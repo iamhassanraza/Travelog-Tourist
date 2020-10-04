@@ -16,7 +16,7 @@ import {
 } from 'react-native';
 import Spinner from 'react-native-loading-spinner-overlay';
 import HeaderTitle from './Heading';
-import Colors, { ThemeBlue } from '../Assets/Colors';
+import Colors, {ThemeBlue} from '../Assets/Colors';
 const API_BASE_URL = `${require('../config').default.production}api/v1`;
 import {connect} from 'react-redux';
 import {CreateUserDetails} from '../ReduxStore/Actions/index';
@@ -90,6 +90,7 @@ class Login extends React.Component {
         body: JSON.stringify({
           email: this.state.email,
           password: this.state.password,
+          account_type_id: 2,
         }),
       })
         .then(res => {
@@ -103,7 +104,7 @@ class Login extends React.Component {
         .then(async response => {
           if (status === 200) {
             //good to go
-            console.log(response);
+            console.log(response, 'response');
             this.props.CreateUserDetails(response);
             await AsyncStorage.setItem('TOKEN', response.token);
             await AsyncStorage.setItem('USERTOKEN', response.token);
@@ -158,7 +159,7 @@ class Login extends React.Component {
                   style={{
                     justifyContent: 'center',
                     marginTop: Platform.OS === 'ios' ? 30 : 0,
-                    height: '20%',
+                    height: '30%',
                   }}>
                   <HeaderTitle />
                 </View>
@@ -270,7 +271,7 @@ class Login extends React.Component {
                   </View>
                   <Text
                     style={{
-                      color: 'white',
+                      color: ThemeBlue,
                       textAlign: 'center',
                       fontSize: 18,
                       marginTop: Platform.OS === 'ios' ? 20 : 15,
@@ -290,7 +291,7 @@ class Login extends React.Component {
                     }}>
                     <Text
                       style={{
-                        color: 'white',
+                        color: ThemeBlue,
                         textAlign: 'center',
                         fontSize: 18,
                       }}>
@@ -298,7 +299,7 @@ class Login extends React.Component {
                     </Text>
                     <Text
                       style={{
-                        color: 'white',
+                        color: ThemeBlue,
                         textAlign: 'center',
                         fontSize: 18,
                         marginTop: 10,
@@ -334,9 +335,9 @@ const styles = StyleSheet.create({
   },
   container: {
     width: screenwidth,
-    paddingTop:100,
+    // marginTop: 50,
     height: screenheight,
-    backgroundColor: Colors.overlayColor,
+    // backgroundColor: 'white',
   },
   overlay: {
     flex: 1,
@@ -350,11 +351,11 @@ const styles = StyleSheet.create({
   },
   heading: {
     fontSize: 50,
-    color: 'white',
+    color: 'black',
   },
   textStyle: {
     fontSize: 20,
-    color: 'white',
+    color: 'black',
     marginBottom: 10,
   },
   buttonStyle: {

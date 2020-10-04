@@ -15,7 +15,7 @@ import {
   StatusBar,
 } from 'react-native';
 import HeaderTitle from './Heading';
-import Colors from '../Assets/Colors';
+import Colors, {ThemeBlue} from '../Assets/Colors';
 import {withNavigation} from 'react-navigation';
 import LogoutButton from '../Components/LogoutButton';
 import {BarIndicator} from 'react-native-indicators';
@@ -70,7 +70,7 @@ class RecoverCode extends React.Component {
         resizeMode="cover">
         <Text
           style={{
-            color: 'white',
+            color: ThemeBlue,
             fontSize: 16,
             margin: 10,
             marginTop: Platform.OS == 'ios' ? 40 : 20,
@@ -93,7 +93,7 @@ class RecoverCode extends React.Component {
                   width: '95%',
                   marginLeft: '2.5%',
                   textAlign: 'center',
-                  color: 'white',
+                  color: ThemeBlue,
                   fontSize: 25,
                 }}>
                 Enter Code
@@ -134,7 +134,7 @@ class RecoverCode extends React.Component {
                         borderRadius: 10,
                         marginTop: 40,
                         justifyContent: 'center',
-                        backgroundColor: 'transparent',
+                        backgroundColor: ThemeBlue,
                         borderColor: 'white',
                         borderWidth: 0.6,
                         flexDirection: 'row',
@@ -166,7 +166,7 @@ class RecoverCode extends React.Component {
                         borderRadius: 10,
                         marginTop: 40,
                         justifyContent: 'center',
-                        backgroundColor: 'transparent',
+                        backgroundColor: ThemeBlue,
                         borderColor: 'white',
                         borderWidth: 0.6,
                       }}>

@@ -756,7 +756,7 @@ class UserProfile extends React.Component {
               }}>
               <Text
                 style={{color: '#727272', fontSize: 18, fontWeight: 'bold'}}>
-                {(this.state.total ?? '  ') + '  '}
+                {(this.state.total ?? 0) + '  '}
               </Text>
               <Text
                 style={{color: '#B4B8BA', fontSize: 18, fontWeight: 'bold'}}>
@@ -1026,7 +1026,7 @@ class UserProfile extends React.Component {
             paddingLeft: 5,
             borderBottomWidth: 0.5,
             borderBottomColor: 'silver',
-            backgroundColor: 'white',
+            backgroundColor: '#f9fdfe',
             justifyContent: 'space-between',
             alignItems: 'center',
           }}>

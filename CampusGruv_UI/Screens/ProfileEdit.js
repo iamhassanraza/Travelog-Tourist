@@ -53,7 +53,7 @@ class ProfilePage extends React.Component {
         params.cam_id === 'nahi_hai' ? (
           <View
             style={{
-              height: Dimensions.get('window').height > 800 ? 50 : 100,
+              height: Dimensions.get('window').height > 800 ? 50 : 50,
               marginTop: Dimensions.get('window').height > 800 ? 50 : 0,
               borderColor: 'red',
               backgroundColor: '#0C91CF',
@@ -173,7 +173,7 @@ class ProfilePage extends React.Component {
         //console.log(campusId)
         // const campuses = [this.state.campuses,...res]
         if (campusId === 'nahi_hai') {
-          const cam = [...[{description: 'select campus'}], ...res];
+          const cam = [...[{description: 'select city'}], ...res];
           //console.log('no campus')
           this.setState({
             campuses: cam,
@@ -308,7 +308,7 @@ class ProfilePage extends React.Component {
     const Token = await AsyncStorage.getItem('TOKEN');
     let response = null;
     //const Campusid = await AsyncStorage.getItem('CAMPUS_ID');
-    if (this.props.User.account_type_id === 1) {
+    if (this.props.User.account_type_id === 2) {
       response = await fetch(
         `${require('../config').default.production}api/v1/edit/profile`,
         {

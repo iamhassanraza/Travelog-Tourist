@@ -48,7 +48,7 @@ class SelectNewChat extends Component {
   };
 
   componentDidMount() {
-    this.getFollowing();
+    // this.getFollowing();
     //this.fetchUsers('a');
   }
 

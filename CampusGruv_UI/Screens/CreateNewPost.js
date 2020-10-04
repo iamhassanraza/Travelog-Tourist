@@ -21,6 +21,12 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 import BackIcon from 'react-native-vector-icons/Ionicons';
 import Spinner from 'react-native-loading-spinner-overlay';
 import RNFetchBlob from 'rn-fetch-blob';
+import Modal from 'react-native-modal';
+import Colors, {ThemeBlue} from '../Assets/Colors';
+const IconGrey = '#b4b8bf';
+const screenwidth = Dimensions.get('window').width;
+const screenheight = Dimensions.get('window').height;
+
 // import {Container, Item, Content, Input} from 'native-base';
 import {
   Container,
@@ -45,6 +51,7 @@ import {
   WaveIndicator,
 } from 'react-native-indicators';
 import {TouchableOpacity} from 'react-native-gesture-handler';
+import PlanInput from '../Components/PlanInput';
 
 const screenHeight = Dimensions.get('window').height;
 
@@ -122,6 +129,8 @@ class CreateNewPost extends Component {
     seats: '',
     speciality: '',
     days: '',
+    isModalVisible: false,
+    plan: [],
     spinner: false,
     imageDetails: this.props.navigation.getParam('imageDetails', null),
     PicAndTitle: this.props.navigation.getParam(
@@ -274,7 +283,7 @@ class CreateNewPost extends Component {
           flexDirection: 'row',
           justifyContent: 'space-between',
           alignItems: 'center',
-          marginTop: 20,
+          marginTop: '10%',
           marginRight: '5%',
         }}>
         <Text style={{fontSize: 16, marginLeft: '5%'}}>Departure</Text>
@@ -309,6 +318,96 @@ class CreateNewPost extends Component {
         />
       </View>
     );
+  };
+
+  renderPlan = () => {
+    return (
+      <View style={{marginHorizontal: '5%'}}>
+        <Text
+          onPress={() => this.setState({isModalVisible: true})}
+          style={{fontSize: 18, textDecorationLine: 'underline'}}>
+          Add tour plan
+        </Text>
+      </View>
+    );
+  };
+
+  renderModal = () => {
+    return (
+      <View style={{flex: 1}}>
+        <Modal
+          style={{margin: 0, height: screenheight}}
+          isVisible={this.state.isModalVisible}
+          onBackdropPress={() => this.setState({isModalVisible: false})}>
+          <View style={{flex: 1, justifyContent: 'flex-end'}}>
+            <View
+              style={{
+                backgroundColor: 'white',
+                flexDirection: 'row',
+                justifyContent: 'center',
+                paddingBottom: 30,
+                borderTopRightRadius: 12,
+                borderTopLeftRadius: 12,
+              }}>
+              <Icon
+                name="cancel"
+                onPress={() => this.setState({isModalVisible: false})}
+                style={{
+                  position: 'absolute',
+                  top: 12,
+                  left: 10,
+                  fontSize: 20,
+                  color: IconGrey,
+                }}
+              />
+              <View
+                style={{
+                  alignItems: 'center',
+                  paddingTop: 3,
+                }}>
+                <View
+                  style={{
+                    alignSelf: 'center',
+                    borderTopWidth: 2,
+                    marginTop: 3,
+                    width: 50,
+                    borderTopColor: IconGrey,
+                  }}
+                />
+                <Text
+                  style={{
+                    fontSize: 20,
+                    fontWeight: 'bold',
+                    marginTop: 2,
+                  }}>
+                  Add tour itinerary
+                </Text>
+              </View>
+            </View>
+            <ScrollView style={{flex: 1, backgroundColor: 'white'}}>
+              {this.renderInputs()}
+            </ScrollView>
+          </View>
+        </Modal>
+      </View>
+    );
+  };
+
+  changePlanState = plan => {
+    console.log(plan, 'plaaaaaaaaaaaaaan');
+    var items = [...this.state.plan];
+    items[plan.day_no - 1] = plan;
+    this.setState({plan: items});
+  };
+
+  renderInputs = () => {
+    var arr = [];
+    for (let i = 0; i < this.state.days; i++) {
+      arr.push({day: i + 1});
+    }
+    return this.state.plan.map(item => {
+      return <PlanInput data={item} changeState={this.changePlanState} />;
+    });
   };
 
   renderPrice = () => {
@@ -367,7 +466,7 @@ class CreateNewPost extends Component {
             style={{
               color: 'grey',
               width: '100%',
-              height: Dimensions.get('window').height / 3.9,
+              height: Dimensions.get('window').height / 5,
               width: Dimensions.get('window').width / 1.1,
               marginLeft: '2.5%',
               marginRight: '2.5%',
@@ -441,10 +540,12 @@ class CreateNewPost extends Component {
             number_of_days: this.state.days,
             total_seats: this.state.seats,
             departure_date: this.state.date,
+            plan: this.state.plan,
           }),
         },
       );
       const postMasterResponse = await response.json();
+      console.log(postMasterResponse, 'master --------------- >');
       let raw_response = await fetch(
         `${require('../config').default.production}api/v1/post/detail`,
         {
@@ -529,7 +630,7 @@ class CreateNewPost extends Component {
   }
 
   render() {
-    // console.log('data', this.state.Images);
+    // console.log('data', this.state.plan);
     return (
       <Container>
         {Platform.OS === 'ios' ? (
@@ -589,7 +690,13 @@ class CreateNewPost extends Component {
                   value={this.state.days}
                   keyboardType="number-pad"
                   onChangeText={text => {
-                    this.onChange('days', text);
+                    var arr = [];
+                    for (let i = 0; i < text; i++) {
+                      arr.push({day_no: i + 1, title: '', description: ''});
+                    }
+                    this.setState({plan: arr}, () =>
+                      this.onChange('days', text),
+                    );
                   }}
                 />
               </Item>
@@ -624,7 +731,8 @@ class CreateNewPost extends Component {
               </Item>
 
               {this.renderDatePicker()}
-
+              {this.renderPlan()}
+              {this.renderModal()}
               {this.renderDescription()}
             </Form>
 

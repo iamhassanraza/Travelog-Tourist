@@ -9,15 +9,7 @@ import {
 } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import IconFeather from 'react-native-vector-icons/Feather';
-import IconFA from 'react-native-vector-icons/SimpleLineIcons';
-import i1 from '../Assets/Images/lahore.jpg';
-import i2 from '../Assets/Images/book.jpg';
-import i3 from '../Assets/Images/ema.jpg';
-import AccPic from '../Components/MultipleAccountsPic';
-import Modal from 'react-native-modal';
-import CrossIcon from 'react-native-vector-icons/MaterialIcons';
-import LogoutButton from '../Components/LogoutButton';
-import {NavigationActions} from 'react-navigation';
+
 import FastImage from 'react-native-fast-image';
 import {connect} from 'react-redux';
 import {CreateUserDetails} from '../ReduxStore/Actions/index';
@@ -81,7 +73,7 @@ class UserSettings extends Component {
           textStyle={{color: ThemeBlue}}
           customIndicator={<UIActivityIndicator color={ThemeBlue} />}
         />
-        <View
+        {/* <View
           style={{
             flexDirection: 'row',
             justifyContent: 'center',
@@ -265,7 +257,7 @@ class UserSettings extends Component {
               );
             }}
           />
-        </View>
+        </View> */}
 
         <View>
           {/* <View
@@ -289,7 +281,7 @@ class UserSettings extends Component {
               Account
             </Text>
           </View> */}
-          {this.state.accountType !== 'org' ? (
+          {false ? (
             <TouchableOpacity
               onPress={() => {
                 this.props.navigation.navigate('CreateOrganization', null);

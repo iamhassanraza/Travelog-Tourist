@@ -14,7 +14,7 @@ import {
   StatusBar,
 } from 'react-native';
 import HeaderTitle from './Heading';
-import Colors from '../Assets/Colors';
+import Colors, {ThemeBlue} from '../Assets/Colors';
 import {ScrollView} from 'react-native-gesture-handler';
 import {Container, Item, Content, Input} from 'native-base';
 import {connect} from 'react-redux';
@@ -32,6 +32,9 @@ import {
   WaveIndicator,
 } from 'react-native-indicators';
 
+const screenwidth = Dimensions.get('window').width;
+const screenheight = Dimensions.get('window').height;
+
 class Signup extends React.Component {
   static navigationOptions = {
     header: null,
@@ -41,7 +44,7 @@ class Signup extends React.Component {
     this.state = {
       resta: [],
       first_name: '',
-      last_name: '',
+      last_name: ' ',
       email: '',
       password: '',
       confirmPass: '',
@@ -124,7 +127,6 @@ class Signup extends React.Component {
     var status = undefined;
 
     if (!this.validateForm()) {
-      console.log('sendng req .....');
     } else {
       // /////////////////////FETCH
       this.setState({spinner: true});
@@ -136,7 +138,7 @@ class Signup extends React.Component {
           last_name: this.state.last_name,
           email: this.state.email,
           password: this.state.password,
-
+          account_type_id: 2,
           // email_verified:'0',
           // active:'0',
         }),
@@ -144,75 +146,71 @@ class Signup extends React.Component {
       })
         .then(res => res.json())
         .then(response => {
-          console.log('=====>>>', response);
-
           if (response) {
             console.log('=====>>>', response);
             if (response.message) {
               alert(response.message);
             }
             if (response.message === 'Signup success') {
-              // this.props.navigation.navigate('Login')
+              this.props.navigation.navigate('Login');
               //===================================================
-
-              fetch(`${API_BASE_URL}/user/signin`, {
-                method: 'POST',
-                headers: {
-                  Accept: 'application/json',
-                  'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                  email: this.state.email,
-                  password: this.state.password,
-                }),
-              })
-                .then(res => {
-                  status = res.status;
-                  return res.json();
-                })
-                .then(async response => {
-                  if (status === 200) {
-                    //good to go
-                    // console.log(response,'============respines e =============')
-                    this.props.CreateUserDetails(response);
-                    await AsyncStorage.setItem('TOKEN', response.token);
-                    await AsyncStorage.setItem('USERTOKEN', response.token);
-                    await AsyncStorage.setItem('email', response.email);
-                    await AsyncStorage.setItem(
-                      'USER_ID',
-                      response.id.toString(),
-                    );
-                    await AsyncStorage.setItem(
-                      'isverified',
-                      response.email_verified.toString(),
-                    );
-                    await AsyncStorage.setItem(
-                      'USER_ID',
-                      response.id.toString(),
-                    );
-                    await AsyncStorage.setItem(
-                      'selected',
-                      response.id.toString(),
-                    );
-                    await AsyncStorage.setItem('accountType', 'user');
-                    //  AsyncStorage.setItem('CAMPUS_ID', response.campus_id.toString());
-                    await AsyncStorage.setItem('CAMPUS_ID', 'nahi_hai');
-                    this.setState({
-                      spinner: false,
-                    });
-
-                    this.props.navigation.navigate('EmailVerification', {
-                      email: response.email,
-                    });
-                  } else if (status === 401) {
-                    //user not found with credentials
-                    alert(response.message.split(':')[1]);
-                  }
-                })
-                .catch(error => {
-                  console.log(error);
-                });
-
+              // fetch(`${API_BASE_URL}/user/signin`, {
+              //   method: 'POST',
+              //   headers: {
+              //     Accept: 'application/json',
+              //     'Content-Type': 'application/json',
+              //   },
+              //   body: JSON.stringify({
+              //     email: this.state.email,
+              //     password: this.state.password,
+              //   }),
+              // })
+              //   .then(res => {
+              //     status = res.status;
+              //     return res.json();
+              //   })
+              //   .then(async response => {
+              //     if (status === 200) {
+              //       console.log('wtf???');
+              //       //good to go
+              //       this.props.CreateUserDetails(response);
+              //       await AsyncStorage.setItem('TOKEN', response.token);
+              //       await AsyncStorage.setItem('USERTOKEN', response.token);
+              //       await AsyncStorage.setItem('email', response.email);
+              //       await AsyncStorage.setItem(
+              //         'USER_ID',
+              //         response.id.toString(),
+              //       );
+              //       await AsyncStorage.setItem(
+              //         'isverified',
+              //         response.email_verified.toString(),
+              //       );
+              //       await AsyncStorage.setItem(
+              //         'USER_ID',
+              //         response.id.toString(),
+              //       );
+              //       await AsyncStorage.setItem(
+              //         'selected',
+              //         response.id.toString(),
+              //       );
+              //       await AsyncStorage.setItem('accountType', 'user');
+              //       //  AsyncStorage.setItem('CAMPUS_ID', response.campus_id.toString());
+              //       await AsyncStorage.setItem('CAMPUS_ID', 'nahi_hai');
+              //       this.setState({
+              //         spinner: false,
+              //       });
+              //       console.log('navigate now');
+              //       this.props.navigation.navigate('EmailVerification', {
+              //         email: response.email,
+              //       });
+              //     } else if (status === 401) {
+              //       //user not found with credentials
+              //       alert(response.message.split(':')[1]);
+              //     }
+              //   })
+              //   .catch(error => {
+              //     console.log(error);
+              //   });
               //===============================================
             } else {
               this.setState({
@@ -230,7 +228,8 @@ class Signup extends React.Component {
   render() {
     // const { navigate } = this.props.navigation;
     return (
-      <Container style={{height: '100%'}}>
+      // <Container style={{height: '100%'}}>
+      <>
         {Platform.OS === 'ios' ? (
           <StatusBar translucent={true} barStyle="light-content" />
         ) : null}
@@ -251,225 +250,233 @@ class Signup extends React.Component {
             Back
           </Text> */}
           <Content style={{}}>
-            <Text
-              style={{
-                color: 'white',
-                fontSize: 16,
-                fontWeight: 'bold',
-                marginLeft: 10,
-                marginTop: Platform.OS == 'ios' ? 40 : 20,
-              }}
-              onPress={() => {
-                this.props.navigation.goBack();
-              }}>
-              Back
-            </Text>
-            {/* MAIN TITLE */}
-            <View style={{justifyContent: 'center', height: '20%'}}>
-              <HeaderTitle />
-            </View>
+            <View style={{height: screenheight}}>
+              <Text
+                style={{
+                  color: 'white',
+                  fontSize: 16,
+                  fontWeight: 'bold',
+                  marginLeft: 10,
+                  marginTop: Platform.OS == 'ios' ? 40 : 10,
+                }}
+                onPress={() => {
+                  this.props.navigation.goBack();
+                }}>
+                Back
+              </Text>
+              {/* MAIN TITLE */}
+              <View
+                style={{
+                  justifyContent: 'center',
+                  // marginTop: 50,
+                  height: '25%',
+                }}>
+                <HeaderTitle />
+              </View>
 
-            <View style={{}}>
-              {/* 
+              <View style={{}}>
+                {/* 
 
                 {/* First name FIELD */}
-              <View
-                style={{
-                  width: '90%',
-                  marginLeft: '5%',
-                  borderColor: '#C4C4C4',
-                  backgroundColor: 'white',
-                  borderWidth: 0.5,
-                  borderRadius: 10,
-                }}>
-                <TextInput
+                <View
                   style={{
                     width: '90%',
-                    height: Platform.OS == 'ios' ? 40 : 50,
-                    marginLeft: 10,
-                    fontSize: 20,
-                    color: '#ACACAC',
-                  }}
-                  placeholder="First name"
-                  value={this.state.first_name}
-                  onChangeText={first_name => this.setState({first_name})}
-                />
-              </View>
-              {/* First name ERROR TEXT */}
-              {this.state.first_nameError ? (
-                <Text style={{color: 'red', fontSize: 13, marginLeft: 20}}>
-                  First Name Required
-                </Text>
-              ) : null}
+                    marginLeft: '5%',
+                    borderColor: '#C4C4C4',
+                    backgroundColor: 'white',
+                    borderWidth: 0.5,
+                    borderRadius: 10,
+                  }}>
+                  <TextInput
+                    style={{
+                      width: '90%',
+                      height: Platform.OS == 'ios' ? 40 : 50,
+                      marginLeft: 10,
+                      fontSize: 20,
+                      color: '#ACACAC',
+                    }}
+                    placeholder="First name"
+                    value={this.state.first_name}
+                    onChangeText={first_name => this.setState({first_name})}
+                  />
+                </View>
+                {/* First name ERROR TEXT */}
+                {this.state.first_nameError ? (
+                  <Text style={{color: 'red', fontSize: 13, marginLeft: 20}}>
+                    First Name Required
+                  </Text>
+                ) : null}
 
-              {/* Last name FIELD */}
-              <View
-                style={{
-                  width: '90%',
-                  marginLeft: '5%',
-                  marginTop: 20,
-                  borderColor: '#C4C4C4',
-                  backgroundColor: 'white',
-                  borderWidth: 0.5,
-                  borderRadius: 10,
-                }}>
-                <TextInput
+                {/* Last name FIELD */}
+                {/* <View
                   style={{
                     width: '90%',
-                    height: Platform.OS == 'ios' ? 40 : 50,
-                    marginLeft: 10,
-                    fontSize: 20,
-                    color: '#ACACAC',
-                  }}
-                  placeholder="Last name"
-                  value={this.state.last_name}
-                  onChangeText={last_name => this.setState({last_name})}
-                />
-              </View>
-              {/* Last name ERROR TEXT */}
-              {this.state.last_nameError ? (
-                <Text style={{color: 'red', fontSize: 13, marginLeft: 20}}>
-                  Last Name Required
-                </Text>
-              ) : null}
-              {/* Email FIELD */}
-              <View
-                style={{
-                  width: '90%',
-                  marginLeft: '5%',
-                  marginTop: 20,
-                  borderColor: '#C4C4C4',
-                  backgroundColor: 'white',
-                  borderWidth: 0.5,
-                  borderRadius: 10,
-                }}>
-                <TextInput
+                    marginLeft: '5%',
+                    marginTop: 20,
+                    borderColor: '#C4C4C4',
+                    backgroundColor: 'white',
+                    borderWidth: 0.5,
+                    borderRadius: 10,
+                  }}>
+                  <TextInput
+                    style={{
+                      width: '90%',
+                      height: Platform.OS == 'ios' ? 40 : 50,
+                      marginLeft: 10,
+                      fontSize: 20,
+                      color: '#ACACAC',
+                    }}
+                    placeholder="Last name"
+                    value={this.state.last_name}
+                    onChangeText={last_name => this.setState({last_name})}
+                  />
+                </View> */}
+                {/* Last name ERROR TEXT */}
+                {/* {this.state.last_nameError ? (
+                  <Text style={{color: 'red', fontSize: 13, marginLeft: 20}}>
+                    Last Name Required
+                  </Text>
+                ) : null} */}
+                {/* Email FIELD */}
+                <View
                   style={{
                     width: '90%',
-                    height: Platform.OS == 'ios' ? 40 : 50,
-                    marginLeft: 10,
-                    fontSize: 20,
-                    color: '#ACACAC',
-                  }}
-                  placeholder="Email"
-                  autoCapitalize="none"
-                  value={this.state.email}
-                  onChangeText={email => this.setState({email})}
-                  keyboardType="email-address"
-                />
-              </View>
-              {/* Email ERROR TEXT */}
-              {this.state.emailError ? (
-                <Text style={{color: 'red', fontSize: 13, marginLeft: 20}}>
-                  Invalid email address
-                </Text>
-              ) : null}
-              {/* Password FIELD */}
-              <View
-                style={{
-                  width: '90%',
-                  marginLeft: '5%',
-                  marginTop: 20,
-                  borderColor: '#C4C4C4',
-                  backgroundColor: 'white',
-                  borderWidth: 0.5,
-                  borderRadius: 10,
-                }}>
-                <TextInput
+                    marginLeft: '5%',
+                    marginTop: 20,
+                    borderColor: '#C4C4C4',
+                    backgroundColor: 'white',
+                    borderWidth: 0.5,
+                    borderRadius: 10,
+                  }}>
+                  <TextInput
+                    style={{
+                      width: '90%',
+                      height: Platform.OS == 'ios' ? 40 : 50,
+                      marginLeft: 10,
+                      fontSize: 20,
+                      color: '#ACACAC',
+                    }}
+                    placeholder="Email"
+                    autoCapitalize="none"
+                    value={this.state.email}
+                    onChangeText={email => this.setState({email})}
+                    keyboardType="email-address"
+                  />
+                </View>
+                {/* Email ERROR TEXT */}
+                {this.state.emailError ? (
+                  <Text style={{color: 'red', fontSize: 13, marginLeft: 20}}>
+                    Invalid email address
+                  </Text>
+                ) : null}
+                {/* Password FIELD */}
+                <View
                   style={{
                     width: '90%',
-                    height: Platform.OS == 'ios' ? 40 : 50,
-                    marginLeft: 10,
-                    fontSize: 20,
-                    color: '#ACACAC',
-                  }}
-                  placeholder="Password"
-                  value={this.state.password}
-                  onChangeText={password => this.setState({password})}
-                  secureTextEntry
-                />
-              </View>
-              {/* Password ERROR TEXT */}
-              {this.state.passwordError ? (
-                <Text style={{color: 'red', fontSize: 13, marginLeft: 20}}>
-                  Minimum 8 characters required
-                </Text>
-              ) : null}
+                    marginLeft: '5%',
+                    marginTop: 20,
+                    borderColor: '#C4C4C4',
+                    backgroundColor: 'white',
+                    borderWidth: 0.5,
+                    borderRadius: 10,
+                  }}>
+                  <TextInput
+                    style={{
+                      width: '90%',
+                      height: Platform.OS == 'ios' ? 40 : 50,
+                      marginLeft: 10,
+                      fontSize: 20,
+                      color: '#ACACAC',
+                    }}
+                    placeholder="Password"
+                    value={this.state.password}
+                    onChangeText={password => this.setState({password})}
+                    secureTextEntry
+                  />
+                </View>
+                {/* Password ERROR TEXT */}
+                {this.state.passwordError ? (
+                  <Text style={{color: 'red', fontSize: 13, marginLeft: 20}}>
+                    Minimum 8 characters required
+                  </Text>
+                ) : null}
 
-              {/* confirm password field */}
+                {/* confirm password field */}
 
-              <View
-                style={{
-                  width: '90%',
-                  marginLeft: '5%',
-                  marginTop: 20,
-                  borderColor: '#C4C4C4',
-                  backgroundColor: 'white',
-                  borderWidth: 0.5,
-                  borderRadius: 10,
-                }}>
-                <TextInput
+                <View
                   style={{
                     width: '90%',
-                    height: Platform.OS == 'ios' ? 40 : 50,
-                    marginLeft: 10,
-                    fontSize: 20,
-                    color: '#ACACAC',
-                  }}
-                  placeholder="Confirm password"
-                  value={this.state.confirmPass}
-                  onChangeText={confirmPass => this.setState({confirmPass})}
-                  secureTextEntry
-                />
-              </View>
-              {/*  confirm Password ERROR TEXT */}
-              {this.state.confirmPassError ? (
-                <Text style={{color: 'red', fontSize: 13, marginLeft: 20}}>
-                  Your passwords don't match
-                </Text>
-              ) : null}
+                    marginLeft: '5%',
+                    marginTop: 20,
+                    borderColor: '#C4C4C4',
+                    backgroundColor: 'white',
+                    borderWidth: 0.5,
+                    borderRadius: 10,
+                  }}>
+                  <TextInput
+                    style={{
+                      width: '90%',
+                      height: Platform.OS == 'ios' ? 40 : 50,
+                      marginLeft: 10,
+                      fontSize: 20,
+                      color: '#ACACAC',
+                    }}
+                    placeholder="Confirm password"
+                    value={this.state.confirmPass}
+                    onChangeText={confirmPass => this.setState({confirmPass})}
+                    secureTextEntry
+                  />
+                </View>
+                {/*  confirm Password ERROR TEXT */}
+                {this.state.confirmPassError ? (
+                  <Text style={{color: 'red', fontSize: 13, marginLeft: 20}}>
+                    Your passwords don't match
+                  </Text>
+                ) : null}
 
-              {/* Sign up BUTTON */}
-              <View style={styles.butt}>
-                <TouchableOpacity onPress={this.submitForm}>
-                  {this.state.spinner ? (
-                    <View
-                      style={{
-                        flexDirection: 'row',
-                        justifyContent: 'center',
-                      }}>
+                {/* Sign up BUTTON */}
+                <View style={styles.butt}>
+                  <TouchableOpacity onPress={this.submitForm}>
+                    {this.state.spinner ? (
+                      <View
+                        style={{
+                          flexDirection: 'row',
+                          justifyContent: 'center',
+                        }}>
+                        <Text
+                          style={{
+                            color: 'white',
+                            fontWeight: 'bold',
+                            fontSize: 18,
+                          }}>
+                          Loading{' '}
+                        </Text>
+                        <BarIndicator
+                          style={{flex: 0}}
+                          count={3}
+                          size={20}
+                          color={'white'}
+                        />
+                      </View>
+                    ) : (
                       <Text
                         style={{
-                          color: 'white',
+                          fontSize: 16,
                           fontWeight: 'bold',
-                          fontSize: 18,
+                          textAlign: 'center',
+                          color: 'white',
                         }}>
-                        Loading{' '}
+                        Sign up
                       </Text>
-                      <BarIndicator
-                        style={{flex: 0}}
-                        count={3}
-                        size={20}
-                        color={'white'}
-                      />
-                    </View>
-                  ) : (
-                    <Text
-                      style={{
-                        fontSize: 16,
-                        fontWeight: 'bold',
-                        textAlign: 'center',
-                        color: 'white',
-                      }}>
-                      Sign up
-                    </Text>
-                  )}
-                </TouchableOpacity>
+                    )}
+                  </TouchableOpacity>
+                </View>
               </View>
             </View>
           </Content>
         </ImageBackground>
-      </Container>
+      </>
+      // </Container>
     );
   }
 }
@@ -483,15 +490,19 @@ const styles = StyleSheet.create({
     marginTop: 40,
     marginBottom: 25,
     justifyContent: 'center',
-    backgroundColor: 'transparent',
+    backgroundColor: ThemeBlue,
     borderColor: 'white',
     borderWidth: 0.6,
   },
   container: {
     flex: 1,
+    // width: screenwidth,
+    // marginTop: 50,
+    // height: screenheight,
+    // backgroundColor: 'white',
     // alignItems: 'center',
     // justifyContent: 'center',
-    backgroundColor: Colors.overlayColor,
+    // backgroundColor: Colors.overlayColor,
   },
   overlay: {
     flex: 1,

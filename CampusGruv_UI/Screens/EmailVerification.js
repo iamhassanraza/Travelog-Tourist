@@ -17,10 +17,12 @@ import {
 } from 'react-native';
 import {BarIndicator} from 'react-native-indicators';
 import HeaderTitle from './Heading';
-import Colors from '../Assets/Colors';
+import Colors, {ThemeBlue} from '../Assets/Colors';
 import {withNavigation} from 'react-navigation';
 import LogoutButton from '../Components/LogoutButton';
 import {Container, Content} from 'native-base';
+
+const screenheight = Dimensions.get('window').height;
 
 class EmailVerification extends React.Component {
   static navigationOptions = {
@@ -47,7 +49,6 @@ class EmailVerification extends React.Component {
         }&type=email&email=${email}`,
       );
       const JsonResponse = await Response.json();
-      console.log(JsonResponse, '======== response ');
       this.setState({spinner: false});
       if (parseInt(Response.status) === 404) {
         alert(JsonResponse.message);
@@ -77,122 +78,124 @@ class EmailVerification extends React.Component {
             source={require('../Assets/Images/background.png')}
             resizeMode="cover">
             <Content>
-              {/* <ScrollView style={{flex: 1}}>
+              <View style={{height: screenheight}}>
+                {/* <ScrollView style={{flex: 1}}>
               <KeyboardAvoidingView positon="padding"> */}
-              <View style={{marginTop: '25%', height: '10%'}}>
-                <HeaderTitle />
-              </View>
-              <View style={{marginTop: '5%'}}>
-                <Text
-                  style={{
-                    width: '95%',
-                    marginLeft: '2.5%',
-                    textAlign: 'center',
-                    color: 'gray',
-                    fontSize: 15,
-                    marginBottom: 10,
-                  }}>
-                  {' '}
-                  A code has been sent to email{' '}
-                  {this.props.navigation.getParam('email', 'no email')} ,kindly
-                  check your email and enter the code below.
-                </Text>
+                <View style={{marginTop: '25%', height: '10%'}}>
+                  <HeaderTitle />
+                </View>
+                <View style={{marginTop: '5%'}}>
+                  <Text
+                    style={{
+                      width: '95%',
+                      marginLeft: '2.5%',
+                      textAlign: 'center',
+                      color: 'gray',
+                      fontSize: 15,
+                      marginBottom: 10,
+                    }}>
+                    {' '}
+                    A code has been sent to email
+                    {this.props.navigation.getParam('email', 'no email')} ,
+                    kindly check your email and enter the code below.
+                  </Text>
 
-                <View
-                  style={{
-                    width: '90%',
-                    marginLeft: '5%',
-                    marginTop: '8%',
-                    borderColor: '#C4C4C4',
-                    backgroundColor: 'white',
-                    borderWidth: 0.5,
-                    borderRadius: 10,
-                  }}>
-                  <TextInput
-                    autoCapitalize="none"
-                    placeholder="Verification code"
+                  <View
                     style={{
                       width: '90%',
-                      fontSize: 20,
-                      color: '#ACACAC',
-                      paddingLeft: '5%',
-                      height: Platform.OS == 'ios' ? 40 : 50,
+                      marginLeft: '5%',
+                      marginTop: '8%',
+                      borderColor: '#C4C4C4',
+                      backgroundColor: 'white',
+                      borderWidth: 0.5,
+                      borderRadius: 10,
+                    }}>
+                    <TextInput
+                      autoCapitalize="none"
+                      placeholder="Verification code"
+                      style={{
+                        width: '90%',
+                        fontSize: 20,
+                        color: '#ACACAC',
+                        paddingLeft: '5%',
+                        height: Platform.OS == 'ios' ? 40 : 50,
+                      }}
+                      onChangeText={text => this.setState({code: text})}
+                      value={this.state.code}
+                    />
+                  </View>
+
+                  <TouchableOpacity onPress={() => this.checkOTP()}>
+                    <View style={{marginBottom: 10}}>
+                      {this.state.spinner ? (
+                        <View
+                          style={{
+                            height: 40,
+                            width: '50%',
+                            marginLeft: '25%',
+                            borderRadius: 10,
+                            marginTop: 40,
+                            justifyContent: 'center',
+                            backgroundColor: ThemeBlue,
+                            borderColor: 'white',
+                            borderWidth: 0.6,
+                            flexDirection: 'row',
+                            justifyContent: 'center',
+                            alignItems: 'center',
+                          }}>
+                          <Text
+                            style={{
+                              fontSize: 16,
+                              fontWeight: 'bold',
+                              textAlign: 'center',
+                              color: 'white',
+                            }}>
+                            Loading{' '}
+                          </Text>
+                          <BarIndicator
+                            style={{flex: 0}}
+                            count={3}
+                            size={20}
+                            color={'white'}
+                          />
+                        </View>
+                      ) : (
+                        <View
+                          style={{
+                            height: 35,
+                            width: '45%',
+                            borderRadius: 10,
+                            alignSelf: 'center',
+                            marginTop: 40,
+                            justifyContent: 'center',
+                            backgroundColor: ThemeBlue,
+                            borderColor: 'white',
+                            borderWidth: 1,
+                          }}>
+                          <Text
+                            style={{
+                              fontSize: 16,
+                              fontWeight: 'bold',
+                              textAlign: 'center',
+                              color: 'white',
+                            }}>
+                            Continue
+                          </Text>
+                        </View>
+                      )}
+                    </View>
+                  </TouchableOpacity>
+                </View>
+                <View style={{position: 'absolute', bottom: 10, left: 10}}>
+                  <LogoutButton
+                    style={{
+                      paddingLeft: 5,
+                      fontSize: 18,
+                      color: ThemeBlue,
+                      fontWeight: 'bold',
                     }}
-                    onChangeText={text => this.setState({code: text})}
-                    value={this.state.code}
                   />
                 </View>
-
-                <TouchableOpacity onPress={() => this.checkOTP()}>
-                  <View style={{marginBottom: 10}}>
-                    {this.state.spinner ? (
-                      <View
-                        style={{
-                          height: 40,
-                          width: '50%',
-                          marginLeft: '25%',
-                          borderRadius: 10,
-                          marginTop: 40,
-                          justifyContent: 'center',
-                          backgroundColor: 'transparent',
-                          borderColor: 'white',
-                          borderWidth: 0.6,
-                          flexDirection: 'row',
-                          justifyContent: 'center',
-                          alignItems: 'center',
-                        }}>
-                        <Text
-                          style={{
-                            fontSize: 16,
-                            fontWeight: 'bold',
-                            textAlign: 'center',
-                            color: 'white',
-                          }}>
-                          Loading{' '}
-                        </Text>
-                        <BarIndicator
-                          style={{flex: 0}}
-                          count={3}
-                          size={20}
-                          color={'white'}
-                        />
-                      </View>
-                    ) : (
-                      <View
-                        style={{
-                          height: 35,
-                          width: '45%',
-                          borderRadius: 10,
-                          alignSelf: 'center',
-                          marginTop: 40,
-                          justifyContent: 'center',
-                          backgroundColor: 'transparent',
-                          borderColor: 'white',
-                          borderWidth: 1,
-                        }}>
-                        <Text
-                          style={{
-                            fontSize: 16,
-                            fontWeight: 'bold',
-                            textAlign: 'center',
-                            color: 'white',
-                          }}>
-                          Continue
-                        </Text>
-                      </View>
-                    )}
-                  </View>
-                </TouchableOpacity>
-              </View>
-              <View style={{position: 'absolute', bottom: 10, left: 10}}>
-                <LogoutButton
-                  style={{
-                    paddingLeft: 5,
-                    fontSize: 18,
-                    color: 'white',
-                    fontWeight: 'bold',
-                  }}
-                />
               </View>
             </Content>
           </ImageBackground>
@@ -205,7 +208,7 @@ class EmailVerification extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: Colors.overlayColor,
+    // backgroundColor: Colors.overlayColor,
   },
 });
 

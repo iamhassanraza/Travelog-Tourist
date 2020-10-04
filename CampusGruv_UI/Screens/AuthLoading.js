@@ -56,7 +56,6 @@ class AuthLoading extends React.Component {
           : 'campusgruv://post/',
         '',
       );
-      console.log('initial route', route);
       let Token = await AsyncStorage.getItem('TOKEN');
       let USER = await AsyncStorage.getItem('USER_ID');
       var response = await fetch(
@@ -71,7 +70,6 @@ class AuthLoading extends React.Component {
       );
       let JsonResponse = await response.json();
       this.setState({postDetail: JsonResponse});
-      console.log(JsonResponse, 'Post details lamo');
     }
 
     //Linking.addEventListener('url', this.handleOpenURL);
@@ -92,7 +90,6 @@ class AuthLoading extends React.Component {
     let USER = await AsyncStorage.getItem('USER_ID');
     let accountType = await AsyncStorage.getItem('accountType');
     let selected = await AsyncStorage.getItem('selected');
-    console.log('hey there', accountType, selected);
     var response = await fetch(
       `${
         require('../config').default.production
@@ -104,7 +101,6 @@ class AuthLoading extends React.Component {
       },
     );
     let JsonResponse = await response.json();
-    console.log(JsonResponse, 'POPOP');
 
     this.props.CreateUserDetails(JsonResponse);
   };
