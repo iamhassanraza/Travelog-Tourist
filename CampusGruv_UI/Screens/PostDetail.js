@@ -1035,7 +1035,6 @@ class PostDetail extends Component {
       'PostData',
       'nothing to render',
     );
-    console.log('data', data);
     return (
       <>
         {/* {Platform.OS === 'ios' ? <StatusBar barStyle="default" /> : null} */}

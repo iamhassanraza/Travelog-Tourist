@@ -111,10 +111,10 @@ class RenderCards extends PureComponent {
                     likes={item.likes_count}
                     seats={item.total_seats}
                     days={item.number_of_days}
-                    departureDate={item.departure_date}
+                    departureDate={item.departure_date.replace(' ', 'T')}
                     price={item.price}
                     speciality={item.speciality}
-                    createdAt={item.created_at}
+                    createdAt={item.created_at.replace(' ', 'T')}
                     major={item.users.major}
                     bio={item.users.bio}
                     contact_no={item.users.contact_no}
@@ -174,10 +174,10 @@ class RenderCards extends PureComponent {
                     likes={item.likes_count}
                     seats={item.total_seats}
                     days={item.number_of_days}
-                    departureDate={item.departure_date}
+                    departureDate={item.departure_date.replace(' ', 'T')}
                     price={item.price}
                     speciality={item.speciality}
-                    createdAt={item.created_at}
+                    createdAt={item.created_at.replace(' ', 'T')}
                     major={item.users.major}
                     bio={item.users.bio}
                     contact_no={item.users.contact_no}

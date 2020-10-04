@@ -147,7 +147,8 @@ class PostCard extends Component {
                   fontSize: 12,
                   marginBottom: 5,
                 }}>
-                Departure: 12 Sept,2020
+                {'Departure: ' +
+                  new Date(this.props.departureDate).toDateString()}
               </Text>
             </View>
           </View>
