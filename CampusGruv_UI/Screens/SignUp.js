@@ -44,7 +44,7 @@ class Signup extends React.Component {
     this.state = {
       resta: [],
       first_name: '',
-      last_name: ' ',
+      last_name: '',
       email: '',
       password: '',
       confirmPass: '',

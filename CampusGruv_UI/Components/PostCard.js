@@ -109,7 +109,7 @@ class PostCard extends Component {
                   alignItems: 'center',
                   padding: 3,
                 }}>
-                {this.props.categoryName}
+                {'RS ' + this.props.price / 100 + 'K'}
               </Text>
             </View>
           ) : null}
@@ -183,7 +183,7 @@ class PostCard extends Component {
               <Text style={{color: 'grey', marginLeft: 2}}>
                 {this.props.first_name +
                   ' ' +
-                  (this.props.last_name === '' || !this.props.last_name
+                  (this.props.last_name.trim() === '' || !this.props.last_name
                     ? ''
                     : this.props.last_name.charAt(0) + '.')}
               </Text>

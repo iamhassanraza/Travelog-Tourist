@@ -227,7 +227,7 @@ class PostDetail extends Component {
             textstyle={{fontSize: 14}}
             icon="timer"
             title="Duration"
-            subtitle={days}
+            subtitle={days + ' days'}
           />
           <IconWithText
             textstyle={{fontSize: 14}}

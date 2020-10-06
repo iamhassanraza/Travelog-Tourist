@@ -389,7 +389,10 @@ class Chat extends React.PureComponent {
                   name:
                     this.props.User.first_name +
                     ' ' +
-                    this.props.User.last_name,
+                    (this.props.User.last_name.trim() === '' ||
+                    !this.props.User.last_name
+                      ? ''
+                      : this.props.User.last_name.charAt(0) + '.'),
                   room_id: this.props.navigation.getParam('room_id', null),
                 },
               ];
@@ -414,7 +417,10 @@ class Chat extends React.PureComponent {
                   name:
                     this.props.User.first_name +
                     ' ' +
-                    this.props.User.last_name,
+                    (this.props.User.last_name.trim() === '' ||
+                    !this.props.User.last_name
+                      ? ''
+                      : this.props.User.last_name.charAt(0) + '.'),
                   room_id: this.props.navigation.getParam('room_id', null),
                 },
               ];
@@ -545,8 +551,11 @@ class Chat extends React.PureComponent {
             name:
               this.props.User.first_name +
               ' ' +
-              this.props.User.last_name.charAt('0') +
-              '.',
+              (this.props.User.last_name.trim() === '' ||
+              !this.props.User.last_name
+                ? ''
+                : this.props.User.last_name.charAt(0) + '.'),
+
             avatar: this.props.User.profile_pic_url,
           }}
         />
