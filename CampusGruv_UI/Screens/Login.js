@@ -122,14 +122,12 @@ class Login extends React.Component {
             } else {
               AsyncStorage.setItem('CAMPUS_ID', response.campus_id.toString());
             }
-
+            console.log('WTF');
             this.props.navigation.navigate('AuthLoading');
           } else if (status === 401) {
             //user not found with credentials
             alert(response.message.split(':')[1]);
           }
-
-          console.log(response, 'json response -----');
         })
         .catch(error => {
           console.log(error);

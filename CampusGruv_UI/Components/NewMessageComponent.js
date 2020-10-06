@@ -42,6 +42,7 @@ class NewMessageComponent extends Component {
       },
     );
     const JsonResponse = await Response.json();
+    console.log(JsonResponse, 'roooooooooooom');
     this.setState({
       room_id: JsonResponse[0].room_id,
     });

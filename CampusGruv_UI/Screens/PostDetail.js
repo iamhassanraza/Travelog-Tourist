@@ -759,13 +759,19 @@ class PostDetail extends Component {
             fontSize: 21,
             fontWeight: 'bold',
             color: 'black',
-            marginTop: 10,
+            marginTop: '5%',
           }}>
           Description
         </Text>
         <TextCutter text={description} limit={150} style={{lineHeight: 22}} />
 
-        <Text style={{fontSize: 21, fontWeight: 'bold', color: ThemeBlue}}>
+        <Text
+          style={{
+            fontSize: 21,
+            marginTop: '5%',
+            fontWeight: 'bold',
+            color: ThemeBlue,
+          }}>
           Tour Plan
         </Text>
         {this.state?.plan.map((item, index) => (
