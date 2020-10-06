@@ -155,7 +155,7 @@ class CreateGroupChat extends Component {
   };
 
   componentDidMount() {
-    this.getFollowing();
+    // this.getFollowing();
 
     this.props.navigation.setParams({
       handleThis: () => {

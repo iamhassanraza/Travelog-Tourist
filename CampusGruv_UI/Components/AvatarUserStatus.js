@@ -111,7 +111,7 @@ class AvatarUserStatus extends Component {
             </View>
           </TouchableWithoutFeedback>
         </View>
-        <TouchableOpacity
+        {/* <TouchableOpacity
           onPress={() => {
             //this.setState({follow: !this.state.follow});
             this.followButton();
@@ -140,7 +140,7 @@ class AvatarUserStatus extends Component {
               </Text>
             </View>
           ) : null}
-        </TouchableOpacity>
+        </TouchableOpacity> */}
       </View>
       // </TouchableWithoutFeedback>
     );

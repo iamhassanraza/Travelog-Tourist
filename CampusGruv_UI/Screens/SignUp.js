@@ -44,7 +44,7 @@ class Signup extends React.Component {
     this.state = {
       resta: [],
       first_name: '',
-      last_name: '',
+      last_name: ' ',
       email: '',
       password: '',
       confirmPass: '',
@@ -71,18 +71,18 @@ class Signup extends React.Component {
       return false;
     }
 
-    if (this.state.last_name.length < 1) {
-      this.setState(
-        {
-          last_nameError: true,
-        },
-        () => {
-          setTimeout(() => this.setState({last_nameError: false}), 1000);
-        },
-      );
+    // if (this.state.last_name.length < 1) {
+    //   this.setState(
+    //     {
+    //       last_nameError: true,
+    //     },
+    //     () => {
+    //       setTimeout(() => this.setState({last_nameError: false}), 1000);
+    //     },
+    //   );
 
-      return false;
-    }
+    //   return false;
+    // }
 
     if (
       !this.state.email.match(/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/)
@@ -125,9 +125,10 @@ class Signup extends React.Component {
 
   submitForm = () => {
     var status = undefined;
-
+    console.log('damn');
     if (!this.validateForm()) {
     } else {
+      console.log('hello');
       // /////////////////////FETCH
       this.setState({spinner: true});
       fetch(`${API_BASE_URL}/user/signup`, {

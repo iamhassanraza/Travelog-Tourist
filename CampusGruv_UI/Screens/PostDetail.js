@@ -777,7 +777,7 @@ class PostDetail extends Component {
         {this.state?.plan.map((item, index) => (
           <PlanItem
             id={item.plan_id}
-            lastitem={array.length - 1 === index ? true : false}
+            lastitem={this.state?.plan.length - 1 === index ? true : false}
             details={item.description}
             title={item.title}
           />
